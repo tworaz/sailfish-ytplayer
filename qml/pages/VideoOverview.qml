@@ -64,47 +64,49 @@ Page {
                 id: header
             }
 
-            Rectangle {
+
+            Image {
+                id: poster
                 anchors {
                     left: parent.left
                     right: parent.right
                 }
                 height: width * 3 / 4
+                fillMode: Image.PreserveAspectFit
 
-                Image {
-                    id: poster
-                    anchors.fill: parent;
-                    fillMode: Image.PreserveAspectFit
-
-                    onStatusChanged: {
-                        if (poster.status == Image.Ready) {
-                            playButton.visible = true
-                        }
+                onStatusChanged: {
+                    if (poster.status == Image.Ready) {
+                        playButton.visible = true
                     }
+                }
+
+                MouseArea {
+                    id: playButton
+                    anchors.centerIn: parent
+                    visible: false
+                    width: ytBackground.width
+                    height: ytBackground.height
 
                     Rectangle {
-                        id: playButton
+                        id: ytBackground
                         anchors.centerIn: parent
-                        width: 1.60 * play.width
-                        height: 1.20 * play.height
+                        width: 1.60 * play_icon.width
+                        height: 1.20 * play_icon.height
                         color: "#BBDE483C"
                         radius: 20
-                        visible: false
+                    }
 
-                        Image {
-                            id: play
-                            anchors.centerIn: parent
-                            source: "image://theme/icon-cover-play"
+                    Image {
+                        id: play_icon
+                        anchors.centerIn: parent
+                        source: "image://theme/icon-cover-play"
+                    }
 
-                            MouseArea {
-                                anchors.fill: parent
-                                onClicked: {
-                                    console.log("Play button clicked")
-                                    onClicked: pageStack.push(Qt.resolvedUrl("VideoPlayer.qml"),
-                                                              {"videoId" : videoId, "title": header.title})
-                                }
-                            }
-                        }
+                    onClicked: {
+                        console.log("Play button clicked")
+                        onClicked: pageStack.push(Qt.resolvedUrl("VideoPlayer.qml"),
+                                                  {"videoId" : videoId, "title": header.title})
+
                     }
                 }
             }
