@@ -13,13 +13,13 @@ CONFIG += sailfishapp
 SOURCES += src/YTPlayer.cpp
 
 OTHER_FILES += \
+    rpm/YTPlayer.spec \
+    rpm/YTPlayer.yaml \
+    YTPlayer.desktop \
+    qml/pages/YoutubeClientV3.js \
     qml/YTPlayer.qml \
     qml/cover/CoverPage.qml \
     qml/pages/VideoCategoryPage.qml \
     qml/pages/VideoListPage.qml \
     qml/pages/VideoOverview.qml \
-    qml/pages/VideoPlayer.qml \
-    qml/pages/YoutubeClientV3.js \
-    rpm/YTPlayer.spec \
-    rpm/YTPlayer.yaml \
-    YTPlayer.desktop
+    qml/pages/VideoPlayer.qml
