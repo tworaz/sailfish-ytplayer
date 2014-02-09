@@ -55,29 +55,6 @@ Page {
             visible: page.orientation === Orientation.Portrait ? true : false
         }
 
-        Rectangle {
-            id: controls
-            anchors.fill: parent
-            visible: false
-
-            Rectangle {
-                id: progress
-                anchors {
-                    right: parent.right
-                    left: parent.left
-                    bottom: parent.bottom
-                }
-                height: 400
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        console.debug("Progress bar clicked");
-                    }
-                }
-            }
-        }
-
         MediaPlayer {
             id: mediaPlayer
             autoPlay: true
@@ -105,6 +82,10 @@ Page {
                     indicator.running = false
                     break;
                 }
+            }
+
+            onPositionChanged: {
+                progressBar.setPosition(position)
             }
 
             onError: {
@@ -145,6 +126,122 @@ Page {
                 anchors.centerIn: parent
                 running: true
                 size: BusyIndicatorSize.Large
+            }
+        }
+
+        MouseArea {
+            id: controls
+            anchors.fill: parent;
+
+            onClicked: {
+                console.log("Controls clicked")
+                show()
+            }
+
+            function show() {
+                playPauseButton.opacity = 1.0
+                progressBar.opacity = 1.0
+                controlsTimer.restart()
+            }
+
+            Timer {
+                id: controlsTimer
+                interval: 2500
+                repeat: false
+                onTriggered: {
+                    console.debug("Video controls timeout, hiding")
+                    playPauseButtonHide.start()
+                    progressBarHide.start()
+                }
+            }
+
+            Image {
+                id: playPauseButton
+                anchors.centerIn: parent
+                opacity: 0.0
+                visible: mediaPlayer.status != MediaPlayer.Stalled
+                source: mediaPlayer.playbackState === MediaPlayer.PlayingState ?
+                            "image://theme/icon-cover-pause" : "image://theme/icon-cover-play"
+
+                NumberAnimation {
+                    id: playPauseButtonHide
+                    target: playPauseButton
+                    property: "opacity"
+                    from: 1.0
+                    to: 0.0
+                    duration: 500
+                    easing.type: Easing.InOutQuad
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        console.debug("Play/Pause button clicked")
+                        controls.show()
+                        if (mediaPlayer.playbackState == MediaPlayer.PlayingState) {
+                            mediaPlayer.pause()
+                        } else {
+                            mediaPlayer.play()
+                        }
+                    }
+                }
+            }
+
+            Rectangle {
+                id: progressBar
+                anchors.bottom: parent.bottom
+                width: parent.width
+                color: Theme.secondaryHighlightColor
+                opacity: 0.0
+                height: 60
+
+                Rectangle {
+                    id: progressContent
+                    height: parent.height
+                    color: Theme.highlightColor
+                    opacity: 0.95
+                }
+
+                NumberAnimation {
+                    id: progressBarHide
+                    target: progressBar
+                    property: "opacity"
+                    from: 1.0
+                    to: 0.0
+                    duration: 500
+                    easing.type: Easing.InOutQuad
+                }
+
+                function setPosition(position) {
+                    var p = position / mediaPlayer.duration;
+                    progressContent.width = progressBar.width * p;
+                }
+
+                MouseArea {
+                    anchors.fill: parent
+                    drag {
+                        target: controls
+                        axis: Drag.XAxis
+                        minimumX: 0
+                        maximumX: controls.width
+                    }
+
+                    onPressed: {
+                        console.debug("Progress pressed")
+                        controls.show()
+                    }
+
+                    onReleased: {
+                        var pos = (mouse.x / progressBar.width) * mediaPlayer.duration
+                        console.debug("Seeking to: " + pos)
+                        mediaPlayer.seek(pos);
+                    }
+
+                    onClicked: {
+                        console.debug("Progress bar clicked");
+                        controls.show()
+                    }
+                }
             }
         }
     }
