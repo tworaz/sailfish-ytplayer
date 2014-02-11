@@ -64,7 +64,7 @@ function getVideoCategories(result, onSuccess, onFailure)
     xhr.send();
 }
 
-function getVideosInCategory(categoryId, result, onSuccess, onFailure)
+function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
 {
     var resultsPerPage = Settings.get(Settings.RESULTS_PER_PAGE);
     var url =  g_youtube_data_v3_url + "videos" +
@@ -73,17 +73,17 @@ function getVideosInCategory(categoryId, result, onSuccess, onFailure)
                "&part=snippet&maxResults=" + resultsPerPage +
                "&chart=mostPopular&videoCategoryId=" + categoryId;
 
+    if (pageToken !== undefined) {
+        url += "&pageToken=" + pageToken;
+    }
+
     console.debug(url);
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status == 200) {
-                var items = JSON.parse(xhr.responseText)["items"];
-                for (var i = 0; i < items.length; i++) {
-                    result.append(items[i]);
-                }
-                onSuccess();
+                onSuccess(JSON.parse(xhr.responseText));
             } else {
                 onFailure("XHR status: " + xhr.status + ", response:" + xhr.responseText);
             }

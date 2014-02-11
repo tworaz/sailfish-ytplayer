@@ -36,6 +36,7 @@ Page {
     id: page
     property string videoCategoryId
     property string title
+    property string nextPageToken
 
     BusyIndicator {
         id: indicator
@@ -57,10 +58,14 @@ Page {
         }
 
         PushUpMenu {
+            visible: page.nextPageToken.length > 0;
             MenuItem {
-                //: Menu option show additional list elements
-                text: qsTr("Show More")
-                onClicked: console.debug("Show more elements")
+                //: Menu option load additional list elements
+                text: qsTr("Load More")
+                onClicked: {
+                    videoListView.loadNextResultsPage()
+                    indicator.running = true;
+                }
             }
         }
 
@@ -120,23 +125,35 @@ Page {
         }
 
         function onFailure(reason) {
-            console.log("onFailure:" + reason);
+            console.error("onFailure:" + reason);
             indicator.running = false
         }
 
-        function onSuccess() {
+        function onVideoListLoaded(response) {
+            for (var i = 0; i < response.items.length; i++) {
+                videoListModel.append(response.items[i]);
+            }
+            if (response.nextPageToken !== undefined) {
+                nextPageToken = response.nextPageToken
+            } else {
+                nextPageToken = "";
+            }
             indicator.running = false
+        }
+
+        function loadNextResultsPage() {
+            Yt.getVideosInCategory(page.videoCategoryId, onVideoListLoaded, onFailure, nextPageToken);
         }
 
         function refresh() {
             indicator.running = true
             videoListModel.clear()
-            Yt.getVideosInCategory(page.videoCategoryId, videoListModel, onSuccess, onFailure)
+            Yt.getVideosInCategory(page.videoCategoryId, onVideoListLoaded, onFailure)
         }
 
         Component.onCompleted: {
             console.debug("Video list page created")
-            Yt.getVideosInCategory(page.videoCategoryId, videoListModel, onSuccess, onFailure)
+            Yt.getVideosInCategory(page.videoCategoryId, onVideoListLoaded, onFailure)
         }
 
         VerticalScrollDecorator {}
