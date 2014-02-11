@@ -48,12 +48,12 @@ Page {
         anchors.fill: parent
         contentHeight: wrapper.height
 
-        PullDownMenu {
-            MenuItem {
-                text: "Refresh"
-                /*onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))*/
-            }
-        }
+        //PullDownMenu {
+        //    MenuItem {
+        //        text: "Refresh"
+        //        /*onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))*/
+        //    }
+        //}
 
         Column {
             id: wrapper

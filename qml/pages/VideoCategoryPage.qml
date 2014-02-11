@@ -49,13 +49,15 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: "Refresh"
+                //: Menu option to refresh content of the list
+                text: qsTr("Refresh")
                 onClicked: videoCategoryListView.refresh()
             }
         }
 
         header: PageHeader {
-            title: "Video Categories"
+            //: Page title
+            title: qsTr("Video Categories")
         }
 
         model: ListModel {

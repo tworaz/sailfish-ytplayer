@@ -50,14 +50,16 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: "Refresh"
+                //: Menu option to refresh content of the list
+                text: qsTr("Refresh")
                 onClicked: videoListView.refresh()
             }
         }
 
         PushUpMenu {
             MenuItem {
-                text: "Show More"
+                //: Menu option show additional list elements
+                text: qsTr("Show More")
                 onClicked: console.debug("Show more elements")
             }
         }

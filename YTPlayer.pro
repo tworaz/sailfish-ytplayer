@@ -13,14 +13,33 @@ CONFIG += sailfishapp
 SOURCES += src/YTPlayer.cpp
 
 OTHER_FILES += \
-    rpm/YTPlayer.spec \
-    rpm/YTPlayer.yaml \
-    YTPlayer.desktop \
-    qml/pages/YoutubeClientV3.js \
-    qml/pages/Settings.js \
-    qml/YTPlayer.qml \
-    qml/cover/CoverPage.qml \
-    qml/pages/VideoCategoryPage.qml \
-    qml/pages/VideoListPage.qml \
-    qml/pages/VideoOverview.qml \
-    qml/pages/VideoPlayer.qml
+        rpm/YTPlayer.spec \
+        rpm/YTPlayer.yaml \
+        YTPlayer.desktop \
+        qml/pages/YoutubeClientV3.js \
+        qml/pages/Settings.js \
+        qml/YTPlayer.qml \
+        qml/cover/CoverPage.qml \
+        qml/pages/VideoCategoryPage.qml \
+        qml/pages/VideoListPage.qml \
+        qml/pages/VideoOverview.qml \
+        qml/pages/VideoPlayer.qml
+
+localization.files = $$files(languages/*.qm)
+localization.path = /usr/share/$${TARGET}/languages
+
+INSTALLS += localization
+
+lupdate_only {
+SOURCES += \
+        qml/YTPlayer.qml \
+        qml/cover/CoverPage.qml \
+        qml/pages/VideoCategoryPage.qml \
+        qml/pages/VideoListPage.qml \
+        qml/pages/VideoOverview.qml \
+        qml/pages/VideoPlayer.qml
+
+TRANSLATIONS += \
+        languages/pl.ts \
+        languages/en.ts
+}
