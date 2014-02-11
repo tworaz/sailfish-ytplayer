@@ -17,6 +17,7 @@ OTHER_FILES += \
     rpm/YTPlayer.yaml \
     YTPlayer.desktop \
     qml/pages/YoutubeClientV3.js \
+    qml/pages/Settings.js \
     qml/YTPlayer.qml \
     qml/cover/CoverPage.qml \
     qml/pages/VideoCategoryPage.qml \

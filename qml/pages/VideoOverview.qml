@@ -103,7 +103,7 @@ Page {
                     }
 
                     onClicked: {
-                        console.log("Play button clicked")
+                        console.debug("Play button clicked")
                         onClicked: pageStack.push(Qt.resolvedUrl("VideoPlayer.qml"),
                                                   {"videoId" : videoId, "title": header.title})
 
@@ -140,7 +140,7 @@ Page {
         }
 
         function onFailure(msg) {
-            console.log("Video overview failure: " + msg)
+            console.error("Video overview failure: " + msg)
             indicator.running = false
         }
 

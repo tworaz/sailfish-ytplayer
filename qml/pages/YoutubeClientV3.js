@@ -27,6 +27,8 @@
  * SUCH DAMAGE.
  */
 
+.import "Settings.js" as Settings
+
 var g_youtube_data_v3_url = "https://www.googleapis.com/youtube/v3/";
 var g_api_key = "AIzaSyAxXu3vOGsHqJ97PBD5QWH21solv4Flx1c"
 var g_region_code = "PL"
@@ -64,10 +66,11 @@ function getVideoCategories(result, onSuccess, onFailure)
 
 function getVideosInCategory(categoryId, result, onSuccess, onFailure)
 {
+    var resultsPerPage = Settings.get(Settings.RESULTS_PER_PAGE);
     var url =  g_youtube_data_v3_url + "videos" +
                "?regionCode=" + g_region_code +
                "&key=" + g_api_key +
-               "&part=snippet&maxResults=20" +
+               "&part=snippet&maxResults=" + resultsPerPage +
                "&chart=mostPopular&videoCategoryId=" + categoryId;
 
     console.debug(url);

@@ -55,6 +55,13 @@ Page {
             }
         }
 
+        PushUpMenu {
+            MenuItem {
+                text: "Show More"
+                onClicked: console.debug("Show more elements")
+            }
+        }
+
         header: PageHeader {
             title: page.title
         }
@@ -68,44 +75,44 @@ Page {
             width: page.width
             height: 94
 
-            Rectangle {
-                width: parent.width
-                height: parent.height
-                color: parent.color
-
-                Image {
-                    id: thumbnail
-                    width: 120
-                    height: 90
-                    anchors {
-                        verticalCenter: parent.verticalCenter
-                        left: parent.left
-                        leftMargin: Theme.paddingMedium
-                    }
-                    fillMode: Image.PreserveAspectFit
-                    source: snippet.thumbnails.default.url
+            Image {
+                id: thumbnail
+                width: 120
+                height: 90
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: parent.left
+                    leftMargin: Theme.paddingMedium
                 }
+                fillMode: Image.PreserveAspectFit
+                source: snippet.thumbnails.default.url
 
-                Label {
-                    color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
-                    elide: Text.ElideRight
-                    anchors {
-                        left: thumbnail.right
-                        right: parent.right
-                        leftMargin: Theme.paddingSmall
-                        rightMargin: Theme.paddingSmall
-                        verticalCenter: parent.verticalCenter
-                    }
-                    font {
-                        family: Theme.fontFamily
-                        pixelSize: Theme.fontSizeSmall
-                    }
-                    text: snippet.title
+                BusyIndicator {
+                    size: BusyIndicatorSize.Small
+                    anchors.centerIn: parent
+                    running: thumbnail.status == Image.Loading
                 }
             }
 
+            Label {
+                color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
+                elide: Text.ElideRight
+                anchors {
+                    left: thumbnail.right
+                    right: parent.right
+                    leftMargin: Theme.paddingSmall
+                    rightMargin: Theme.paddingSmall
+                    verticalCenter: parent.verticalCenter
+                }
+                font {
+                    family: Theme.fontFamily
+                    pixelSize: Theme.fontSizeSmall
+                }
+                text: snippet.title
+            }
+
             onClicked: {
-                console.log("Clicked " + index + ", videoId: " + id)
+                console.debug("Clicked " + index + ", videoId: " + id)
                 pageStack.push(Qt.resolvedUrl("VideoOverview.qml"), {"videoId": id})
             }
         }
@@ -126,7 +133,7 @@ Page {
         }
 
         Component.onCompleted: {
-            console.log("Video list page created")
+            console.debug("Video list page created")
             Yt.getVideosInCategory(page.videoCategoryId, videoListModel, onSuccess, onFailure)
         }
 

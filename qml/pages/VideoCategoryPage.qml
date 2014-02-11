@@ -30,6 +30,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "YoutubeClientV3.js" as Yt
+import "Settings.js" as Settings
 
 
 Page {
@@ -77,7 +78,7 @@ Page {
             }
 
             onClicked: {
-                console.log("Selected video category id:" + id)
+                console.debug("Selected video category id:" + id)
                 pageStack.push(Qt.resolvedUrl("VideoListPage.qml"),
                                {"videoCategoryId": id, "title" : snippet.title})
             }
@@ -99,8 +100,9 @@ Page {
         }
 
         Component.onCompleted: {
-            console.log("Video category list page created")
+            console.debug("Video category list page created")
             Yt.getVideoCategories(videoCategoryListModel, onSuccess, onFailure)
+            Settings.initialize();
         }
 
         VerticalScrollDecorator {}
