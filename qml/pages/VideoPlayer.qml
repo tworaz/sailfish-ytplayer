@@ -36,6 +36,7 @@ import "YoutubeClientV3.js" as Yt
 Page {
     id: page
     allowedOrientations: Orientation.All
+    showNavigationIndicator: page.isPortrait || (page.isLandscape && controls.visible())
     property string videoId
     property string title
 
@@ -52,7 +53,25 @@ Page {
         PageHeader {
             id: header
             title: page.title
-            visible: page.orientation === Orientation.Portrait ? true : false
+            visible: page.isPortrait || (page.isLandscape && controls.visible())
+            z: video.z + 2
+        }
+
+        // Simple background for PageHeader visible only when player is in landscape mode.
+        // It's supposed to ensure header contents are always readeble, no matter what
+        // video content is visible in the background.
+        Rectangle {
+            anchors {
+                right: header.right
+                left: header.left
+                top: header.top
+                bottom: header.bottom
+            }
+
+            visible: header.visible
+            color: "black"
+            opacity: 0.5
+            z: header.z - 1
         }
 
         MediaPlayer {
@@ -134,7 +153,7 @@ Page {
             anchors.fill: parent;
 
             onClicked: {
-                console.log("Controls clicked")
+                console.debug("Screen tapped, showing video controls")
                 show()
             }
 
@@ -142,6 +161,10 @@ Page {
                 playPauseButton.opacity = 1.0
                 progressBar.opacity = 1.0
                 controlsTimer.restart()
+            }
+
+            function visible() {
+                return (playPauseButton.opacity == 1.0);
             }
 
             Timer {
