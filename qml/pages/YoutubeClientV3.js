@@ -34,26 +34,24 @@ var g_api_key = "AIzaSyAxXu3vOGsHqJ97PBD5QWH21solv4Flx1c"
 var g_region_code = "PL"
 var g_locale = "en_US"
 
-function getYoutubeV3Url(reference, queryParams) {
+function getYoutubeV3Url(reference, queryParams)
+{
     var url =  g_youtube_data_v3_url + reference +
             "?regionCode=" + g_region_code +
-            "&key=" + g_api_key;
+            "&key=" + g_api_key +
+            "&hl=" + g_locale;
 
     for (var key in queryParams) {
         if (queryParams.hasOwnProperty(key)) {
             url += "&" + key + "=" + queryParams[key];
         }
     }
-
     return url;
 }
 
 function getVideoCategories(result, onSuccess, onFailure)
 {
-    var url =  g_youtube_data_v3_url + "videoCategories" +
-               "?regionCode=" + g_region_code +
-               "&key=" + g_api_key +
-               "&part=snippet&hl=" + g_locale;
+    var url = getYoutubeV3Url("videoCategories", {"part" : "snippet"});
 
     console.debug("XHR: " + url);
 
@@ -81,11 +79,14 @@ function getVideoCategories(result, onSuccess, onFailure)
 function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
 {
     var resultsPerPage = Settings.get(Settings.RESULTS_PER_PAGE);
-    var url =  g_youtube_data_v3_url + "videos" +
-               "?regionCode=" + g_region_code +
-               "&key=" + g_api_key +
-               "&part=snippet&maxResults=" + resultsPerPage +
-               "&chart=mostPopular&videoCategoryId=" + categoryId;
+    var qParams = {};
+
+    qParams["part"] = "snippet";
+    qParams["maxResults"] = resultsPerPage;
+    qParams["chart"] = "mostPopular";
+    qParams["videoCategoryId"] = categoryId;
+
+    var url = getYoutubeV3Url("videos", qParams);
 
     if (pageToken !== undefined) {
         url += "&pageToken=" + pageToken;
@@ -109,11 +110,8 @@ function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
 
 function getVideoDetails(videoId, onSuccess, onFailure)
 {
-    var url =  g_youtube_data_v3_url + "videos" +
-               "?regionCode=" + g_region_code +
-               "&key=" + g_api_key +
-               "&part=snippet,contentDetails" +
-               "&id=" + videoId;
+    var url = getYoutubeV3Url("videos", {"part" : "contentDetails, snippet",
+                              "id" : videoId});
 
     console.debug("XHR: " + url);
 
@@ -220,6 +218,8 @@ function getVideoUrl(videoId, onSuccess, onFailure)
                                 "&signature=" + stream_map_array[i].sig;
                     } else {
                         // Encrypted content not supported directly
+                        console.log("No support for playing videos with encrypted signatures from youtube directly\n" +
+                                    "Falling back yo ytapi.com");
                         selected_url = getVideoUrlYtAPI(videoId, 18);
                     }
 
