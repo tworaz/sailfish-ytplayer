@@ -77,51 +77,11 @@ Page {
             id: videoListModel
         }
 
-        delegate: BackgroundItem {
-            id: delegate
-            width: page.width
-            height: 94
-
-            Image {
-                id: thumbnail
-                width: 120
-                height: 90
-                anchors {
-                    verticalCenter: parent.verticalCenter
-                    left: parent.left
-                    leftMargin: Theme.paddingMedium
-                }
-                fillMode: Image.PreserveAspectFit
-                source: snippet.thumbnails.default.url
-
-                BusyIndicator {
-                    size: BusyIndicatorSize.Small
-                    anchors.centerIn: parent
-                    running: thumbnail.status == Image.Loading
-                }
-            }
-
-            Label {
-                color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
-                elide: Text.ElideRight
-                anchors {
-                    left: thumbnail.right
-                    right: parent.right
-                    leftMargin: Theme.paddingSmall
-                    rightMargin: Theme.paddingSmall
-                    verticalCenter: parent.verticalCenter
-                }
-                font {
-                    family: Theme.fontFamily
-                    pixelSize: Theme.fontSizeSmall
-                }
-                text: snippet.title
-            }
-
-            onClicked: {
-                console.debug("Clicked " + index + ", videoId: " + id)
-                pageStack.push(Qt.resolvedUrl("VideoOverview.qml"), {"videoId": id})
-            }
+        delegate: YoutubeListItem {
+            width: parent.width
+            title: snippet.title
+            thumbnailUrl: snippet.thumbnails.default.url
+            youtubeId: {"kind" : kind, "videoId" : id}
         }
 
         function onFailure(reason) {
