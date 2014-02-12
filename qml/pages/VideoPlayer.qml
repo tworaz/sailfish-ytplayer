@@ -182,7 +182,7 @@ Page {
                 id: playPauseButton
                 anchors.centerIn: parent
                 opacity: 0.0
-                visible: mediaPlayer.status != MediaPlayer.Stalled
+                visible: !indicator.running
                 source: mediaPlayer.playbackState === MediaPlayer.PlayingState ?
                             "image://theme/icon-cover-pause" : "image://theme/icon-cover-play"
 
