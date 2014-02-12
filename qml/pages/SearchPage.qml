@@ -105,7 +105,7 @@ Page {
             width: parent.width
             title: snippet.title
             thumbnailUrl: snippet.thumbnails.default.url
-            youtubeId: _youtubeId
+            youtubeId: id
         }
 
         function loadNextResultsPage() {
@@ -117,8 +117,6 @@ Page {
 
         function onSearchSuccessful(results) {
             for (var i = 0; i < results.items.length; i++) {
-                results.items[i]["_youtubeId"] = results.items[i].id
-                delete results.items[i].id
                 resultsListModel.append(results.items[i])
             }
             if (results.hasOwnProperty("nextPageToken")) {
