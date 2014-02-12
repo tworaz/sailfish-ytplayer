@@ -49,6 +49,11 @@ Page {
 
         PullDownMenu {
             MenuItem {
+                //: Menu option to show search page
+                text: qsTr("Search")
+                onClicked: pageStack.replace(Qt.resolvedUrl("SearchPage.qml"))
+            }
+            MenuItem {
                 //: Menu option to refresh content of the list
                 text: qsTr("Refresh")
                 onClicked: videoCategoryListView.refresh()

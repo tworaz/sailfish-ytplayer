@@ -34,6 +34,20 @@ var g_api_key = "AIzaSyAxXu3vOGsHqJ97PBD5QWH21solv4Flx1c"
 var g_region_code = "PL"
 var g_locale = "en_US"
 
+function getYoutubeV3Url(reference, queryParams) {
+    var url =  g_youtube_data_v3_url + reference +
+            "?regionCode=" + g_region_code +
+            "&key=" + g_api_key;
+
+    for (var key in queryParams) {
+        if (queryParams.hasOwnProperty(key)) {
+            url += "&" + key + "=" + queryParams[key];
+        }
+    }
+
+    return url;
+}
+
 function getVideoCategories(result, onSuccess, onFailure)
 {
     var url =  g_youtube_data_v3_url + "videoCategories" +
@@ -41,7 +55,7 @@ function getVideoCategories(result, onSuccess, onFailure)
                "&key=" + g_api_key +
                "&part=snippet&hl=" + g_locale;
 
-    console.debug(url);
+    console.debug("XHR: " + url);
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -77,7 +91,7 @@ function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
         url += "&pageToken=" + pageToken;
     }
 
-    console.debug(url);
+    console.debug("XHR: " + url);
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -101,7 +115,7 @@ function getVideoDetails(videoId, onSuccess, onFailure)
                "&part=snippet,contentDetails" +
                "&id=" + videoId;
 
-    console.debug(url);
+    console.debug("XHR: " + url);
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -118,10 +132,41 @@ function getVideoDetails(videoId, onSuccess, onFailure)
     xhr.send();
 }
 
+function getSearchResults(query, onSuccess, onFailure, pageToken)
+{
+    var qParams = {};
+    qParams["q"] = query;
+    qParams["part"] = "snippet";
+    qParams["maxResults"] = Settings.get(Settings.RESULTS_PER_PAGE);
+    if (pageToken) {
+        qParams["pageToken"] = pageToken;
+    }
+
+    var url = getYoutubeV3Url("search", qParams);
+
+    console.debug("XHR: " + url);
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status !== 200) {
+                onFailure("XHR status: " + xhr.status + ", response: " + xhr.responseText);
+                return;
+            }
+            var response = JSON.parse(xhr.responseText);
+            onSuccess(response);
+        }
+    }
+    xhr.open("GET", url);
+    xhr.send();
+}
+
 function getVideoUrl(videoId, onSuccess, onFailure)
 {
     var req = "http://www.youtube.com/get_video_info?video_id=" + videoId +
             "&el=player_embedded&gl=US&hl=en&eurl=https://youtube.googleapis.com/v/&asf=3&sts=1588";
+
+    console.debug("XHR: " + req);
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {

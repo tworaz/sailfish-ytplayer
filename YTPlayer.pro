@@ -23,7 +23,9 @@ OTHER_FILES += \
         qml/pages/VideoCategoryPage.qml \
         qml/pages/VideoListPage.qml \
         qml/pages/VideoOverview.qml \
-        qml/pages/VideoPlayer.qml
+        qml/pages/VideoPlayer.qml \
+        qml/pages/SearchPage.qml \
+        qml/pages/YoutubeListItem.qml
 
 localization.files = $$files(languages/*.qm)
 localization.path = /usr/share/$${TARGET}/languages
