@@ -35,6 +35,7 @@ import "YoutubeClientV3.js" as Yt
 Page {
     id: page
     property string videoId
+    readonly property string coverFile: "VideoOverviewCover.qml"
 
     BusyIndicator {
         id: indicator
@@ -71,8 +72,8 @@ Page {
                     left: parent.left
                     right: parent.right
                 }
-                height: width * 3 / 4
-                fillMode: Image.PreserveAspectFit
+                height: width * 9 / 16
+                fillMode: Image.PreserveAspectCrop
 
                 onStatusChanged: {
                     if (poster.status == Image.Ready) {
@@ -145,11 +146,18 @@ Page {
         }
 
         Component.onCompleted: {
-            console.debug("Video overview page created")
-            console.debug("Video ID: " + videoId)
+            console.debug("Video overview page created, video ID:" + videoId)
             Yt.getVideoDetails(videoId, onVideoDetailsLoaded, onFailure)
         }
 
         VerticalScrollDecorator {}
+    }
+
+    function getCoverThumbnailUrl() {
+        return poster.source;
+    }
+
+    function getTitle() {
+        return header.title
     }
 }

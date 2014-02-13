@@ -30,59 +30,31 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-BackgroundItem {
-    id: videoItem
-    height: thumbnail.height + 2 * Theme.paddingSmall
+Item {
+    Rectangle {
+        anchors.horizontalCenter: parent.horizontalCenter
+        y: (parent.width - width) / 2
+        width: 0.80 * parent.width
+        height: 0.75 * width
+        color: "#BBDE483C"
+        radius: 20
 
-    property variant youtubeId
-    property string title
-    property string thumbnailUrl
-
-    Image {
-        id: thumbnail
-        width: 120
-        height: width * 9 / 16
-        anchors {
-            verticalCenter: parent.verticalCenter
-            left: parent.left
-            leftMargin: Theme.paddingMedium
-        }
-        fillMode: Image.PreserveAspectCrop
-        source: videoItem.thumbnailUrl
-
-        BusyIndicator {
-            size: BusyIndicatorSize.Small
+        Image {
             anchors.centerIn: parent
-            running: thumbnail.status == Image.Loading
+            source: "image://theme/icon-cover-play"
         }
     }
 
-    Label {
-        color: videoItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-        //color: Theme.primaryColor
-        elide: Text.ElideRight
-        anchors {
-            left: thumbnail.right
-            right: parent.right
-            leftMargin: Theme.paddingSmall
-            rightMargin: Theme.paddingSmall
-            verticalCenter: parent.verticalCenter
-        }
-        font {
-            family: Theme.fontFamily
-            pixelSize: Theme.fontSizeSmall
-        }
-        text: videoItem.title
-    }
+    CoverActionList {
+        id: coverAction
 
-    onClicked: {
-        if (youtubeId.kind === "youtube#video") {
-            console.debug("Clicked item is a video, opening video overview page")
-            pageStack.push(Qt.resolvedUrl("VideoOverview.qml"), {"videoId": youtubeId.videoId})
-        } else if (youtubeId.kind === "youtube#channel") {
-            console.error("TODO: implement support for browsing channel videos!")
-        } else {
-            console.error("Unrecogized id kind: " + youtubeId.kind);
+        CoverAction {
+            iconSource: "image://theme/icon-cover-search"
+            onTriggered: {
+                pageStack.clear();
+                pageStack.push(Qt.resolvedUrl("../pages/SearchPage.qml"))
+                activate()
+            }
         }
     }
 }

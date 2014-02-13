@@ -29,12 +29,20 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "pages"
 
-ApplicationWindow
-{
-    initialPage: Component { VideoCategoryPage { } }
-    cover: Qt.resolvedUrl("cover/CoverLoader.qml")
+CoverBackground {
+    Loader {
+        anchors.fill: parent
+        source: {
+            if (!pageStack.busy && pageStack.currentPage &&
+                pageStack.currentPage.hasOwnProperty("coverFile")) {
+                console.debug("Custom page cover selected: " + pageStack.currentPage.coverFile)
+                return pageStack.currentPage.coverFile
+            } else {
+                return "GenericCover.qml"
+            }
+        }
+    }
 }
 
 

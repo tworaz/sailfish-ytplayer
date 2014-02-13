@@ -19,13 +19,15 @@ OTHER_FILES += \
         qml/pages/YoutubeClientV3.js \
         qml/pages/Settings.js \
         qml/YTPlayer.qml \
-        qml/cover/CoverPage.qml \
         qml/pages/VideoCategoryPage.qml \
         qml/pages/VideoListPage.qml \
         qml/pages/VideoOverview.qml \
         qml/pages/VideoPlayer.qml \
         qml/pages/SearchPage.qml \
-        qml/pages/YoutubeListItem.qml
+        qml/pages/YoutubeListItem.qml \
+        qml/cover/VideoOverviewCover.qml \
+        qml/cover/GenericCover.qml \
+        qml/cover/CoverLoader.qml
 
 localization.files = $$files(languages/*.qm)
 localization.path = /usr/share/$${TARGET}/languages

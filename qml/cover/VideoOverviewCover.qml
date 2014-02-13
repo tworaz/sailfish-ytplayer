@@ -30,59 +30,58 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-BackgroundItem {
-    id: videoItem
-    height: thumbnail.height + 2 * Theme.paddingSmall
+Item {
+    property Item overviewPage: pageStack.currentPage
 
-    property variant youtubeId
-    property string title
-    property string thumbnailUrl
+    Column {
+        anchors.bottom: actions.top
+        x: Theme.paddingMedium
+        y: Theme.paddingMedium
+        width: parent.width - 2 * Theme.paddingMedium
+        spacing: Theme.paddingMedium
 
-    Image {
-        id: thumbnail
-        width: 120
-        height: width * 9 / 16
-        anchors {
-            verticalCenter: parent.verticalCenter
-            left: parent.left
-            leftMargin: Theme.paddingMedium
+        Image {
+            id: thumbnail
+            width: parent.width
+            height: width * 9 / 16
+            fillMode: Image.PreserveAspectCrop
+            source: overviewPage.getCoverThumbnailUrl()
         }
-        fillMode: Image.PreserveAspectCrop
-        source: videoItem.thumbnailUrl
 
-        BusyIndicator {
-            size: BusyIndicatorSize.Small
-            anchors.centerIn: parent
-            running: thumbnail.status == Image.Loading
+        Label {
+            width: parent.width
+            color: Theme.primaryColor
+            font.family: Theme.fontFamilyHeading
+            font.pixelSize: Theme.fontSizeMedium
+            maximumLineCount: 3
+            wrapMode: Text.Wrap
+            elide: Text.ElideRight
+            horizontalAlignment: Text.AlignHCenter
+
+            text: overviewPage.getTitle()
         }
     }
 
-    Label {
-        color: videoItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-        //color: Theme.primaryColor
-        elide: Text.ElideRight
-        anchors {
-            left: thumbnail.right
-            right: parent.right
-            leftMargin: Theme.paddingSmall
-            rightMargin: Theme.paddingSmall
-            verticalCenter: parent.verticalCenter
-        }
-        font {
-            family: Theme.fontFamily
-            pixelSize: Theme.fontSizeSmall
-        }
-        text: videoItem.title
-    }
+    CoverActionList {
+        id: actions
 
-    onClicked: {
-        if (youtubeId.kind === "youtube#video") {
-            console.debug("Clicked item is a video, opening video overview page")
-            pageStack.push(Qt.resolvedUrl("VideoOverview.qml"), {"videoId": youtubeId.videoId})
-        } else if (youtubeId.kind === "youtube#channel") {
-            console.error("TODO: implement support for browsing channel videos!")
-        } else {
-            console.error("Unrecogized id kind: " + youtubeId.kind);
+        CoverAction {
+            iconSource: "image://theme/icon-cover-search"
+            onTriggered: {
+                pageStack.clear();
+                pageStack.push(Qt.resolvedUrl("../pages/SearchPage.qml"))
+                activate()
+            }
+        }
+
+        CoverAction {
+            iconSource: "image://theme/icon-cover-play"
+            onTriggered: {
+                onClicked: pageStack.push(Qt.resolvedUrl("../pages/VideoPlayer.qml"),
+                                          {"videoId" : overviewPage.videoId,
+                                           "title": overviewPage.getTitle()})
+                activate()
+            }
         }
     }
 }

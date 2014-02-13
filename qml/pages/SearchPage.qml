@@ -72,6 +72,7 @@ Page {
             onTextChanged: searchHandler.search(text)
         }
 
+
         Timer {
             id: searchHandler
             interval: 1000
