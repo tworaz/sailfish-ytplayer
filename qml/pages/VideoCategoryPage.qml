@@ -50,19 +50,22 @@ Page {
         PullDownMenu {
             MenuItem {
                 //: Menu option to show search page
-                text: qsTr("Search")
+                //% "Search"
+                text: qsTrId("ytplayer-action-search")
                 onClicked: pageStack.replace(Qt.resolvedUrl("SearchPage.qml"))
             }
             MenuItem {
                 //: Menu option to refresh content of the list
-                text: qsTr("Refresh")
+                //% "Refresh"
+                text: qsTrId("ytplayer-action-refresh")
                 onClicked: videoCategoryListView.refresh()
             }
         }
 
         header: PageHeader {
-            //: Page title
-            title: qsTr("Video Categories")
+            //: Video categories page title
+            //% "Video Categories"
+            title: qsTrId("ytplayer-title-video-categories")
         }
 
         model: ListModel {

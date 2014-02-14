@@ -52,7 +52,8 @@ Page {
         PullDownMenu {
             MenuItem {
                 //: Menu option to refresh content of the list
-                text: qsTr("Refresh")
+                //% "Refresh"
+                text: qsTrId("ytplayer-action-refresh")
                 onClicked: videoListView.refresh()
             }
         }
@@ -61,7 +62,8 @@ Page {
             visible: page.nextPageToken.length > 0;
             MenuItem {
                 //: Menu option load additional list elements
-                text: qsTr("Load More")
+                //% "Load More"
+                text: qsTrId("ytplayer-action-load-more")
                 onClicked: {
                     videoListView.loadNextResultsPage()
                     indicator.running = true;

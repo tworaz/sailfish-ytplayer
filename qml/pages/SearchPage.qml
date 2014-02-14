@@ -50,8 +50,9 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                //: Menu options to show YouTube video categories page
-                text: qsTr("Video Categories")
+                //: Video categories page title
+                //% "Video Categories"
+                text: qsTrId("ytplayer-title-video-categories")
                 onClicked: pageStack.replace(Qt.resolvedUrl("VideoCategoryPage.qml"))
             }
         }
@@ -60,15 +61,17 @@ Page {
             visible: page.nextPageToken.length > 0;
             MenuItem {
                 //: Menu option load additional list elements
-                text: qsTr("Load More")
+                //% "Load More"
+                text: qsTrId("ytplayer-action-load-more")
                 onClicked: searchView.loadNextResultsPage()
             }
         }
 
         header: SearchField {
             width: parent.width
-            //: Label text for video search field
-            placeholderText: qsTr("Search")
+            //: Label of video search text field
+            //% "Search"
+            text: qsTrId("ytplayer-label-search")
             onTextChanged: searchHandler.search(text)
         }
 

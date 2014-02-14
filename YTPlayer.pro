@@ -44,6 +44,5 @@ SOURCES += \
         qml/pages/VideoPlayer.qml
 
 TRANSLATIONS += \
-        languages/pl.ts \
         languages/en.ts
 }
