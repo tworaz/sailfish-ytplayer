@@ -39,9 +39,16 @@ int main(int argc, char *argv[])
 	QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
 	QScopedPointer<QQuickView> view(SailfishApp::createView());
 	QTranslator translator;
+	QString lang = QLocale::system().name();
+	QString dir = SailfishApp::pathTo(QString("languages")).toLocalFile();
 
-	translator.load(QLocale::system(),
-					SailfishApp::pathTo(QString("languages")).toLocalFile());
+	qDebug("System language : %s", qPrintable(lang));
+
+	bool ret = translator.load(lang, dir);
+	if (!ret) {
+		qDebug("No translation for current system language, falling back to en");
+		translator.load("en", dir);
+	}
 	app->installTranslator(&translator);
 
 	view->setSource(SailfishApp::pathTo("qml/YTPlayer.qml"));

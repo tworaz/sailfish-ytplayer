@@ -39,7 +39,7 @@ CoverBackground {
                 console.debug("Custom page cover selected: " + pageStack.currentPage.coverFile)
                 return pageStack.currentPage.coverFile
             } else {
-                return "GenericCover.qml"
+                return "Default.qml"
             }
         }
     }

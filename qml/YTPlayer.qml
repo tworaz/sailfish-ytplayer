@@ -33,8 +33,8 @@ import "pages"
 
 ApplicationWindow
 {
-    initialPage: Component { VideoCategoryPage { } }
-    cover: Qt.resolvedUrl("cover/CoverLoader.qml")
+    initialPage: Component { VideoCategories { } }
+    cover: Qt.resolvedUrl("cover/Loader.qml")
 }
 
 

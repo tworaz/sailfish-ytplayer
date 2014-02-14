@@ -52,7 +52,7 @@ Page {
                 //: Menu option to show search page
                 //% "Search"
                 text: qsTrId("ytplayer-action-search")
-                onClicked: pageStack.replace(Qt.resolvedUrl("SearchPage.qml"))
+                onClicked: pageStack.replace(Qt.resolvedUrl("Search.qml"))
             }
             MenuItem {
                 //: Menu option to refresh content of the list

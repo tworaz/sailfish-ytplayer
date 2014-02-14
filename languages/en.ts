@@ -4,25 +4,37 @@
 <context>
     <name></name>
     <message id="ytplayer-title-video-categories">
-        <location filename="../qml/pages/VideoCategoryPage.qml" line="68"/>
+        <location filename="../qml/pages/Search.qml" line="55"/>
+        <location filename="../qml/pages/VideoCategories.qml" line="68"/>
         <source>Video Categories</source>
-        <extracomment>Video categories page title</extracomment>
+        <extracomment>Video categories page title
+----------
+Video categories page title</extracomment>
         <translation>Video Categories</translation>
     </message>
     <message id="ytplayer-action-load-more">
+        <location filename="../qml/pages/Search.qml" line="65"/>
         <location filename="../qml/pages/VideoListPage.qml" line="66"/>
         <source>Load More</source>
-        <extracomment>Menu option load additional list elements</extracomment>
+        <extracomment>Menu option load additional list elements
+----------
+Menu option load additional list elements</extracomment>
         <translation>Load More</translation>
     </message>
+    <message id="ytplayer-label-search">
+        <location filename="../qml/pages/Search.qml" line="74"/>
+        <source>Search</source>
+        <extracomment>Label of video search text field</extracomment>
+        <translation>Search</translation>
+    </message>
     <message id="ytplayer-action-search">
-        <location filename="../qml/pages/VideoCategoryPage.qml" line="54"/>
+        <location filename="../qml/pages/VideoCategories.qml" line="54"/>
         <source>Search</source>
         <extracomment>Menu option to show search page</extracomment>
         <translation>Search</translation>
     </message>
     <message id="ytplayer-action-refresh">
-        <location filename="../qml/pages/VideoCategoryPage.qml" line="60"/>
+        <location filename="../qml/pages/VideoCategories.qml" line="60"/>
         <location filename="../qml/pages/VideoListPage.qml" line="56"/>
         <source>Refresh</source>
         <extracomment>Menu option to refresh content of the list

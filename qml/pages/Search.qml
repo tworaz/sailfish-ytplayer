@@ -53,7 +53,7 @@ Page {
                 //: Video categories page title
                 //% "Video Categories"
                 text: qsTrId("ytplayer-title-video-categories")
-                onClicked: pageStack.replace(Qt.resolvedUrl("VideoCategoryPage.qml"))
+                onClicked: pageStack.replace(Qt.resolvedUrl("VideoCategories.qml"))
             }
         }
 

@@ -35,7 +35,7 @@ import "YoutubeClientV3.js" as Yt
 Page {
     id: page
     property string videoId
-    readonly property string coverFile: "VideoOverviewCover.qml"
+    readonly property string coverFile: "VideoOverview.qml"
 
     BusyIndicator {
         id: indicator

@@ -69,7 +69,7 @@ Item {
             iconSource: "image://theme/icon-cover-search"
             onTriggered: {
                 pageStack.clear();
-                pageStack.push(Qt.resolvedUrl("../pages/SearchPage.qml"))
+                pageStack.push(Qt.resolvedUrl("../pages/Search.qml"))
                 activate()
             }
         }
