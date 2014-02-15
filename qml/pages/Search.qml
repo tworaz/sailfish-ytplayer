@@ -71,7 +71,7 @@ Page {
             width: parent.width
             //: Label of video search text field
             //% "Search"
-            text: qsTrId("ytplayer-label-search")
+            placeholderText: qsTrId("ytplayer-label-search")
             onTextChanged: searchHandler.search(text)
         }
 
