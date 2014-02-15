@@ -269,8 +269,9 @@ Page {
         }
     }
 
-    function onFailure(msg) {
-        console.error(msg);
+    function onFailure(error) {
+        networkErrorNotification.show(error);
+        indicator.running = false;
     }
 
     function onVideoUrlObtained(url) {
@@ -279,8 +280,7 @@ Page {
     }
 
     Component.onCompleted: {
-        console.debug("Video player page created")
-        console.debug("Video ID: " + videoId)
+        console.debug("Video player page created, video ID: " + videoId)
         Yt.getVideoUrl(videoId, onVideoUrlObtained, onFailure)
     }
 }

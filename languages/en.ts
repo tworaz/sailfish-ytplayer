@@ -42,5 +42,29 @@ Menu option load additional list elements</extracomment>
 Menu option to refresh content of the list</extracomment>
         <translation>Refresh</translation>
     </message>
+    <message id="ytplayer-error-summary">
+        <location filename="../qml/YTPlayer.qml" line="50"/>
+        <source>Internal application error</source>
+        <extracomment>Internal application error notification summary</extracomment>
+        <translation>Internal application error</translation>
+    </message>
+    <message id="ytplayer-http-error-summary">
+        <location filename="../qml/YTPlayer.qml" line="54"/>
+        <source>HTTP error</source>
+        <extracomment>HTTP error notification summary</extracomment>
+        <translation>HTTP error</translation>
+    </message>
+    <message id="ytplayer-unknown-error-summary">
+        <location filename="../qml/YTPlayer.qml" line="58"/>
+        <source>Unknown network error</source>
+        <extracomment>Unknown HTTP error notification summary</extracomment>
+        <translation>Unknown network error</translation>
+    </message>
+    <message id="ytplayer-http-error-body">
+        <location filename="../qml/YTPlayer.qml" line="66"/>
+        <source>The server has returned %1</source>
+        <extracomment>Http client error notification body</extracomment>
+        <translation>The server as returned %1</translation>
+    </message>
 </context>
 </TS>

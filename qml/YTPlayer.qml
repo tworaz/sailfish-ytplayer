@@ -29,12 +29,46 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import org.nemomobile.notifications 1.0
 import "pages"
 
 ApplicationWindow
 {
     initialPage: Component { VideoCategories { } }
     cover: Qt.resolvedUrl("cover/Loader.qml")
+
+    Notification {
+        id: networkErrorNotification
+
+        function show(error) {
+            console.error("HTTP error code: " + error.code)
+            console.error("HTTP error details: " + JSON.stringify(error.details, undefined, 2))
+
+            if (error.code === 0) {
+                //: Internal application error notification summary
+                //% "Internal application error"
+                previewSummary = qsTrId('ytplayer-error-summary')
+            } else if (error.code >= 400 && error.code < 600) {
+                //: HTTP error notification summary
+                //% "HTTP error"
+                previewSummary = qsTrId('ytplayer-http-error-summary')
+            } else {
+                //: Unknown HTTP error notification summary
+                //% "Unknown network error"
+                previewSummary = qsTrId('ytplayer-unknown-error-summary')
+            }
+
+            if (error.details.hasOwnProperty("error")) {
+                previewBody = error.details.error.message
+            } else {
+                //: Http client error notification body
+                //% "The server has returned %1"
+                previewBody = qsTrId('ytplayer-http-error-body').arg(error.code)
+            }
+
+            publish();
+        }
+    }
 }
 
 

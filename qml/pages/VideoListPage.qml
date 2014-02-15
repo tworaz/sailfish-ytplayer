@@ -86,8 +86,8 @@ Page {
             youtubeId: {"kind" : kind, "videoId" : id}
         }
 
-        function onFailure(reason) {
-            console.error("onFailure:" + reason);
+        function onFailure(error) {
+            networkErrorNotification.show(error);
             indicator.running = false
         }
 

@@ -98,8 +98,8 @@ Page {
             indicator.running = false
         }
 
-        function onFailure(reason) {
-            console.log("onFailure:" + reason);
+        function onFailure(error) {
+            networkErrorNotification.show(error);
             indicator.running = false
         }
 

@@ -32,14 +32,18 @@
 var g_youtube_data_v3_url = "https://www.googleapis.com/youtube/v3/";
 var g_api_key = "AIzaSyAxXu3vOGsHqJ97PBD5QWH21solv4Flx1c"
 var g_region_code = "PL"
-var g_locale = "en_US"
 
 function getYoutubeV3Url(reference, queryParams)
 {
+    var locale = Qt.locale().name;
+    if (locale === "C") {
+        locale = "en_US";
+    }
+
     var url =  g_youtube_data_v3_url + reference +
             "?regionCode=" + g_region_code +
             "&key=" + g_api_key +
-            "&hl=" + g_locale;
+            "&hl=" + locale;
 
     for (var key in queryParams) {
         if (queryParams.hasOwnProperty(key)) {
@@ -68,7 +72,7 @@ function getVideoCategories(result, onSuccess, onFailure)
                 }
                 onSuccess();
             } else {
-                onFailure("XHR status: " + xhr.status + ", response:" + xhr.responseText);
+                onFailure({"code" : xhr.status, "details" : JSON.parse(xhr.responseText)});
             }
         }
     }
@@ -100,7 +104,7 @@ function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
             if (xhr.status == 200) {
                 onSuccess(JSON.parse(xhr.responseText));
             } else {
-                onFailure("XHR status: " + xhr.status + ", response:" + xhr.responseText);
+                onFailure({"code" : xhr.status, "details" : JSON.parse(xhr.responseText)});
             }
         }
     }
@@ -119,7 +123,7 @@ function getVideoDetails(videoId, onSuccess, onFailure)
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status !== 200) {
-                onFailure("XHR status: " + xhr.status + ", response: " + xhr.responseText);
+                onFailure({"code" : xhr.status, "details" : JSON.parse(xhr.responseText)});
                 return;
             }
             var details = JSON.parse(xhr.responseText);
@@ -148,7 +152,7 @@ function getSearchResults(query, onSuccess, onFailure, pageToken)
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             if (xhr.status !== 200) {
-                onFailure("XHR status: " + xhr.status + ", response: " + xhr.responseText);
+                onFailure({"code" : xhr.status, "details" : JSON.parse(xhr.responseText)});
                 return;
             }
             var response = JSON.parse(xhr.responseText);
@@ -170,7 +174,7 @@ function getVideoUrl(videoId, onSuccess, onFailure)
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status !== 200) {
-                onFailure("XHR status: " + xhr.status + ", response: " + xhr.responseText);
+                onFailure({"code" : xhr.status, "details" : JSON.parse(xhr.responseText)});
                 return;
             }
             var stream_map_str = undefined;
@@ -184,7 +188,7 @@ function getVideoUrl(videoId, onSuccess, onFailure)
             }
 
             if (stream_map_str === undefined) {
-                onFailure("No valid video streams found!");
+                onFailure({"code" : 0, "details" : "No video streams found!"});
                 return;
             }
 
@@ -228,7 +232,8 @@ function getVideoUrl(videoId, onSuccess, onFailure)
             }
 
             if (selected_url === undefined) {
-                onFailure("No 360p video found!");
+                onFailure({"code" : 0, "details" : "No 360p video stream found!"});
+                return;
             }
 
             onSuccess(selected_url);

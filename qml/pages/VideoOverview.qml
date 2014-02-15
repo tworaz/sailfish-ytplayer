@@ -140,8 +140,8 @@ Page {
             indicator.running = false
         }
 
-        function onFailure(msg) {
-            console.error("Video overview failure: " + msg)
+        function onFailure(error) {
+            networkErrorNotification.show(error);
             indicator.running = false
         }
 
