@@ -57,21 +57,5 @@ localization.path = /usr/share/$${TARGET}/languages
 
 INSTALLS += localization mcc
 
-lupdate_only {
-SOURCES += \
-        qml/pages/YoutubeClientV3.js \
-        qml/pages/Settings.js \
-        qml/YTPlayer.qml \
-        qml/cover/Loader.qml \
-        qml/cover/Default.qml \
-        qml/cover/VideoOverview.qml \
-        qml/pages/VideoListPage.qml \
-        qml/pages/VideoOverview.qml \
-        qml/pages/VideoPlayer.qml \
-        qml/pages/YoutubeListItem.qml \
-        qml/pages/Search.qml \
-        qml/pages/VideoCategories.qml
-
 TRANSLATIONS += \
         languages/en.ts
-}

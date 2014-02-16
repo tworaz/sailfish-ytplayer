@@ -3,12 +3,12 @@ Summary: Native YouTube client for SailfishOS
 Version: 0.1
 Release: 1
 Group: Qt/Qt
-URL: http://example.org/
-License: LICENSE
+URL: https://github.com/tworaz/sailfish-ytplayer
+License: BSD-3-Clause
 Sources:
 - '%{name}-%{version}.tar.bz2'
 Description: |
-  Short description of my SailfishOS Application
+  YTPlayer is an unofficial YouTube client for SailfishOS
 Configure: none
 Builder: qtc5
 PkgConfigBR:
@@ -20,13 +20,8 @@ Requires:
 - sailfishsilica-qt5 >= 0.10.9
 Files:
 -
-- /usr/share/icons/hicolor/86x86/apps
-- /usr/share/applications
-- /usr/share/YTPlayer
-- /usr/bin
 - '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
 - '%{_datadir}/applications/%{name}.desktop'
-- '%{_datadir}/%{name}/qml'
-- '%{_datadir}/%{name}/languages'
+- '%{_datadir}/%{name}'
 - '%{_bindir}'
 -
