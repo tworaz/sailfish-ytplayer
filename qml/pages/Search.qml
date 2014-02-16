@@ -61,8 +61,8 @@ Page {
             visible: page.nextPageToken.length > 0;
             MenuItem {
                 //: Menu option load additional list elements
-                //% "Load More"
-                text: qsTrId("ytplayer-action-load-more")
+                //% "Show more"
+                text: qsTrId("ytplayer-action-show-more")
                 onClicked: searchView.loadNextResultsPage()
             }
         }

@@ -61,9 +61,9 @@ Page {
         PushUpMenu {
             visible: page.nextPageToken.length > 0;
             MenuItem {
-                //: Menu option load additional list elements
-                //% "Load More"
-                text: qsTrId("ytplayer-action-load-more")
+                //: Menu option show/load additional list elements
+                //% "Show more"
+                text: qsTrId("ytplayer-action-show-more")
                 onClicked: {
                     videoListView.loadNextResultsPage()
                     indicator.running = true;
