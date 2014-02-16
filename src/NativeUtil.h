@@ -27,37 +27,22 @@
  * SUCH DAMAGE.
  */
 
-#ifdef QT_QML_DEBUG
-#include <QtQuick>
-#endif
+#ifndef NATIVEUTIL_H
+#define NATIVEUTIL_H
 
-#include <sailfishapp.h>
+#include <QObject>
+#include <QJsonObject>
 
-#include "NativeUtil.h"
-
-
-int main(int argc, char *argv[])
+class NativeUtil : public QObject
 {
-	QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
-	QScopedPointer<QQuickView> view(SailfishApp::createView());
-	QScopedPointer<NativeUtil> nativeUtil(new NativeUtil(app.data()));
-	QTranslator translator;
-	QString lang = QLocale::system().name();
-	QString dir = SailfishApp::pathTo(QString("languages")).toLocalFile();
+	Q_OBJECT
 
-	qDebug("System language : %s", qPrintable(lang));
+	Q_PROPERTY(QJsonObject mcc READ getMcc)
 
-	bool ret = translator.load(lang, dir);
-	if (!ret) {
-		qDebug("No translation for current system language, falling back to en");
-		translator.load("en", dir);
-	}
-	app->installTranslator(&translator);
+public:
+	explicit NativeUtil(QObject *parent = 0);
 
-	view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
-	view->setSource(SailfishApp::pathTo("qml/YTPlayer.qml"));
-	view->showFullScreen();
+	QJsonObject getMcc() const;
+};
 
-	return app->exec();
-}
-
+#endif // NATIVEUTIL_H

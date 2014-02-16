@@ -30,12 +30,40 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import org.nemomobile.notifications 1.0
+import MeeGo.QOfono 0.2
+import "pages/YoutubeClientV3.js" as Yt
 import "pages"
 
 ApplicationWindow
 {
+    property string regionCode: "US"
+
     initialPage: Component { VideoCategories { } }
     cover: Qt.resolvedUrl("cover/Loader.qml")
+
+    OfonoManager {
+        id: ofonoManager
+    }
+
+    OfonoSimManager {
+        id: simManager
+        modemPath: {
+            if (ofonoManager.modems.length > 0) {
+                return ofonoManager.modems[0]
+            } else {
+                console.error("Could not determine modem path!")
+                return ""
+            }
+        }
+
+        onMobileCountryCodeChanged: {
+            var mcc = NativeUtil.mcc;
+            if (mcc.hasOwnProperty(mobileCountryCode)) {
+                console.debug("Region code changed to: " + mcc[mobileCountryCode])
+                regionCode = mcc[mobileCountryCode];
+            }
+        }
+    }
 
     Notification {
         id: networkErrorNotification

@@ -10,12 +10,18 @@ TARGET = YTPlayer
 
 CONFIG += sailfishapp
 
-SOURCES += src/YTPlayer.cpp
+SOURCES += \
+        src/YTPlayer.cpp \
+        src/NativeUtil.cpp
+
+HEADERS += \
+        src/NativeUtil.h
 
 OTHER_FILES += \
         rpm/YTPlayer.spec \
         rpm/YTPlayer.yaml \
         YTPlayer.desktop \
+        generate-mcc-json.py \
         qml/pages/YoutubeClientV3.js \
         qml/pages/Settings.js \
         qml/YTPlayer.qml \
@@ -29,13 +35,26 @@ OTHER_FILES += \
         qml/pages/Search.qml \
         qml/pages/VideoCategories.qml
 
+mcc_data.output = mcc.json
+mcc_data.variable_out = OTHER_FILES
+mcc_data.commands = \
+        $$top_srcdir/generate-mcc-json.py \
+                -i mcc.txt -o mcc.json
+
+QMAKE_EXTRA_COMPILERS += mcc_data
+
+mcc.files = mcc.json
+mcc.path = /usr/share/$${TARGET}
+
 localization.files = $$files(languages/*.qm)
 localization.path = /usr/share/$${TARGET}/languages
 
-INSTALLS += localization
+INSTALLS += localization mcc
 
 lupdate_only {
 SOURCES += \
+        qml/pages/YoutubeClientV3.js \
+        qml/pages/Settings.js \
         qml/YTPlayer.qml \
         qml/cover/Loader.qml \
         qml/cover/Default.qml \

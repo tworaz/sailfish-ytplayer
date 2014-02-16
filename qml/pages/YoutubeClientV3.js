@@ -29,9 +29,8 @@
 
 .import "Settings.js" as Settings
 
-var g_youtube_data_v3_url = "https://www.googleapis.com/youtube/v3/";
-var g_api_key = "AIzaSyAxXu3vOGsHqJ97PBD5QWH21solv4Flx1c"
-var g_region_code = "PL"
+var _youtube_data_v3_url = "https://www.googleapis.com/youtube/v3/";
+var _api_key = "AIzaSyAxXu3vOGsHqJ97PBD5QWH21solv4Flx1c";
 
 function getYoutubeV3Url(reference, queryParams)
 {
@@ -40,9 +39,9 @@ function getYoutubeV3Url(reference, queryParams)
         locale = "en_US";
     }
 
-    var url =  g_youtube_data_v3_url + reference +
-            "?regionCode=" + g_region_code +
-            "&key=" + g_api_key +
+    var url =  _youtube_data_v3_url + reference +
+            "?regionCode=" + regionCode +
+            "&key=" + _api_key +
             "&hl=" + locale;
 
     for (var key in queryParams) {

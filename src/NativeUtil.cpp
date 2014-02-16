@@ -27,37 +27,36 @@
  * SUCH DAMAGE.
  */
 
-#ifdef QT_QML_DEBUG
-#include <QtQuick>
-#endif
-
+#include <QFile>
+#include <QJsonDocument>
 #include <sailfishapp.h>
 
 #include "NativeUtil.h"
 
-
-int main(int argc, char *argv[])
+NativeUtil::NativeUtil(QObject *parent) :
+    QObject(parent)
 {
-	QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
-	QScopedPointer<QQuickView> view(SailfishApp::createView());
-	QScopedPointer<NativeUtil> nativeUtil(new NativeUtil(app.data()));
-	QTranslator translator;
-	QString lang = QLocale::system().name();
-	QString dir = SailfishApp::pathTo(QString("languages")).toLocalFile();
-
-	qDebug("System language : %s", qPrintable(lang));
-
-	bool ret = translator.load(lang, dir);
-	if (!ret) {
-		qDebug("No translation for current system language, falling back to en");
-		translator.load("en", dir);
-	}
-	app->installTranslator(&translator);
-
-	view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
-	view->setSource(SailfishApp::pathTo("qml/YTPlayer.qml"));
-	view->showFullScreen();
-
-	return app->exec();
 }
 
+QJsonObject
+NativeUtil::getMcc() const
+{
+	QString mccPath = SailfishApp::pathTo(QString("mcc.json")).toLocalFile();
+	QFile mccFile(mccPath);
+
+	if (!mccFile.open(QIODevice::ReadOnly)) {
+		qDebug("Mobile Country Code file not found, please check your installation");
+		return QJsonObject();
+	}
+
+	QByteArray mccData = mccFile.readAll();
+	mccFile.close();
+
+	QJsonDocument doc = QJsonDocument::fromJson(mccData);
+	if (doc.isObject()) {
+		return doc.object();
+	} else {
+		qDebug("Invalid Mobile Country Code dictionary, please check your installation!");
+		return QJsonObject();
+	}
+}
