@@ -39,7 +39,7 @@ ApplicationWindow
     property string regionCode: "US"
 
     initialPage: Component { VideoCategories { } }
-    cover: Qt.resolvedUrl("cover/Loader.qml")
+    cover: Qt.resolvedUrl("cover/Default.qml")
 
     OfonoManager {
         id: ofonoManager
@@ -62,6 +62,19 @@ ApplicationWindow
                 console.debug("Region code changed to: " + mcc[mobileCountryCode])
                 regionCode = mcc[mobileCountryCode];
             }
+        }
+    }
+
+    pageStack.onBusyChanged: {
+        var coverUrl = undefined
+        if (pageStack.currentPage.hasOwnProperty("coverFile")) {
+            coverUrl = Qt.resolvedUrl("cover/" + pageStack.currentPage.coverFile)
+        } else {
+            coverUrl = Qt.resolvedUrl("cover/Default.qml")
+        }
+        if (coverUrl !== cover) {
+            console.debug("Changing cover page to: " + coverUrl)
+            cover = coverUrl
         }
     }
 

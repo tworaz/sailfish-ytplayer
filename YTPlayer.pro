@@ -25,7 +25,6 @@ OTHER_FILES += \
         qml/pages/YoutubeClientV3.js \
         qml/pages/Settings.js \
         qml/YTPlayer.qml \
-        qml/cover/Loader.qml \
         qml/cover/Default.qml \
         qml/cover/VideoOverview.qml \
         qml/pages/VideoListPage.qml \
@@ -35,6 +34,8 @@ OTHER_FILES += \
         qml/pages/Search.qml \
         qml/pages/VideoCategories.qml
 
+MCC_DATA = mcc.txt
+mcc_data.input = MCC_DATA
 mcc_data.output = mcc.json
 mcc_data.variable_out = OTHER_FILES
 mcc_data.commands = \

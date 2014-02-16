@@ -36,6 +36,8 @@ Page {
     id: page
     property string videoId
     readonly property string coverFile: "VideoOverview.qml"
+    readonly property alias title: header.title
+    readonly property alias thumbnailUrl: poster.source
 
     BusyIndicator {
         id: indicator
@@ -48,13 +50,6 @@ Page {
         id: flickable
         anchors.fill: parent
         contentHeight: wrapper.height
-
-        //PullDownMenu {
-        //    MenuItem {
-        //        text: "Refresh"
-        //        /*onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))*/
-        //    }
-        //}
 
         Column {
             id: wrapper
@@ -151,13 +146,5 @@ Page {
         }
 
         VerticalScrollDecorator {}
-    }
-
-    function getCoverThumbnailUrl() {
-        return poster.source;
-    }
-
-    function getTitle() {
-        return header.title
     }
 }

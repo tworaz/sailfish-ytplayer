@@ -30,8 +30,16 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-Item {
-    property Item overviewPage: pageStack.currentPage
+CoverBackground {
+    property Item parentPage: pageStack.currentPage
+    property variant thumbnailUrl: parentPage.thumbnailUrl
+
+    // Filter out empty urls sent during VideoOverview page load
+    onThumbnailUrlChanged: {
+        if (thumbnailUrl) {
+            thumbnail.source = thumbnailUrl
+        }
+    }
 
     Column {
         anchors.bottom: actions.top
@@ -45,10 +53,10 @@ Item {
             width: parent.width
             height: width * 9 / 16
             fillMode: Image.PreserveAspectCrop
-            source: overviewPage.getCoverThumbnailUrl()
         }
 
         Label {
+            id: title
             width: parent.width
             color: Theme.primaryColor
             font.family: Theme.fontFamilyHeading
@@ -57,8 +65,7 @@ Item {
             wrapMode: Text.Wrap
             elide: Text.ElideRight
             horizontalAlignment: Text.AlignHCenter
-
-            text: overviewPage.getTitle()
+            text: parentPage.title
         }
     }
 
@@ -78,8 +85,8 @@ Item {
             iconSource: "image://theme/icon-cover-play"
             onTriggered: {
                 onClicked: pageStack.push(Qt.resolvedUrl("../pages/VideoPlayer.qml"),
-                                          {"videoId" : overviewPage.videoId,
-                                           "title": overviewPage.getTitle()})
+                                          {"videoId" : parentPage.videoId,
+                                           "title": parentPage.title})
                 activate()
             }
         }
