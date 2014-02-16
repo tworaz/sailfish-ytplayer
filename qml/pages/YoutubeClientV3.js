@@ -30,7 +30,6 @@
 .import "Settings.js" as Settings
 
 var _youtube_data_v3_url = "https://www.googleapis.com/youtube/v3/";
-var _api_key = "AIzaSyAxXu3vOGsHqJ97PBD5QWH21solv4Flx1c";
 
 function getYoutubeV3Url(reference, queryParams)
 {
@@ -41,7 +40,7 @@ function getYoutubeV3Url(reference, queryParams)
 
     var url =  _youtube_data_v3_url + reference +
             "?regionCode=" + regionCode +
-            "&key=" + _api_key +
+            "&key=" + NativeUtil.YouTubeDataKey +
             "&hl=" + locale;
 
     for (var key in queryParams) {

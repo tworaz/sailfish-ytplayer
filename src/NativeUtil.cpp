@@ -60,3 +60,13 @@ NativeUtil::getMcc() const
 		return QJsonObject();
 	}
 }
+
+QString
+NativeUtil::getYouTubeDataKey() const
+{
+#ifndef YOUTUBE_DATA_API_V3_KEY
+#error "Please define YOUTUBE_DATA_API_V3_KEY"
+#else
+	return QString(YOUTUBE_DATA_API_V3_KEY);
+#endif
+}

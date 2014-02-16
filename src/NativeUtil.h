@@ -38,11 +38,13 @@ class NativeUtil : public QObject
 	Q_OBJECT
 
 	Q_PROPERTY(QJsonObject mcc READ getMcc)
+	Q_PROPERTY(QString YouTubeDataKey READ getYouTubeDataKey)
 
 public:
 	explicit NativeUtil(QObject *parent = 0);
 
 	QJsonObject getMcc() const;
+	QString getYouTubeDataKey() const;
 };
 
 #endif // NATIVEUTIL_H

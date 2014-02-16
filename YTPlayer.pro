@@ -44,6 +44,11 @@ mcc_data.commands = \
 
 QMAKE_EXTRA_COMPILERS += mcc_data
 
+exists($${top_srcdir}/youtube-data-api-v3.key) {
+        message("Using contents of yotube-data-api-v3.key")
+        DEFINES += YOUTUBE_DATA_API_V3_KEY=\\\"$$cat(youtube-data-api-v3.key)\\\"
+}
+
 mcc.files = mcc.json
 mcc.path = /usr/share/$${TARGET}
 
