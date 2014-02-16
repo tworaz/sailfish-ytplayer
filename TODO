@@ -1,0 +1,14 @@
+- Youtube channel browser
+- Youtube playlist browser
+- Settings page
+- User authentication
+- User channels and playlist browser
+- Improve video overview page
+- Implement support for choosing video quality
+- Add support for youtube remote
+- Implement custom cover page for VideoPlayer.qml
+- Add some sort of seek indicator to progress bar in VideoPlayer.qml
+- Investigate and improve video playback when player is minimized mode
+  * Allow user to choose if the video should keep playing even when the player is hidden
+  * Prevent screen from turning off when video is playing, but allow the user to override this bahviour
+  * Don't hide video controls when playback is paused??
