@@ -96,7 +96,7 @@ Page {
 
             onClicked: {
                 console.debug("Selected video category id:" + id)
-                pageStack.push(Qt.resolvedUrl("VideoListPage.qml"),
+                pageStack.push(Qt.resolvedUrl("VideoList.qml"),
                                {"videoCategoryId": id, "title" : snippet.title})
             }
         }

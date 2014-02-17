@@ -27,7 +27,7 @@ OTHER_FILES += \
         qml/YTPlayer.qml \
         qml/cover/Default.qml \
         qml/cover/VideoOverview.qml \
-        qml/pages/VideoListPage.qml \
+        qml/pages/VideoList.qml \
         qml/pages/VideoOverview.qml \
         qml/pages/VideoPlayer.qml \
         qml/pages/YoutubeListItem.qml \
@@ -70,8 +70,8 @@ SOURCES += \
         qml/YTPlayer.qml \
         qml/cover/Default.qml \
         qml/cover/VideoOverview.qml \
-        qml/pages/VideoListPage.qml \
         qml/pages/VideoOverview.qml \
+        qml/pages/VideoList.qml \
         qml/pages/VideoPlayer.qml \
         qml/pages/YoutubeListItem.qml \
         qml/pages/Search.qml \
