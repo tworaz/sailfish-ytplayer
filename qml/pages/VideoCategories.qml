@@ -49,16 +49,23 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                //: Menu option to show search page
-                //% "Search"
-                text: qsTrId("ytplayer-action-search")
-                onClicked: pageStack.replace(Qt.resolvedUrl("Search.qml"))
-            }
-            MenuItem {
                 //: Menu option to refresh content of the list
                 //% "Refresh"
                 text: qsTrId("ytplayer-action-refresh")
                 onClicked: videoCategoryListView.refresh()
+            }
+            MenuItem {
+                //: Menu option to show settings page
+                //% "Settings"
+                text: qsTrId("ytplayer-action-settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
+            }
+
+            MenuItem {
+                //: Menu option to show search page
+                //% "Search"
+                text: qsTrId("ytplayer-action-search")
+                onClicked: pageStack.replace(Qt.resolvedUrl("Search.qml"))
             }
         }
 

@@ -60,7 +60,6 @@ Page {
                 id: header
             }
 
-
             Image {
                 id: poster
                 anchors {

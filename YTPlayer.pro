@@ -32,7 +32,10 @@ OTHER_FILES += \
         qml/pages/VideoPlayer.qml \
         qml/pages/YoutubeListItem.qml \
         qml/pages/Search.qml \
-        qml/pages/VideoCategories.qml
+        qml/pages/VideoCategories.qml \
+        qml/pages/Settings.qml \
+        qml/pages/About.qml \
+        qml/pages/DisplaySettings.qml
 
 MCC_DATA = mcc.txt
 mcc_data.input = MCC_DATA
@@ -59,3 +62,21 @@ INSTALLS += localization mcc
 
 TRANSLATIONS += \
         languages/en.ts
+
+lupdate_only {
+SOURCES += \
+        qml/pages/YoutubeClientV3.js \
+        qml/pages/Settings.js \
+        qml/YTPlayer.qml \
+        qml/cover/Default.qml \
+        qml/cover/VideoOverview.qml \
+        qml/pages/VideoListPage.qml \
+        qml/pages/VideoOverview.qml \
+        qml/pages/VideoPlayer.qml \
+        qml/pages/YoutubeListItem.qml \
+        qml/pages/Search.qml \
+        qml/pages/VideoCategories.qml \
+        qml/pages/Settings.qml \
+        qml/pages/About.qml \
+        qml/pages/DisplaySettings.qml
+}
