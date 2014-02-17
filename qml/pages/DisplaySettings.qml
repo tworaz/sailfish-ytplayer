@@ -51,7 +51,7 @@ Page {
             valueText: value
             //: Label of results per page slider in display settings menu
             //% "Results per page"
-            label: "ytplayer-label-results-per-page"
+            label: qsTrId("ytplayer-label-results-per-page")
             onValueChanged: S.set(S.RESULTS_PER_PAGE, value)
         }
     }

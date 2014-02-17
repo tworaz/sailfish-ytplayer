@@ -82,7 +82,7 @@ Menu option to refresh content of the list</extracomment>
     <message id="ytplayer-label-region-code">
         <source>Region code: %1</source>
         <extracomment>Region code field value</extracomment>
-        <translation>RegionCode: %1</translation>
+        <translation>Region Code: %1</translation>
     </message>
     <message id="ytplayer-title-display">
         <source>Display</source>
@@ -90,6 +90,11 @@ Menu option to refresh content of the list</extracomment>
 ----------
 Title of display settings page</extracomment>
         <translation>Display</translation>
+    </message>
+    <message id="ytplayer-label-results-per-page">
+        <source>Results per page</source>
+        <extracomment>Label of results per page slider in display settings menu</extracomment>
+        <translation>Results per page</translation>
     </message>
 </context>
 </TS>
