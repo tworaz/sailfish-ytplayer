@@ -94,12 +94,10 @@ Page {
             }
 
             onPlaybackStateChanged: {
-                console.debug("Media Player state changed to: " +
-                              mediaPlayerStateToString(playbackState))
-                switch (playbackState) {
-                case MediaPlayer.PlayingState:
-                    indicator.running = false
-                    break;
+                switch(playbackState) {
+                case MediaPlayer.PlayingState: return "Playing"
+                case MediaPlayer.PausedState: return "Paused"
+                case MediaPlayer.StoppedState: return "Stopped"
                 }
             }
 
@@ -123,14 +121,6 @@ Page {
                 case MediaPlayer.EndOfMedia: return "EndOfMedia"
                 case MediaPlayer.InvalidMedia: return "InvalidMedia"
                 default: return "UnknownStatus"
-                }
-            }
-
-            function mediaPlayerStateToString(state) {
-                switch(state) {
-                case MediaPlayer.PlayingState: return "Playing"
-                case MediaPlayer.PausedState: return "Paused"
-                case MediaPlayer.StoppedState: return "Stopped"
                 }
             }
         }
