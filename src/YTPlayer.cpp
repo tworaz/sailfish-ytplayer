@@ -35,6 +35,23 @@
 
 #include "NativeUtil.h"
 
+class YTPNetworkAccessManagerFactory: public QQmlNetworkAccessManagerFactory
+{
+public:
+	QNetworkAccessManager *create(QObject *parent)
+	{
+		QNetworkAccessManager *manager = new QNetworkAccessManager(parent);
+		QNetworkDiskCache *cache = new QNetworkDiskCache(manager);
+		QString datadir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+		cache->setCacheDirectory(datadir);
+		cache->setMaximumCacheSize(10*1024*1024);
+		manager->setCache(cache);
+		qDebug() << "Disk cache location: " << datadir;
+		qDebug() << "Disk cache size: " << cache->maximumCacheSize() / (1024*1024) << "MB";
+		return manager;
+	}
+};
+
 
 int main(int argc, char *argv[])
 {
@@ -56,6 +73,7 @@ int main(int argc, char *argv[])
 
 	view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
 	view->setSource(SailfishApp::pathTo("qml/YTPlayer.qml"));
+	view->engine()->setNetworkAccessManagerFactory(new YTPNetworkAccessManagerFactory());
 	view->showFullScreen();
 
 	return app->exec();
