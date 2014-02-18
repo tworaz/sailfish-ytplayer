@@ -1,4 +1,4 @@
-Name: YTPlayer
+Name: ytplayer
 Summary: Native YouTube client for SailfishOS
 Version: 0.1.0
 Release: 1
@@ -12,15 +12,15 @@ Description: |
 Configure: none
 Builder: qtc5
 PkgConfigBR:
-- sailfishapp >= 0.0.10
-- Qt5Core
-- Qt5Qml
 - Qt5Quick
+- Qt5Qml
+- Qt5Core
+- sailfishapp >= 0.0.10
 Requires:
 - sailfishsilica-qt5 >= 0.10.9
 Files:
-- '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
-- '%{_datadir}/applications/%{name}.desktop'
-- '%{_datadir}/%{name}'
 - '%{_bindir}'
+- '%{_datadir}/%{name}'
+- '%{_datadir}/applications/%{name}.desktop'
+- '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
 PkgBR: []

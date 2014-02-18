@@ -6,7 +6,7 @@
 #         - desktop icon filename must be changed
 #         - desktop filename must be changed
 #         - icon definition filename in desktop file must be changed
-TARGET = YTPlayer
+TARGET = ytplayer
 
 CONFIG += sailfishapp
 
@@ -18,9 +18,8 @@ HEADERS += \
         src/NativeUtil.h
 
 OTHER_FILES += \
-        rpm/YTPlayer.spec \
-        rpm/YTPlayer.yaml \
-        YTPlayer.desktop \
+        rpm/ytplayer.yaml \
+        ytplayer.desktop \
         generate-mcc-json.py \
         qml/pages/YoutubeClientV3.js \
         qml/pages/Settings.js \
