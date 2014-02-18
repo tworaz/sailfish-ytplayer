@@ -73,7 +73,7 @@ Page {
             font.family: Theme.fontFamily
             //: Version label value
             //% "Version: %1"
-            text: qsTrId("ytplayer-label-version").arg("0.1.0")
+            text: qsTrId("ytplayer-label-version").arg(NativeUtil.version)
         }
 
         Label {

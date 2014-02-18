@@ -45,6 +45,8 @@ mcc_data.commands = \
         $$top_srcdir/generate-mcc-json.py \
                 -i mcc.txt -o mcc.json
 
+DEFINES += VERSION_STR=\\\"$$system($${top_srcdir}/get_version_str.sh)\\\"
+
 QMAKE_EXTRA_COMPILERS += mcc_data
 
 exists($${top_srcdir}/youtube-data-api-v3.key) {

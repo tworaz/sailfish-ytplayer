@@ -70,3 +70,13 @@ NativeUtil::getYouTubeDataKey() const
 	return QString(YOUTUBE_DATA_API_V3_KEY);
 #endif
 }
+
+QString
+NativeUtil::getVersion() const
+{
+#ifdef VERSION_STR
+	return QString(VERSION_STR);
+#else
+	return QString("Unknown");
+#endif
+}
