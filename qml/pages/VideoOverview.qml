@@ -51,6 +51,16 @@ Page {
         anchors.fill: parent
         contentHeight: wrapper.height
 
+        PullDownMenu {
+            MenuItem {
+                //: Label of menu action starting video playback
+                //% "Play"
+                text: qsTrId("ytplayer-action-play")
+                onClicked: pageStack.push(Qt.resolvedUrl("VideoPlayer.qml"),
+                                          {"videoId" : videoId, "title": header.title})
+            }
+        }
+
         Column {
             id: wrapper
             width: parent.width - 2 * Theme.paddingMedium
@@ -72,36 +82,6 @@ Page {
                 onStatusChanged: {
                     if (poster.status == Image.Ready) {
                         playButton.visible = true
-                    }
-                }
-
-                MouseArea {
-                    id: playButton
-                    anchors.centerIn: parent
-                    visible: false
-                    width: ytBackground.width
-                    height: ytBackground.height
-
-                    Rectangle {
-                        id: ytBackground
-                        anchors.centerIn: parent
-                        width: 1.60 * play_icon.width
-                        height: 1.20 * play_icon.height
-                        color: "#BBDE483C"
-                        radius: 20
-                    }
-
-                    Image {
-                        id: play_icon
-                        anchors.centerIn: parent
-                        source: "image://theme/icon-cover-play"
-                    }
-
-                    onClicked: {
-                        console.debug("Play button clicked")
-                        onClicked: pageStack.push(Qt.resolvedUrl("VideoPlayer.qml"),
-                                                  {"videoId" : videoId, "title": header.title})
-
                     }
                 }
             }

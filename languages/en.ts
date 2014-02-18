@@ -96,5 +96,10 @@ Title of display settings page</extracomment>
         <extracomment>Label of results per page slider in display settings menu</extracomment>
         <translation>Results per page</translation>
     </message>
+    <message id="ytplayer-action-play">
+        <source>Play</source>
+        <extracomment>Label of menu action starting video playback</extracomment>
+        <translation>Play</translation>
+    </message>
 </context>
 </TS>
