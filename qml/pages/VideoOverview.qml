@@ -53,6 +53,12 @@ Page {
 
         PullDownMenu {
             MenuItem {
+                //: Menu option to show settings page
+                //% "Settings"
+                text: qsTrId("ytplayer-action-settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
+            }
+            MenuItem {
                 //: Label of menu action starting video playback
                 //% "Play"
                 text: qsTrId("ytplayer-action-play")

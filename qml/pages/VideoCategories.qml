@@ -60,7 +60,6 @@ Page {
                 text: qsTrId("ytplayer-action-settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
             }
-
             MenuItem {
                 //: Menu option to show search page
                 //% "Search"
