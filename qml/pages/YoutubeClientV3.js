@@ -138,6 +138,8 @@ function getSearchResults(query, onSuccess, onFailure, pageToken)
     qParams["q"] = query;
     qParams["part"] = "snippet";
     qParams["maxResults"] = Settings.get(Settings.RESULTS_PER_PAGE);
+    //TODO: Only search for videos until browsing channels and playlist is implemented
+    qParams["type"] = "video";
     if (pageToken) {
         qParams["pageToken"] = pageToken;
     }
