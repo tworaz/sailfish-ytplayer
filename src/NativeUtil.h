@@ -37,9 +37,9 @@ class NativeUtil : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QJsonObject mcc READ getMcc)
-	Q_PROPERTY(QString YouTubeDataKey READ getYouTubeDataKey)
-	Q_PROPERTY(QString version READ getVersion)
+	Q_PROPERTY(QJsonObject mcc READ getMcc CONSTANT)
+	Q_PROPERTY(QString YouTubeDataKey READ getYouTubeDataKey CONSTANT)
+	Q_PROPERTY(QString version READ getVersion CONSTANT)
 
 public:
 	explicit NativeUtil(QObject *parent = 0);
