@@ -37,6 +37,8 @@ Page {
     id: page
     allowedOrientations: Orientation.All
     showNavigationIndicator: page.isPortrait || (page.isLandscape && controls.visible())
+
+    property bool applicationActive: Qt.application.active
     property string videoId
     property string title
 
@@ -267,6 +269,12 @@ Page {
     function onVideoUrlObtained(url) {
         console.debug("Selected URL: " + url)
         mediaPlayer.source = url
+    }
+
+    onApplicationActiveChanged:  {
+        if (!applicationActive) {
+            mediaPlayer.pause()
+        }
     }
 
     Component.onCompleted: {
