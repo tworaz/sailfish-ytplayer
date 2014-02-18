@@ -37,6 +37,7 @@ import "pages"
 ApplicationWindow
 {
     property string regionCode: "US"
+    property string mainIconColor: "#FF980093"
 
     initialPage: Component { VideoCategories { } }
     cover: Qt.resolvedUrl("cover/Default.qml")

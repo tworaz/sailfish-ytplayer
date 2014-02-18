@@ -36,7 +36,7 @@ CoverBackground {
         y: (parent.width - width) / 2
         width: 0.80 * parent.width
         height: 0.75 * width
-        color: "#BBDE483C"
+        color: mainIconColor
         radius: 20
 
         Image {

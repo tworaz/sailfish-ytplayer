@@ -58,7 +58,7 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             width: 1.60 * play_icon.width
             height: 1.20 * play_icon.height
-            color: "#BBDE483C"
+            color: mainIconColor
             radius: 20
             Image {
                 id: play_icon
