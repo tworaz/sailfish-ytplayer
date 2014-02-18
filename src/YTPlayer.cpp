@@ -27,10 +27,16 @@
  * SUCH DAMAGE.
  */
 
-#ifdef QT_QML_DEBUG
-#include <QtQuick>
-#endif
-
+#include <QQmlNetworkAccessManagerFactory>
+#include <QNetworkAccessManager>
+#include <QNetworkDiskCache>
+#include <QGuiApplication>
+#include <QStandardPaths>
+#include <QTranslator>
+#include <QQmlContext>
+#include <QQuickView>
+#include <QQmlEngine>
+#include <QDebug>
 #include <sailfishapp.h>
 
 #include "NativeUtil.h"
