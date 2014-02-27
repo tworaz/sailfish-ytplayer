@@ -1,6 +1,6 @@
-Name: ytplayer
+Name: harbour-ytplayer
 Summary: Native YouTube client for SailfishOS
-Version: 0.1.0
+Version: 0.1.1
 Release: 1
 Group: Qt/Qt
 URL: https://github.com/tworaz/sailfish-ytplayer
@@ -23,4 +23,9 @@ Files:
 - '%{_datadir}/%{name}'
 - '%{_datadir}/applications/%{name}.desktop'
 - '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
+- /usr/bin
+- /usr/share/harbour-ytplayer/languages
+- /usr/share/harbour-ytplayer
+- /usr/share/applications
+- /usr/share/icons/hicolor/86x86/apps
 PkgBR: []

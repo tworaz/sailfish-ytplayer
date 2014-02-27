@@ -6,7 +6,7 @@
 #         - desktop icon filename must be changed
 #         - desktop filename must be changed
 #         - icon definition filename in desktop file must be changed
-TARGET = ytplayer
+TARGET = harbour-ytplayer
 
 CONFIG += sailfishapp
 
@@ -18,9 +18,11 @@ HEADERS += \
         src/NativeUtil.h
 
 OTHER_FILES += \
-        rpm/ytplayer.yaml \
-        ytplayer.desktop \
+        rpm/harbour-ytplayer.yaml \
+        rpm/harbour-ytplayer.spec \
+        harbour-ytplayer.desktop \
         generate-mcc-json.py \
+        get_version_str.sh \
         qml/pages/YoutubeClientV3.js \
         qml/pages/Settings.js \
         qml/YTPlayer.qml \
@@ -64,20 +66,10 @@ INSTALLS += localization mcc
 TRANSLATIONS += \
         languages/en.ts
 
-lupdate_only {
+lupdate_only{
 SOURCES += \
-        qml/pages/YoutubeClientV3.js \
-        qml/pages/Settings.js \
-        qml/YTPlayer.qml \
-        qml/cover/Default.qml \
-        qml/cover/VideoOverview.qml \
-        qml/pages/VideoOverview.qml \
-        qml/pages/VideoList.qml \
-        qml/pages/VideoPlayer.qml \
-        qml/pages/YoutubeListItem.qml \
-        qml/pages/Search.qml \
-        qml/pages/VideoCategories.qml \
-        qml/pages/Settings.qml \
-        qml/pages/About.qml \
-        qml/pages/DisplaySettings.qml
+        qml/*.qml \
+        qml/cover/*.qml \
+        qml/pages/*.qml \
+        qml/pages/*.js
 }
