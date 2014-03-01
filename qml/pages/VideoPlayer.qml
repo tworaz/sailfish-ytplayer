@@ -127,6 +127,7 @@ Page {
             }
         }
 
+        // TODO: Use VideoOutput once it's working
         GStreamerVideoOutput {
             id: video
             source: mediaPlayer
@@ -262,7 +263,7 @@ Page {
     }
 
     function onFailure(error) {
-        networkErrorNotification.show(error);
+        errorNotification.show(error);
         indicator.running = false;
     }
 

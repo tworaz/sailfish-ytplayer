@@ -29,7 +29,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import org.nemomobile.notifications 1.0
+import harbour.ytplayer.notifications 1.0
 import "pages/YoutubeClientV3.js" as Yt
 import "pages"
 
@@ -54,7 +54,7 @@ ApplicationWindow
     }
 
     Notification {
-        id: networkErrorNotification
+        id: errorNotification
 
         function show(error) {
             console.error("HTTP error code: " + error.code)

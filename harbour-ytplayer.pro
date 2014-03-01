@@ -39,6 +39,8 @@ OTHER_FILES += \
         qml/pages/About.qml \
         qml/pages/DisplaySettings.qml
 
+include(third_party/notifications.pri)
+
 MCC_DATA = mcc.txt
 mcc_data.input = MCC_DATA
 mcc_data.output = mcc.json

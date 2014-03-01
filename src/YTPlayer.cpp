@@ -27,17 +27,18 @@
  * SUCH DAMAGE.
  */
 
-#include <QQmlNetworkAccessManagerFactory>
 #include <QNetworkAccessManager>
 #include <QNetworkDiskCache>
 #include <QGuiApplication>
 #include <QStandardPaths>
 #include <QTranslator>
-#include <QQmlContext>
 #include <QQuickView>
-#include <QQmlEngine>
+#include <QtQml>
 #include <QDebug>
 #include <sailfishapp.h>
+
+// third party code
+#include <notification.h>
 
 #include "NativeUtil.h"
 
@@ -77,6 +78,7 @@ int main(int argc, char *argv[])
 	}
 	app->installTranslator(&translator);
 
+	qmlRegisterType<Notification>("harbour.ytplayer.notifications", 1, 0, "Notification");
 	view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
 	view->setSource(SailfishApp::pathTo("qml/YTPlayer.qml"));
 	view->engine()->setNetworkAccessManagerFactory(new YTPNetworkAccessManagerFactory());

@@ -105,7 +105,7 @@ Page {
         }
 
         function onFailure(error) {
-            networkErrorNotification.show(error);
+            errorNotification.show(error);
             indicator.running = false
         }
 
