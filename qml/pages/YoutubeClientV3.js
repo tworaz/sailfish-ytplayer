@@ -217,14 +217,15 @@ function getVideoUrl(videoId, onSuccess, onFailure)
             var selected_url = undefined;
             for (var i = 0; i < stream_map_array.length; i++) {
                 if (stream_map_array[i].itag === "18") {
-                    if ("sig" in stream_map_array[i]) {
+                    if ("s" in stream_map_array[i]) {
+                        //TODO: support playing videos with encrypted signatures
+                        console.log("Encrypted signature detected, can't play video directly, falling back to ytapi.com");
+                        selected_url = getVideoUrlYtAPI(videoId, 18);
+                    } else if ("sig" in stream_map_array[i]) {
                         selected_url = stream_map_array[i].url +
                                 "&signature=" + stream_map_array[i].sig;
                     } else {
-                        // Encrypted content not supported directly
-                        console.log("No support for playing videos with encrypted signatures from youtube directly," +
-                                    "falling back to ytapi.com");
-                        selected_url = getVideoUrlYtAPI(videoId, 18);
+                        selected_url = stream_map_array[i].url;
                     }
 
                     break;
