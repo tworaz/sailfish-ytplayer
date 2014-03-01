@@ -82,7 +82,7 @@ Page {
             font.family: Theme.fontFamily
             //: Region code field value
             //% "Region code: %1"
-            text: qsTrId('ytplayer-label-region-code').arg(NativeUtil.regionCode)
+            text: qsTrId('ytplayer-label-region-code').arg(regionCode)
         }
     }
 }

@@ -39,7 +39,7 @@ function getYoutubeV3Url(reference, queryParams)
     }
 
     var url =  _youtube_data_v3_url + reference +
-            "?regionCode=" + NativeUtil.regionCode +
+            "?regionCode=" + regionCode +
             "&key=" + NativeUtil.YouTubeDataKey +
             "&hl=" + locale;
 

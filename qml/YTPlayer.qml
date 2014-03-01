@@ -35,6 +35,7 @@ import "pages"
 
 ApplicationWindow
 {
+    property string regionCode: NativeUtil.regionCode
     property string mainIconColor: "#FF980093"
 
     initialPage: Component { VideoCategories { } }
