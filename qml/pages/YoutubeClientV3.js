@@ -55,8 +55,6 @@ function getVideoCategories(result, onSuccess, onFailure)
 {
     var url = getYoutubeV3Url("videoCategories", {"part" : "snippet"});
 
-    console.debug("XHR: " + url);
-
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -94,8 +92,6 @@ function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
         url += "&pageToken=" + pageToken;
     }
 
-    console.debug("XHR: " + url);
-
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
@@ -114,8 +110,6 @@ function getVideoDetails(videoId, onSuccess, onFailure)
 {
     var url = getYoutubeV3Url("videos", {"part" : "contentDetails, snippet",
                               "id" : videoId});
-
-    console.debug("XHR: " + url);
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -146,8 +140,6 @@ function getSearchResults(query, onSuccess, onFailure, pageToken)
 
     var url = getYoutubeV3Url("search", qParams);
 
-    console.debug("XHR: " + url);
-
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
@@ -167,8 +159,6 @@ function getVideoUrl(videoId, onSuccess, onFailure)
 {
     var req = "http://www.youtube.com/get_video_info?video_id=" + videoId +
             "&el=player_embedded&gl=US&hl=en&eurl=https://youtube.googleapis.com/v/&asf=3&sts=1588";
-
-    console.debug("XHR: " + req);
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
