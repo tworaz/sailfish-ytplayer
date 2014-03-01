@@ -39,7 +39,7 @@ function getYoutubeV3Url(reference, queryParams)
     }
 
     var url =  _youtube_data_v3_url + reference +
-            "?regionCode=" + regionCode +
+            "?regionCode=" + NativeUtil.regionCode +
             "&key=" + NativeUtil.YouTubeDataKey +
             "&hl=" + locale;
 
@@ -222,8 +222,8 @@ function getVideoUrl(videoId, onSuccess, onFailure)
                                 "&signature=" + stream_map_array[i].sig;
                     } else {
                         // Encrypted content not supported directly
-                        console.log("No support for playing videos with encrypted signatures from youtube directly\n" +
-                                    "Falling back yo ytapi.com");
+                        console.log("No support for playing videos with encrypted signatures from youtube directly," +
+                                    "falling back to ytapi.com");
                         selected_url = getVideoUrlYtAPI(videoId, 18);
                     }
 

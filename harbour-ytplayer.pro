@@ -9,6 +9,7 @@
 TARGET = harbour-ytplayer
 
 CONFIG += sailfishapp
+QT += dbus
 
 SOURCES += \
         src/YTPlayer.cpp \

@@ -29,36 +29,48 @@
 
 #include <QFile>
 #include <QJsonDocument>
+#include <QDBusMessage>
+#include <QDBusArgument>
 #include <sailfishapp.h>
+#include <QDebug>
 
 #include "NativeUtil.h"
+
+static QString FALLBACK_COUNTRY_CODE = QString("US");
 
 NativeUtil::NativeUtil(QObject *parent) :
     QObject(parent)
 {
 }
 
-QJsonObject
-NativeUtil::getMcc() const
+QString
+NativeUtil::getRegionCode() const
 {
-	QString mccPath = SailfishApp::pathTo(QString("mcc.json")).toLocalFile();
-	QFile mccFile(mccPath);
+	QDBusConnection systemBus = QDBusConnection::connectToBus(QDBusConnection::SystemBus, "system");
+	if (systemBus.isConnected()) {
+		QDBusObjectPath modem = getModemPath(systemBus);
+		if (modem.path().isEmpty()) {
+			qDebug() << "Failed to find modem";
+			return FALLBACK_COUNTRY_CODE;
+		}
+		qDebug() << "Modem Path: " << modem.path();
 
-	if (!mccFile.open(QIODevice::ReadOnly)) {
-		qDebug("Mobile Country Code file not found, please check your installation");
-		return QJsonObject();
-	}
+		unsigned mcc = getMobileCountryCode(systemBus, modem);
+		qDebug() << "Mobile Country Code: " << mcc;
 
-	QByteArray mccData = mccFile.readAll();
-	mccFile.close();
-
-	QJsonDocument doc = QJsonDocument::fromJson(mccData);
-	if (doc.isObject()) {
-		return doc.object();
+		QJsonObject mccMap = getMobileCountryCodeMap();
+		QJsonObject::Iterator iter =  mccMap.find(QString::number(mcc));
+		if (iter == mccMap.end()) {
+			qDebug() << "No country could be found for code " << mcc;
+			return FALLBACK_COUNTRY_CODE;
+		}
+		QString countryCode = static_cast<QJsonValue>(*iter).toString();
+		qDebug() << "Country code: " << countryCode;
+		return countryCode;
 	} else {
-		qDebug("Invalid Mobile Country Code dictionary, please check your installation!");
-		return QJsonObject();
+		qDebug("Failed to connect to system bus!");
 	}
+	return FALLBACK_COUNTRY_CODE;
 }
 
 QString
@@ -79,4 +91,88 @@ NativeUtil::getVersion() const
 #else
 	return QString("Unknown");
 #endif
+}
+
+QDBusObjectPath
+NativeUtil::getModemPath(QDBusConnection connection)
+{
+	QDBusMessage msg = QDBusMessage::createMethodCall("org.ofono", "/", "org.ofono.Manager", "GetModems");
+	QDBusMessage reply = connection.call(msg);
+
+	if (reply.arguments().length() == 0)
+		return QDBusObjectPath();
+
+	if (!reply.arguments().at(0).canConvert<QDBusArgument>())
+		return QDBusObjectPath();
+
+	const QDBusArgument replyArg = reply.arguments().at(0).value<QDBusArgument>();
+	Q_ASSERT(replyArg.currentType() == QDBusArgument::ArrayType);
+	replyArg.beginArray();
+	QDBusVariant pathVariant;
+	replyArg >> pathVariant;
+	replyArg.endArray();
+
+	if (!pathVariant.variant().canConvert<QDBusObjectPath>()) {
+		return QDBusObjectPath();
+	}
+
+	return pathVariant.variant().value<QDBusObjectPath>();
+}
+
+unsigned
+NativeUtil::getMobileCountryCode(QDBusConnection conn, QDBusObjectPath modem)
+{
+	QDBusMessage msg = QDBusMessage::createMethodCall("org.ofono", modem.path(),
+	                                                  "org.ofono.SimManager", "GetProperties");
+	QDBusMessage reply = conn.call(msg);
+	unsigned mcc = 0;
+
+	if (reply.arguments().length() == 0)
+		return 0;
+	if (!reply.arguments().at(0).canConvert<QDBusArgument>())
+		return 0;
+
+	const QDBusArgument replyArg = reply.arguments().at(0).value<QDBusArgument>();
+	Q_ASSERT(replyArg.currentType() == QDBusArgument::MapType);
+
+	replyArg.beginMap();
+	while (!replyArg.atEnd()) {
+		QString key;
+		QVariant value;
+		replyArg.beginMapEntry();
+		replyArg >> key >> value;
+		if (key == "MobileCountryCode") {
+			Q_ASSERT(value.type() == QVariant::String);
+			mcc = value.toUInt();
+			replyArg.endMapEntry();
+			break;
+		}
+		replyArg.endMapEntry();
+	}
+	replyArg.endMap();
+
+	return mcc;
+}
+
+QJsonObject
+NativeUtil::getMobileCountryCodeMap()
+{
+	QString mccPath = SailfishApp::pathTo(QString("mcc.json")).toLocalFile();
+	QFile mccFile(mccPath);
+
+	if (!mccFile.open(QIODevice::ReadOnly)) {
+		qDebug("Mobile Country Code file not found, please check your installation");
+		return QJsonObject();
+	}
+
+	QByteArray mccData = mccFile.readAll();
+	mccFile.close();
+
+	QJsonDocument doc = QJsonDocument::fromJson(mccData);
+	if (doc.isObject()) {
+		return doc.object();
+	} else {
+		qDebug("Invalid Mobile Country Code dictionary, please check your installation!");
+	}
+	return QJsonObject();
 }

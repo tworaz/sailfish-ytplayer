@@ -31,22 +31,29 @@
 #define NATIVEUTIL_H
 
 #include <QObject>
+#include <QDBusConnection>
+#include <QDBusObjectPath>
 #include <QJsonObject>
 
 class NativeUtil : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QJsonObject mcc READ getMcc CONSTANT)
 	Q_PROPERTY(QString YouTubeDataKey READ getYouTubeDataKey CONSTANT)
 	Q_PROPERTY(QString version READ getVersion CONSTANT)
+	Q_PROPERTY(QString regionCode READ getRegionCode CONSTANT)
 
 public:
 	explicit NativeUtil(QObject *parent = 0);
 
-	QJsonObject getMcc() const;
+	QString getRegionCode() const;
 	QString getYouTubeDataKey() const;
 	QString getVersion() const;
+
+private:
+	static QDBusObjectPath getModemPath(QDBusConnection conn);
+	static unsigned getMobileCountryCode(QDBusConnection conn, QDBusObjectPath modem);
+	static QJsonObject getMobileCountryCodeMap();
 };
 
 #endif // NATIVEUTIL_H

@@ -15,6 +15,7 @@ PkgConfigBR:
 - Qt5Quick
 - Qt5Qml
 - Qt5Core
+- Qt5DBus
 - sailfishapp >= 0.0.10
 Requires:
 - sailfishsilica-qt5 >= 0.10.9
@@ -23,9 +24,4 @@ Files:
 - '%{_datadir}/%{name}'
 - '%{_datadir}/applications/%{name}.desktop'
 - '%{_datadir}/icons/hicolor/86x86/apps/%{name}.png'
-- /usr/bin
-- /usr/share/harbour-ytplayer/languages
-- /usr/share/harbour-ytplayer
-- /usr/share/applications
-- /usr/share/icons/hicolor/86x86/apps
 PkgBR: []
