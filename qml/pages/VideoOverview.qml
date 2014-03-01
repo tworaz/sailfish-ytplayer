@@ -30,6 +30,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "YoutubeClientV3.js" as Yt
+import "duration.js" as DUtil
 
 
 Page {
@@ -71,6 +72,7 @@ Page {
             id: wrapper
             width: parent.width - 2 * Theme.paddingMedium
             x: Theme.paddingMedium
+            spacing: Theme.paddingLarge
 
             PageHeader {
                 id: header
@@ -86,15 +88,61 @@ Page {
                 fillMode: Image.PreserveAspectCrop
             }
 
-            Label {
-                id: description
-                width: parent.width;
-                font {
-                    family: Theme.fontFamily
-                    pixelSize: Theme.fontSizeSmall
+            Row {
+                width: parent.width
+
+                KeyValueLabel {
+                    id: publishDate
+                    width: parent.width * 2 / 3
+                    pixelSize: Theme.fontSizeExtraSmall
+                    //: Label for video upload date field
+                    //% "Published on"
+                    key: qsTrId("ytplayer-label-publish-date")
                 }
-                color: Theme.primaryColor
-                wrapMode: Text.Wrap
+
+                KeyValueLabel {
+                    id: duration
+                    width: parent.width / 3
+                    pixelSize: Theme.fontSizeExtraSmall
+                    horizontalAlignment: Text.AlignRight
+                    //: Label for video duration field
+                    //% "Duration"
+                    key: qsTrId("ytplayer-label-duration")
+                }
+            }
+
+            Row {
+                width: parent.width
+                spacing: Theme.paddingLarge
+
+                StatItem {
+                    id: viewCount
+                    image: "image://theme/icon-s-cloud-download?" + Theme.highlightColor
+                }
+
+                StatItem {
+                    id: likeCount
+                    image: "image://theme/icon-s-like?" + Theme.highlightColor
+                }
+
+                StatItem {
+                    id: dislikeCount
+                    image: "image://theme/icon-s-like?" + Theme.highlightColor
+                    imageRotation: 180.0
+                }
+            }
+
+            Separator {
+                color: Theme.highlightColor
+                width: parent.width;
+            }
+
+            KeyValueLabel {
+                id: description
+                width: parent.width
+                //: Label for the description field
+                //% "Description"
+                key: qsTrId("ytplayer-label-description")
             }
         }
 
@@ -109,7 +157,22 @@ Page {
                 poster.source = thumbnails.default.url
             }
 
-            description.text = details.snippet.description
+            if (details.snippet.description) {
+                description.value = details.snippet.description
+            } else {
+                description.visible = false
+            }
+
+            viewCount.text = details.statistics.viewCount
+            likeCount.text = details.statistics.likeCount
+            dislikeCount.text = details.statistics.dislikeCount
+
+            var pd = new Date(details.snippet.publishedAt)
+            publishDate.value = Qt.formatDateTime(pd, "d MMMM yyyy")
+
+            var dur = new DUtil.Duration(details.contentDetails.duration)
+            duration.value = dur.asClock();
+
             header.title = details.snippet.title
             indicator.running = false
         }

@@ -61,7 +61,13 @@ Menu option to refresh content of the list</extracomment>
     </message>
     <message id="ytplayer-action-settings">
         <source>Settings</source>
-        <extracomment>Menu option to show settings page</extracomment>
+        <extracomment>Menu option to show settings page
+----------
+Menu option to show settings page
+----------
+Menu option to show settings page
+----------
+Menu option to show settings page</extracomment>
         <translation>Settings</translation>
     </message>
     <message id="ytplayer-title-about">
@@ -100,6 +106,22 @@ Title of display settings page</extracomment>
         <source>Play</source>
         <extracomment>Label of menu action starting video playback</extracomment>
         <translation>Play</translation>
+    </message>
+    <message id="ytplayer-label-description">
+        <source>Description</source>
+        <extracomment>Label for the description field</extracomment>
+        <translation>Description</translation>
+    </message>
+    <message id="ytplayer-label-publish-date">
+        <source>Published on</source>
+        <oldsource>Published at</oldsource>
+        <extracomment>Label for video upload date field</extracomment>
+        <translation>Published on</translation>
+    </message>
+    <message id="ytplayer-label-duration">
+        <source>Duration</source>
+        <extracomment>Label for video duration field</extracomment>
+        <translation>Duration</translation>
     </message>
 </context>
 </TS>

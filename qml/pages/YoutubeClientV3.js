@@ -108,7 +108,7 @@ function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
 
 function getVideoDetails(videoId, onSuccess, onFailure)
 {
-    var url = getYoutubeV3Url("videos", {"part" : "contentDetails, snippet",
+    var url = getYoutubeV3Url("videos", {"part" : "contentDetails, snippet, statistics",
                               "id" : videoId});
 
     var xhr = new XMLHttpRequest();

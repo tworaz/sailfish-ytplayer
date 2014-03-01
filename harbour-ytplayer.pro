@@ -26,6 +26,7 @@ OTHER_FILES += \
         get_version_str.sh \
         qml/pages/YoutubeClientV3.js \
         qml/pages/Settings.js \
+        qml/pages/duration.js \
         qml/YTPlayer.qml \
         qml/cover/Default.qml \
         qml/cover/VideoOverview.qml \
@@ -37,7 +38,9 @@ OTHER_FILES += \
         qml/pages/VideoCategories.qml \
         qml/pages/Settings.qml \
         qml/pages/About.qml \
-        qml/pages/DisplaySettings.qml
+        qml/pages/DisplaySettings.qml \
+        qml/pages/KeyValueLabel.qml \
+        qml/pages/StatItem.qml
 
 include(third_party/notifications.pri)
 
