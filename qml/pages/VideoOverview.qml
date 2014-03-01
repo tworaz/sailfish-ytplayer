@@ -84,12 +84,6 @@ Page {
                 }
                 height: width * 9 / 16
                 fillMode: Image.PreserveAspectCrop
-
-                onStatusChanged: {
-                    if (poster.status == Image.Ready) {
-                        playButton.visible = true
-                    }
-                }
             }
 
             Label {
