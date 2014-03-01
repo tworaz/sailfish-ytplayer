@@ -56,13 +56,12 @@ rm -rf %{buildroot}
 %qmake5_install
 
 # >> install post
+find %{buildroot}%{_datadir} -type f -exec chmod 0644 {} +;
 # << install post
 
 desktop-file-install --delete-original       \
   --dir %{buildroot}%{_datadir}/applications             \
    %{buildroot}%{_datadir}/applications/*.desktop
-
-find %{buildroot}%{_datadir} -type f -exec chmod 0644 {} +;
 
 %files
 %defattr(-,root,root,-)
