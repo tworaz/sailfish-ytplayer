@@ -3,7 +3,6 @@
 - Settings page
 - User authentication
 - User channels and playlist browser
-- Improve video overview page
 - Implement support for choosing video quality
 - Add support for youtube remote
 - Implement custom cover page for VideoPlayer.qml
