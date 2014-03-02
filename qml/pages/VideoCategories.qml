@@ -50,6 +50,9 @@ Page {
             if (status === FontLoader.Ready) {
                 console.debug("YouTube icons loaded, loading categories")
                 videoCategoryListView.refresh()
+            } else if (status === FontLoader.Error) {
+                console.warn("Failed to load youtube category icons")
+                videoCategoryListView.refresh()
             }
         }
     }
@@ -106,6 +109,7 @@ Page {
                     font.pixelSize: Theme.fontSizeLarge
                     color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
                     text: getIconForCategoryId(id)
+                    visible: youtubeIconsLoader.status === FontLoader.Ready
 
                     function getIconForCategoryId(category)
                     {
@@ -151,26 +155,44 @@ Page {
             }
         }
 
-        function onSuccess() {
+        ConnectionRetryTimer {
+            id: connectionRetryTimer
+            onTriggered: {
+                Yt.getVideoCategories(videoCategoryListView.onSuccess, onRetryFailure)
+            }
+        }
+
+        function onSuccess(categories) {
+            for (var i = 0; i < categories.length; i++) {
+                var category = categories[i];
+                if (category.snippet.assignable) {
+                    videoCategoryListModel.append(category);
+                }
+            }
             indicator.running = false
         }
 
         function onFailure(error) {
-            errorNotification.show(error);
-            indicator.running = false
+            if (error.code === 0) {
+                connectionRetryTimer.reset();
+                connectionRetryTimer.start();
+            } else {
+                errorNotification.show(error);
+                indicator.running = false
+            }
         }
 
         function refresh() {
             indicator.running = true
             videoCategoryListModel.clear()
-            Yt.getVideoCategories(videoCategoryListModel, onSuccess, onFailure)
+            Yt.getVideoCategories(onSuccess, onFailure)
         }
 
         Component.onCompleted: {
             console.debug("Video category list page created")
             if (youtubeIconsLoader.status === FontLoader.Ready) {
                 console.debug("Youtube icons already loaded, loading categories")
-                Yt.getVideoCategories(videoCategoryListModel, onSuccess, onFailure)
+                Yt.getVideoCategories(onSuccess, onFailure)
             }
             Settings.initialize();
         }

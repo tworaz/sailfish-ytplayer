@@ -75,12 +75,14 @@ ApplicationWindow
                 previewSummary = qsTrId('ytplayer-unknown-error-summary')
             }
 
-            if (error.details.hasOwnProperty("error")) {
-                previewBody = error.details.error.message
-            } else {
-                //: Http client error notification body
-                //% "The server has returned %1"
-                previewBody = qsTrId('ytplayer-http-error-body').arg(error.code)
+            if (error.details) {
+                if (error.details.hasOwnProperty("error")) {
+                    previewBody = error.details.error.message
+                } else {
+                    //: Http client error notification body
+                    //% "The server has returned %1"
+                    previewBody = qsTrId('ytplayer-http-error-body').arg(error.code)
+                }
             }
 
             publish();

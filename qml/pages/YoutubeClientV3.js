@@ -51,7 +51,7 @@ function getYoutubeV3Url(reference, queryParams)
     return url;
 }
 
-function getVideoCategories(result, onSuccess, onFailure)
+function getVideoCategories(onSuccess, onFailure)
 {
     var url = getYoutubeV3Url("videoCategories", {"part" : "snippet"});
 
@@ -59,16 +59,11 @@ function getVideoCategories(result, onSuccess, onFailure)
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status == 200) {
-                var items = JSON.parse(xhr.responseText)["items"];
-                for (var i = 0; i < items.length; i++) {
-                    var category = items[i];
-                    if (category.snippet.assignable) {
-                        result.append(category);
-                    }
-                }
-                onSuccess();
+                var categories = JSON.parse(xhr.responseText)["items"];
+                onSuccess(categories);
             } else {
-                onFailure({"code" : xhr.status, "details" : JSON.parse(xhr.responseText)});
+                var details = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
+                onFailure({"code" : xhr.status, "details" : details});
             }
         }
     }
@@ -98,7 +93,8 @@ function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
             if (xhr.status == 200) {
                 onSuccess(JSON.parse(xhr.responseText));
             } else {
-                onFailure({"code" : xhr.status, "details" : JSON.parse(xhr.responseText)});
+                var details = xhr.responseText ? JSON.parse(xhr.responseText) : "";
+                onFailure({"code" : xhr.status, "details" : details});
             }
         }
     }
@@ -115,7 +111,8 @@ function getVideoDetails(videoId, onSuccess, onFailure)
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status !== 200) {
-                onFailure({"code" : xhr.status, "details" : JSON.parse(xhr.responseText)});
+                var details = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
+                onFailure({"code" : xhr.status, "details" : details});
                 return;
             }
             var details = JSON.parse(xhr.responseText);
@@ -144,7 +141,8 @@ function getSearchResults(query, onSuccess, onFailure, pageToken)
     xhr.onreadystatechange = function() {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             if (xhr.status !== 200) {
-                onFailure({"code" : xhr.status, "details" : JSON.parse(xhr.responseText)});
+                var details = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
+                onFailure({"code" : xhr.status, "details" : details});
                 return;
             }
             var response = JSON.parse(xhr.responseText);

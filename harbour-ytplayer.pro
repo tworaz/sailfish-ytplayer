@@ -40,7 +40,8 @@ OTHER_FILES += \
         qml/pages/About.qml \
         qml/pages/DisplaySettings.qml \
         qml/pages/KeyValueLabel.qml \
-        qml/pages/StatItem.qml
+        qml/pages/StatItem.qml \
+        qml/pages/ConnectionRetryTimer.qml
 
 include(third_party/notifications.pri)
 
