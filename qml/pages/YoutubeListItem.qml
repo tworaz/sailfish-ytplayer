@@ -53,7 +53,7 @@ BackgroundItem {
         BusyIndicator {
             size: BusyIndicatorSize.Small
             anchors.centerIn: parent
-            running: thumbnail.status == Image.Loading
+            running: thumbnail.status === Image.Loading
         }
     }
 
