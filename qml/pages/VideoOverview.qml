@@ -137,12 +137,12 @@ Page {
                 width: parent.width;
             }
 
-            KeyValueLabel {
+            Label {
                 id: description
                 width: parent.width
-                //: Label for the description field
-                //% "Description"
-                key: qsTrId("ytplayer-label-description")
+                textFormat: Text.PlainText
+                wrapMode: Text.Wrap
+                font.pixelSize: Theme.fontSizeSmall
             }
         }
 
@@ -158,7 +158,7 @@ Page {
             }
 
             if (details.snippet.description) {
-                description.value = details.snippet.description
+                description.text = details.snippet.description
             } else {
                 description.visible = false
             }
@@ -183,7 +183,7 @@ Page {
         }
 
         Component.onCompleted: {
-            console.debug("Video overview page created, video ID:" + videoId)
+            console.debug("Video overview page created, video ID: " + videoId)
             Yt.getVideoDetails(videoId, onVideoDetailsLoaded, onFailure)
         }
 

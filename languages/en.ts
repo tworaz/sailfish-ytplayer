@@ -107,11 +107,6 @@ Title of display settings page</extracomment>
         <extracomment>Label of menu action starting video playback</extracomment>
         <translation>Play</translation>
     </message>
-    <message id="ytplayer-label-description">
-        <source>Description</source>
-        <extracomment>Label for the description field</extracomment>
-        <translation>Description</translation>
-    </message>
     <message id="ytplayer-label-publish-date">
         <source>Published on</source>
         <oldsource>Published at</oldsource>

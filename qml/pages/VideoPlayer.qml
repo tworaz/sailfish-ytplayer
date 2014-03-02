@@ -178,7 +178,8 @@ Page {
                 opacity: 0.0
                 visible: !indicator.running
                 source: mediaPlayer.playbackState === MediaPlayer.PlayingState ?
-                            "image://theme/icon-cover-pause" : "image://theme/icon-cover-play"
+                            "image://theme/icon-cover-pause?" + Theme.highlightColor :
+                            "image://theme/icon-cover-play?" + Theme.highlightColor
 
                 NumberAnimation {
                     id: playPauseButtonHide
