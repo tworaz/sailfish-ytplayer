@@ -63,12 +63,6 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                //: Menu option to refresh content of the list
-                //% "Refresh"
-                text: qsTrId("ytplayer-action-refresh")
-                onClicked: videoCategoryListView.refresh()
-            }
-            MenuItem {
                 //: Menu option to show settings page
                 //% "Settings"
                 text: qsTrId("ytplayer-action-settings")

@@ -29,9 +29,7 @@ Menu option show/load additional list elements</extracomment>
     </message>
     <message id="ytplayer-action-refresh">
         <source>Refresh</source>
-        <extracomment>Menu option to refresh content of the list
-----------
-Menu option to refresh content of the list</extracomment>
+        <extracomment>Menu option to refresh content of the list</extracomment>
         <translation>Refresh</translation>
     </message>
     <message id="ytplayer-error-summary">
