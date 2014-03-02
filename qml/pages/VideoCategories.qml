@@ -43,6 +43,17 @@ Page {
         size: BusyIndicatorSize.Large
     }
 
+    FontLoader {
+        id: youtubeIconsLoader
+        source: "https://www.youtube.com/s/tv/fonts/youtube-icons.ttf"
+        onStatusChanged: {
+            if (status === FontLoader.Ready) {
+                console.debug("YouTube icons loaded, loading categories")
+                videoCategoryListView.refresh()
+            }
+        }
+    }
+
     SilicaListView {
         id: videoCategoryListView
         anchors.fill: parent
@@ -81,15 +92,55 @@ Page {
         delegate: BackgroundItem {
             id: delegate
 
-            Label {
-                x: Theme.paddingLarge
+            Row {
+                x: Theme.paddingMedium
                 width: page.width;
-                text: snippet.title
+                spacing: Theme.paddingLarge
                 anchors.verticalCenter: parent.verticalCenter
-                color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
-                font {
-                    pixelSize: Theme.fontSizeLarge
-                    family: Theme.fontFamilyHeading
+
+                Text {
+                    anchors.verticalCenter: parent.verticalCenter
+                    horizontalAlignment: Text.AlignHCenter
+                    width: 60
+                    font.family: "youtube-icons"
+                    font.pixelSize: Theme.fontSizeLarge
+                    color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    text: getIconForCategoryId(id)
+
+                    function getIconForCategoryId(category)
+                    {
+                        var categoryId = parseInt(category);
+                        switch (categoryId) {
+                        case 1:  return "\ue64d"  // Film & Animation
+                        case 2:  return "\ue650"  // Autos & Vechicles
+                        case 10: return "\ue636"  // Music
+                        case 15: return "\ue633"  // Pets & Animals
+                        case 17: return "\ue60d"  // Sports
+                        case 19: return "\ue641"  // Travel & Events
+                        case 20: return "\ue64f"  // Gaming
+                        case 22: return "\ue634"  // People & Blogs
+                        case 23: return "\ue638"  // Commedy
+                        case 24: return "\ue64c"  // Entertainment
+                        case 25: return "\ue634"  // News & Politics
+                        case 26: return "\ue639"  // Howto & Style
+                        case 27: return "\ue64b"  // Education
+                        case 28: return "\ue610"  // Science & Technology
+                        case 29: return "\ue64e"  // Nonprofits & Activism
+                        default:
+                            console.debug("No icon for category: " + category)
+                            return "\ue60c"
+                        }
+                    }
+                }
+
+                Label {
+                    text: snippet.title
+                    anchors.verticalCenter: parent.verticalCenter
+                    color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    font {
+                        pixelSize: Theme.fontSizeLarge
+                        family: Theme.fontFamilyHeading
+                    }
                 }
             }
 
@@ -117,7 +168,10 @@ Page {
 
         Component.onCompleted: {
             console.debug("Video category list page created")
-            Yt.getVideoCategories(videoCategoryListModel, onSuccess, onFailure)
+            if (youtubeIconsLoader.status === FontLoader.Ready) {
+                console.debug("Youtube icons already loaded, loading categories")
+                Yt.getVideoCategories(videoCategoryListModel, onSuccess, onFailure)
+            }
             Settings.initialize();
         }
 
