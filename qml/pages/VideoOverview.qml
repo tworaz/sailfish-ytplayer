@@ -73,6 +73,7 @@ Page {
             width: parent.width - 2 * Theme.paddingMedium
             x: Theme.paddingMedium
             spacing: Theme.paddingLarge
+            visible: !indicator.running
 
             PageHeader {
                 id: header
@@ -86,6 +87,12 @@ Page {
                 }
                 height: width * 9 / 16
                 fillMode: Image.PreserveAspectCrop
+
+                BusyIndicator {
+                    size: BusyIndicatorSize.Medium
+                    anchors.centerIn: parent
+                    running: poster.status === Image.Loading
+                }
             }
 
             Row {
