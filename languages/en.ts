@@ -19,7 +19,9 @@ Menu option show/load additional list elements</extracomment>
     </message>
     <message id="ytplayer-label-search">
         <source>Search</source>
-        <extracomment>Label of video search text field</extracomment>
+        <extracomment>Label of video search text field
+----------
+Search settings section label</extracomment>
         <translation>Search</translation>
     </message>
     <message id="ytplayer-action-search">
@@ -88,13 +90,6 @@ Menu option to show settings page</extracomment>
         <extracomment>Region code field value</extracomment>
         <translation>Region Code: %1</translation>
     </message>
-    <message id="ytplayer-title-display">
-        <source>Display</source>
-        <extracomment>Title of display settings page
-----------
-Title of display settings page</extracomment>
-        <translation>Display</translation>
-    </message>
     <message id="ytplayer-label-results-per-page">
         <source>Results per page</source>
         <extracomment>Label of results per page slider in display settings menu</extracomment>
@@ -115,6 +110,31 @@ Title of display settings page</extracomment>
         <source>Duration</source>
         <extracomment>Label for video duration field</extracomment>
         <translation>Duration</translation>
+    </message>
+    <message id="ytplayer-label-content-filtering">
+        <source>Content filtering</source>
+        <extracomment>Content filtering settings option label</extracomment>
+        <translation>Content filtering</translation>
+    </message>
+    <message id="ytplayer-label-display">
+        <source>Display</source>
+        <extracomment>Display settings section label</extracomment>
+        <translation>Display</translation>
+    </message>
+    <message id="ytplayer-content-fitering-none">
+        <source>None</source>
+        <extracomment>Option value for lack of any content filtering</extracomment>
+        <translation>None</translation>
+    </message>
+    <message id="ytplayer-content-filtering-moderate">
+        <source>Moderate</source>
+        <extracomment>Option value for moderate content filtering</extracomment>
+        <translation>Moderate</translation>
+    </message>
+    <message id="ytplayer-content-filtering-strict">
+        <source>Strict</source>
+        <extracomment>Option value for strict content filtering</extracomment>
+        <translation>Strict</translation>
     </message>
 </context>
 </TS>

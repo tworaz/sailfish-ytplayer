@@ -30,6 +30,11 @@
 .import QtQuick.LocalStorage 2.0 as Sql
 
 var RESULTS_PER_PAGE = "results-per-page";
+var SAFE_SEARCH = "safe-search"
+
+var SAFE_SEARCH_NONE = 0;
+var SAFE_SEARCH_MODERATE = 1;
+var SAFE_SEARCH_STRICT = 2;
 
 function _getDatabase()
 {
@@ -42,6 +47,7 @@ function initialize()
     db.transaction(function(tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS settings(key TEXT unique, value TEXT)');
         tx.executeSql('INSERT OR IGNORE INTO settings VALUES(?,?);', [RESULTS_PER_PAGE, 20]);
+        tx.executeSql('INSERT OR IGNORE INTO settings VALUES(?,?);', [SAFE_SEARCH, SAFE_SEARCH_MODERATE]);
     });
 }
 

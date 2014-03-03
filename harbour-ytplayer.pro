@@ -19,15 +19,15 @@ HEADERS += \
         src/NativeUtil.h
 
 OTHER_FILES += \
-        rpm/harbour-ytplayer.yaml \
-        rpm/harbour-ytplayer.spec \
-        harbour-ytplayer.desktop \
         generate-mcc-json.py \
         get_version_str.sh \
+        harbour-ytplayer.desktop \
+        rpm/harbour-ytplayer.yaml \
+        rpm/harbour-ytplayer.spec \
+        qml/YTPlayer.qml \
         qml/pages/YoutubeClientV3.js \
         qml/pages/Settings.js \
         qml/pages/duration.js \
-        qml/YTPlayer.qml \
         qml/cover/Default.qml \
         qml/cover/VideoOverview.qml \
         qml/pages/VideoList.qml \
@@ -38,7 +38,6 @@ OTHER_FILES += \
         qml/pages/VideoCategories.qml \
         qml/pages/Settings.qml \
         qml/pages/About.qml \
-        qml/pages/DisplaySettings.qml \
         qml/pages/KeyValueLabel.qml \
         qml/pages/StatItem.qml \
         qml/pages/ConnectionRetryTimer.qml

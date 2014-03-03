@@ -29,64 +29,92 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "Settings.js" as S
 
 Page {
     id: settingsPage
 
-    SilicaListView {
-        id: view
+    SilicaFlickable {
         anchors.fill: parent
 
-        header: PageHeader {
-            //: Settings page title
-            //% "Settings"
-            title: qsTrId("ytplayer-title-settings")
-        }
-
-        model: ListModel {
-            id: optionsModel
-            ListElement {
-                icon: "image://theme/icon-m-display"
-                page: "DisplaySettings.qml"
-            }
-            ListElement {
-                icon: "image://theme/icon-m-about"
-                page: "About.qml"
-            }
-
-            function name(index) {
-                if (name["text"] === undefined) {
-                    name.text = [
-                        //: Title of display settings page
-                        //% "Display"
-                        qsTrId("ytplayer-title-display"),
-                        //% "About YTPlater"
-                        qsTrId("ytplayer-title-about"),
-                    ]
-                }
-                return name.text[index]
+        PullDownMenu {
+            MenuItem {
+                //% "About YTPlater"
+                text: qsTrId("ytplayer-title-about")
+                onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
             }
         }
 
-        delegate: BackgroundItem {
-            id: optionItem
+        Column {
+            x: Theme.paddingLarge
+            width: parent.width - 2 * Theme.paddingLarge
+            spacing: Theme.paddingMedium
 
-            Image {
-                id: optionIcon
-                anchors.verticalCenter: parent.verticalCenter
-                source: icon
+            PageHeader {
+                //: Settings page title
+                //% "Settings"
+                title: qsTrId("ytplayer-title-settings")
             }
+
             Label {
-                color: optionItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-                width: settingsPage.width
-                anchors.left: optionIcon.right
-                anchors.verticalCenter: parent.verticalCenter
-                font.family: Theme.fontFamily
-                font.pixelSize: Theme.fontSizeSmall
-                text: view.model.name(index)
+                //: Search settings section label
+                //% "Search"
+                text: qsTrId("ytplayer-label-search")
+                width: parent.width
+                color: Theme.highlightColor
+                horizontalAlignment: Text.AlignRight
             }
 
-            onClicked: pageStack.push(Qt.resolvedUrl(page))
+            ComboBox {
+                //: Content filtering settings option label
+                //% "Content filtering"
+                label: qsTrId("ytplayer-label-content-filtering")
+                width: parent.width
+                currentIndex: S.get(S.SAFE_SEARCH)
+
+                menu: ContextMenu {
+                    // Indexes of menu items should match SAFE_SEARCH_ keys in Settings.js
+                    MenuItem {
+                        //: Option value for lack of any content filtering
+                        //% "None"
+                        text: qsTrId("ytplayer-content-fitering-none")
+                    }
+                    MenuItem {
+                        //: Option value for moderate content filtering
+                        //% "Moderate"
+                        text: qsTrId("ytplayer-content-filtering-moderate")
+                    }
+                    MenuItem {
+                        //: Option value for strict content filtering
+                        //% "Strict
+                        text: qsTrId("ytplayer-content-filtering-strict")
+                    }
+                }
+
+                onCurrentIndexChanged: S.set(S.SAFE_SEARCH, currentIndex);
+            }
+
+            Label {
+                //: Display settings section label
+                //% "Display"
+                text: qsTrId("ytplayer-label-display")
+                width: parent.width
+                color: Theme.highlightColor
+                horizontalAlignment: Text.AlignRight
+            }
+
+            Slider {
+                width: parent.width
+                minimumValue: 15
+                maximumValue: 50
+                stepSize: 5
+                value: S.get(S.RESULTS_PER_PAGE)
+                valueText: value
+                //: Label of results per page slider in display settings menu
+                //% "Results per page"
+                label: qsTrId("ytplayer-label-results-per-page")
+                onValueChanged: S.set(S.RESULTS_PER_PAGE, value)
+            }
         }
     }
 }

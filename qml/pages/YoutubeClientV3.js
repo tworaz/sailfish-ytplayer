@@ -111,8 +111,8 @@ function getVideoDetails(videoId, onSuccess, onFailure)
     xhr.onreadystatechange = function() {
         if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status !== 200) {
-                var details = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
-                onFailure({"code" : xhr.status, "details" : details});
+                var errDetails = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
+                onFailure({"code" : xhr.status, "details" : errDetails});
                 return;
             }
             var details = JSON.parse(xhr.responseText);
@@ -131,11 +131,30 @@ function getSearchResults(query, onSuccess, onFailure, pageToken)
     qParams["maxResults"] = Settings.get(Settings.RESULTS_PER_PAGE);
     //TODO: Only search for videos until browsing channels and playlist is implemented
     qParams["type"] = "video";
+
+    var safeSearchValue = undefined;
+    switch (parseInt(Settings.get(Settings.SAFE_SEARCH))) {
+    default:
+        console.warn("Unknown safe search value: " + Settings.get(Settings.SAFE_SEARCH));
+        break;
+    case Settings.SAFE_SEARCH_NONE:
+        qParams["safeSearch"] = "none";
+        break;
+    case Settings.SAFE_SEARCH_MODERATE:
+        qParams["safeSearch"] = "moderate";
+        break;
+    case Settings.SAFE_SEARCH_STRICT:
+        qParams["safeSearch"] = "strict";
+        break;
+    }
+
     if (pageToken) {
         qParams["pageToken"] = pageToken;
     }
 
     var url = getYoutubeV3Url("search", qParams);
+
+    console.debug("Search URL:" + url);
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
