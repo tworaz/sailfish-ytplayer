@@ -65,14 +65,16 @@ Page {
         }
 
         PushUpMenu {
-            visible: page.nextPageToken.length > 0;
+            id: bottomMenu
+            visible: page.nextPageToken.length > 0
+            quickSelect: true
             MenuItem {
                 //: Menu option show/load additional list elements
                 //% "Show more"
                 text: qsTrId("ytplayer-action-show-more")
                 onClicked: {
                     videoListView.loadNextResultsPage()
-                    indicator.running = true;
+                    bottomMenu.busy = true
                 }
             }
         }
@@ -93,24 +95,26 @@ Page {
         }
 
         function onFailure(error) {
-            errorNotification.show(error);
+            errorNotification.show(error)
             indicator.running = false
+            bottomMenu.busy = false
         }
 
         function onVideoListLoaded(response) {
             for (var i = 0; i < response.items.length; i++) {
-                videoListModel.append(response.items[i]);
+                videoListModel.append(response.items[i])
             }
             if (response.nextPageToken !== undefined) {
                 nextPageToken = response.nextPageToken
             } else {
-                nextPageToken = "";
+                nextPageToken = ""
             }
             indicator.running = false
+            bottomMenu.busy = false
         }
 
         function loadNextResultsPage() {
-            Yt.getVideosInCategory(page.videoCategoryId, onVideoListLoaded, onFailure, nextPageToken);
+            Yt.getVideosInCategory(page.videoCategoryId, onVideoListLoaded, onFailure, nextPageToken)
         }
 
         function refresh() {

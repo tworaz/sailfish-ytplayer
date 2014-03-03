@@ -64,7 +64,9 @@ Page {
         }
 
         PushUpMenu {
-            visible: page.nextPageToken.length > 0;
+            id: bottomMenu
+            visible: page.nextPageToken.length > 0
+            quickSelect: true
             MenuItem {
                 //: Menu option load additional list elements
                 //% "Show more"
@@ -92,13 +94,13 @@ Page {
             function search(str) {
                 if (str.length) {
                     queryStr = str
-                    restart();
+                    restart()
                 }
             }
 
             onTriggered: {
                 console.debug("Searching for: " + queryStr)
-                resultsListModel.clear();
+                resultsListModel.clear()
                 Yt.getSearchResults(queryStr, searchView.onSearchSuccessful, searchView.onSearchFailed)
                 indicator.running = true
             }
@@ -122,7 +124,7 @@ Page {
             console.debug("Loading next page of results, token: " + page.nextPageToken)
             Yt.getSearchResults(searchHandler.queryStr, searchView.onSearchSuccessful,
                                 searchView.onSearchFailed, page.nextPageToken)
-            indicator.running = true
+            bottomMenu.busy = true
         }
 
         function onSearchSuccessful(results) {
@@ -132,12 +134,13 @@ Page {
             if (results.hasOwnProperty("nextPageToken")) {
                 page.nextPageToken = results.nextPageToken
             }
-            indicator.running = false;
+            indicator.running = false
+            bottomMenu.busy = false
         }
 
         function onSearchFailed(msg) {
-            console.error("Search Failed: " + msg);
-            indicator.running = false;
+            console.error("Search Failed: " + msg)
+            indicator.running = false
         }
 
         Component.onCompleted: {
