@@ -41,7 +41,8 @@ function getYoutubeV3Url(reference, queryParams)
     var url =  _youtube_data_v3_url + reference +
             "?regionCode=" + regionCode +
             "&key=" + NativeUtil.YouTubeDataKey +
-            "&hl=" + locale;
+            "&hl=" + locale +
+            "&maxResults=" + Settings.get(Settings.RESULTS_PER_PAGE);
 
     for (var key in queryParams) {
         if (queryParams.hasOwnProperty(key)) {
@@ -73,11 +74,11 @@ function getVideoCategories(onSuccess, onFailure)
 
 function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
 {
-    var resultsPerPage = Settings.get(Settings.RESULTS_PER_PAGE);
+    //var resultsPerPage = Settings.get(Settings.RESULTS_PER_PAGE);
     var qParams = {};
 
     qParams["part"] = "snippet";
-    qParams["maxResults"] = resultsPerPage;
+    //qParams["maxResults"] = resultsPerPage;
     qParams["chart"] = "mostPopular";
     qParams["videoCategoryId"] = categoryId;
 
@@ -102,6 +103,27 @@ function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
     xhr.send();
 }
 
+function getVideosInPlaylist(playlistId, onSuccess, onFailure)
+{
+    var url = getYoutubeV3Url("playlistItems",{"part" : "snippet", "playlistId" : playlistId});
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status !== 200) {
+                var errDetails = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
+                onFailure({"code" : xhr.status, "details" : errDetails});
+                return;
+            }
+            var response = JSON.parse(xhr.responseText);
+            console.assert(response.kind === "youtube#playlistItemListResponse");
+            onSuccess(response);
+        }
+    }
+    xhr.open("GET", url);
+    xhr.send()
+}
+
 function getVideoDetails(videoId, onSuccess, onFailure)
 {
     var url = getYoutubeV3Url("videos", {"part" : "contentDetails, snippet, statistics",
@@ -123,14 +145,36 @@ function getVideoDetails(videoId, onSuccess, onFailure)
     xhr.send();
 }
 
+function getChannelDetails(channelId, onSuccess, onFailure)
+{
+    var url = getYoutubeV3Url("channels",
+        {"part" : "snippet,statistics,contentDetails", "id" : channelId});
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status !== 200) {
+                var errDetails = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
+                onFailure({"code" : xhr.status, "details" : errDetails});
+                return;
+            }
+            var response = JSON.parse(xhr.responseText);
+            console.assert(response.kind === "youtube#channelListResponse");
+            console.assert(response.pageInfo.totalResults === 1);
+            onSuccess(response);
+        }
+    }
+    xhr.open("GET", url);
+    xhr.send();
+}
+
 function getSearchResults(query, onSuccess, onFailure, pageToken)
 {
     var qParams = {};
     qParams["q"] = query;
     qParams["part"] = "snippet";
-    qParams["maxResults"] = Settings.get(Settings.RESULTS_PER_PAGE);
-    //TODO: Only search for videos until browsing channels and playlist is implemented
-    qParams["type"] = "video";
+    //qParams["maxResults"] = Settings.get(Settings.RESULTS_PER_PAGE);
+    qParams["type"] = "video,channel";
 
     var safeSearchValue = undefined;
     switch (parseInt(Settings.get(Settings.SAFE_SEARCH))) {
@@ -153,8 +197,6 @@ function getSearchResults(query, onSuccess, onFailure, pageToken)
     }
 
     var url = getYoutubeV3Url("search", qParams);
-
-    console.debug("Search URL:" + url);
 
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {

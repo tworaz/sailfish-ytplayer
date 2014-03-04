@@ -51,7 +51,7 @@ CoverBackground {
         Image {
             id: thumbnail
             width: parent.width
-            height: width * 9 / 16
+            height: width * thumbnailAspectRatio
             fillMode: Image.PreserveAspectCrop
         }
 

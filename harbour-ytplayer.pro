@@ -40,7 +40,10 @@ OTHER_FILES += \
         qml/pages/About.qml \
         qml/pages/KeyValueLabel.qml \
         qml/pages/StatItem.qml \
-        qml/pages/ConnectionRetryTimer.qml
+        qml/pages/ConnectionRetryTimer.qml \
+        qml/pages/ChannelBrowser.qml \
+        qml/pages/AsyncImage.qml \
+        qml/pages/YoutubeVideoList.qml
 
 include(third_party/notifications.pri)
 

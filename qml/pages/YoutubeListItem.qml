@@ -31,35 +31,29 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 BackgroundItem {
-    id: videoItem
+    id: ytItem
     height: thumbnail.height + 2 * Theme.paddingSmall
 
     property variant youtubeId
-    property string title
-    property string thumbnailUrl
+    property alias title: itemLabel.text
+    property alias thumbnailUrl: thumbnail.source
 
-    Image {
+    AsyncImage {
         id: thumbnail
         width: 120
-        height: width * 9 / 16
+        height: width * thumbnailAspectRatio
         anchors {
             verticalCenter: parent.verticalCenter
             left: parent.left
             leftMargin: Theme.paddingMedium
         }
-        fillMode: Image.PreserveAspectCrop
-        source: videoItem.thumbnailUrl
-
-        BusyIndicator {
-            size: BusyIndicatorSize.Small
-            anchors.centerIn: parent
-            running: thumbnail.status === Image.Loading
-        }
+        source: ytItem.thumbnailUrl
+        indicatorSize: BusyIndicatorSize.Small
     }
 
     Label {
-        color: videoItem.highlighted ? Theme.highlightColor : Theme.primaryColor
-        //color: Theme.primaryColor
+        id: itemLabel
+        color: ytItem.highlighted ? Theme.highlightColor : Theme.primaryColor
         elide: Text.ElideRight
         anchors {
             left: thumbnail.right
@@ -72,15 +66,16 @@ BackgroundItem {
             family: Theme.fontFamily
             pixelSize: Theme.fontSizeSmall
         }
-        text: videoItem.title
     }
 
     onClicked: {
         if (youtubeId.kind === "youtube#video") {
-            console.debug("Clicked item is a video, opening video overview page")
+            console.debug("Selected item is a video, opening video overview page")
             pageStack.push(Qt.resolvedUrl("VideoOverview.qml"), {"videoId": youtubeId.videoId})
         } else if (youtubeId.kind === "youtube#channel") {
-            console.error("TODO: implement support for browsing channel videos!")
+            console.debug("Selected item is a channel, opening channel browser ")
+            pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),
+                           {"channelId" : youtubeId.channelId, title: ytItem.title})
         } else {
             console.error("Unrecogized id kind: " + youtubeId.kind);
         }

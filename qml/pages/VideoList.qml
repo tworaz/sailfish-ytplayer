@@ -34,7 +34,7 @@ import "YoutubeClientV3.js" as Yt
 
 Page {
     id: page
-    property string videoCategoryId
+    property variant videoResourceId: {"kind" : "", "id" : ""}
     property string title
     property string nextPageToken
 
@@ -91,7 +91,17 @@ Page {
             width: parent.width
             title: snippet.title
             thumbnailUrl: snippet.thumbnails.default.url
-            youtubeId: {"kind" : kind, "videoId" : id}
+            youtubeId: {
+                var y = undefined;
+                if (videoResourceId.kind === "youtube#videoCategory") {
+                    y = { "kind" : kind, "videoId" : id }
+                } else if (videoResourceId.kind === "#channelPlaylist") {
+                    y = snippet.resourceId
+                } else {
+                    console.assert(false)
+                }
+                return y
+            }
         }
 
         function onFailure(error) {
@@ -101,6 +111,8 @@ Page {
         }
 
         function onVideoListLoaded(response) {
+            console.assert(response.kind === "youtube#playlistItemListResponse" ||
+                           response.kind === "youtube#videoListResponse")
             for (var i = 0; i < response.items.length; i++) {
                 videoListModel.append(response.items[i])
             }
@@ -114,18 +126,25 @@ Page {
         }
 
         function loadNextResultsPage() {
-            Yt.getVideosInCategory(page.videoCategoryId, onVideoListLoaded, onFailure, nextPageToken)
+            var token = nextPageToken.length > 0 ? nextPageToken : undefined
+            if (videoResourceId.kind === "youtube#videoCategory") {
+                Yt.getVideosInCategory(videoResourceId.id, onVideoListLoaded, onFailure, token)
+            } else if (videoResourceId.kind === "#channelPlaylist") {
+                Yt.getVideosInPlaylist(videoResourceId.id, onVideoListLoaded, onFailure, token)
+            } else {
+                console.error("Unrecognized video listing types: " + videoResourceId.kind)
+            }
         }
 
         function refresh() {
             indicator.running = true
             videoListModel.clear()
-            Yt.getVideosInCategory(page.videoCategoryId, onVideoListLoaded, onFailure)
+            loadNextResultsPage()
         }
 
         Component.onCompleted: {
             console.debug("Video list page created")
-            Yt.getVideosInCategory(page.videoCategoryId, onVideoListLoaded, onFailure)
+            loadNextResultsPage()
         }
 
         VerticalScrollDecorator {}

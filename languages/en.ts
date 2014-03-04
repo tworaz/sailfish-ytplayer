@@ -12,7 +12,9 @@ Video categories page title</extracomment>
     </message>
     <message id="ytplayer-action-show-more">
         <source>Show more</source>
-        <extracomment>Menu option load additional list elements
+        <extracomment>Menu option show/load additional list elements
+----------
+Menu option load additional list elements
 ----------
 Menu option show/load additional list elements</extracomment>
         <translation>Show more</translation>
@@ -135,6 +137,21 @@ Menu option to show settings page</extracomment>
         <source>Strict</source>
         <extracomment>Option value for strict content filtering</extracomment>
         <translation>Strict</translation>
+    </message>
+    <message id="ytplayer-label-created-on">
+        <source>Created on</source>
+        <extracomment>Label for youtube channel creation date field</extracomment>
+        <translation>Created on</translation>
+    </message>
+    <message id="ytplayer-label-video-count">
+        <source>Video count</source>
+        <extracomment>Label for channel video count field</extracomment>
+        <translation>Video count</translation>
+    </message>
+    <message id="ytplayer-label-channel-videos">
+        <source>Channel videos</source>
+        <extracomment>Label for the channel videos list</extracomment>
+        <translation>Channel videos</translation>
     </message>
 </context>
 </TS>

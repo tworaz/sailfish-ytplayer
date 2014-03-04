@@ -36,7 +36,8 @@ import "pages"
 ApplicationWindow
 {
     property string regionCode: NativeUtil.regionCode
-    property string mainIconColor: "#FF980093"
+    readonly property string mainIconColor: "#FF980093"
+    readonly property double thumbnailAspectRatio: 9 / 16
 
     initialPage: Component { VideoCategories { } }
     cover: Qt.resolvedUrl("cover/Default.qml")

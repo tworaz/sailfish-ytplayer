@@ -77,22 +77,14 @@ Page {
 
             PageHeader {
                 id: header
+                title: ""
             }
 
-            Image {
+            AsyncImage {
                 id: poster
-                anchors {
-                    left: parent.left
-                    right: parent.right
-                }
-                height: width * 9 / 16
-                fillMode: Image.PreserveAspectCrop
-
-                BusyIndicator {
-                    size: BusyIndicatorSize.Medium
-                    anchors.centerIn: parent
-                    running: poster.status === Image.Loading
-                }
+                width: parent.width
+                height: width * thumbnailAspectRatio
+                indicatorSize: BusyIndicatorSize.Medium
             }
 
             Row {
