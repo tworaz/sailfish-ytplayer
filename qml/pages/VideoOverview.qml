@@ -36,8 +36,8 @@ import "duration.js" as DUtil
 Page {
     id: page
     property string videoId
-    readonly property string coverFile: "VideoOverview.qml"
     readonly property alias title: header.title
+    readonly property string coverFile: "VideoOverview.qml"
     readonly property alias thumbnailUrl: poster.source
 
     BusyIndicator {
@@ -73,15 +73,14 @@ Page {
             width: parent.width - 2 * Theme.paddingMedium
             x: Theme.paddingMedium
             spacing: Theme.paddingLarge
-            visible: !indicator.running
 
             PageHeader {
                 id: header
-                title: ""
             }
 
             AsyncImage {
                 id: poster
+                visible: !indicator.running
                 width: parent.width
                 height: width * thumbnailAspectRatio
                 indicatorSize: BusyIndicatorSize.Medium
@@ -89,6 +88,7 @@ Page {
 
             Row {
                 width: parent.width
+                visible: !indicator.running
 
                 KeyValueLabel {
                     id: publishDate
@@ -113,6 +113,7 @@ Page {
             Row {
                 width: parent.width
                 spacing: Theme.paddingLarge
+                visible: !indicator.running
 
                 StatItem {
                     id: viewCount
@@ -134,10 +135,12 @@ Page {
             Separator {
                 color: Theme.highlightColor
                 width: parent.width;
+                visible: !indicator.running
             }
 
             Label {
                 id: description
+                visible: !indicator.running
                 width: parent.width
                 textFormat: Text.PlainText
                 wrapMode: Text.Wrap

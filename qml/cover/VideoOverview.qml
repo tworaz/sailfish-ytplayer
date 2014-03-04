@@ -65,7 +65,7 @@ CoverBackground {
             wrapMode: Text.Wrap
             elide: Text.ElideRight
             horizontalAlignment: Text.AlignHCenter
-            text: parentPage.title
+            text: parentPage.title ? parentPage.title : ""
         }
     }
 

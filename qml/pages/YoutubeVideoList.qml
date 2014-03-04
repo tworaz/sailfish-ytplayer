@@ -33,6 +33,7 @@ import "YoutubeClientV3.js" as Yt
 
 
 SilicaListView {
+    id: root
     property variant videoResourceId: {"kind" : "", "id" : ""}
     property string nextPageToken: ""
     property bool hasNextPage: nextPageToken.length > 0
@@ -61,8 +62,7 @@ SilicaListView {
 
     function onFailure(error) {
         errorNotification.show(error)
-        indicator.running = false
-        busy = false
+        root.busy = false
     }
 
     function onVideoListLoaded(response) {
@@ -76,18 +76,17 @@ SilicaListView {
         } else {
             nextPageToken = ""
         }
-        indicator.running = false
-        busy = false
+        root.busy = false
     }
 
     function loadNextResultsPage() {
         var token = nextPageToken.length > 0 ? nextPageToken : undefined
         if (videoResourceId.kind === "youtube#videoCategory") {
             Yt.getVideosInCategory(videoResourceId.id, onVideoListLoaded, onFailure, token)
-            busy = true
+            root.busy = true
         } else if (videoResourceId.kind === "#channelPlaylist") {
             Yt.getVideosInPlaylist(videoResourceId.id, onVideoListLoaded, onFailure, token)
-            busy = true
+            root.busy = true
         } else {
             console.error("Unrecognized video listing types: " + videoResourceId.kind)
         }

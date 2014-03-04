@@ -34,18 +34,16 @@ import "YoutubeClientV3.js" as Yt
 
 Page {
     id: page
-    property variant videoResourceId: {"kind" : "", "id" : ""}
+    property alias videoResourceId: videoListView.videoResourceId
     property string title
-    property string nextPageToken
 
     BusyIndicator {
-        id: indicator
         anchors.centerIn: parent
-        running: true
+        running: (videoListView.busy && videoListView.model.count === 0)
         size: BusyIndicatorSize.Large
     }
 
-    SilicaListView {
+    YoutubeVideoList {
         id: videoListView
         anchors.fill: parent
 
@@ -65,86 +63,19 @@ Page {
         }
 
         PushUpMenu {
-            id: bottomMenu
-            visible: page.nextPageToken.length > 0
+            visible: videoListView.hasNextPage
+            busy: videoListView.busy
             quickSelect: true
             MenuItem {
                 //: Menu option show/load additional list elements
                 //% "Show more"
                 text: qsTrId("ytplayer-action-show-more")
-                onClicked: {
-                    videoListView.loadNextResultsPage()
-                    bottomMenu.busy = true
-                }
+                onClicked: videoListView.loadNextResultsPage()
             }
         }
 
         header: PageHeader {
             title: page.title
-        }
-
-        model: ListModel {
-            id: videoListModel
-        }
-
-        delegate: YoutubeListItem {
-            width: parent.width
-            title: snippet.title
-            thumbnailUrl: snippet.thumbnails.default.url
-            youtubeId: {
-                var y = undefined;
-                if (videoResourceId.kind === "youtube#videoCategory") {
-                    y = { "kind" : kind, "videoId" : id }
-                } else if (videoResourceId.kind === "#channelPlaylist") {
-                    y = snippet.resourceId
-                } else {
-                    console.assert(false)
-                }
-                return y
-            }
-        }
-
-        function onFailure(error) {
-            errorNotification.show(error)
-            indicator.running = false
-            bottomMenu.busy = false
-        }
-
-        function onVideoListLoaded(response) {
-            console.assert(response.kind === "youtube#playlistItemListResponse" ||
-                           response.kind === "youtube#videoListResponse")
-            for (var i = 0; i < response.items.length; i++) {
-                videoListModel.append(response.items[i])
-            }
-            if (response.nextPageToken !== undefined) {
-                nextPageToken = response.nextPageToken
-            } else {
-                nextPageToken = ""
-            }
-            indicator.running = false
-            bottomMenu.busy = false
-        }
-
-        function loadNextResultsPage() {
-            var token = nextPageToken.length > 0 ? nextPageToken : undefined
-            if (videoResourceId.kind === "youtube#videoCategory") {
-                Yt.getVideosInCategory(videoResourceId.id, onVideoListLoaded, onFailure, token)
-            } else if (videoResourceId.kind === "#channelPlaylist") {
-                Yt.getVideosInPlaylist(videoResourceId.id, onVideoListLoaded, onFailure, token)
-            } else {
-                console.error("Unrecognized video listing types: " + videoResourceId.kind)
-            }
-        }
-
-        function refresh() {
-            indicator.running = true
-            videoListModel.clear()
-            loadNextResultsPage()
-        }
-
-        Component.onCompleted: {
-            console.debug("Video list page created")
-            loadNextResultsPage()
         }
 
         VerticalScrollDecorator {}
