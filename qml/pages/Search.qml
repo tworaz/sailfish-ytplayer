@@ -80,9 +80,11 @@ Page {
             //: Label of video search text field
             //% "Search"
             placeholderText: qsTrId("ytplayer-label-search")
-            onTextChanged: searchHandler.search(text)
+            onTextChanged: {
+                searchView.currentIndex = -1
+                searchHandler.search(text)
+            }
         }
-
 
         Timer {
             id: searchHandler
@@ -101,13 +103,11 @@ Page {
             onTriggered: {
                 console.debug("Searching for: " + queryStr)
                 resultsListModel.clear()
+                page.nextPageToken = ""
                 Yt.getSearchResults(queryStr, searchView.onSearchSuccessful, searchView.onSearchFailed)
                 indicator.running = true
             }
         }
-
-        // prevent newly added list delegates from stealing focus away from the search field
-        currentIndex: -1
 
         model: ListModel {
             id: resultsListModel
@@ -118,6 +118,20 @@ Page {
             title: snippet.title
             thumbnailUrl: snippet.thumbnails.default.url
             youtubeId: id
+        }
+
+        onMovementStarted: {
+            if (count > 0) {
+                currentIndex = 0
+                currentItem.forceActiveFocus()
+            }
+        }
+
+        onContentYChanged: {
+            if (contentY === -searchView.headerItem.height) {
+                currentIndex = -1
+                searchView.headerItem.forceActiveFocus()
+            }
         }
 
         function loadNextResultsPage() {
@@ -140,6 +154,7 @@ Page {
 
         function onSearchFailed(msg) {
             console.error("Search Failed: " + msg)
+            page.nextPageToken = ""
             indicator.running = false
         }
 
