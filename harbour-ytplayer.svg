@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="86"
+   height="86"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="harbour-ytplayer.svg"
+   inkscape:export-filename="/home/tworaz/devel/jolla/harbour-ytplayer/harbour-ytplayer.png"
+   inkscape:export-xdpi="90.632324"
+   inkscape:export-ydpi="90.632324">
+  <defs
+     id="defs4">
+    <linearGradient
+       id="linearGradient3789-6">
+      <stop
+         style="stop-color:#9400c3;stop-opacity:1;"
+         offset="0"
+         id="stop3791-0" />
+      <stop
+         style="stop-color:#620062;stop-opacity:1;"
+         offset="1"
+         id="stop3793-4" />
+    </linearGradient>
+    <radialGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient3789-6"
+       id="radialGradient3846"
+       cx="43"
+       cy="47"
+       fx="43"
+       fy="47"
+       r="42.700001"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="5.6568542"
+     inkscape:cx="4.346098"
+     inkscape:cy="35.577311"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer2"
+     showgrid="true"
+     inkscape:window-width="1600"
+     inkscape:window-height="847"
+     inkscape:window-x="0"
+     inkscape:window-y="29"
+     inkscape:window-maximized="1"
+     inkscape:snap-bbox="true"
+     inkscape:snap-global="true">
+    <inkscape:grid
+       type="xygrid"
+       id="grid2985"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:groupmode="layer"
+     id="layer2"
+     inkscape:label="Ebene"
+     style="display:inline"
+     transform="translate(0,-4)">
+    <path
+       inkscape:connector-curvature="0"
+       style="fill:url(#radialGradient3846);fill-opacity:1.0"
+       id="path11"
+       d="M 84.277,4.3 H 43 C 19.417,4.3 0.3,23.418 0.3,47 v 41.277 c 0,0.786 0.637,1.423 1.423,1.423 H 43 C 66.583,89.7 85.7,70.582 85.7,47 V 5.723 C 85.7,4.937 85.063,4.3 84.277,4.3 z"
+       inkscape:export-xdpi="90.632324"
+       inkscape:export-ydpi="90.632324"
+       inkscape:export-filename="/home/tworaz/devel/jolla/harbour-ytplayer/harbour-ytplayer.png" />
+    <path
+       sodipodi:type="star"
+       style="fill:#e6e6e6;fill-opacity:1"
+       id="path3063"
+       sodipodi:sides="3"
+       sodipodi:cx="30"
+       sodipodi:cy="31"
+       sodipodi:r1="20"
+       sodipodi:r2="10"
+       sodipodi:arg1="0"
+       sodipodi:arg2="1.0471976"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="M 50,31 35,39.660254 20,48.320508 20,31 20,13.679492 35,22.339746 z"
+       transform="translate(10,16.320508)"
+       inkscape:transform-center-x="-5" />
+  </g>
+</svg>
