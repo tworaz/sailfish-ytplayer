@@ -37,251 +37,141 @@ import "YoutubeClientV3.js" as Yt
 Page {
     id: page
     allowedOrientations: Orientation.All
-    showNavigationIndicator: page.isPortrait || (page.isLandscape && controls.visible())
+    showNavigationIndicator: topDockPanel.open
 
-    property bool applicationActive: Qt.application.active
     property string videoId
     property string title
 
+    onOrientationChanged: {
+        if (page.isLandscape) {
+            showVideoControls(true)
+        } else {
+            showVideoControls(!videoController.playing)
+        }
+    }
+
+    function showVideoControls(show) {
+        if (show) {
+            topDockPanel.show()
+            videoController.show()
+        } else {
+            topDockPanel.hide()
+            videoController.hide()
+        }
+    }
+
     Rectangle {
-        id: background;
+        id: background
         anchors.fill: parent
         color: "black"
+    }
+
+    DockedPanel {
+        id: topDockPanel
+        dock: Dock.Top
+        width: parent.width
+        height: Theme.itemSizeMedium + Theme.paddingMedium
+        z: video.z + 1
+
+        Rectangle {
+            anchors.fill: parent
+            opacity: 0.5
+            color: "black"
+        }
+
+        PageHeader {
+            id: header
+            title: page.title
+        }
     }
 
     SilicaFlickable {
         id: flickable
         anchors.fill: parent
-
-        PageHeader {
-            id: header
-            title: page.title
-            visible: page.isPortrait || (page.isLandscape && controls.visible())
-            z: video.z + 2
-        }
-
-        // Simple background for PageHeader visible only when player is in landscape mode.
-        // It's supposed to ensure header contents are always readeble, no matter what
-        // video content is visible in the background.
-        Rectangle {
-            anchors {
-                right: header.right
-                left: header.left
-                top: header.top
-                bottom: header.bottom
-            }
-
-            visible: header.visible
-            color: "black"
-            opacity: 0.5
-            z: header.z - 1
-        }
-
-        MediaPlayer {
-            id: mediaPlayer
-            autoPlay: true
-
-            onStatusChanged: {
-                console.debug("Media Player status changed to: " +
-                              mediaPlayerStatusToString(status))
-                switch (status) {
-                case MediaPlayer.Loading:
-                case MediaPlayer.Buffering:
-                case MediaPlayer.Stalled:
-                    indicator.running = true
-                    break;
-                case MediaPlayer.Buffered:
-                    indicator.running = false
-                    break;
-                }
-            }
-
-            onPlaybackStateChanged: {
-                switch(playbackState) {
-                case MediaPlayer.PlayingState: return "Playing"
-                case MediaPlayer.PausedState: return "Paused"
-                case MediaPlayer.StoppedState: return "Stopped"
-                }
-            }
-
-            onPositionChanged: {
-                progressBar.setPosition(position)
-            }
-
-            onError: {
-                console.error(errorString)
-                indicator.running = false
-            }
-
-            function mediaPlayerStatusToString(status) {
-                switch(status) {
-                case MediaPlayer.NoMedia: return "NoMedia"
-                case MediaPlayer.Loading: return "Loading"
-                case MediaPlayer.Loaded: return "Loaded"
-                case MediaPlayer.Buffering: return "Buffering"
-                case MediaPlayer.Stalled: return "Stalled"
-                case MediaPlayer.Buffered: return "Buffered"
-                case MediaPlayer.EndOfMedia: return "EndOfMedia"
-                case MediaPlayer.InvalidMedia: return "InvalidMedia"
-                default: return "UnknownStatus"
-                }
-            }
-        }
+        anchors.topMargin: topDockPanel.margin
+        anchors.bottomMargin: videoController.margin
 
         // TODO: Use VideoOutput once it's working
         GStreamerVideoOutput {
             id: video
-            source: mediaPlayer
+            source: videoController.mediaPlayer
             anchors.fill: parent
 
             BusyIndicator {
                 id: indicator
                 anchors.centerIn: parent
-                running: true
+                running: videoController.showIndicator
                 size: BusyIndicatorSize.Large
             }
         }
 
         MouseArea {
-            id: controls
-            anchors.fill: parent;
+            anchors.fill: parent
+            visible: page.isLandscape
 
             onClicked: {
-                console.debug("Screen tapped, showing video controls")
-                show()
-            }
-
-            function show() {
-                playPauseButton.opacity = 1.0
-                progressBar.opacity = 1.0
+                console.debug("Video player screen clicked")
+                showVideoControls(true)
                 controlsTimer.restart()
-            }
-
-            function visible() {
-                return (playPauseButton.opacity == 1.0);
             }
 
             Timer {
                 id: controlsTimer
-                interval: 2500
+                interval: 4000
                 repeat: false
                 onTriggered: {
-                    console.debug("Video controls timeout, hiding")
-                    playPauseButtonHide.start()
-                    progressBarHide.start()
-                }
-            }
-
-            Image {
-                id: playPauseButton
-                anchors.centerIn: parent
-                opacity: 0.0
-                visible: !indicator.running
-                source: mediaPlayer.playbackState === MediaPlayer.PlayingState ?
-                            "image://theme/icon-cover-pause?" + Theme.highlightColor :
-                            "image://theme/icon-cover-play?" + Theme.highlightColor
-
-                NumberAnimation {
-                    id: playPauseButtonHide
-                    target: playPauseButton
-                    property: "opacity"
-                    from: 1.0
-                    to: 0.0
-                    duration: 500
-                    easing.type: Easing.InOutQuad
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        console.debug("Play/Pause button clicked")
-                        controls.show()
-                        if (mediaPlayer.playbackState == MediaPlayer.PlayingState) {
-                            mediaPlayer.pause()
-                        } else {
-                            mediaPlayer.play()
-                        }
+                    if (!videoController.playbackFinished &&
+                        videoController.playing &&
+                        page.isLandscape) {
+                        console.debug("Video controls timeout, hiding")
+                        showVideoControls(false)
                     }
                 }
             }
+        }
+    }
 
-            Rectangle {
-                id: progressBar
-                anchors.bottom: parent.bottom
-                width: parent.width
-                color: Theme.secondaryHighlightColor
-                opacity: 0.0
-                height: 60
+    VideoController {
+        id: videoController
+        width: parent.width
+        height: Theme.itemSizeLarge + Theme.paddingLarge
+        dock: Dock.Bottom
 
-                Rectangle {
-                    id: progressContent
-                    height: parent.height
-                    color: Theme.highlightColor
-                    opacity: 0.95
-                }
+        onSeekingChanged: {
+            if (page.isLandscape) {
+                seeking ? controlsTimer.stop() : controlsTimer.start()
+            }
+        }
 
-                NumberAnimation {
-                    id: progressBarHide
-                    target: progressBar
-                    property: "opacity"
-                    from: 1.0
-                    to: 0.0
-                    duration: 500
-                    easing.type: Easing.InOutQuad
-                }
+        onPlaybackFinishedChanged: {
+            if (playbackFinished && page.isLandscape){
+                controlsTimer.restart()
+            } else {
+                showVideoControls(true)
+            }
+        }
 
-                function setPosition(position) {
-                    var p = position / mediaPlayer.duration;
-                    progressContent.width = progressBar.width * p;
-                }
-
-                MouseArea {
-                    anchors.fill: parent
-                    drag {
-                        target: controls
-                        axis: Drag.XAxis
-                        minimumX: 0
-                        maximumX: controls.width
-                    }
-
-                    onPressed: {
-                        console.debug("Progress pressed")
-                        controls.show()
-                    }
-
-                    onReleased: {
-                        var pos = (mouse.x / progressBar.width) * mediaPlayer.duration
-                        console.debug("Seeking to: " + pos)
-                        mediaPlayer.seek(pos);
-                    }
-
-                    onClicked: {
-                        console.debug("Progress bar clicked");
-                        controls.show()
-                    }
-                }
+        onPlayingChanged: {
+            if (playing && page.isLandscape) {
+                controlsTimer.restart()
             }
         }
     }
 
     function onFailure(error) {
-        errorNotification.show(error);
-        indicator.running = false;
+        errorNotification.show(error)
+        videoController.showIndicator = false
     }
 
     function onVideoUrlObtained(url) {
         console.debug("Selected URL: " + url)
-        mediaPlayer.source = url
-    }
+        videoController.mediaPlayer.source = url
 
-    onApplicationActiveChanged:  {
-        if (!applicationActive) {
-            mediaPlayer.pause()
-        }
     }
 
     Component.onCompleted: {
         console.debug("Video player page created, video ID: " + videoId)
         Yt.getVideoUrl(videoId, onVideoUrlObtained, onFailure)
+        showVideoControls(true)
     }
 }
