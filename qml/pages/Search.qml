@@ -128,7 +128,7 @@ Page {
         }
 
         onContentYChanged: {
-            if (contentY === -searchView.headerItem.height) {
+            if (contentY === -searchView.headerItem.height && !pageStack.busy) {
                 currentIndex = -1
                 searchView.headerItem.forceActiveFocus()
             }
