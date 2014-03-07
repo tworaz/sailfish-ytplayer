@@ -121,8 +121,7 @@ Page {
                 repeat: false
                 onTriggered: {
                     if (!videoController.playbackFinished &&
-                        videoController.playing &&
-                        page.isLandscape) {
+                        videoController.playing && page.isLandscape) {
                         console.debug("Video controls timeout, hiding")
                         showVideoControls(false)
                     }
@@ -145,8 +144,6 @@ Page {
 
         onPlaybackFinishedChanged: {
             if (playbackFinished && page.isLandscape){
-                controlsTimer.restart()
-            } else {
                 showVideoControls(true)
             }
         }

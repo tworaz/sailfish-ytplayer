@@ -37,7 +37,7 @@ DockedPanel {
     property alias mediaPlayer: _mediaPlayer
     property alias seeking: progressSlider.down
     property bool playing: _mediaPlayer.playbackState === MediaPlayer.PlayingState
-    property bool playbackFinished: _mediaPlayer.Status === MediaPlayer.EndOfMedia
+    property bool playbackFinished: _mediaPlayer.status === MediaPlayer.EndOfMedia
     property bool applicationActive: Qt.application.active
     property bool showIndicator: false
 
@@ -78,9 +78,15 @@ DockedPanel {
 
         onPlaybackStateChanged: {
             switch(playbackState) {
-            case MediaPlayer.PlayingState: return "Playing"
-            case MediaPlayer.PausedState: return "Paused"
-            case MediaPlayer.StoppedState: return "Stopped"
+            case MediaPlayer.PlayingState:
+                console.debug("Video is playing")
+                break
+            case MediaPlayer.PausedState:
+                console.debug("Video is paused")
+                break
+            case MediaPlayer.StoppedState:
+                console.debug("Video is stopped")
+                break
             }
         }
 
