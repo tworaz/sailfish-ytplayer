@@ -176,3 +176,21 @@ NativeUtil::getMobileCountryCodeMap()
 	}
 	return QJsonObject();
 }
+
+void
+NativeUtil::setPreventScreenBlanking(bool prevent)
+{
+	QDBusConnection systemBus = QDBusConnection::connectToBus(QDBusConnection::SystemBus, "system");
+	Q_ASSERT(systemBus.isConnected());
+	QString request;
+	if (prevent) {
+		request = "req_display_blanking_pause";
+		qDebug() << "Disabling display blanking";
+	} else {
+		request = "req_display_cancel_blanking_pause";
+		qDebug() << "Enabling display blanking";
+	}
+	QDBusMessage msg = QDBusMessage::createMethodCall("com.nokia.mce", "/com/nokia/mce/request",
+	                                                  "com.nokia.mce.request", request);
+	(void)systemBus.call(msg);
+}

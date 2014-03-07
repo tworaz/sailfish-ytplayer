@@ -149,6 +149,7 @@ Page {
         }
 
         onPlayingChanged: {
+            NativeUtil.preventScreenBlanking = playing
             if (playing && page.isLandscape) {
                 controlsTimer.restart()
             }

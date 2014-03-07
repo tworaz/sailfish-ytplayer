@@ -42,6 +42,7 @@ class NativeUtil : public QObject
 	Q_PROPERTY(QString YouTubeDataKey READ getYouTubeDataKey CONSTANT)
 	Q_PROPERTY(QString version READ getVersion CONSTANT)
 	Q_PROPERTY(QString regionCode READ getRegionCode CONSTANT)
+	Q_PROPERTY(bool preventScreenBlanking WRITE setPreventScreenBlanking)
 
 public:
 	explicit NativeUtil(QObject *parent = 0);
@@ -54,6 +55,7 @@ private:
 	static QDBusObjectPath getModemPath(QDBusConnection conn);
 	static unsigned getMobileCountryCode(QDBusConnection conn, QDBusObjectPath modem);
 	static QJsonObject getMobileCountryCodeMap();
+	static void setPreventScreenBlanking(bool prevent);
 };
 
 #endif // NATIVEUTIL_H
