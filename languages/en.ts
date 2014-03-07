@@ -153,5 +153,46 @@ Menu option to show settings page</extracomment>
         <extracomment>Label for the channel videos list</extracomment>
         <translation>Channel videos</translation>
     </message>
+    <message id="ytplayer-status-buffering">
+        <source>Buffering: %1%</source>
+        <oldsource>Buffering: %1 \%</oldsource>
+        <extracomment>Media player status indicating content is buffering</extracomment>
+        <translation>Buffering: %1%</translation>
+    </message>
+    <message id="ytplayer-status-no-media">
+        <source>No media</source>
+        <extracomment>Media player status indicating there is no content to play</extracomment>
+        <translation>No media</translation>
+    </message>
+    <message id="ytplayer-status-loading">
+        <source>Loading</source>
+        <extracomment>Media player status indicating content is loading</extracomment>
+        <translation>Loading</translation>
+    </message>
+    <message id="ytplayer-status-loaded">
+        <source>Loaded</source>
+        <extracomment>Media player status indicating content was loaded</extracomment>
+        <translation>Loaded</translation>
+    </message>
+    <message id="ytplayer-status-stalled">
+        <source>Stalled</source>
+        <extracomment>Media player status indicating content loading has stalled</extracomment>
+        <translation>Stalled</translation>
+    </message>
+    <message id="ytplayer-status-buffered">
+        <source>Buffered</source>
+        <extracomment>Media player status indicating content has been buffered</extracomment>
+        <translation>Buffered</translation>
+    </message>
+    <message id="ytplayer-status-end-of-media">
+        <source>End of media</source>
+        <extracomment>Media player status indicating end of content has been reached</extracomment>
+        <translation>End of media</translation>
+    </message>
+    <message id="ytplayer-status-invalid-media">
+        <source>Invalid media</source>
+        <extracomment>Media player status indicating invalid content type</extracomment>
+        <translation>Invalid media</translation>
+    </message>
 </context>
 </TS>

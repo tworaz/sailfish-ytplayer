@@ -105,7 +105,9 @@ DockedPanel {
             //console.debug("Buffering progress: " + Math.round(bufferProgress * 100))
             var b = Math.round(bufferProgress * 100)
             if (b < 100) {
-                playbackStatus.text = "Buffering:" + Math.round(bufferProgress * 100) + "%"
+                //% "Buffering: %1%"
+                playbackStatus.text = qsTrId('ytplayer-status-buffering').arg(
+                            Math.round(bufferProgress * 100))
             } else {
                 playbackStatus.text = mediaPlayerStatusToString(MediaPlayer.Buffered)
             }
@@ -114,14 +116,32 @@ DockedPanel {
         function mediaPlayerStatusToString(status) {
             // TODO: Translate status strings
             switch(status) {
-            case MediaPlayer.NoMedia: return "NoMedia"
-            case MediaPlayer.Loading: return "Loading"
-            case MediaPlayer.Loaded: return "Loaded"
-            case MediaPlayer.Buffering: return "Buffering"
-            case MediaPlayer.Stalled: return "Stalled"
-            case MediaPlayer.Buffered: return "Buffered"
-            case MediaPlayer.EndOfMedia: return "EndOfMedia"
-            case MediaPlayer.InvalidMedia: return "InvalidMedia"
+            //: Media player status indicating there is no content to play
+            //% "No media"
+            case MediaPlayer.NoMedia: return qsTrId('ytplayer-status-no-media')
+            //: Media player status indicating content is loading
+            //% "Loading"
+            case MediaPlayer.Loading: return qsTrId('ytplayer-status-loading')
+            //: Media player status indicating content was loaded
+            //% "Loaded"
+            case MediaPlayer.Loaded: return qsTrId('ytplayer-status-loaded')
+            case MediaPlayer.Buffering:
+                //: Media player status indicating content is buffering
+                //% "Buffering: %1%"
+                return qsTrId('ytplayer-status-buffering').arg(
+                            Math.round(bufferProgress * 100))
+            //: Media player status indicating content loading has stalled
+            //% "Stalled"
+            case MediaPlayer.Stalled: return qsTrId('ytplayer-status-stalled')
+            //: Media player status indicating content has been buffered
+            //% "Buffered"
+            case MediaPlayer.Buffered: return qsTrId('ytplayer-status-buffered')
+            //: Media player status indicating end of content has been reached
+            //% "End of media"
+            case MediaPlayer.EndOfMedia: return qsTrId('ytplayer-status-end-of-media')
+            //: Media player status indicating invalid content type
+            //% "Invalid media"
+            case MediaPlayer.InvalidMedia: return qsTrId('ytplayer-status-invalid-media')
             default: return "UnknownStatus"
             }
         }
