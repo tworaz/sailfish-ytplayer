@@ -161,6 +161,15 @@ Page {
             }
         }
 
+        onOpenChanged: {
+            // Prevent the user from closing the panel in portrait mode
+            if (!open && page.isPortrait) {
+                open = true
+                return
+            }
+            topDockPanel.open = open
+        }
+
         onPlayingChanged: {
             if (Qt.application.active) {
                 screenBlanking.prevent(playing)
