@@ -34,6 +34,7 @@ import "YoutubeClientV3.js" as Yt
 
 SilicaListView {
     id: root
+    property alias count: videoListModel.count
     property variant videoResourceId: {"kind" : "", "id" : ""}
     property string nextPageToken: ""
     property bool hasNextPage: nextPageToken.length > 0
@@ -95,9 +96,5 @@ SilicaListView {
     function refresh() {
         videoListModel.clear()
         loadNextResultsPage()
-    }
-
-    onVideoResourceIdChanged: {
-        refresh()
     }
 }

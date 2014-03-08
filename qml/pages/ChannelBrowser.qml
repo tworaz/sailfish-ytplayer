@@ -170,6 +170,8 @@ Page {
                 commentCount.text = stats.commentCount
                 viewCount.text = stats.viewCount
                 indicator.running = false
+
+                channelVideoList.refresh()
             }
 
             function onChannelDetailsFetchFailed(error) {

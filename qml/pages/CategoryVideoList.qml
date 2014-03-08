@@ -37,9 +37,15 @@ Page {
     property alias categoryResourceId: videoListView.videoResourceId
     property string title
 
+    onStatusChanged: {
+        if (status === PageStatus.Active && !videoListView.count) {
+            videoListView.refresh()
+        }
+    }
+
     BusyIndicator {
         anchors.centerIn: parent
-        running: (videoListView.busy && videoListView.model.count === 0)
+        running: (videoListView.busy && videoListView.count === 0)
         size: BusyIndicatorSize.Large
     }
 
