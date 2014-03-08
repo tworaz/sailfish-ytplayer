@@ -46,6 +46,21 @@ Page {
     property string videoId
     property string title
 
+    Component.onCompleted: {
+        console.debug("Video player page created, video ID: " + videoId)
+        showVideoControls(true)
+    }
+
+    onStatusChanged: {
+        if (status === PageStatus.Active) {
+            Yt.getVideoUrl(videoId, onVideoUrlObtained, onFailure)
+        } else if (status == PageStatus.Deactivating) {
+            console.debug("VidePlayer page deactiated");
+            mediaPlayer.stop()
+            videoOutput.source = null
+        }
+    }
+
     onApplicationActiveChanged:  {
         if (!applicationActive) {
             mediaPlayer.pause()
@@ -89,7 +104,7 @@ Page {
         dock: Dock.Top
         width: parent.width
         height: Theme.itemSizeMedium + Theme.paddingMedium
-        z: video.z + 1
+        z: videoOutput.z + 1
 
         Rectangle {
             anchors.fill: parent
@@ -111,7 +126,7 @@ Page {
 
         // TODO: Use VideoOutput once it's working
         GStreamerVideoOutput {
-            id: video
+            id: videoOutput
             source: mediaPlayer
             anchors.fill: parent
 
@@ -214,11 +229,5 @@ Page {
         console.debug("Selected URL: " + url)
         mediaPlayer.source = url
 
-    }
-
-    Component.onCompleted: {
-        console.debug("Video player page created, video ID: " + videoId)
-        Yt.getVideoUrl(videoId, onVideoUrlObtained, onFailure)
-        showVideoControls(true)
     }
 }
