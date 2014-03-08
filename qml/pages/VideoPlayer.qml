@@ -112,7 +112,7 @@ Page {
         // TODO: Use VideoOutput once it's working
         GStreamerVideoOutput {
             id: video
-            source: Qt.application.active ? mediaPlayer : null
+            source: mediaPlayer
             anchors.fill: parent
 
             BusyIndicator {
