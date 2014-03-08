@@ -131,9 +131,9 @@ Page {
             }
 
             Label {
-                //: Label for the channel videos list
-                //% "Channel videos"
-                text: qsTrId("ytplayer-label-channel-videos")
+                //: Label/Title for the list of latest videos in certain category
+                //% "Latest videos"
+                text: qsTrId("ytplayer-label-latest-videos")
                 width: parent.width
                 color: Theme.highlightColor
                 horizontalAlignment: Text.AlignRight

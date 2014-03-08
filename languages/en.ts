@@ -148,11 +148,6 @@ Menu option to show settings page</extracomment>
         <extracomment>Label for channel video count field</extracomment>
         <translation>Video count</translation>
     </message>
-    <message id="ytplayer-label-channel-videos">
-        <source>Channel videos</source>
-        <extracomment>Label for the channel videos list</extracomment>
-        <translation>Channel videos</translation>
-    </message>
     <message id="ytplayer-status-buffering">
         <source>Buffering: %1%</source>
         <oldsource>Buffering: %1 \%</oldsource>
@@ -193,6 +188,11 @@ Menu option to show settings page</extracomment>
         <source>Invalid media</source>
         <extracomment>Media player status indicating invalid content type</extracomment>
         <translation>Invalid media</translation>
+    </message>
+    <message id="ytplayer-label-latest-videos">
+        <source>Latest videos</source>
+        <extracomment>Label/Title for the list of latest videos in certain category</extracomment>
+        <translation>Latest videos</translation>
     </message>
 </context>
 </TS>
