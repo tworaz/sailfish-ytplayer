@@ -32,7 +32,6 @@ OTHER_FILES += \
         qml/pages/Settings.js \
         qml/pages/duration.js \
         qml/pages/Helpers.js \
-        qml/pages/VideoList.qml \
         qml/pages/VideoOverview.qml \
         qml/pages/VideoPlayer.qml \
         qml/pages/YoutubeListItem.qml \
@@ -46,7 +45,8 @@ OTHER_FILES += \
         qml/pages/ChannelBrowser.qml \
         qml/pages/AsyncImage.qml \
         qml/pages/YoutubeVideoList.qml \
-        qml/pages/VideoController.qml
+        qml/pages/VideoController.qml \
+        qml/pages/CategoryVideoList.qml
 
 include(third_party/notifications.pri)
 

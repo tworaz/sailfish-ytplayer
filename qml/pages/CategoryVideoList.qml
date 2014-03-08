@@ -34,7 +34,7 @@ import "YoutubeClientV3.js" as Yt
 
 Page {
     id: page
-    property alias videoResourceId: videoListView.videoResourceId
+    property alias categoryResourceId: videoListView.videoResourceId
     property string title
 
     BusyIndicator {

@@ -145,8 +145,9 @@ Page {
             onClicked: {
                 console.debug("Selected video category id:" + id)
                 var listingType = { "kind" : kind, "id" : id }
-                pageStack.push(Qt.resolvedUrl("VideoList.qml"),
-                               {"videoResourceId": listingType, "title" : snippet.title})
+                pageStack.push(Qt.resolvedUrl("CategoryVideoList.qml"),
+                               { "categoryResourceId": listingType,
+                                 "title" : snippet.title})
             }
         }
 
