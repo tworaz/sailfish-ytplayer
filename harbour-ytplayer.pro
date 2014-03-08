@@ -27,6 +27,7 @@ OTHER_FILES += \
         qml/YTPlayer.qml \
         qml/cover/Default.qml \
         qml/cover/VideoOverview.qml \
+        qml/cover/VideoPlayer.qml \
         qml/pages/YoutubeClientV3.js \
         qml/pages/Settings.js \
         qml/pages/duration.js \

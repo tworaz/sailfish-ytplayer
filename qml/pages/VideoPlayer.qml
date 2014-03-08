@@ -39,8 +39,21 @@ Page {
     allowedOrientations: Orientation.All
     showNavigationIndicator: topDockPanel.open
 
+    readonly property string coverFile: "VideoPlayer.qml"
+    property bool applicationActive: Qt.application.active
+    property alias mediaPlayer: videoController.mediaPlayer
+    property string thumbnailUrl
     property string videoId
     property string title
+
+    onApplicationActiveChanged:  {
+        if (!applicationActive) {
+            mediaPlayer.pause()
+            NativeUtil.preventScreenBlanking = false
+        } else {
+            NativeUtil.preventScreenBlanking = videoController.playing
+        }
+    }
 
     onOrientationChanged: {
         if (page.isLandscape) {
@@ -94,7 +107,7 @@ Page {
         // TODO: Use VideoOutput once it's working
         GStreamerVideoOutput {
             id: video
-            source: videoController.mediaPlayer
+            source: Qt.application.active ? mediaPlayer : null
             anchors.fill: parent
 
             BusyIndicator {
@@ -149,7 +162,9 @@ Page {
         }
 
         onPlayingChanged: {
-            NativeUtil.preventScreenBlanking = playing
+            if (Qt.application.active) {
+                NativeUtil.preventScreenBlanking = playing
+            }
             if (playing && page.isLandscape) {
                 controlsTimer.restart()
             }
@@ -163,7 +178,7 @@ Page {
 
     function onVideoUrlObtained(url) {
         console.debug("Selected URL: " + url)
-        videoController.mediaPlayer.source = url
+        mediaPlayer.source = url
 
     }
 

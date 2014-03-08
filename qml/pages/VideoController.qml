@@ -38,16 +38,9 @@ DockedPanel {
     property alias seeking: progressSlider.down
     property bool playing: _mediaPlayer.playbackState === MediaPlayer.PlayingState
     property bool playbackFinished: _mediaPlayer.status === MediaPlayer.EndOfMedia
-    property bool applicationActive: Qt.application.active
     property bool showIndicator: false
 
     flickableDirection: Flickable.VerticalFlick
-
-    onApplicationActiveChanged:  {
-        if (!applicationActive) {
-            _mediaPlayer.pause()
-        }
-    }
 
     Rectangle {
         anchors.fill: parent
@@ -103,6 +96,7 @@ DockedPanel {
         }
 
         onError: {
+            // TODO: Do something in case of error
             console.error(errorString)
             showIndicator = false
         }
@@ -192,7 +186,6 @@ DockedPanel {
                 minimumValue: 0
                 maximumValue: 100
                 valueText: H.parseDuration(value)
-
                 onReleased: _mediaPlayer.seek(value)
             }
         }

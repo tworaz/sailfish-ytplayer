@@ -29,23 +29,24 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import QtMultimedia 5.0
+import "../pages/Helpers.js" as H
 
 CoverBackground {
     property Item parentPage: pageStack.currentPage
-    property variant thumbnailUrl: parentPage.thumbnailUrl
+    property variant mediaPlayer
 
-    // Filter out empty urls sent during VideoOverview page load
-    onThumbnailUrlChanged: {
-        if (thumbnailUrl) {
-            thumbnail.source = thumbnailUrl
-        }
+    onParentPageChanged: {
+        mediaPlayer = parentPage.mediaPlayer
+        thumbnail.source = parentPage.thumbnailUrl
+        title.text = parentPage.title
     }
 
     Column {
         anchors.top: parent.top
         anchors.bottom: actions.top
         width: parent.width
-        spacing: Theme.paddingMedium
+        spacing: Theme.paddingSmall
 
         Image {
             id: thumbnail
@@ -60,38 +61,62 @@ CoverBackground {
             color: Theme.primaryColor
             font.family: Theme.fontFamilyHeading
             font.pixelSize: Theme.fontSizeMedium
-            maximumLineCount: 3
+            maximumLineCount: 2
             wrapMode: Text.Wrap
             elide: Text.ElideRight
             horizontalAlignment: Text.AlignHCenter
-            text: parentPage.title ? parentPage.title : ""
+        }
+
+        Item {
+            width: parent.width
+            height: wrapper.height
+
+            Rectangle {
+                id: wrapper
+                anchors.centerIn: parent
+                width: progress.width + 2 * Theme.paddingSmall
+                height: progress.height + 2 * Theme.paddingSmall
+                color: Theme.secondaryHighlightColor
+                opacity: 0.5
+                radius: 10
+
+                Label {
+                    id: progress
+                    property int _dur: mediaPlayer ? mediaPlayer.duration : 0
+                    property int _pos: mediaPlayer ? mediaPlayer.position : 0
+
+                    anchors.centerIn: parent
+                    horizontalAlignment: Text.AlignHCenter
+                    font.pixelSize: Theme.fontSizeSmall
+                    font.family: Theme.fontFamilyHeading
+                    color: Theme.primaryColor
+                    text: H.parseDuration(_pos) + " / " + H.parseDuration(_dur)
+                }
+            }
         }
     }
 
     CoverActionList {
         id: actions
+        property bool playing: (mediaPlayer !== undefined &&
+            (mediaPlayer.playbackState === MediaPlayer.PlayingState))
 
         CoverAction {
-            iconSource: "image://theme/icon-cover-search"
-            onTriggered: {
-                pageStack.clear();
-                pageStack.push(Qt.resolvedUrl("../pages/Search.qml"))
-                activate()
-            }
-        }
-
-        CoverAction {
-            iconSource: "image://theme/icon-cover-play"
-            onTriggered: {
-                onClicked: {
-                    var args = {}
-                    args["videoId"] = parentPage.videoId
-                    args["title"] = title.text
-                    args["thumbnailUrl"] = thumbnailUrl
-                    pageStack.push(Qt.resolvedUrl("../pages/VideoPlayer.qml"), args)
+            iconSource: {
+                if (actions.playing) {
+                    return "image://theme/icon-cover-pause"
+                } else {
+                    return "image://theme/icon-cover-play"
                 }
-                activate()
+            }
+            onTriggered: {
+                if (actions.playing) {
+                    mediaPlayer.pause()
+                } else {
+                    mediaPlayer.play()
+                }
             }
         }
     }
 }
+

@@ -63,8 +63,13 @@ Page {
                 //: Label of menu action starting video playback
                 //% "Play"
                 text: qsTrId("ytplayer-action-play")
-                onClicked: pageStack.push(Qt.resolvedUrl("VideoPlayer.qml"),
-                                          {"videoId" : videoId, "title": header.title})
+                onClicked: {
+                    var args = {}
+                    args["videoId"] = videoId
+                    args["title"] = title
+                    args["thumbnailUrl"] = thumbnailUrl
+                    pageStack.push(Qt.resolvedUrl("VideoPlayer.qml"), args)
+                }
             }
         }
 
