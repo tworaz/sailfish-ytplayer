@@ -49,17 +49,22 @@ Page {
     onApplicationActiveChanged:  {
         if (!applicationActive) {
             mediaPlayer.pause()
-            screenBlanking.prevenr(false)
+            screenBlanking.prevent(false)
         } else {
             screenBlanking.prevent(videoController.playing)
         }
     }
 
     onOrientationChanged: {
-        if (page.isLandscape) {
-            showVideoControls(true)
-        } else {
+        if (page.orientation & (Orientation.Landscape | Orientation.LandscapeInverted)) {
+            console.debug("Video player orientation changed to landscape")
             showVideoControls(!videoController.playing)
+            if (videoController.playing) {
+                controlsTimer.restart()
+            }
+        } else {
+            console.debug("Video player orientation changed to portrait")
+            showVideoControls(true)
         }
     }
 

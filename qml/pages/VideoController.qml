@@ -184,7 +184,6 @@ DockedPanel {
                 enabled: _mediaPlayer.seekable
                 handleVisible: true
                 minimumValue: 0
-                maximumValue: 100
                 valueText: H.parseDuration(value)
                 onReleased: _mediaPlayer.seek(value)
             }
