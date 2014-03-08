@@ -44,6 +44,6 @@ function parseDuration(dur) {
     } else if (minutes > 0) {
         return Qt.formatTime(date, "mm:ss")
     } else {
-        return Qt.formatTime(date, "ss")
+        return Qt.formatTime(date, "m:ss")
     }
 }
