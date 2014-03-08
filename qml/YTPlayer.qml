@@ -38,6 +38,7 @@ ApplicationWindow
     property string regionCode: NativeUtil.regionCode
     readonly property string mainIconColor: "#FF980093"
     readonly property double thumbnailAspectRatio: 9 / 16
+    readonly property string datadir: "/usr/share/harbour-ytplayer/"
 
     initialPage: Component { VideoCategories { } }
     cover: Qt.resolvedUrl("cover/Default.qml")

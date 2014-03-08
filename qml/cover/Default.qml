@@ -31,18 +31,12 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
-    Rectangle {
+    Image {
         anchors.horizontalCenter: parent.horizontalCenter
-        y: (parent.width - width) / 2
-        width: 0.80 * parent.width
-        height: 0.75 * width
-        color: mainIconColor
-        radius: 20
-
-        Image {
-            anchors.centerIn: parent
-            source: "image://theme/icon-cover-play"
-        }
+        y: Theme.paddingMedium
+        width: parent.width - 2 * Theme.paddingMedium
+        fillMode: Image.PreserveAspectFit
+        source: datadir + "/images/logo.png"
     }
 
     CoverActionList {

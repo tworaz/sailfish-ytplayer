@@ -70,10 +70,13 @@ exists($${top_srcdir}/youtube-data-api-v3.key) {
 mcc.files = mcc.json
 mcc.path = /usr/share/$${TARGET}
 
+artwork.files = $$files(images/*)
+artwork.path = /usr/share/$${TARGET}/images
+
 localization.files = $$files(languages/*.qm)
 localization.path = /usr/share/$${TARGET}/languages
 
-INSTALLS += localization mcc
+INSTALLS += localization mcc artwork
 
 TRANSLATIONS += \
         languages/en.ts
