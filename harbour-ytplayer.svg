@@ -41,7 +41,8 @@
        fx="43"
        fy="47"
        r="42.700001"
-       gradientUnits="userSpaceOnUse" />
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="matrix(0.86753046,6.2917086e-4,-6.3215787e-4,0.87164956,5.7259015,6.0054163)" />
   </defs>
   <sodipodi:namedview
      id="base"
@@ -51,7 +52,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="5.6568542"
-     inkscape:cx="4.346098"
+     inkscape:cx="4.6996514"
      inkscape:cy="35.577311"
      inkscape:document-units="px"
      inkscape:current-layer="layer2"
@@ -62,7 +63,10 @@
      inkscape:window-y="29"
      inkscape:window-maximized="1"
      inkscape:snap-bbox="true"
-     inkscape:snap-global="true">
+     inkscape:snap-global="true"
+     inkscape:snap-grids="false"
+     inkscape:snap-center="true"
+     inkscape:snap-object-midpoints="true">
     <inkscape:grid
        type="xygrid"
        id="grid2985"
@@ -79,7 +83,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -91,7 +95,7 @@
      transform="translate(0,-4)">
     <path
        inkscape:connector-curvature="0"
-       style="fill:url(#radialGradient3846);fill-opacity:1.0"
+       style="fill:url(#radialGradient3846);fill-opacity:1"
        id="path11"
        d="M 84.277,4.3 H 43 C 19.417,4.3 0.3,23.418 0.3,47 v 41.277 c 0,0.786 0.637,1.423 1.423,1.423 H 43 C 66.583,89.7 85.7,70.582 85.7,47 V 5.723 C 85.7,4.937 85.063,4.3 84.277,4.3 z"
        inkscape:export-xdpi="90.632324"
