@@ -49,9 +49,9 @@ Page {
     onApplicationActiveChanged:  {
         if (!applicationActive) {
             mediaPlayer.pause()
-            NativeUtil.preventScreenBlanking = false
+            screenBlanking.prevenr(false)
         } else {
-            NativeUtil.preventScreenBlanking = videoController.playing
+            screenBlanking.prevent(videoController.playing)
         }
     }
 
@@ -123,7 +123,7 @@ Page {
             visible: page.isLandscape
 
             onClicked: {
-                console.debug("Video player screen clicked")
+                console.debug("Video player screen clicked, showing controls")
                 showVideoControls(true)
                 controlsTimer.restart()
             }
@@ -163,10 +163,30 @@ Page {
 
         onPlayingChanged: {
             if (Qt.application.active) {
-                NativeUtil.preventScreenBlanking = playing
+                screenBlanking.prevent(playing)
             }
             if (playing && page.isLandscape) {
                 controlsTimer.restart()
+            }
+        }
+    }
+
+    Timer {
+        id: screenBlanking
+        interval: 30000
+        repeat: true
+
+        onTriggered: {
+            NativeUtil.preventScreenBlanking = true
+        }
+
+        function prevent(block) {
+            if (block) {
+                NativeUtil.preventScreenBlanking = true
+                start()
+            } else {
+                NativeUtil.preventScreenBlanking = false
+                stop()
             }
         }
     }
