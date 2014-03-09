@@ -35,6 +35,7 @@ Page {
     id: page
     property string channelId
     property string title
+    property variant coverData
 
     BusyIndicator {
         id: indicator
@@ -44,8 +45,8 @@ Page {
     }
 
     onStatusChanged: {
-        if (status === PageStatus.Active) {
-            requestCoverPage("Default.qml")
+        if (status === PageStatus.Active && coverData) {
+            requestCoverPage("ChannelBrowser.qml", coverData);
         }
     }
 
@@ -57,6 +58,15 @@ Page {
         property string channelPlaylistId: ""
         onChannelPlaylistIdChanged: {
             videoResourceId = { "kind" : "#channelPlaylist", "id" : channelPlaylistId }
+        }
+
+        PullDownMenu {
+            MenuItem {
+                //: Menu option to show settings page
+                //% "Settings"
+                text: qsTrId("ytplayer-action-settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
+            }
         }
 
         PushUpMenu {
@@ -150,7 +160,6 @@ Page {
             Component.onCompleted: {
                 console.debug("Channel browser page created for: " + channelId)
                 Yt.getChannelDetails(channelId, onChannelDetailsFetched, onChannelDetailsFetchFailed)
-                requestCoverPage("Default.qml")
             }
 
             function onChannelDetailsFetched(result) {
@@ -178,7 +187,11 @@ Page {
                 viewCount.text = stats.viewCount
                 indicator.running = false
 
+                coverData = { "title" : title, "thumbnailUrl" : poster.source, "videoCount" : stats.videoCount }
+                requestCoverPage("ChannelBrowser.qml", coverData)
+
                 channelVideoList.refresh()
+
             }
 
             function onChannelDetailsFetchFailed(error) {
