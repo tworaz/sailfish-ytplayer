@@ -42,17 +42,14 @@ ApplicationWindow
 
     initialPage: Component { VideoCategories { } }
     cover: Qt.resolvedUrl("cover/Default.qml")
+    property variant coverData
 
-    pageStack.onBusyChanged: {
-        var coverUrl = undefined
-        if (pageStack.currentPage.hasOwnProperty("coverFile")) {
-            coverUrl = Qt.resolvedUrl("cover/" + pageStack.currentPage.coverFile)
-        } else {
-            coverUrl = Qt.resolvedUrl("cover/Default.qml")
-        }
+    function requestCoverPage(coverFile, props) {
+        var coverUrl = Qt.resolvedUrl("cover/" + coverFile)
         if (coverUrl !== cover) {
-            console.debug("Changing cover page to: " + coverUrl)
+            console.debug("Current page requested new cover: " + coverFile)
             cover = coverUrl
+            coverData = props
         }
     }
 

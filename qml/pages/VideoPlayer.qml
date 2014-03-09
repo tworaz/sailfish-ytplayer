@@ -39,15 +39,18 @@ Page {
     allowedOrientations: Orientation.All
     showNavigationIndicator: topDockPanel.open
 
+    property alias mediaPlayer: videoController.mediaPlayer
+    property alias title: header.title
     readonly property string coverFile: "VideoPlayer.qml"
     property bool applicationActive: Qt.application.active
-    property alias mediaPlayer: videoController.mediaPlayer
     property string thumbnailUrl
     property string videoId
-    property string title
 
     Component.onCompleted: {
         console.debug("Video player page created, video ID: " + videoId)
+        requestCoverPage("VideoPlayer.qml",
+                         { "title" : page.title, "thumbnailUrl" : thumbnailUrl,
+                           "mediaPlayer": mediaPlayer })
         showVideoControls(true)
     }
 
@@ -114,7 +117,6 @@ Page {
 
         PageHeader {
             id: header
-            title: page.title
         }
     }
 
@@ -228,6 +230,5 @@ Page {
     function onVideoUrlObtained(url) {
         console.debug("Selected URL: " + url)
         mediaPlayer.source = url
-
     }
 }

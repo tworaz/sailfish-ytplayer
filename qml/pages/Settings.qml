@@ -34,6 +34,10 @@ import "Settings.js" as S
 Page {
     id: settingsPage
 
+    Component.onCompleted: {
+        requestCoverPage("Default.qml")
+    }
+
     SilicaFlickable {
         anchors.fill: parent
 

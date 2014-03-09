@@ -33,6 +33,10 @@ import Sailfish.Silica 1.0
 Page {
     id: aboutPage
 
+    Component.onCompleted: {
+        requestCoverPage("Default.qml")
+    }
+
     PageHeader {
         id: header
         //: Title of about page

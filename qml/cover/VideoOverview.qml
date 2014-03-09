@@ -31,14 +31,14 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
-    property Item parentPage: pageStack.currentPage
-    property variant thumbnailUrl: parentPage.thumbnailUrl
+    property string videoId
+    property alias title: _title.text
+    property alias thumbnailUrl: thumbnail.source
 
-    // Filter out empty urls sent during VideoOverview page load
-    onThumbnailUrlChanged: {
-        if (thumbnailUrl) {
-            thumbnail.source = thumbnailUrl
-        }
+    Component.onCompleted: {
+        videoId = coverData.videoId
+        title = coverData.title
+        thumbnailUrl = coverData.thumbnailUrl
     }
 
     Column {
@@ -55,7 +55,7 @@ CoverBackground {
         }
 
         Label {
-            id: title
+            id: _title
             width: parent.width
             color: Theme.primaryColor
             font.family: Theme.fontFamilyHeading
@@ -64,7 +64,6 @@ CoverBackground {
             wrapMode: Text.Wrap
             elide: Text.ElideRight
             horizontalAlignment: Text.AlignHCenter
-            text: parentPage.title ? parentPage.title : ""
         }
     }
 
@@ -74,7 +73,7 @@ CoverBackground {
         CoverAction {
             iconSource: "image://theme/icon-cover-search"
             onTriggered: {
-                pageStack.clear();
+                pageStack.clear()
                 pageStack.push(Qt.resolvedUrl("../pages/Search.qml"))
                 activate()
             }
@@ -85,9 +84,9 @@ CoverBackground {
             onTriggered: {
                 onClicked: {
                     var args = {}
-                    args["videoId"] = parentPage.videoId
-                    args["title"] = title.text
-                    args["thumbnailUrl"] = thumbnailUrl
+                    args["videoId"] = videoId
+                    args["title"] = title
+                    args["thumbnailUrl"] = thumbnail.source
                     pageStack.push(Qt.resolvedUrl("../pages/VideoPlayer.qml"), args)
                 }
                 activate()

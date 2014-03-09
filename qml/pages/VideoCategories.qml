@@ -57,6 +57,12 @@ Page {
         }
     }
 
+    onStatusChanged: {
+        if (status === PageStatus.Active) {
+            requestCoverPage("Default.qml")
+        }
+    }
+
     SilicaListView {
         id: videoCategoryListView
         anchors.fill: parent

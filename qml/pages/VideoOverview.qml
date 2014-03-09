@@ -37,14 +37,21 @@ Page {
     id: page
     property string videoId
     property alias title: header.title
-    readonly property string coverFile: "VideoOverview.qml"
     readonly property alias thumbnailUrl: poster.source
 
+    Component.onCompleted: {
+        console.debug("Video overview page for video ID: " + videoId + " created")
+    }
+
     onStatusChanged: {
-        if (status === PageStatus.Active && poster.status !== Image.Ready) {
-            //videoListView.refresh()
-            console.debug("Video overview page created, video ID: " + videoId)
-            Yt.getVideoDetails(videoId, onVideoDetailsLoaded, onFailure)
+        if (status === PageStatus.Active) {
+            if (poster.status !== Image.Ready) {
+                Yt.getVideoDetails(videoId, onVideoDetailsLoaded, onFailure)
+            } else {
+                requestCoverPage("VideoOverview.qml",
+                    { "thumbnailUrl" : thumbnailUrl, "videoId" : videoId,
+                      "title" : title})
+            }
         }
     }
 
@@ -192,6 +199,10 @@ Page {
 
         header.title = details.snippet.title
         indicator.running = false
+
+        requestCoverPage("VideoOverview.qml",
+            { "thumbnailUrl" : thumbnailUrl, "videoId" : videoId,
+              "title" : title})
     }
 
     function onFailure(error) {

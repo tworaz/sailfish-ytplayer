@@ -38,8 +38,11 @@ Page {
     property string title
 
     onStatusChanged: {
-        if (status === PageStatus.Active && !videoListView.count) {
-            videoListView.refresh()
+        if (status === PageStatus.Active) {
+            if (!videoListView.count) {
+                videoListView.refresh()
+            }
+            requestCoverPage("Default.qml")
         }
     }
 

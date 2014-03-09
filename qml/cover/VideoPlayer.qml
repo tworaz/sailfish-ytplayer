@@ -33,13 +33,14 @@ import QtMultimedia 5.0
 import "../pages/Helpers.js" as H
 
 CoverBackground {
-    property Item parentPage: pageStack.currentPage
-    property variant mediaPlayer
+    property alias title: _title.text
+    property alias thumbnailUrl: thumbnail.source
+    property MediaPlayer mediaPlayer
 
-    onParentPageChanged: {
-        mediaPlayer = parentPage.mediaPlayer
-        thumbnail.source = parentPage.thumbnailUrl
-        title.text = parentPage.title
+    Component.onCompleted: {
+        title = coverData.title
+        thumbnailUrl = coverData.thumbnailUrl
+        mediaPlayer = coverData.mediaPlayer
     }
 
     Column {
@@ -56,7 +57,7 @@ CoverBackground {
         }
 
         Label {
-            id: title
+            id: _title
             width: parent.width
             color: Theme.primaryColor
             font.family: Theme.fontFamilyHeading
@@ -98,7 +99,7 @@ CoverBackground {
 
     CoverActionList {
         id: actions
-        property bool playing: (mediaPlayer !== undefined &&
+        property bool playing: (mediaPlayer != undefined &&
             (mediaPlayer.playbackState === MediaPlayer.PlayingState))
 
         CoverAction {

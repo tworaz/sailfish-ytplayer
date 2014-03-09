@@ -44,6 +44,12 @@ Page {
         size: BusyIndicatorSize.Large
     }
 
+    onStatusChanged: {
+        if (status === PageStatus.Active) {
+            requestCoverPage("Default.qml")
+        }
+    }
+
     SilicaListView {
         id: searchView
         anchors.fill: parent

@@ -43,6 +43,12 @@ Page {
         size: BusyIndicatorSize.Large
     }
 
+    onStatusChanged: {
+        if (status === PageStatus.Active) {
+            requestCoverPage("Default.qml")
+        }
+    }
+
     YoutubeVideoList {
         id: channelVideoList
         anchors.fill: parent
@@ -144,6 +150,7 @@ Page {
             Component.onCompleted: {
                 console.debug("Channel browser page created for: " + channelId)
                 Yt.getChannelDetails(channelId, onChannelDetailsFetched, onChannelDetailsFetchFailed)
+                requestCoverPage("Default.qml")
             }
 
             function onChannelDetailsFetched(result) {
