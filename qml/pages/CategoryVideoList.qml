@@ -30,19 +30,23 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "YoutubeClientV3.js" as Yt
+import "Helpers.js" as H
 
 
 Page {
     id: page
     property alias categoryResourceId: videoListView.videoResourceId
     property string title
+    property variant coverData
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
             if (!videoListView.count) {
                 videoListView.refresh()
             }
-            requestCoverPage("Default.qml")
+            if (coverData) {
+                requestCoverPage("CategoryVideoList.qml", coverData)
+            }
         }
     }
 
@@ -85,6 +89,37 @@ Page {
 
         header: PageHeader {
             title: page.title
+        }
+
+        onBusyChanged: {
+            if (!busy && count > 0) {
+                var _f = function(m) {
+                    if (m.snippet.thumbnails.medium) {
+                        return m.snippet.thumbnails.medium.url
+                    } else if (m.snippet.thumbnails.high) {
+                        return m.snippet.thumbnails.high.url
+                    } else {
+                        return m.snippet.thumbnails.default.url
+                    }
+                }
+
+                var r1 = Math.floor(Math.random() * count)
+                var r2 = Math.floor(Math.random() * count)
+                if (r1 == r2) {
+                    if (r1 == count) {
+                        r2 = r1 - 1
+                    } else {
+                        r2 = r1 + 1
+                    }
+                }
+
+                coverData = {
+                    "img1" : _f(model.get(r1)),
+                    "img2" : _f(model.get(r2)),
+                    "title": H.getYouTubeIconForCategoryId(categoryResourceId.id) + " " + title
+                }
+                requestCoverPage("CategoryVideoList.qml", coverData)
+            }
         }
 
         VerticalScrollDecorator {}

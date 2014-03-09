@@ -27,48 +27,48 @@
  * SUCH DAMAGE.
  */
 
-function parseDuration(dur) {
-    var seconds = Math.ceil(dur / 1000)
-    var hours = Math.floor(seconds / 3600)
-    seconds -= hours * 3600
-    var minutes = Math.floor(seconds / 60)
-    seconds -= minutes * 60
+import QtQuick 2.0
+import Sailfish.Silica 1.0
+import "../pages/Helpers.js" as H
 
-    var date = new Date()
-    date.setHours(hours)
-    date.setMinutes(minutes)
-    date.setSeconds(seconds)
-
-    if (hours > 0) {
-        return Qt.formatTime(date, "hh:mm:ss")
-    } else if (minutes > 0) {
-        return Qt.formatTime(date, "mm:ss")
-    } else {
-        return Qt.formatTime(date, "m:ss")
+CoverBackground {
+    Component.onCompleted: {
+        _img1.source = coverData.img1
+        _img2.source = coverData.img2
+        category.text = coverData.title
     }
-}
 
-function getYouTubeIconForCategoryId(category)
-{
-    var categoryId = parseInt(category);
-    switch (categoryId) {
-    case 1:  return "\ue64d"  // Film & Animation
-    case 2:  return "\ue650"  // Autos & Vechicles
-    case 10: return "\ue636"  // Music
-    case 15: return "\ue633"  // Pets & Animals
-    case 17: return "\ue60d"  // Sports
-    case 19: return "\ue641"  // Travel & Events
-    case 20: return "\ue64f"  // Gaming
-    case 22: return "\ue634"  // People & Blogs
-    case 23: return "\ue638"  // Commedy
-    case 24: return "\ue64c"  // Entertainment
-    case 25: return "\ue634"  // News & Politics
-    case 26: return "\ue639"  // Howto & Style
-    case 27: return "\ue64b"  // Education
-    case 28: return "\ue610"  // Science & Technology
-    case 29: return "\ue64e"  // Nonprofits & Activism
-    default:
-        console.debug("No icon for category: " + category)
-        return "\ue60c"
+    Image {
+        id: _img1
+        anchors.top: parent.top
+        width: parent.width
+        height: width * thumbnailAspectRatio
+        fillMode: Image.PreserveAspectCrop
+    }
+    Image {
+        id: _img2
+        anchors.top: _img1.bottom
+        width: parent.width
+        height: width * thumbnailAspectRatio
+        fillMode: Image.PreserveAspectCrop
+    }
+    Item {
+        x: Theme.paddingMedium
+        anchors.top: _img2.bottom
+        anchors.bottom: parent.bottom
+        width: parent.width - 2 * Theme.paddingMedium
+
+        Label {
+            id: category
+            anchors.centerIn: parent
+            width: parent.width
+            //elide: Text.ElideRight
+            horizontalAlignment: Text.AlignHCenter
+            color: Theme.primaryColor
+            font.family: "youtube-icons"
+            font.pixelSize: Theme.fontSizeSmall
+            maximumLineCount: 2
+            wrapMode: Text.Wrap
+        }
     }
 }

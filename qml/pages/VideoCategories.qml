@@ -31,6 +31,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "YoutubeClientV3.js" as Yt
 import "Settings.js" as Settings
+import "Helpers.js" as H
 
 
 Page {
@@ -108,33 +109,8 @@ Page {
                     font.family: "youtube-icons"
                     font.pixelSize: Theme.fontSizeLarge
                     color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
-                    text: getIconForCategoryId(id)
+                    text: H.getYouTubeIconForCategoryId(id)
                     visible: youtubeIconsLoader.status === FontLoader.Ready
-
-                    function getIconForCategoryId(category)
-                    {
-                        var categoryId = parseInt(category);
-                        switch (categoryId) {
-                        case 1:  return "\ue64d"  // Film & Animation
-                        case 2:  return "\ue650"  // Autos & Vechicles
-                        case 10: return "\ue636"  // Music
-                        case 15: return "\ue633"  // Pets & Animals
-                        case 17: return "\ue60d"  // Sports
-                        case 19: return "\ue641"  // Travel & Events
-                        case 20: return "\ue64f"  // Gaming
-                        case 22: return "\ue634"  // People & Blogs
-                        case 23: return "\ue638"  // Commedy
-                        case 24: return "\ue64c"  // Entertainment
-                        case 25: return "\ue634"  // News & Politics
-                        case 26: return "\ue639"  // Howto & Style
-                        case 27: return "\ue64b"  // Education
-                        case 28: return "\ue610"  // Science & Technology
-                        case 29: return "\ue64e"  // Nonprofits & Activism
-                        default:
-                            console.debug("No icon for category: " + category)
-                            return "\ue60c"
-                        }
-                    }
                 }
 
                 Label {
