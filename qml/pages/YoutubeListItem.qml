@@ -71,7 +71,8 @@ BackgroundItem {
     onClicked: {
         if (youtubeId.kind === "youtube#video") {
             console.debug("Selected item is a video, opening video overview page")
-            pageStack.push(Qt.resolvedUrl("VideoOverview.qml"), {"videoId": youtubeId.videoId})
+            pageStack.push(Qt.resolvedUrl("VideoOverview.qml"),
+                           { "videoId": youtubeId.videoId, title: ytItem.title })
         } else if (youtubeId.kind === "youtube#channel") {
             console.debug("Selected item is a channel, opening channel browser ")
             pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),

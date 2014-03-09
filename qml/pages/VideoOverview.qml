@@ -36,9 +36,17 @@ import "duration.js" as DUtil
 Page {
     id: page
     property string videoId
-    readonly property alias title: header.title
+    property alias title: header.title
     readonly property string coverFile: "VideoOverview.qml"
     readonly property alias thumbnailUrl: poster.source
+
+    onStatusChanged: {
+        if (status === PageStatus.Active && poster.status !== Image.Ready) {
+            //videoListView.refresh()
+            console.debug("Video overview page created, video ID: " + videoId)
+            Yt.getVideoDetails(videoId, onVideoDetailsLoaded, onFailure)
+        }
+    }
 
     BusyIndicator {
         id: indicator
@@ -152,48 +160,42 @@ Page {
                 font.pixelSize: Theme.fontSizeSmall
             }
         }
-
-        function onVideoDetailsLoaded(details) {
-            //console.debug("Have video details: " + JSON.stringify(details, undefined, 2))
-            var thumbnails = details.snippet.thumbnails;
-            if (thumbnails.standard) {
-                poster.source = thumbnails.standard.url
-            } else if (thumbnails.high) {
-                poster.source = thumbnails.high.url;
-            } else {
-                poster.source = thumbnails.default.url
-            }
-
-            if (details.snippet.description) {
-                description.text = details.snippet.description
-            } else {
-                description.visible = false
-            }
-
-            viewCount.text = details.statistics.viewCount
-            likeCount.text = details.statistics.likeCount
-            dislikeCount.text = details.statistics.dislikeCount
-
-            var pd = new Date(details.snippet.publishedAt)
-            publishDate.value = Qt.formatDateTime(pd, "d MMMM yyyy")
-
-            var dur = new DUtil.Duration(details.contentDetails.duration)
-            duration.value = dur.asClock();
-
-            header.title = details.snippet.title
-            indicator.running = false
-        }
-
-        function onFailure(error) {
-            errorNotification.show(error);
-            indicator.running = false
-        }
-
-        Component.onCompleted: {
-            console.debug("Video overview page created, video ID: " + videoId)
-            Yt.getVideoDetails(videoId, onVideoDetailsLoaded, onFailure)
-        }
-
         VerticalScrollDecorator {}
+    }
+
+    function onVideoDetailsLoaded(details) {
+        //console.debug("Have video details: " + JSON.stringify(details, undefined, 2))
+        var thumbnails = details.snippet.thumbnails;
+        if (thumbnails.standard) {
+            poster.source = thumbnails.standard.url
+        } else if (thumbnails.high) {
+            poster.source = thumbnails.high.url;
+        } else {
+            poster.source = thumbnails.default.url
+        }
+
+        if (details.snippet.description) {
+            description.text = details.snippet.description
+        } else {
+            description.visible = false
+        }
+
+        viewCount.text = details.statistics.viewCount
+        likeCount.text = details.statistics.likeCount
+        dislikeCount.text = details.statistics.dislikeCount
+
+        var pd = new Date(details.snippet.publishedAt)
+        publishDate.value = Qt.formatDateTime(pd, "d MMMM yyyy")
+
+        var dur = new DUtil.Duration(details.contentDetails.duration)
+        duration.value = dur.asClock();
+
+        header.title = details.snippet.title
+        indicator.running = false
+    }
+
+    function onFailure(error) {
+        errorNotification.show(error);
+        indicator.running = false
     }
 }
