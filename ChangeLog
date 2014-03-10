@@ -1,0 +1,14 @@
+v0.1.2
+* Add support for browsing YouTube channels,
+* Improve video playback controls,
+* Disable screen blanking during video playback,
+* Simplify application settings,
+* Improve keyboard handling in Search page,
+* Add new application icon,
+* Improve page transition animation smoothness,
+* Improve application stability,
+* Implement more dedicated cover pages
+* Various small tweaks to UI look and feel
+
+v0.1.1
+* Initial harbour release
