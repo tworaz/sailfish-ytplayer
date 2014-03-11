@@ -31,7 +31,8 @@
 
 var _youtube_data_v3_url = "https://www.googleapis.com/youtube/v3/";
 
-function getYoutubeV3Url(reference, queryParams)
+
+function _getYoutubeV3Url(reference, queryParams)
 {
     var locale = Qt.locale().name;
     if (locale === "C") {
@@ -52,19 +53,18 @@ function getYoutubeV3Url(reference, queryParams)
     return url;
 }
 
-function getVideoCategories(onSuccess, onFailure)
-{
-    var url = getYoutubeV3Url("videoCategories", {"part" : "snippet"});
 
+function _async_json_request(url, onSuccess, onFailure)
+{
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status == 200) {
-                var categories = JSON.parse(xhr.responseText)["items"];
-                onSuccess(categories);
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                onSuccess(response)
             } else {
                 var details = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
-                onFailure({"code" : xhr.status, "details" : details});
+                onFailure({ "code" : xhr.status, "details" : details });
             }
         }
     }
@@ -72,108 +72,90 @@ function getVideoCategories(onSuccess, onFailure)
     xhr.send();
 }
 
+
+function getVideoCategories(onSuccess, onFailure)
+{
+    var url = _getYoutubeV3Url("videoCategories", {"part" : "snippet"});
+
+    _async_json_request(url, function (result) {
+        console.assert(result.hasOwnProperty('kind') &&
+                       result.kind === "youtube#videoCategoryListResponse");
+        console.assert(result.hasOwnProperty('items') && result.items.length > 0);
+        console.assert(result.items[0].hasOwnProperty('kind') &&
+                       result.items[0].kind === "youtube#videoCategory");
+        onSuccess(result.items);
+    }, onFailure);
+}
+
+
 function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
 {
-    //var resultsPerPage = Settings.get(Settings.RESULTS_PER_PAGE);
     var qParams = {};
-
     qParams["part"] = "snippet";
-    //qParams["maxResults"] = resultsPerPage;
     qParams["chart"] = "mostPopular";
     qParams["videoCategoryId"] = categoryId;
 
-    var url = getYoutubeV3Url("videos", qParams);
+    var url = _getYoutubeV3Url("videos", qParams);
 
     if (pageToken !== undefined) {
         url += "&pageToken=" + pageToken;
     }
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status == 200) {
-                onSuccess(JSON.parse(xhr.responseText));
-            } else {
-                var details = xhr.responseText ? JSON.parse(xhr.responseText) : "";
-                onFailure({"code" : xhr.status, "details" : details});
-            }
-        }
-    }
-    xhr.open("GET", url);
-    xhr.send();
+    _async_json_request(url, function(result) {
+        console.assert(result.kind === "youtube#videoListResponse");
+        console.assert(result.hasOwnProperty('items') && result.items.length > 0);
+        console.assert(result.items[0].kind === "youtube#video");
+        onSuccess(result)
+    }, onFailure);
 }
+
 
 function getVideosInPlaylist(playlistId, onSuccess, onFailure)
 {
-    var url = getYoutubeV3Url("playlistItems",{"part" : "snippet", "playlistId" : playlistId});
+    var url = _getYoutubeV3Url("playlistItems",{"part" : "snippet", "playlistId" : playlistId});
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status !== 200) {
-                var errDetails = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
-                onFailure({"code" : xhr.status, "details" : errDetails});
-                return;
-            }
-            var response = JSON.parse(xhr.responseText);
-            console.assert(response.kind === "youtube#playlistItemListResponse");
-            onSuccess(response);
-        }
-    }
-    xhr.open("GET", url);
-    xhr.send()
+    _async_json_request(url, function(response) {
+        console.assert(response.kind === "youtube#playlistItemListResponse");
+        console.assert(response.items.length > 0);
+        console.assert(response.items[0].kind === "youtube#playlistItem");
+        onSuccess(response);
+    }, onFailure);
 }
+
 
 function getVideoDetails(videoId, onSuccess, onFailure)
 {
-    var url = getYoutubeV3Url("videos", {"part" : "contentDetails, snippet, statistics",
+    var url = _getYoutubeV3Url("videos", {"part" : "contentDetails, snippet, statistics",
                               "id" : videoId});
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status !== 200) {
-                var errDetails = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
-                onFailure({"code" : xhr.status, "details" : errDetails});
-                return;
-            }
-            var details = JSON.parse(xhr.responseText);
-            onSuccess(details.items[0]);
-        }
-    }
-    xhr.open("GET", url);
-    xhr.send();
+    _async_json_request(url, function(response) {
+        console.assert(response.items.length === 1);
+        console.assert(response.kind === "youtube#videoListResponse");
+        console.assert(response.items[0].kind === "youtube#video");
+        onSuccess(response.items[0]);
+    }, onFailure);
 }
+
 
 function getChannelDetails(channelId, onSuccess, onFailure)
 {
-    var url = getYoutubeV3Url("channels",
+    var url = _getYoutubeV3Url("channels",
         {"part" : "snippet,statistics,contentDetails", "id" : channelId});
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status !== 200) {
-                var errDetails = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
-                onFailure({"code" : xhr.status, "details" : errDetails});
-                return;
-            }
-            var response = JSON.parse(xhr.responseText);
-            console.assert(response.kind === "youtube#channelListResponse");
-            console.assert(response.pageInfo.totalResults === 1);
-            onSuccess(response);
-        }
-    }
-    xhr.open("GET", url);
-    xhr.send();
+    _async_json_request(url, function(response) {
+        console.assert(response.kind === "youtube#channelListResponse");
+        console.assert(response.items.length === 1);
+        console.assert(response.items[0].kind ==="youtube#channel");
+        onSuccess(response);
+    }, onFailure);
 }
+
 
 function getSearchResults(query, onSuccess, onFailure, pageToken)
 {
     var qParams = {};
     qParams["q"] = query;
     qParams["part"] = "snippet";
-    //qParams["maxResults"] = Settings.get(Settings.RESULTS_PER_PAGE);
     qParams["type"] = "video,channel";
 
     var safeSearchValue = undefined;
@@ -196,23 +178,17 @@ function getSearchResults(query, onSuccess, onFailure, pageToken)
         qParams["pageToken"] = pageToken;
     }
 
-    var url = getYoutubeV3Url("search", qParams);
+    var url = _getYoutubeV3Url("search", qParams);
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState == XMLHttpRequest.DONE) {
-            if (xhr.status !== 200) {
-                var details = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
-                onFailure({"code" : xhr.status, "details" : details});
-                return;
-            }
-            var response = JSON.parse(xhr.responseText);
-            onSuccess(response);
+    _async_json_request(url, function(response) {
+        console.assert(response.kind === "youtube#searchListResponse");
+        if (response.items.length > 0) {
+            console.assert(response.items[0].kind === "youtube#searchResult");
         }
-    }
-    xhr.open("GET", url);
-    xhr.send();
+        onSuccess(response);
+    }, onFailure);
 }
+
 
 function getVideoUrl(videoId, onSuccess, onFailure)
 {
@@ -292,6 +268,7 @@ function getVideoUrl(videoId, onSuccess, onFailure)
     xhr.open("GET", req);
     xhr.send();
 }
+
 
 function getVideoUrlYtAPI(videoId, itag)
 {
