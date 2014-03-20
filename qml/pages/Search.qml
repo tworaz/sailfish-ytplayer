@@ -119,7 +119,7 @@ Page {
             id: resultsListModel
         }
 
-        delegate: YoutubeListItem {
+        delegate: YTListItem {
             width: parent.width
             title: snippet.title
             thumbnailUrl: snippet.thumbnails.default.url

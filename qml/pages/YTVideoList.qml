@@ -44,7 +44,7 @@ SilicaListView {
         id: videoListModel
     }
 
-    delegate: YoutubeListItem {
+    delegate: YTListItem {
         width: parent.width
         title: snippet.title
         thumbnailUrl: snippet.thumbnails.default.url

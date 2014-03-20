@@ -51,7 +51,7 @@ Page {
         }
     }
 
-    YoutubeVideoList {
+    YTVideoList {
         id: channelVideoList
         anchors.fill: parent
         visible: !indicator.running

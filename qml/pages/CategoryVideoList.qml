@@ -56,7 +56,7 @@ Page {
         size: BusyIndicatorSize.Large
     }
 
-    YoutubeVideoList {
+    YTVideoList {
         id: videoListView
         anchors.fill: parent
 

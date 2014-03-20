@@ -39,16 +39,16 @@ OTHER_FILES += \
         qml/pages/duration.js \
         qml/pages/VideoOverview.qml \
         qml/pages/VideoPlayer.qml \
-        qml/pages/YoutubeListItem.qml \
         qml/pages/Search.qml \
         qml/pages/VideoCategories.qml \
         qml/pages/Settings.qml \
         qml/pages/About.qml \
         qml/pages/ConnectionRetryTimer.qml \
         qml/pages/ChannelBrowser.qml \
-        qml/pages/YoutubeVideoList.qml \
         qml/pages/VideoController.qml \
-        qml/pages/CategoryVideoList.qml
+        qml/pages/CategoryVideoList.qml \
+        qml/pages/YTListItem.qml \
+        qml/pages/YTVideoList.qml
 
 include(third_party/notifications.pri)
 
