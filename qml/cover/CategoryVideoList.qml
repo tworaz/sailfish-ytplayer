@@ -29,7 +29,8 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "../pages/Helpers.js" as H
+import "../common/Helpers.js" as H
+import "../common"
 
 CoverBackground {
     Component.onCompleted: {
@@ -38,14 +39,14 @@ CoverBackground {
         category.text = coverData.title
     }
 
-    Image {
+    AsyncImage {
         id: _img1
         anchors.top: parent.top
         width: parent.width
         height: width * thumbnailAspectRatio
         fillMode: Image.PreserveAspectCrop
     }
-    Image {
+    AsyncImage {
         id: _img2
         anchors.top: _img1.bottom
         width: parent.width

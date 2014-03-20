@@ -25,6 +25,10 @@ OTHER_FILES += \
         rpm/harbour-ytplayer.yaml \
         rpm/harbour-ytplayer.spec \
         qml/YTPlayer.qml \
+        qml/common/KeyValueLabel.qml \
+        qml/common/AsyncImage.qml \
+        qml/common/StatItem.qml \
+        qml/common/Helpers.js \
         qml/cover/Default.qml \
         qml/cover/VideoOverview.qml \
         qml/cover/VideoPlayer.qml \
@@ -33,7 +37,6 @@ OTHER_FILES += \
         qml/pages/YoutubeClientV3.js \
         qml/pages/Settings.js \
         qml/pages/duration.js \
-        qml/pages/Helpers.js \
         qml/pages/VideoOverview.qml \
         qml/pages/VideoPlayer.qml \
         qml/pages/YoutubeListItem.qml \
@@ -41,11 +44,8 @@ OTHER_FILES += \
         qml/pages/VideoCategories.qml \
         qml/pages/Settings.qml \
         qml/pages/About.qml \
-        qml/pages/KeyValueLabel.qml \
-        qml/pages/StatItem.qml \
         qml/pages/ConnectionRetryTimer.qml \
         qml/pages/ChannelBrowser.qml \
-        qml/pages/AsyncImage.qml \
         qml/pages/YoutubeVideoList.qml \
         qml/pages/VideoController.qml \
         qml/pages/CategoryVideoList.qml

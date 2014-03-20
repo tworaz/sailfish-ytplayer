@@ -30,7 +30,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtMultimedia 5.0
-import "../pages/Helpers.js" as H
+import "../common/Helpers.js" as H
 
 CoverBackground {
     property alias title: _title.text

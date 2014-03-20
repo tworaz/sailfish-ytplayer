@@ -29,6 +29,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../common"
 
 CoverBackground {
     property alias title: _title.text
@@ -47,7 +48,7 @@ CoverBackground {
         width: parent.width
         spacing: Theme.paddingMedium
 
-        Image {
+        AsyncImage {
             id: thumbnail
             width: parent.width
             height: width * thumbnailAspectRatio

@@ -31,6 +31,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "YoutubeClientV3.js" as Yt
 import "duration.js" as DUtil
+import "../common"
 
 
 Page {
