@@ -208,15 +208,15 @@ Page {
         repeat: true
 
         onTriggered: {
-            NativeUtil.preventScreenBlanking = true
+            NativeUtil.preventScreenBlanking(true)
         }
 
         function prevent(block) {
             if (block) {
-                NativeUtil.preventScreenBlanking = true
+                NativeUtil.preventScreenBlanking(true)
                 start()
             } else {
-                NativeUtil.preventScreenBlanking = false
+                NativeUtil.preventScreenBlanking(false)
                 stop()
             }
         }

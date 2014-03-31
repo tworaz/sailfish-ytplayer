@@ -34,6 +34,7 @@
 #include <sailfishapp.h>
 #include <QDebug>
 
+#include "config.h"
 #include "NativeUtil.h"
 
 static QString FALLBACK_COUNTRY_CODE = QString("US");
@@ -157,7 +158,7 @@ NativeUtil::getMobileCountryCode(QDBusConnection conn, QDBusObjectPath modem)
 QJsonObject
 NativeUtil::getMobileCountryCodeMap()
 {
-	QString mccPath = SailfishApp::pathTo(QString("mcc.json")).toLocalFile();
+	QString mccPath = SailfishApp::pathTo(QString("mcc-data.json")).toLocalFile();
 	QFile mccFile(mccPath);
 
 	if (!mccFile.open(QIODevice::ReadOnly)) {
@@ -178,7 +179,7 @@ NativeUtil::getMobileCountryCodeMap()
 }
 
 void
-NativeUtil::setPreventScreenBlanking(bool prevent)
+NativeUtil::preventScreenBlanking(bool prevent)
 {
 	QDBusConnection systemBus = QDBusConnection::connectToBus(QDBusConnection::SystemBus, "system");
 	Q_ASSERT(systemBus.isConnected());

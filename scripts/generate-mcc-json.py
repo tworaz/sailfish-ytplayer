@@ -28,6 +28,8 @@ def main(argv):
         show_help()
         sys.exit(1)
 
+    print ("Generating mobile country code json data : " + outputfile)
+
     f = open(inputfile, 'r')
     countries = {}
     for line in f:

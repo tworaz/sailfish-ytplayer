@@ -1,7 +1,7 @@
 #!/bin/sh
 
 _SCRIPT=$(readlink -f $0)
-_DIR=$(dirname $_SCRIPT)
+_DIR=$(dirname $_SCRIPT)/..
 
 _BASE=$(grep -oE 'Version: [0-9.]*' $_DIR/rpm/harbour-ytplayer.yaml | awk '{ print $2 }')
 

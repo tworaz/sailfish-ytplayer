@@ -19,8 +19,9 @@ HEADERS += \
         src/NativeUtil.h
 
 OTHER_FILES += \
-        generate-mcc-json.py \
-        get_version_str.sh \
+        scripts/generate-mcc-json.py \
+        scripts/generate-config-h.py \
+        scripts/get_version_str.sh \
         harbour-ytplayer.desktop \
         rpm/harbour-ytplayer.yaml \
         rpm/harbour-ytplayer.spec \
@@ -52,24 +53,38 @@ OTHER_FILES += \
 
 include(third_party/notifications.pri)
 
-MCC_DATA = mcc.txt
-mcc_data.input = MCC_DATA
-mcc_data.output = mcc.json
-mcc_data.variable_out = OTHER_FILES
-mcc_data.commands = \
-        $$top_srcdir/generate-mcc-json.py \
-                -i mcc.txt -o mcc.json
-
-DEFINES += VERSION_STR=\\\"$$system($${top_srcdir}/get_version_str.sh)\\\"
-
-QMAKE_EXTRA_COMPILERS += mcc_data
-
-exists($${top_srcdir}/youtube-data-api-v3.key) {
-        message("Using contents of yotube-data-api-v3.key")
-        DEFINES += YOUTUBE_DATA_API_V3_KEY=\\\"$$cat(youtube-data-api-v3.key)\\\"
+!exists($${top_srcdir}/youtube-data-api-v3.key) {
+    error("YouTube data api key file not found: youtube-data-api-v3.key")
+}
+!exists($${top_srcdir}/youtube-client-id.json) {
+    warning("YouTube client ID file not found, client authotization won't work!")
 }
 
-mcc.files = mcc.json
+# mobile county code json target
+mcc_data.target = mcc-data.json
+mcc_data.commands = \
+    $$top_srcdir/scripts/generate-mcc-json.py \
+            -i $$top_srcdir/mcc.txt \
+            -o $$top_builddir/mcc-data.json
+mcc_data.depends = $$top_srcdir/mcc.txt
+
+# config.h target
+config_h.target = config.h
+config_h.commands = \
+    $$top_srcdir/scripts/generate-config-h.py \
+            --keyfile=$$top_srcdir/youtube-data-api-v3.key \
+            --idfile=$$top_srcdir/youtube-client-id.json \
+            --outfile=$$top_builddir/config.h
+config_h.depends = \
+    $$top_srcdir/youtube-data-api-v3.key \
+    $$top_srcdir/youtube-client-id.json
+
+QMAKE_EXTRA_TARGETS += config_h mcc_data
+PRE_TARGETDEPS += config.h mcc-data.json
+
+DEFINES += VERSION_STR=\\\"$$system($${top_srcdir}/scripts/get_version_str.sh)\\\"
+
+mcc.files = $$top_builddir/mcc-data.json
 mcc.path = /usr/share/$${TARGET}
 
 artwork.files = $$files(images/*)
