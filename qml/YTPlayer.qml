@@ -38,6 +38,7 @@ ApplicationWindow
     property string regionCode: NativeUtil.regionCode
     readonly property string mainIconColor: "#FF980093"
     readonly property double thumbnailAspectRatio: 9 / 16
+    // TODO don't hardcode this
     readonly property string datadir: "/usr/share/harbour-ytplayer/"
 
     initialPage: Component { VideoCategories { } }
@@ -55,6 +56,14 @@ ApplicationWindow
 
     Notification {
         id: errorNotification
+
+        function showMessage(summary, body) {
+            previewSummary = summary
+            if (!body) {
+                previewBody = ""
+            }
+            publish()
+        }
 
         function show(error) {
             console.error("HTTP error code: " + error.code)
@@ -84,7 +93,7 @@ ApplicationWindow
                 }
             }
 
-            publish();
+            publish()
         }
     }
 }

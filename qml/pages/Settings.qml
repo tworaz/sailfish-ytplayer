@@ -61,6 +61,41 @@ Page {
             }
 
             Label {
+                //: Account settings section label
+                //% "Account"
+                text: qsTrId("ytplayer-label-account")
+                width: parent.width
+                color: Theme.highlightColor
+                horizontalAlignment: Text.AlignRight
+            }
+
+            TextSwitch {
+                //: Label of switch activating/deactivating YouTube account integration
+                //% "YouTube account integration"
+                text: qsTrId("ytplayer-account-integration-label")
+                //: Description of switch activating/deactivating YouTube account integration
+                //% "Allow YTPlayer to manage YouTube user account"
+                description: qsTrId("ytplayer-account-integration-description")
+                checked: S.get(S.YOUTUBE_ACCOUNT_INTEGRATION) === S.ENABLE
+
+                onCheckedChanged: {
+                    if (settingsPage.status !== PageStatus.Active) {
+                        return
+                    }
+
+                    if (checked) {
+                        console.log("Enabling account integration")
+                        pageStack.push(Qt.resolvedUrl("YTOAuth2.qml"))
+                    } else {
+                        console.log("Disabling account integration")
+                        S.set(S.YOUTUBE_ACCESS_TOKEN, "")
+                        S.set(S.YOUTUBE_REFRESH_TOKEN, "")
+                        S.set(S.YOUTUBE_ACCOUNT_INTEGRATION, S.DISABLE)
+                    }
+                }
+            }
+
+            Label {
                 //: Search settings section label
                 //% "Search"
                 text: qsTrId("ytplayer-label-search")

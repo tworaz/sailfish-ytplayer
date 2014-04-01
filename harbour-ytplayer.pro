@@ -49,7 +49,8 @@ OTHER_FILES += \
         qml/pages/VideoController.qml \
         qml/pages/CategoryVideoList.qml \
         qml/pages/YTListItem.qml \
-        qml/pages/YTVideoList.qml
+        qml/pages/YTVideoList.qml \
+        qml/pages/YTOAuth2.qml
 
 include(third_party/notifications.pri)
 

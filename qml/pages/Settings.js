@@ -31,14 +31,24 @@
 
 var RESULTS_PER_PAGE = "results-per-page";
 var SAFE_SEARCH = "safe-search"
+var YOUTUBE_ACCOUNT_INTEGRATION = "youtube_account_integration"
+var YOUTUBE_ACCESS_TOKEN = "access_token"
+var YOUTUBE_REFRESH_TOKEN = "refresh_token"
 
 var SAFE_SEARCH_NONE = 0;
 var SAFE_SEARCH_MODERATE = 1;
 var SAFE_SEARCH_STRICT = 2;
 
+var ENABLE = "enable";
+var DISABLE = "disable";
+
 function _getDatabase()
 {
     return Sql.LocalStorage.openDatabaseSync("YTPlayer", "1", "SettingsDatabase", 100000);
+}
+
+function _setDefaultValue(transaction, key, value) {
+    transaction.executeSql('INSERT OR IGNORE INTO settings VALUES (?,?);', [key, value]);
 }
 
 function initialize()
@@ -46,8 +56,9 @@ function initialize()
     var db = _getDatabase();
     db.transaction(function(tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS settings(key TEXT unique, value TEXT)');
-        tx.executeSql('INSERT OR IGNORE INTO settings VALUES(?,?);', [RESULTS_PER_PAGE, 20]);
-        tx.executeSql('INSERT OR IGNORE INTO settings VALUES(?,?);', [SAFE_SEARCH, SAFE_SEARCH_MODERATE]);
+        _setDefaultValue(tx, RESULTS_PER_PAGE, 20);
+        _setDefaultValue(tx, SAFE_SEARCH, SAFE_SEARCH_MODERATE);
+        _setDefaultValue(tx, YOUTUBE_ACCOUNT_INTEGRATION, DISABLE);
     });
 }
 

@@ -73,6 +73,7 @@ CoverBackground {
         }
 
         Label {
+            //% "Video count"
             property string _label: qsTrId("ytplayer-label-video-count")
             property color _color: Theme.highlightColor
             property string count: ""

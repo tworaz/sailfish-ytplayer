@@ -84,6 +84,18 @@ NativeUtil::getYouTubeDataKey() const
 #endif
 }
 
+QVariantMap
+NativeUtil::getYouTubeAuthData() const
+{
+	QVariantMap map;
+	map.insert("auth_uri", YOUTUBE_AUTH_URI);
+	map.insert("client_id", YOUTUBE_AUTH_CLIENT_ID);
+	map.insert("client_secret", YOUTUBE_AUTH_CLIENT_SECRET);
+	map.insert("token_uri", YOUTUBE_AUTH_TOKEN_URI);
+	map.insert("redirect_uri", YOUTUBE_AUTH_REDIRECT_URI);
+	return map;
+}
+
 QString
 NativeUtil::getVersion() const
 {

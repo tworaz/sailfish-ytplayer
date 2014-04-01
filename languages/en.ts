@@ -14,9 +14,9 @@ Video categories page title</extracomment>
         <source>Show more</source>
         <extracomment>Menu option show/load additional list elements
 ----------
-Menu option load additional list elements
+Menu option show/load additional list elements
 ----------
-Menu option show/load additional list elements</extracomment>
+Menu option load additional list elements</extracomment>
         <translation>Show more</translation>
     </message>
     <message id="ytplayer-label-search">
@@ -64,6 +64,8 @@ Search settings section label</extracomment>
     <message id="ytplayer-action-settings">
         <source>Settings</source>
         <extracomment>Menu option to show settings page
+----------
+Menu option to show settings page
 ----------
 Menu option to show settings page
 ----------
@@ -193,6 +195,42 @@ Menu option to show settings page</extracomment>
         <source>Latest videos</source>
         <extracomment>Label/Title for the list of latest videos in certain category</extracomment>
         <translation>Latest videos</translation>
+    </message>
+    <message id="ytplayer-oauth-page-loading-failed">
+        <source>Failed to load OAuth authorization page!</source>
+        <extracomment>YouTube OAuth page loading failure message</extracomment>
+        <translation>Failed to load OAuth authorization page!</translation>
+    </message>
+    <message id="ytplayer-oauth-access-denied">
+        <source>YouTube OAuth access denined!</source>
+        <extracomment>Message informing the user about YouTube OAuth autorization denial</extracomment>
+        <translation>YouTube OAuth access denied!</translation>
+    </message>
+    <message id="ytplayer-youtube-sign-in-successful">
+        <source>Sign in successful</source>
+        <extracomment>Notification informing the user that YouTube sign in succeeded</extracomment>
+        <translation>Sign in successful</translation>
+    </message>
+    <message id="ytplayer-oauth-failed">
+        <source>OAuth authorization failed!</source>
+        <extracomment>Error message informing the user about OAuth authorization failure</extracomment>
+        <translation>OAuth authorization failed!</translation>
+    </message>
+    <message id="ytplayer-label-account">
+        <source>Account</source>
+        <extracomment>Account settings section label</extracomment>
+        <translation>Account</translation>
+    </message>
+    <message id="ytplayer-account-integration-label">
+        <source>YouTube account integration</source>
+        <extracomment>Label of switch activating/deactivating YouTube account integration</extracomment>
+        <translation>YouTube account integration</translation>
+    </message>
+    <message id="ytplayer-account-integration-description">
+        <source>Allow YTPlayer to manage YouTube user account</source>
+        <oldsource>Allow YTPlayer to access YouTube user account</oldsource>
+        <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
+        <translation>Allow YTPlayer to manage YouTube user account</translation>
     </message>
 </context>
 </TS>

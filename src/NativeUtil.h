@@ -31,15 +31,17 @@
 #define NATIVEUTIL_H
 
 #include <QObject>
+#include <QVariantMap>
+#include <QJsonObject>
 #include <QDBusConnection>
 #include <QDBusObjectPath>
-#include <QJsonObject>
 
 class NativeUtil : public QObject
 {
 	Q_OBJECT
 
 	Q_PROPERTY(QString YouTubeDataKey READ getYouTubeDataKey CONSTANT)
+	Q_PROPERTY(QVariantMap YouTubeAuthData READ getYouTubeAuthData CONSTANT)
 	Q_PROPERTY(QString version READ getVersion CONSTANT)
 	Q_PROPERTY(QString regionCode READ getRegionCode CONSTANT)
 
@@ -50,6 +52,7 @@ public:
 
 	QString getRegionCode() const;
 	QString getYouTubeDataKey() const;
+	QVariantMap getYouTubeAuthData() const;
 	QString getVersion() const;
 
 private:

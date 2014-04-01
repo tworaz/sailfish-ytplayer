@@ -58,10 +58,10 @@ function _async_json_request(url, onSuccess, onFailure)
 {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
-        if (xhr.readyState == XMLHttpRequest.DONE) {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
             if (xhr.status === 200) {
                 var response = JSON.parse(xhr.responseText);
-                onSuccess(response)
+                onSuccess(response);
             } else {
                 var details = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
                 onFailure({ "code" : xhr.status, "details" : details });
@@ -70,6 +70,32 @@ function _async_json_request(url, onSuccess, onFailure)
     }
     xhr.open("GET", url);
     xhr.send();
+}
+
+
+function requestOAuthTokens(authCode, onSuccess, onFailure) {
+    var params = "code=" + authCode +
+            "&client_id=" + NativeUtil.YouTubeAuthData["client_id"] +
+            "&client_secret=" + NativeUtil.YouTubeAuthData["client_secret"] +
+            "&redirect_uri=urn:ietf:wg:oauth:2.0:oob" +
+            "&grant_type=authorization_code";
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+                onSuccess(response);
+            } else {
+                var details = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
+                onFailure({ "code" : xhr.status, "details" : details });
+            }
+        }
+    }
+    xhr.open("POST", NativeUtil.YouTubeAuthData["token_uri"]);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('Content-Length', params.length);
+    xhr.send(params);
 }
 
 
