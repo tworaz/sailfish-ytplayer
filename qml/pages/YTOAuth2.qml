@@ -107,6 +107,7 @@ Page {
             console.assert(result.hasOwnProperty('refresh_token'))
             S.set(S.YOUTUBE_ACCESS_TOKEN, result["access_token"])
             S.set(S.YOUTUBE_REFRESH_TOKEN, result["refresh_token"])
+            S.set(S.YOUTUBE_ACCESS_TOKEN_TYPE, result["token_type"])
             S.set(S.YOUTUBE_ACCOUNT_INTEGRATION, S.ENABLE)
             //: Notification informing the user that YouTube sign in succeeded
             //% "Sign in successful"

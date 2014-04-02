@@ -31,7 +31,6 @@
 
 var _youtube_data_v3_url = "https://www.googleapis.com/youtube/v3/";
 
-
 function _getYoutubeV3Url(reference, queryParams)
 {
     var locale = Qt.locale().name;
@@ -54,7 +53,18 @@ function _getYoutubeV3Url(reference, queryParams)
 }
 
 
-function _async_json_request(url, onSuccess, onFailure)
+function isAuthEnabled() {
+    return Settings.get(Settings.YOUTUBE_ACCOUNT_INTEGRATION) === Settings.ENABLE;
+}
+
+
+function _getAuthHeader() {
+    return Settings.get(Settings.YOUTUBE_ACCESS_TOKEN_TYPE) + " " +
+           Settings.get(Settings.YOUTUBE_ACCESS_TOKEN);
+}
+
+
+function _asyncFormPost(url, content, onSuccess, onFailure)
 {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -68,34 +78,90 @@ function _async_json_request(url, onSuccess, onFailure)
             }
         }
     }
-    xhr.open("GET", url);
+    xhr.open("POST", url);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.setRequestHeader('Content-Length', content.length);
+    if (isAuthEnabled()) {
+        xhr.setRequestHeader("Authorization", _getAuthHeader());
+    }
+    xhr.send(content);
+}
+
+
+function _refreshOAuthToken(onSuccess, onFailure)
+{
+    var body = "client_id=" + NativeUtil.YouTubeAuthData["client_id"] +
+            "&client_secret=" + NativeUtil.YouTubeAuthData["client_secret"] +
+            "&refresh_token=" + Settings.get(Settings.YOUTUBE_REFRESH_TOKEN) +
+            "&grant_type=refresh_token";
+
+    _asyncFormPost(NativeUtil.YouTubeAuthData["token_uri"], body,
+        function(response) {
+            console.debug("Token refresh succeeded");
+            Settings.set(Settings.YOUTUBE_ACCESS_TOKEN, response.access_token);
+            Settings.set(Settings.YOUTUBE_ACCESS_TOKEN_TYPE, response.token_type);
+            onSuccess(response);
+        }, function(error) {
+            onFailure(error);
+        });
+}
+
+
+function _xhr_onreadystate(xhr, onSuccess, onFailure, onRetry)
+{
+    if (xhr.readyState === XMLHttpRequest.DONE) {
+        if (xhr.status === 200) {
+            var response = JSON.parse(xhr.responseText);
+            onSuccess(response);
+        } else if (xhr.status === 204) {
+            onSuccess();
+        } else if (xhr.status === 401 && isAuthEnabled()) {
+            console.debug("Refreshing OAuth2 token");
+            _refreshOAuthToken(function (response) {
+                if (onRetry) {
+                    onRetry();
+                } else {
+                    _asyncJsonRequest(xhr._url, onSuccess, onFailure);
+                }
+            }, function (error) {
+                onFailure(error);
+            });
+        } else {
+            var details = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
+            onFailure({ "code" : xhr.status, "details" : details });
+        }
+    }
+}
+
+
+function _asyncJsonRequest(url, onSuccess, onFailure, method)
+{
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        _xhr_onreadystate(xhr, onSuccess, onFailure);
+    }
+    if (method) {
+        xhr.open(method, url);
+    } else {
+        xhr.open("GET", url);
+    }
+    xhr._url = url;
+    if (isAuthEnabled()) {
+        xhr.setRequestHeader("Authorization", _getAuthHeader());
+    }
     xhr.send();
 }
 
 
 function requestOAuthTokens(authCode, onSuccess, onFailure) {
-    var params = "code=" + authCode +
+    var content = "code=" + authCode +
             "&client_id=" + NativeUtil.YouTubeAuthData["client_id"] +
             "&client_secret=" + NativeUtil.YouTubeAuthData["client_secret"] +
             "&redirect_uri=urn:ietf:wg:oauth:2.0:oob" +
             "&grant_type=authorization_code";
 
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                var response = JSON.parse(xhr.responseText);
-                onSuccess(response);
-            } else {
-                var details = xhr.responseText ? JSON.parse(xhr.responseText) : undefined;
-                onFailure({ "code" : xhr.status, "details" : details });
-            }
-        }
-    }
-    xhr.open("POST", NativeUtil.YouTubeAuthData["token_uri"]);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-    xhr.setRequestHeader('Content-Length', params.length);
-    xhr.send(params);
+    _asyncFormPost(NativeUtil.YouTubeAuthData["token_uri"],
+                   content, onSuccess, onFailure);
 }
 
 
@@ -103,7 +169,7 @@ function getVideoCategories(onSuccess, onFailure)
 {
     var url = _getYoutubeV3Url("videoCategories", {"part" : "snippet"});
 
-    _async_json_request(url, function (result) {
+    _asyncJsonRequest(url, function (result) {
         console.assert(result.hasOwnProperty('kind') &&
                        result.kind === "youtube#videoCategoryListResponse");
         console.assert(result.hasOwnProperty('items') && result.items.length > 0);
@@ -127,7 +193,7 @@ function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
         url += "&pageToken=" + pageToken;
     }
 
-    _async_json_request(url, function(result) {
+    _asyncJsonRequest(url, function(result) {
         console.assert(result.kind === "youtube#videoListResponse");
         console.assert(result.hasOwnProperty('items') && result.items.length > 0);
         console.assert(result.items[0].kind === "youtube#video");
@@ -140,7 +206,7 @@ function getVideosInPlaylist(playlistId, onSuccess, onFailure)
 {
     var url = _getYoutubeV3Url("playlistItems",{"part" : "snippet", "playlistId" : playlistId});
 
-    _async_json_request(url, function(response) {
+    _asyncJsonRequest(url, function(response) {
         console.assert(response.kind === "youtube#playlistItemListResponse");
         console.assert(response.items.length > 0);
         console.assert(response.items[0].kind === "youtube#playlistItem");
@@ -154,7 +220,7 @@ function getVideoDetails(videoId, onSuccess, onFailure)
     var url = _getYoutubeV3Url("videos", {"part" : "contentDetails, snippet, statistics",
                               "id" : videoId});
 
-    _async_json_request(url, function(response) {
+    _asyncJsonRequest(url, function(response) {
         console.assert(response.items.length === 1);
         console.assert(response.kind === "youtube#videoListResponse");
         console.assert(response.items[0].kind === "youtube#video");
@@ -168,12 +234,96 @@ function getChannelDetails(channelId, onSuccess, onFailure)
     var url = _getYoutubeV3Url("channels",
         {"part" : "snippet,statistics,contentDetails", "id" : channelId});
 
-    _async_json_request(url, function(response) {
+    _asyncJsonRequest(url, function(response) {
         console.assert(response.kind === "youtube#channelListResponse");
         console.assert(response.items.length === 1);
         console.assert(response.items[0].kind ==="youtube#channel");
         onSuccess(response);
     }, onFailure);
+}
+
+
+function getSubscriptions(onSuccess, onFailure, pageToken)
+{
+    var url = _getYoutubeV3Url("subscriptions", {
+        "part" : "id", "mine" : true, "part" : "snippet" });
+
+    if (pageToken !== undefined) {
+        url += "&pageToken=" + pageToken;
+    }
+
+    _asyncJsonRequest(url, function(response) {
+        console.assert(response.kind === "youtube#subscriptionListResponse")
+        onSuccess(response);
+    }, onFailure);
+}
+
+
+function subscribeChannel(channelId, onSuccess, onFailure)
+{
+    var url = _youtube_data_v3_url + "subscriptions?part=snippet";
+
+    var resource = JSON.stringify ({
+        "snippet" : {
+            "resourceId" : {
+                "kind" : "youtube#channel",
+                "channelId" : channelId,
+            }
+        }
+    });
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        _xhr_onreadystate(xhr, function(response) {
+            console.assert(response.kind === "youtube#subscription");
+            onSuccess(response);
+        }, onFailure, function() {
+            subscribeChannel(channelId, onSuccess, onFailure);
+        });
+    }
+    xhr.open("POST", url);
+    xhr.setRequestHeader("Authorization", _getAuthHeader());
+    xhr.setRequestHeader('Content-Type', 'application/json');
+    xhr.setRequestHeader('Content-Length', resource.length);
+    xhr.send(resource);
+}
+
+
+function unsubscribe(subscriptionId, onSuccess, onFailure)
+{
+    var url = _youtube_data_v3_url + "subscriptions?id=" + subscriptionId;
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        _xhr_onreadystate(xhr, onSuccess, onFailure, function() {
+            unsubscribe(subscriptionId, onSuccess, onFailure);
+        });
+    }
+    xhr.open("DELETE", url);
+    xhr.setRequestHeader("Authorization", _getAuthHeader());
+    xhr.send();
+}
+
+
+function isChannelSubscribed(channelId, onSuccess, onFailure)
+{
+    var _successHandler = function (response) {
+        for (var i = 0; i < response.items.length; ++i) {
+            var item = response.items[i];
+            console.assert(item.snippet.resourceId.kind === "youtube#channel");
+            if (item.snippet.resourceId.channelId === channelId) {
+                console.assert(item.kind === "youtube#subscription");
+                onSuccess(item);
+                return;
+            }
+        }
+        if (response.hasOwnProperty('nextPageToken')) {
+            getSubscriptions(_successHandler, onFailure, response.nextPageToken);
+        }
+        onSuccess(undefined);
+    };
+
+    getSubscriptions(_successHandler, onFailure);
 }
 
 
@@ -206,7 +356,7 @@ function getSearchResults(query, onSuccess, onFailure, pageToken)
 
     var url = _getYoutubeV3Url("search", qParams);
 
-    _async_json_request(url, function(response) {
+    _asyncJsonRequest(url, function(response) {
         console.assert(response.kind === "youtube#searchListResponse");
         if (response.items.length > 0) {
             console.assert(response.items[0].kind === "youtube#searchResult");

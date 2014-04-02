@@ -232,5 +232,14 @@ Menu option to show settings page</extracomment>
         <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
         <translation>Allow YTPlayer to manage YouTube user account</translation>
     </message>
+    <message id="ytplayer-channel-unsubscribe">
+        <source>Unsubscribe</source>
+        <extracomment>Menu option to unsubscribe from YouTube channel</extracomment>
+        <translation>Unsubscribe</translation>
+    </message>
+    <message id="ytplayer-channel-subscribe">
+        <source>Subscribe</source>
+        <translation>Subscribe</translation>
+    </message>
 </context>
 </TS>

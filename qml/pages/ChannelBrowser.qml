@@ -38,6 +38,9 @@ Page {
     property string title
     property variant coverData
 
+    property bool channelSubscribed: false
+    property string subscriptionId: ""
+
     BusyIndicator {
         id: indicator
         anchors.centerIn: parent
@@ -46,8 +49,29 @@ Page {
     }
 
     onStatusChanged: {
-        if (status === PageStatus.Active && coverData) {
-            requestCoverPage("ChannelBrowser.qml", coverData);
+        if (status === PageStatus.Active) {
+            if (coverData) {
+                requestCoverPage("ChannelBrowser.qml", coverData)
+            }
+            subscriptionMenu.visible = Yt.isAuthEnabled()
+        }
+    }
+
+    onChannelIdChanged: {
+        if (Yt.isAuthEnabled()) {
+            console.debug("Authorization enabled, checking channel subscription status")
+            Yt.isChannelSubscribed(channelId, function(response) {
+                page.channelSubscribed = response ? true : false
+                console.debug("Channel subscribed: " + page.channelSubscribed)
+                if (page.channelSubscribed) {
+                    page.subscriptionId = response.id
+                    console.debug("Subscription ID: " + page.subscriptionId)
+                } else {
+                    page.subscriptionId = "";
+                }
+            }, function(error) {
+                errorNotification.show(error)
+            });
         }
     }
 
@@ -57,8 +81,32 @@ Page {
         visible: !indicator.running
 
         property string channelPlaylistId: ""
+
         onChannelPlaylistIdChanged: {
             videoResourceId = { "kind" : "#channelPlaylist", "id" : channelPlaylistId }
+        }
+
+        function changeChanelSubscription(subscribe) {
+            if (subscribe) {
+                console.debug("Subscribing channel: " + channelId)
+                Yt.subscribeChannel(channelId, function(response) {
+                    console.debug("Channel subscribed successfully: " + response.id)
+                    page.channelSubscribed = true
+                    page.subscriptionId = response.id
+                }, function(error) {
+                    errorNotification.show(error)
+                })
+            } else {
+                console.debug("Unsubscribing channel: " + page.subscriptionId);
+                console.assert(page.subscriptionId.length > 0)
+                Yt.unsubscribe(page.subscriptionId, function(response) {
+                    console.debug("Channel unsubscribed successfully")
+                    page.channelSubscribed = false
+                    page.subscriptionId = ""
+                }, function (error) {
+                    errorNotification.show(error);
+                });
+            }
         }
 
         PullDownMenu {
@@ -67,6 +115,20 @@ Page {
                 //% "Settings"
                 text: qsTrId("ytplayer-action-settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
+            }
+            MenuItem {
+                id: subscriptionMenu
+                visible: false
+                // TODO: translate
+                text: channelSubscribed ?
+                          //: Menu option to unsubscribe from YouTube channel
+                          //% "Unsubscribe"
+                          qsTrId("ytplayer-channel-unsubscribe") :
+                          // Menu option to subscribe to YouTube channel
+                          //% "Subscribe"
+                          qsTrId("ytplayer-channel-subscribe")
+
+                onClicked: channelVideoList.changeChanelSubscription(!page.channelSubscribed)
             }
         }
 
@@ -192,7 +254,6 @@ Page {
                 requestCoverPage("ChannelBrowser.qml", coverData)
 
                 channelVideoList.refresh()
-
             }
 
             function onChannelDetailsFetchFailed(error) {

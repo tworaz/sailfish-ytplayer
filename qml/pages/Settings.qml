@@ -90,6 +90,7 @@ Page {
                         console.log("Disabling account integration")
                         S.set(S.YOUTUBE_ACCESS_TOKEN, "")
                         S.set(S.YOUTUBE_REFRESH_TOKEN, "")
+                        S.set(S.YOUTUBE_TOKEN_TYPE, "")
                         S.set(S.YOUTUBE_ACCOUNT_INTEGRATION, S.DISABLE)
                     }
                 }

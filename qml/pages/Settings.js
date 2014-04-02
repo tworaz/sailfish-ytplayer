@@ -32,6 +32,7 @@
 var RESULTS_PER_PAGE = "results-per-page";
 var SAFE_SEARCH = "safe-search"
 var YOUTUBE_ACCOUNT_INTEGRATION = "youtube_account_integration"
+var YOUTUBE_ACCESS_TOKEN_TYPE = "access_token_type"
 var YOUTUBE_ACCESS_TOKEN = "access_token"
 var YOUTUBE_REFRESH_TOKEN = "refresh_token"
 
