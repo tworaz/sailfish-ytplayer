@@ -13,10 +13,12 @@ QT += dbus
 
 SOURCES += \
         src/YTPlayer.cpp \
-        src/NativeUtil.cpp
+        src/NativeUtil.cpp \
+        src/Logger.cpp
 
 HEADERS += \
-        src/NativeUtil.h
+        src/NativeUtil.h \
+        src/Logger.h
 
 OTHER_FILES += \
         scripts/generate-mcc-json.py \

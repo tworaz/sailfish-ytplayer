@@ -41,7 +41,7 @@ Page {
     readonly property alias thumbnailUrl: poster.source
 
     Component.onCompleted: {
-        console.debug("Video overview page for video ID: " + videoId + " created")
+        Log.debug("Video overview page for video ID: " + videoId + " created")
     }
 
     onStatusChanged: {
@@ -172,7 +172,7 @@ Page {
     }
 
     function onVideoDetailsLoaded(details) {
-        //console.debug("Have video details: " + JSON.stringify(details, undefined, 2))
+        //Log.debug("Have video details: " + JSON.stringify(details, undefined, 2))
         var thumbnails = details.snippet.thumbnails;
         if (thumbnails.standard) {
             poster.source = thumbnails.standard.url

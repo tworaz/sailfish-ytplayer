@@ -71,15 +71,15 @@ BackgroundItem {
 
     onClicked: {
         if (youtubeId.kind === "youtube#video") {
-            console.debug("Selected item is a video, opening video overview page")
+            Log.debug("Selected item is a video, opening video overview page")
             pageStack.push(Qt.resolvedUrl("VideoOverview.qml"),
                            { "videoId": youtubeId.videoId, title: ytItem.title })
         } else if (youtubeId.kind === "youtube#channel") {
-            console.debug("Selected item is a channel, opening channel browser ")
+            Log.debug("Selected item is a channel, opening channel browser ")
             pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),
                            {"channelId" : youtubeId.channelId, title: ytItem.title})
         } else {
-            console.error("Unrecogized id kind: " + youtubeId.kind);
+            Log.error("Unrecogized id kind: " + youtubeId.kind);
         }
     }
 }

@@ -97,7 +97,7 @@ function _refreshOAuthToken(onSuccess, onFailure)
 
     _asyncFormPost(NativeUtil.YouTubeAuthData["token_uri"], body,
         function(response) {
-            console.debug("Token refresh succeeded");
+            Log.debug("Token refresh succeeded");
             Settings.set(Settings.YOUTUBE_ACCESS_TOKEN, response.access_token);
             Settings.set(Settings.YOUTUBE_ACCESS_TOKEN_TYPE, response.token_type);
             onSuccess(response);
@@ -116,7 +116,7 @@ function _xhr_onreadystate(xhr, onSuccess, onFailure, onRetry)
         } else if (xhr.status === 204) {
             onSuccess();
         } else if (xhr.status === 401 && isAuthEnabled()) {
-            console.debug("Refreshing OAuth2 token");
+            Log.debug("Refreshing OAuth2 token");
             _refreshOAuthToken(function (response) {
                 if (onRetry) {
                     onRetry();
@@ -337,7 +337,7 @@ function getSearchResults(query, onSuccess, onFailure, pageToken)
     var safeSearchValue = undefined;
     switch (parseInt(Settings.get(Settings.SAFE_SEARCH))) {
     default:
-        console.warn("Unknown safe search value: " + Settings.get(Settings.SAFE_SEARCH));
+        Log.warn("Unknown safe search value: " + Settings.get(Settings.SAFE_SEARCH));
         break;
     case Settings.SAFE_SEARCH_NONE:
         qParams["safeSearch"] = "none";
@@ -393,12 +393,12 @@ function getVideoUrl(videoId, onSuccess, onFailure)
                 return;
             }
 
-            //console.debug("Stream map string: " + stream_map_str );
+            //Log.debug("Stream map string: " + stream_map_str );
 
             var stream_map_array = [];
             tokens = stream_map_str.split(',');
             for (var i = 0; i < tokens.length; i++) {
-                //console.debug("Stream map array element " + i);
+                //Log.debug("Stream map array element " + i);
                 var map_elements = tokens[i].split('&');
                 var map = {};
                 for (var k = 0; k < map_elements.length; k++) {
@@ -408,19 +408,19 @@ function getVideoUrl(videoId, onSuccess, onFailure)
                     } else {
                         map[map_entry[0]] = map_entry[1];
                     }
-                    //console.debug("  " + map_entry[0] + " = " + map[map_entry[0]]);
+                    //Log.debug("  " + map_entry[0] + " = " + map[map_entry[0]]);
                 }
                 stream_map_array[i] = map;
             }
 
-            //console.debug(JSON.stringify(stream_map_array, undefined, 2));
+            //Log.debug(JSON.stringify(stream_map_array, undefined, 2));
 
             var selected_url = undefined;
             for (var i = 0; i < stream_map_array.length; i++) {
                 if (stream_map_array[i].itag === "18") {
                     if ("s" in stream_map_array[i]) {
                         //TODO: support playing videos with encrypted signatures
-                        console.log("Encrypted signature detected, can't play video directly, falling back to ytapi.com");
+                        Log.info("Encrypted signature detected, can't play video directly, falling back to ytapi.com");
                         selected_url = getVideoUrlYtAPI(videoId, 18);
                     } else if ("sig" in stream_map_array[i]) {
                         selected_url = stream_map_array[i].url +

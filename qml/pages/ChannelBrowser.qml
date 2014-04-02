@@ -59,13 +59,13 @@ Page {
 
     onChannelIdChanged: {
         if (Yt.isAuthEnabled()) {
-            console.debug("Authorization enabled, checking channel subscription status")
+            Log.debug("Authorization enabled, checking channel subscription status")
             Yt.isChannelSubscribed(channelId, function(response) {
                 page.channelSubscribed = response ? true : false
-                console.debug("Channel subscribed: " + page.channelSubscribed)
+                Log.debug("Channel subscribed: " + page.channelSubscribed)
                 if (page.channelSubscribed) {
                     page.subscriptionId = response.id
-                    console.debug("Subscription ID: " + page.subscriptionId)
+                    Log.debug("Subscription ID: " + page.subscriptionId)
                 } else {
                     page.subscriptionId = "";
                 }
@@ -88,19 +88,19 @@ Page {
 
         function changeChanelSubscription(subscribe) {
             if (subscribe) {
-                console.debug("Subscribing channel: " + channelId)
+                Log.debug("Subscribing channel: " + channelId)
                 Yt.subscribeChannel(channelId, function(response) {
-                    console.debug("Channel subscribed successfully: " + response.id)
+                    Log.debug("Channel subscribed successfully: " + response.id)
                     page.channelSubscribed = true
                     page.subscriptionId = response.id
                 }, function(error) {
                     errorNotification.show(error)
                 })
             } else {
-                console.debug("Unsubscribing channel: " + page.subscriptionId);
+                Log.debug("Unsubscribing channel: " + page.subscriptionId);
                 console.assert(page.subscriptionId.length > 0)
                 Yt.unsubscribe(page.subscriptionId, function(response) {
-                    console.debug("Channel unsubscribed successfully")
+                    Log.debug("Channel unsubscribed successfully")
                     page.channelSubscribed = false
                     page.subscriptionId = ""
                 }, function (error) {
@@ -221,7 +221,7 @@ Page {
             VerticalScrollDecorator {}
 
             Component.onCompleted: {
-                console.debug("Channel browser page created for: " + channelId)
+                Log.debug("Channel browser page created for: " + channelId)
                 Yt.getChannelDetails(channelId, onChannelDetailsFetched, onChannelDetailsFetchFailed)
             }
 
@@ -234,7 +234,7 @@ Page {
                 } else if (details.thumbnails.hasOwnProperty("medium")) {
                     poster.source = details.thumbnails.medium.url
                 } else {
-                    console.debug("No appropriate channel thumbnail found: " +
+                    Log.debug("No appropriate channel thumbnail found: " +
                                   JSON.stringify(details.thumbnail, undefined, 2))
                     poster.visible = false
                 }

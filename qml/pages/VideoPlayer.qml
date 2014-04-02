@@ -47,7 +47,7 @@ Page {
     property string videoId
 
     Component.onCompleted: {
-        console.debug("Video player page created, video ID: " + videoId)
+        Log.debug("Video player page created, video ID: " + videoId)
         requestCoverPage("VideoPlayer.qml",
                          { "title" : page.title, "thumbnailUrl" : thumbnailUrl,
                            "mediaPlayer": mediaPlayer })
@@ -58,7 +58,7 @@ Page {
         if (status === PageStatus.Active) {
             Yt.getVideoUrl(videoId, onVideoUrlObtained, onFailure)
         } else if (status == PageStatus.Deactivating) {
-            console.debug("VidePlayer page deactiated");
+            Log.debug("VidePlayer page deactiated");
             mediaPlayer.stop()
             videoOutput.source = null
         }
@@ -75,13 +75,13 @@ Page {
 
     onOrientationChanged: {
         if (page.orientation & (Orientation.Landscape | Orientation.LandscapeInverted)) {
-            console.debug("Video player orientation changed to landscape")
+            Log.debug("Video player orientation changed to landscape")
             showVideoControls(!videoController.playing)
             if (videoController.playing) {
                 controlsTimer.restart()
             }
         } else {
-            console.debug("Video player orientation changed to portrait")
+            Log.debug("Video player orientation changed to portrait")
             showVideoControls(true)
         }
     }
@@ -145,7 +145,7 @@ Page {
             visible: page.isLandscape
 
             onClicked: {
-                console.debug("Video player screen clicked, showing controls")
+                Log.debug("Video player screen clicked, showing controls")
                 showVideoControls(true)
                 controlsTimer.restart()
             }
@@ -157,7 +157,7 @@ Page {
                 onTriggered: {
                     if (!videoController.playbackFinished &&
                         videoController.playing && page.isLandscape) {
-                        console.debug("Video controls timeout, hiding")
+                        Log.debug("Video controls timeout, hiding")
                         showVideoControls(false)
                     }
                 }
@@ -228,7 +228,7 @@ Page {
     }
 
     function onVideoUrlObtained(url) {
-        console.debug("Selected URL: " + url)
+        Log.debug("Selected URL: " + url)
         mediaPlayer.source = url
     }
 }

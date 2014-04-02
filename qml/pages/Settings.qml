@@ -84,10 +84,10 @@ Page {
                     }
 
                     if (checked) {
-                        console.log("Enabling account integration")
+                        Log.info("Enabling account integration")
                         pageStack.push(Qt.resolvedUrl("YTOAuth2.qml"))
                     } else {
-                        console.log("Disabling account integration")
+                        Log.info("Disabling account integration")
                         S.set(S.YOUTUBE_ACCESS_TOKEN, "")
                         S.set(S.YOUTUBE_REFRESH_TOKEN, "")
                         S.set(S.YOUTUBE_TOKEN_TYPE, "")

@@ -27,48 +27,44 @@
  * SUCH DAMAGE.
  */
 
-function parseDuration(dur) {
-    var seconds = Math.ceil(dur / 1000)
-    var hours = Math.floor(seconds / 3600)
-    seconds -= hours * 3600
-    var minutes = Math.floor(seconds / 60)
-    seconds -= minutes * 60
+#ifndef _LOGGER_H_
+#define _LOGGER_H_
 
-    var date = new Date()
-    date.setHours(hours)
-    date.setMinutes(minutes)
-    date.setSeconds(seconds)
+#include <QPair>
+#include <QObject>
+#include <QString>
+#include <QMessageLogContext>
+#include <QContiguousCache>
 
-    if (hours > 0) {
-        return Qt.formatTime(date, "hh:mm:ss")
-    } else if (minutes > 0) {
-        return Qt.formatTime(date, "mm:ss")
-    } else {
-        return Qt.formatTime(date, "m:ss")
-    }
-}
-
-function getYouTubeIconForCategoryId(category)
+class Logger : public QObject
 {
-    var categoryId = parseInt(category);
-    switch (categoryId) {
-    case 1:  return "\ue64d"  // Film & Animation
-    case 2:  return "\ue650"  // Autos & Vechicles
-    case 10: return "\ue636"  // Music
-    case 15: return "\ue633"  // Pets & Animals
-    case 17: return "\ue60d"  // Sports
-    case 19: return "\ue641"  // Travel & Events
-    case 20: return "\ue64f"  // Gaming
-    case 22: return "\ue634"  // People & Blogs
-    case 23: return "\ue638"  // Commedy
-    case 24: return "\ue64c"  // Entertainment
-    case 25: return "\ue634"  // News & Politics
-    case 26: return "\ue639"  // Howto & Style
-    case 27: return "\ue64b"  // Education
-    case 28: return "\ue610"  // Science & Technology
-    case 29: return "\ue64e"  // Nonprofits & Activism
-    default:
-        Log.debug("No icon for category: " + category)
-        return "\ue60c"
-    }
-}
+	Q_OBJECT
+
+public:
+	explicit Logger(QObject *parent = 0);
+
+	static void Register();
+
+	Q_INVOKABLE void debug(QString msg) { _log(LOG_DEBUG, msg); }
+	Q_INVOKABLE void error(QString msg) { _log(LOG_ERROR, msg); }
+	Q_INVOKABLE void warn(QString msg)  { _log(LOG_WARN, msg); }
+	Q_INVOKABLE void info(QString msg)  { _log(LOG_INFO, msg); }
+
+private:
+	enum LogType {
+		LOG_DEBUG = 0,
+		LOG_ERROR,
+		LOG_WARN,
+		LOG_INFO
+	};
+
+	typedef QPair<LogType, QString> LogEntry;
+
+	void _log(LogType, QString);
+	static void _messageHandler(QtMsgType, const QMessageLogContext&, const QString&);
+
+	static QtMessageHandler _original_handler;
+	static QContiguousCache<LogEntry> *_log_cache;
+};
+
+#endif // _LOGGER_H_

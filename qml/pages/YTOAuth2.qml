@@ -77,7 +77,7 @@ Page {
                 }
                 break
             case WebView.LoadFailedStatus:
-                console.warn("Authorization page loading failed!")
+                Log.warn("Authorization page loading failed!")
                 //: YouTube OAuth page loading failure message
                 //% "Failed to load OAuth authorization page!"
                 errorNotification.showMessage(qsTrId("ytplayer-oauth-page-loading-failed"))
@@ -91,13 +91,13 @@ Page {
                 visible = false
                 YT.requestOAuthTokens(authCode, onSuccess, onFailure)
             } else if (title.indexOf('Denied error') !== -1) {
-                console.debug("Youtube OAuth access denied!")
+                Log.debug("Youtube OAuth access denied!")
                 //: Message informing the user about YouTube OAuth autorization denial
                 //% "YouTube OAuth access denined!"
                 errorNotification.showMessage(qsTrId("ytplayer-oauth-access-denied"))
                 pageStack.navigateBack(PageStackAction.Animated)
             } else if (title.length > 0) {
-                console.debug("OAuth page title changed: " + title)
+                Log.debug("OAuth page title changed: " + title)
                 pageTitle = title
             }
         }
@@ -116,7 +116,7 @@ Page {
         }
 
         function onFailure(error) {
-            console.debug("Error: " + JSON.stringify(error, undefined, 2))
+            Log.debug("Error: " + JSON.stringify(error, undefined, 2))
             //: Error message informing the user about OAuth authorization failure
             //% "OAuth authorization failed!"
             errorNotification.showMessage(qsTrId("ytplayer-oauth-failed"))

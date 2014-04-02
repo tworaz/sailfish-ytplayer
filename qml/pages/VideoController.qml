@@ -53,7 +53,7 @@ DockedPanel {
         autoPlay: true
 
         onStatusChanged: {
-            console.debug("Media Player status changed to: " +
+            Log.debug("Media Player status changed to: " +
                           mediaPlayerStatusToString(status))
             switch (status) {
             case MediaPlayer.Loading:
@@ -72,13 +72,13 @@ DockedPanel {
         onPlaybackStateChanged: {
             switch(playbackState) {
             case MediaPlayer.PlayingState:
-                console.debug("Video is playing")
+                Log.debug("Video is playing")
                 break
             case MediaPlayer.PausedState:
-                console.debug("Video is paused")
+                Log.debug("Video is paused")
                 break
             case MediaPlayer.StoppedState:
-                console.debug("Video is stopped")
+                Log.debug("Video is stopped")
                 break
             }
         }
@@ -90,19 +90,19 @@ DockedPanel {
         }
 
         onDurationChanged: {
-            console.debug("Media player duration changed: " + H.parseDuration(duration))
+            Log.debug("Media player duration changed: " + H.parseDuration(duration))
             progressSlider.value = 0
             progressSlider.maximumValue = duration
         }
 
         onError: {
             // TODO: Do something in case of error
-            console.error(errorString)
+            Log.error(errorString)
             showIndicator = false
         }
 
         onBufferProgressChanged: {
-            //console.debug("Buffering progress: " + Math.round(bufferProgress * 100))
+            //Log.debug("Buffering progress: " + Math.round(bufferProgress * 100))
             var b = Math.round(bufferProgress * 100)
             if (b < 100) {
                 //% "Buffering: %1%"
@@ -163,7 +163,7 @@ DockedPanel {
                 }
             }
             onClicked: {
-                console.debug("Play/Pause button clicked")
+                Log.debug("Play/Pause button clicked")
                 if (_mediaPlayer.playbackState === MediaPlayer.PlayingState) {
                     _mediaPlayer.pause()
                 } else {

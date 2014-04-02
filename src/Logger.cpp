@@ -27,48 +27,47 @@
  * SUCH DAMAGE.
  */
 
-function parseDuration(dur) {
-    var seconds = Math.ceil(dur / 1000)
-    var hours = Math.floor(seconds / 3600)
-    seconds -= hours * 3600
-    var minutes = Math.floor(seconds / 60)
-    seconds -= minutes * 60
+#include "Logger.h"
 
-    var date = new Date()
-    date.setHours(hours)
-    date.setMinutes(minutes)
-    date.setSeconds(seconds)
+#include <stdio.h>
 
-    if (hours > 0) {
-        return Qt.formatTime(date, "hh:mm:ss")
-    } else if (minutes > 0) {
-        return Qt.formatTime(date, "mm:ss")
-    } else {
-        return Qt.formatTime(date, "m:ss")
-    }
+#define LOG_CACHE_SIZE 50
+
+static QString _log_str_arr[] = {
+	QString("[DEBUG] "),
+	QString("[ERROR] "),
+	QString("[WARN]  "),
+	QString("[INFO]  ")
+};
+
+QtMessageHandler Logger::_original_handler = NULL;
+QContiguousCache<Logger::LogEntry> *Logger::_log_cache =
+		new QContiguousCache<Logger::LogEntry>(LOG_CACHE_SIZE);
+
+
+Logger::Logger(QObject *parent)
+	: QObject(parent)
+{
 }
 
-function getYouTubeIconForCategoryId(category)
+void
+Logger::Register()
 {
-    var categoryId = parseInt(category);
-    switch (categoryId) {
-    case 1:  return "\ue64d"  // Film & Animation
-    case 2:  return "\ue650"  // Autos & Vechicles
-    case 10: return "\ue636"  // Music
-    case 15: return "\ue633"  // Pets & Animals
-    case 17: return "\ue60d"  // Sports
-    case 19: return "\ue641"  // Travel & Events
-    case 20: return "\ue64f"  // Gaming
-    case 22: return "\ue634"  // People & Blogs
-    case 23: return "\ue638"  // Commedy
-    case 24: return "\ue64c"  // Entertainment
-    case 25: return "\ue634"  // News & Politics
-    case 26: return "\ue639"  // Howto & Style
-    case 27: return "\ue64b"  // Education
-    case 28: return "\ue610"  // Science & Technology
-    case 29: return "\ue64e"  // Nonprofits & Activism
-    default:
-        Log.debug("No icon for category: " + category)
-        return "\ue60c"
-    }
+	_original_handler = qInstallMessageHandler(Logger::_messageHandler);
+}
+
+void
+Logger::_log(LogType type, QString message)
+{
+	const QString& prefix = _log_str_arr[type];
+	QString fullMessage = prefix + message;
+	fprintf(stdout, "%s\n", fullMessage.toLocal8Bit().data());
+	_log_cache->append(LogEntry(type, message));
+}
+
+void
+Logger::_messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+{
+	_log_cache->append(LogEntry(LOG_DEBUG, msg));
+	_original_handler(type, context, msg);
 }

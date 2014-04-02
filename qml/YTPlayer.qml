@@ -48,7 +48,7 @@ ApplicationWindow
     function requestCoverPage(coverFile, props) {
         var coverUrl = Qt.resolvedUrl("cover/" + coverFile)
         if (coverUrl !== cover) {
-            console.debug("Current page requested new cover: " + coverFile)
+            Log.debug("Current page requested new cover: " + coverFile)
             cover = coverUrl
             coverData = props
         }
@@ -66,8 +66,8 @@ ApplicationWindow
         }
 
         function show(error) {
-            console.error("HTTP error code: " + error.code)
-            console.error("HTTP error details: " + JSON.stringify(error.details, undefined, 2))
+            Log.error("HTTP error code: " + error.code)
+            Log.error("HTTP error details: " + JSON.stringify(error.details, undefined, 2))
 
             if (error.code === 0) {
                 //: Internal application error notification summary

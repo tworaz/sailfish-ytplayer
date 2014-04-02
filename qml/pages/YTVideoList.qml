@@ -89,7 +89,7 @@ SilicaListView {
             Yt.getVideosInPlaylist(videoResourceId.id, onVideoListLoaded, onFailure, token)
             root.busy = true
         } else {
-            console.error("Unrecognized video listing types: " + videoResourceId.kind)
+            Log.error("Unrecognized video listing types: " + videoResourceId.kind)
         }
     }
 

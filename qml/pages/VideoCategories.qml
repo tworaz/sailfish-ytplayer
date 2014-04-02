@@ -49,10 +49,10 @@ Page {
         source: "https://www.youtube.com/s/tv/fonts/youtube-icons.ttf"
         onStatusChanged: {
             if (status === FontLoader.Ready) {
-                console.debug("YouTube icons loaded, loading categories")
+                Log.debug("YouTube icons loaded, loading categories")
                 videoCategoryListView.refresh()
             } else if (status === FontLoader.Error) {
-                console.warn("Failed to load youtube category icons")
+                Log.warn("Failed to load youtube category icons")
                 videoCategoryListView.refresh()
             }
         }
@@ -125,7 +125,7 @@ Page {
             }
 
             onClicked: {
-                console.debug("Selected video category id:" + id)
+                Log.debug("Selected video category id:" + id)
                 var listingType = { "kind" : kind, "id" : id }
                 pageStack.push(Qt.resolvedUrl("CategoryVideoList.qml"),
                                { "categoryResourceId": listingType,
@@ -167,9 +167,9 @@ Page {
         }
 
         Component.onCompleted: {
-            console.debug("Video category list page created")
+            Log.debug("Video category list page created")
             if (youtubeIconsLoader.status === FontLoader.Ready) {
-                console.debug("Youtube icons already loaded, loading categories")
+                Log.debug("Youtube icons already loaded, loading categories")
                 Yt.getVideoCategories(onSuccess, onFailure)
             }
             Settings.initialize();

@@ -107,7 +107,7 @@ Page {
             }
 
             onTriggered: {
-                console.debug("Searching for: " + queryStr)
+                Log.debug("Searching for: " + queryStr)
                 resultsListModel.clear()
                 page.nextPageToken = ""
                 Yt.getSearchResults(queryStr, searchView.onSearchSuccessful, searchView.onSearchFailed)
@@ -141,7 +141,7 @@ Page {
         }
 
         function loadNextResultsPage() {
-            console.debug("Loading next page of results, token: " + page.nextPageToken)
+            Log.debug("Loading next page of results, token: " + page.nextPageToken)
             Yt.getSearchResults(searchHandler.queryStr, searchView.onSearchSuccessful,
                                 searchView.onSearchFailed, page.nextPageToken)
             bottomMenu.busy = true
@@ -159,13 +159,13 @@ Page {
         }
 
         function onSearchFailed(msg) {
-            console.error("Search Failed: " + msg)
+            Log.error("Search Failed: " + msg)
             page.nextPageToken = ""
             indicator.running = false
         }
 
         Component.onCompleted: {
-            console.debug("YouTube search page created")
+            Log.debug("YouTube search page created")
             searchView.headerItem.forceActiveFocus()
         }
 
