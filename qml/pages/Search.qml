@@ -74,6 +74,7 @@ Page {
             visible: page.nextPageToken.length > 0
             quickSelect: true
             MenuItem {
+                visible: parent.visible
                 //: Menu option load additional list elements
                 //% "Show more"
                 text: qsTrId("ytplayer-action-show-more")
