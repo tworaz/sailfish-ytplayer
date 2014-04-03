@@ -34,11 +34,19 @@ import "duration.js" as DUtil
 import "../common"
 
 
-Page {
+Dialog {
     id: page
     property string videoId
     property alias title: header.title
     readonly property alias thumbnailUrl: poster.source
+
+    acceptDestination: Qt.resolvedUrl("VideoPlayer.qml")
+    acceptDestinationAction: PageStackAction.Push
+    acceptDestinationProperties: {
+        // thumbnailUrl will be set once it's actually known
+        "videoId" : videoId,
+        "title"   : title,
+    }
 
     Component.onCompleted: {
         Log.debug("Video overview page for video ID: " + videoId + " created")
@@ -49,9 +57,11 @@ Page {
             if (poster.status !== Image.Ready) {
                 Yt.getVideoDetails(videoId, onVideoDetailsLoaded, onFailure)
             } else {
-                requestCoverPage("VideoOverview.qml",
-                    { "thumbnailUrl" : thumbnailUrl, "videoId" : videoId,
-                      "title" : title})
+                requestCoverPage("VideoOverview.qml", {
+                    "thumbnailUrl" : thumbnailUrl,
+                    "videoId"      : videoId,
+                    "title"        : title
+                })
             }
         }
     }
@@ -75,18 +85,6 @@ Page {
                 text: qsTrId("ytplayer-action-settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
             }
-            MenuItem {
-                //: Label of menu action starting video playback
-                //% "Play"
-                text: qsTrId("ytplayer-action-play")
-                onClicked: {
-                    var args = {}
-                    args["videoId"] = videoId
-                    args["title"] = title
-                    args["thumbnailUrl"] = thumbnailUrl
-                    pageStack.push(Qt.resolvedUrl("VideoPlayer.qml"), args)
-                }
-            }
         }
 
         Column {
@@ -95,8 +93,14 @@ Page {
             x: Theme.paddingMedium
             spacing: Theme.paddingLarge
 
-            PageHeader {
+            DialogHeader {
                 id: header
+                //: Label for video play button
+                //% "Play Video"
+                acceptText: qsTrId('ytplayer-action-play')
+                //: Label for back button in dialog
+                //% "Back"
+                cancelText: qsTrId('ytplayer-action-back')
             }
 
             AsyncImage {
@@ -181,6 +185,7 @@ Page {
         } else {
             poster.source = thumbnails.default.url
         }
+        acceptDestinationInstance.thumbnailUrl = poster.source
 
         if (details.snippet.description) {
             description.text = details.snippet.description
@@ -201,9 +206,11 @@ Page {
         header.title = details.snippet.title
         indicator.running = false
 
-        requestCoverPage("VideoOverview.qml",
-            { "thumbnailUrl" : thumbnailUrl, "videoId" : videoId,
-              "title" : title})
+        requestCoverPage("VideoOverview.qml", {
+            "thumbnailUrl" : thumbnailUrl,
+            "videoId"      : videoId,
+            "title"        : title
+        })
     }
 
     function onFailure(error) {

@@ -48,15 +48,17 @@ Page {
 
     Component.onCompleted: {
         Log.debug("Video player page created, video ID: " + videoId)
-        requestCoverPage("VideoPlayer.qml",
-                         { "title" : page.title, "thumbnailUrl" : thumbnailUrl,
-                           "mediaPlayer": mediaPlayer })
         showVideoControls(true)
     }
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
             Yt.getVideoUrl(videoId, onVideoUrlObtained, onFailure)
+            requestCoverPage("VideoPlayer.qml", {
+                "title"        : page.title,
+                "thumbnailUrl" : thumbnailUrl,
+                "mediaPlayer"  : mediaPlayer
+            })
         } else if (status == PageStatus.Deactivating) {
             Log.debug("VidePlayer page deactiated");
             mediaPlayer.stop()

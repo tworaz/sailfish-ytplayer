@@ -100,9 +100,10 @@ Menu option to show settings page</extracomment>
         <translation>Results per page</translation>
     </message>
     <message id="ytplayer-action-play">
-        <source>Play</source>
-        <extracomment>Label of menu action starting video playback</extracomment>
-        <translation>Play</translation>
+        <source>Play Video</source>
+        <oldsource>Play</oldsource>
+        <extracomment>Label for video play button</extracomment>
+        <translation>Play Video</translation>
     </message>
     <message id="ytplayer-label-publish-date">
         <source>Published on</source>
@@ -240,6 +241,11 @@ Menu option to show settings page</extracomment>
     <message id="ytplayer-channel-subscribe">
         <source>Subscribe</source>
         <translation>Subscribe</translation>
+    </message>
+    <message id="ytplayer-action-back">
+        <source>Back</source>
+        <extracomment>Label for back button in dialog</extracomment>
+        <translation>Back</translation>
     </message>
 </context>
 </TS>
