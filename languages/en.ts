@@ -5,9 +5,7 @@
     <name></name>
     <message id="ytplayer-title-video-categories">
         <source>Video Categories</source>
-        <extracomment>Video categories page title
-----------
-Video categories page title</extracomment>
+        <extracomment>Video categories page title</extracomment>
         <translation>Video Categories</translation>
     </message>
     <message id="ytplayer-action-show-more">
@@ -30,15 +28,8 @@ Search settings section label</extracomment>
     </message>
     <message id="ytplayer-action-search">
         <source>Search</source>
-        <extracomment>Menu option to show search page
-----------
-Menu option to show search page</extracomment>
+        <extracomment>Menu option to show search page</extracomment>
         <translation>Search</translation>
-    </message>
-    <message id="ytplayer-action-refresh">
-        <source>Refresh</source>
-        <extracomment>Menu option to refresh content of the list</extracomment>
-        <translation>Refresh</translation>
     </message>
     <message id="ytplayer-error-summary">
         <source>Internal application error</source>
@@ -68,10 +59,6 @@ Menu option to show search page</extracomment>
     <message id="ytplayer-action-settings">
         <source>Settings</source>
         <extracomment>Menu option to show settings page
-----------
-Menu option to show settings page
-----------
-Menu option to show settings page
 ----------
 Menu option to show settings page
 ----------

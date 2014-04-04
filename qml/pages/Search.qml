@@ -47,6 +47,7 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Active) {
             requestCoverPage("Default.qml")
+            topMenu.subscriptionsMenuVisible = Yt.isAuthEnabled()
         }
     }
 
@@ -54,19 +55,9 @@ Page {
         id: searchView
         anchors.fill: parent
 
-        PullDownMenu {
-            MenuItem {
-                //: Menu option to show settings page
-                //% "Settings"
-                text: qsTrId("ytplayer-action-settings")
-                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
-            }
-            MenuItem {
-                //: Video categories page title
-                //% "Video Categories"
-                text: qsTrId("ytplayer-title-video-categories")
-                onClicked: pageStack.replace(Qt.resolvedUrl("VideoCategories.qml"))
-            }
+        YTPagesTopMenu {
+            id: topMenu
+            searchMenuVisible: false
         }
 
         PushUpMenu {

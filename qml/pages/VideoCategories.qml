@@ -61,7 +61,7 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Active) {
             requestCoverPage("Default.qml")
-            subscriptionsMenuItem.visible = Yt.isAuthEnabled()
+            topMenu.subscriptionsMenuVisible = Yt.isAuthEnabled()
         }
     }
 
@@ -69,27 +69,9 @@ Page {
         id: videoCategoryListView
         anchors.fill: parent
 
-        PullDownMenu {
-            MenuItem {
-                //: Menu option to show settings page
-                //% "Settings"
-                text: qsTrId("ytplayer-action-settings")
-                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
-            }
-            MenuItem {
-                id: subscriptionsMenuItem
-                //: Menu option to show user YouTube subscriptions page
-                //% "Subscriptions"
-                text: qsTrId("ytplayer-action-subscriptions")
-                onClicked: pageStack.replace(Qt.resolvedUrl("Subscriptions.qml"))
-                visible: false
-            }
-            MenuItem {
-                //: Menu option to show search page
-                //% "Search"
-                text: qsTrId("ytplayer-action-search")
-                onClicked: pageStack.replace(Qt.resolvedUrl("Search.qml"))
-            }
+        YTPagesTopMenu {
+            id: topMenu
+            categoriesMenuVisible: false
         }
 
         header: PageHeader {

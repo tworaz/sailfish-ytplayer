@@ -83,27 +83,9 @@ Page {
 
         property string nextPageToken: ""
 
-        PullDownMenu {
+        YTPagesTopMenu {
             busy: root.loadingData
-
-            MenuItem {
-                //: Menu option to show settings page
-                //% "Settings"
-                text: qsTrId("ytplayer-action-settings")
-                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
-            }
-            MenuItem {
-                //: Menu option to show search page
-                //% "Search"
-                text: qsTrId("ytplayer-action-search")
-                onClicked: pageStack.replace(Qt.resolvedUrl("Search.qml"))
-            }
-            MenuItem {
-                //: Video categories page title
-                //% "Video Categories"
-                text: qsTrId("ytplayer-action-video-categories")
-                onClicked: pageStack.replace(Qt.resolvedUrl("VideoCategories.qml"))
-            }
+            subscriptionsMenuVisible: false
         }
 
         PushUpMenu {

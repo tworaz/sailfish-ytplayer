@@ -67,12 +67,6 @@ Page {
                 text: qsTrId("ytplayer-action-settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
             }
-            MenuItem {
-                //: Menu option to refresh content of the list
-                //% "Refresh"
-                text: qsTrId("ytplayer-action-refresh")
-                onClicked: videoListView.refresh()
-            }
         }
 
         PushUpMenu {
