@@ -1,9 +1,10 @@
 - Youtube playlist browser
-- User authentication
 - User channels and playlist browser
-- Ability to subscribe to channels
 - Implement support for choosing video quality
 - Add support for youtube remote (playback of content on remote devices)
 - Investigate and improve video playback when player is minimized mode:
   * Allow user to choose if the video should keep playing even when the player is hidden
 - Use SVG image in default cover page (revisit this once jolla uses Qt 5.2)
+- Log browser and bug report dialog
+- New videos in subscribed channels notification
+- "Similar videos" popup in VideoOverview / VideoPlayer
