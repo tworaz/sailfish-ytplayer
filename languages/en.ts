@@ -16,7 +16,9 @@ Video categories page title</extracomment>
 ----------
 Menu option show/load additional list elements
 ----------
-Menu option load additional list elements</extracomment>
+Menu option load additional list elements
+----------
+Menu option show/load additional list elements</extracomment>
         <translation>Show more</translation>
     </message>
     <message id="ytplayer-label-search">
@@ -28,7 +30,9 @@ Search settings section label</extracomment>
     </message>
     <message id="ytplayer-action-search">
         <source>Search</source>
-        <extracomment>Menu option to show search page</extracomment>
+        <extracomment>Menu option to show search page
+----------
+Menu option to show search page</extracomment>
         <translation>Search</translation>
     </message>
     <message id="ytplayer-action-refresh">
@@ -64,6 +68,8 @@ Search settings section label</extracomment>
     <message id="ytplayer-action-settings">
         <source>Settings</source>
         <extracomment>Menu option to show settings page
+----------
+Menu option to show settings page
 ----------
 Menu option to show settings page
 ----------
@@ -246,6 +252,23 @@ Menu option to show settings page</extracomment>
         <source>Back</source>
         <extracomment>Label for back button in dialog</extracomment>
         <translation>Back</translation>
+    </message>
+    <message id="ytplayer-title-subscriptions">
+        <source>Subscriptions</source>
+        <oldsource>My Subscriptions</oldsource>
+        <extracomment>Title of user YouTube scubscriptions list page</extracomment>
+        <translation>Subscriptions</translation>
+    </message>
+    <message id="ytplayer-action-subscriptions">
+        <source>Subscriptions</source>
+        <oldsource>My Subscriptions</oldsource>
+        <extracomment>Menu option to show user YouTube subscriptions page</extracomment>
+        <translation>Subscriptions</translation>
+    </message>
+    <message id="ytplayer-action-video-categories">
+        <source>Video Categories</source>
+        <extracomment>Video categories page title</extracomment>
+        <translation>Video Categories</translation>
     </message>
 </context>
 </TS>

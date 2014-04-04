@@ -52,7 +52,8 @@ OTHER_FILES += \
         qml/pages/CategoryVideoList.qml \
         qml/pages/YTListItem.qml \
         qml/pages/YTVideoList.qml \
-        qml/pages/YTOAuth2.qml
+        qml/pages/YTOAuth2.qml \
+        qml/pages/Subscriptions.qml
 
 include(third_party/notifications.pri)
 

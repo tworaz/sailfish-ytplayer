@@ -61,6 +61,7 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Active) {
             requestCoverPage("Default.qml")
+            subscriptionsMenuItem.visible = Yt.isAuthEnabled()
         }
     }
 
@@ -74,6 +75,14 @@ Page {
                 //% "Settings"
                 text: qsTrId("ytplayer-action-settings")
                 onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
+            }
+            MenuItem {
+                id: subscriptionsMenuItem
+                //: Menu option to show user YouTube subscriptions page
+                //% "Subscriptions"
+                text: qsTrId("ytplayer-action-subscriptions")
+                onClicked: pageStack.replace(Qt.resolvedUrl("Subscriptions.qml"))
+                visible: false
             }
             MenuItem {
                 //: Menu option to show search page
