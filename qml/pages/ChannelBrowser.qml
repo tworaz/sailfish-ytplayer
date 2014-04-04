@@ -36,6 +36,7 @@ Page {
     id: page
     property string channelId
     property string title
+    property variant thumbnails
     property variant coverData
 
     property bool channelSubscribed: false
@@ -159,6 +160,15 @@ Page {
                 width: parent.width
                 height: width * thumbnailAspectRatio
                 indicatorSize: BusyIndicatorSize.Large
+                source : {
+                    if (thumbnails.high) {
+                        return thumbnails.high.url
+                    } else if (thumbnails.medium) {
+                        return thumbnails.medium.url
+                    } else {
+                        return thumbnails.default.url
+                    }
+                }
             }
 
             Row {
@@ -229,15 +239,6 @@ Page {
                 console.assert(result.items[0].kind === "youtube#channel")
 
                 var details = result.items[0].snippet
-                if (details.thumbnails.hasOwnProperty("high")) {
-                    poster.source = details.thumbnails.high.url
-                } else if (details.thumbnails.hasOwnProperty("medium")) {
-                    poster.source = details.thumbnails.medium.url
-                } else {
-                    Log.debug("No appropriate channel thumbnail found: " +
-                                  JSON.stringify(details.thumbnail, undefined, 2))
-                    poster.visible = false
-                }
                 var d = new Date(details.publishedAt)
                 creationDate.value = Qt.formatDate(d, "d MMMM yyyy")
 
@@ -250,8 +251,11 @@ Page {
                 viewCount.text = stats.viewCount
                 indicator.running = false
 
-                coverData = { "title" : title, "thumbnailUrl" : poster.source, "videoCount" : stats.videoCount }
-                requestCoverPage("ChannelBrowser.qml", coverData)
+                requestCoverPage("ChannelBrowser.qml", {
+                    "thumbnails" : page.thumbnails,
+                    "videoCount" : stats.videoCount,
+                    "title"      : title
+                })
 
                 channelVideoList.refresh()
             }

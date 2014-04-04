@@ -41,9 +41,9 @@ Page {
 
     property alias mediaPlayer: videoController.mediaPlayer
     property alias title: header.title
+    property variant thumbnails
     readonly property string coverFile: "VideoPlayer.qml"
     property bool applicationActive: Qt.application.active
-    property string thumbnailUrl
     property string videoId
 
     Component.onCompleted: {
@@ -55,9 +55,9 @@ Page {
         if (status === PageStatus.Active) {
             Yt.getVideoUrl(videoId, onVideoUrlObtained, onFailure)
             requestCoverPage("VideoPlayer.qml", {
-                "title"        : page.title,
-                "thumbnailUrl" : thumbnailUrl,
-                "mediaPlayer"  : mediaPlayer
+                "title"       : page.title,
+                "thumbnails"  : thumbnails,
+                "mediaPlayer" : mediaPlayer
             })
         } else if (status == PageStatus.Deactivating) {
             Log.debug("VidePlayer page deactiated");

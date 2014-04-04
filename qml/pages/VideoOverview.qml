@@ -37,15 +37,16 @@ import "../common"
 Dialog {
     id: page
     property string videoId
+    property variant thumbnails
     property alias title: header.title
-    readonly property alias thumbnailUrl: poster.source
+    property bool dataLoaded: false
 
     acceptDestination: Qt.resolvedUrl("VideoPlayer.qml")
     acceptDestinationAction: PageStackAction.Push
     acceptDestinationProperties: {
-        // thumbnailUrl will be set once it's actually known
-        "videoId" : videoId,
-        "title"   : title,
+        "thumbnails" : thumbnails,
+        "videoId"    : videoId,
+        "title"      : title,
     }
 
     Component.onCompleted: {
@@ -54,15 +55,14 @@ Dialog {
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            if (poster.status !== Image.Ready) {
+            if (!dataLoaded) {
                 Yt.getVideoDetails(videoId, onVideoDetailsLoaded, onFailure)
-            } else {
-                requestCoverPage("VideoOverview.qml", {
-                    "thumbnailUrl" : thumbnailUrl,
-                    "videoId"      : videoId,
-                    "title"        : title
-                })
             }
+            requestCoverPage("VideoOverview.qml", {
+                "thumbnails" : thumbnails,
+                "videoId"    : videoId,
+                "title"      : title
+            })
         }
     }
 
@@ -109,6 +109,15 @@ Dialog {
                 width: parent.width
                 height: width * thumbnailAspectRatio
                 indicatorSize: BusyIndicatorSize.Medium
+                source: {
+                    if (thumbnails.high) {
+                        return thumbnails.high.url
+                    } else if (thumbnails.medium) {
+                        return thumbnails.medium.url
+                    } else {
+                        return thymbnails.default.url
+                    }
+                }
             }
 
             Row {
@@ -177,16 +186,6 @@ Dialog {
 
     function onVideoDetailsLoaded(details) {
         //Log.debug("Have video details: " + JSON.stringify(details, undefined, 2))
-        var thumbnails = details.snippet.thumbnails;
-        if (thumbnails.standard) {
-            poster.source = thumbnails.standard.url
-        } else if (thumbnails.high) {
-            poster.source = thumbnails.high.url;
-        } else {
-            poster.source = thumbnails.default.url
-        }
-        acceptDestinationInstance.thumbnailUrl = poster.source
-
         if (details.snippet.description) {
             description.text = details.snippet.description
         } else {
@@ -205,16 +204,12 @@ Dialog {
 
         header.title = details.snippet.title
         indicator.running = false
-
-        requestCoverPage("VideoOverview.qml", {
-            "thumbnailUrl" : thumbnailUrl,
-            "videoId"      : videoId,
-            "title"        : title
-        })
+        dataLoaded = true
     }
 
     function onFailure(error) {
         errorNotification.show(error);
         indicator.running = false
+        dataLoaded = true
     }
 }

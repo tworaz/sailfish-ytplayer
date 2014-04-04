@@ -31,15 +31,16 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtMultimedia 5.0
 import "../common/Helpers.js" as H
+import "../common"
 
 CoverBackground {
     property alias title: _title.text
-    property alias thumbnailUrl: thumbnail.source
+    property variant thumbnails
     property MediaPlayer mediaPlayer
 
     Component.onCompleted: {
         title = coverData.title
-        thumbnailUrl = coverData.thumbnailUrl
+        thumbnails = coverData.thumbnails
         mediaPlayer = coverData.mediaPlayer
     }
 
@@ -49,11 +50,11 @@ CoverBackground {
         width: parent.width
         spacing: Theme.paddingSmall
 
-        Image {
-            id: thumbnail
+        AsyncImage {
             width: parent.width
             height: width * thumbnailAspectRatio
             fillMode: Image.PreserveAspectCrop
+            source: thumbnails.medium.url
         }
 
         Label {

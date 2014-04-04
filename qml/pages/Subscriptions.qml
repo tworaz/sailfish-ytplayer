@@ -119,7 +119,7 @@ Page {
 
         delegate: YTListItem {
             title: snippet.title
-            thumbnailUrl: snippet.thumbnails.default.url
+            thumbnails: snippet.thumbnails
             youtubeId: snippet.resourceId
         }
 

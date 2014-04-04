@@ -33,12 +33,12 @@ import Sailfish.Silica 1.0
 CoverBackground {
     property string videoId
     property alias title: _title.text
-    property alias thumbnailUrl: thumbnail.source
+    property variant thumbnails
 
     Component.onCompleted: {
         videoId = coverData.videoId
         title = coverData.title
-        thumbnailUrl = coverData.thumbnailUrl
+        thumbnails = coverData.thumbnails
     }
 
     Column {
@@ -52,6 +52,7 @@ CoverBackground {
             width: parent.width
             height: width * thumbnailAspectRatio
             fillMode: Image.PreserveAspectCrop
+            source: thumbnails.medium.url
         }
 
         Label {
@@ -83,11 +84,11 @@ CoverBackground {
             iconSource: "image://theme/icon-cover-play"
             onTriggered: {
                 onClicked: {
-                    var args = {}
-                    args["videoId"] = videoId
-                    args["title"] = title
-                    args["thumbnailUrl"] = thumbnail.source
-                    pageStack.push(Qt.resolvedUrl("../pages/VideoPlayer.qml"), args)
+                    pageStack.push(Qt.resolvedUrl("../pages/VideoPlayer.qml"), {
+                        "thumbnails" : thumbnails,
+                        "videoId"    : videoId,
+                        "title"      : title
+                    })
                 }
                 activate()
             }

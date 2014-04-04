@@ -33,12 +33,12 @@ import "../common"
 
 CoverBackground {
     property alias title: _title.text
-    property alias thumbnailUrl: thumbnail.source
     property alias videoCount: _videoCount.count
+    property variant thumbnails
 
     Component.onCompleted: {
         title = coverData.title
-        thumbnailUrl = coverData.thumbnailUrl
+        thumbnails = coverData.thumbnails
         videoCount = coverData.videoCount
     }
 
@@ -49,10 +49,18 @@ CoverBackground {
         spacing: Theme.paddingMedium
 
         AsyncImage {
-            id: thumbnail
             width: parent.width
             height: width * thumbnailAspectRatio
             fillMode: Image.PreserveAspectCrop
+            source: {
+                if (thumbnails.medium) {
+                    return thumbnails.medium.url
+                } else if (thumbnails.hight) {
+                    return thumbnails.higth.url
+                } else {
+                    return thumbnails.default.url
+                }
+            }
         }
 
         Label {

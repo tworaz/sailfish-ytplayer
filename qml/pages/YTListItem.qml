@@ -37,7 +37,7 @@ BackgroundItem {
 
     property variant youtubeId
     property alias title: itemLabel.text
-    property alias thumbnailUrl: thumbnail.source
+    property variant thumbnails
 
     AsyncImage {
         id: thumbnail
@@ -48,7 +48,7 @@ BackgroundItem {
             left: parent.left
             leftMargin: Theme.paddingMedium
         }
-        source: ytItem.thumbnailUrl
+        source: thumbnails.default.url
         indicatorSize: BusyIndicatorSize.Small
     }
 
@@ -72,12 +72,18 @@ BackgroundItem {
     onClicked: {
         if (youtubeId.kind === "youtube#video") {
             Log.debug("Selected item is a video, opening video overview page")
-            pageStack.push(Qt.resolvedUrl("VideoOverview.qml"),
-                           { "videoId": youtubeId.videoId, title: ytItem.title })
+            pageStack.push(Qt.resolvedUrl("VideoOverview.qml"), {
+                "videoId"    : youtubeId.videoId,
+                "thumbnails" : ytItem.thumbnails,
+                "title"      : ytItem.title
+            })
         } else if (youtubeId.kind === "youtube#channel") {
             Log.debug("Selected item is a channel, opening channel browser ")
-            pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),
-                           {"channelId" : youtubeId.channelId, title: ytItem.title})
+            pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"), {
+                "channelId"  : youtubeId.channelId,
+                "thumbnails" : ytItem.thumbnails,
+                "title"      : ytItem.title
+            })
         } else {
             Log.error("Unrecogized id kind: " + youtubeId.kind);
         }
