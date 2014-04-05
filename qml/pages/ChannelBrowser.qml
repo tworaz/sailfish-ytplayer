@@ -251,11 +251,12 @@ Page {
                 viewCount.text = stats.viewCount
                 indicator.running = false
 
-                requestCoverPage("ChannelBrowser.qml", {
+                coverData = {
                     "thumbnails" : page.thumbnails,
                     "videoCount" : stats.videoCount,
                     "title"      : title
-                })
+                };
+                requestCoverPage("ChannelBrowser.qml", coverData)
 
                 channelVideoList.refresh()
             }
