@@ -37,15 +37,15 @@ Page {
     id: page
     property alias categoryResourceId: videoListView.videoResourceId
     property string title
-    property variant coverData
+    property variant savedCoverData
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
             if (!videoListView.count) {
                 videoListView.refresh()
             }
-            if (coverData) {
-                requestCoverPage("CategoryVideoList.qml", coverData)
+            if (savedCoverData) {
+                requestCoverPage("CategoryVideoList.qml", savedCoverData)
             }
         }
     }
@@ -87,32 +87,17 @@ Page {
 
         onBusyChanged: {
             if (!busy && count > 0) {
-                var _f = function(m) {
-                    if (m.snippet.thumbnails.medium) {
-                        return m.snippet.thumbnails.medium.url
-                    } else if (m.snippet.thumbnails.high) {
-                        return m.snippet.thumbnails.high.url
-                    } else {
-                        return m.snippet.thumbnails.default.url
-                    }
-                }
+                var data = {
+                    "images" : [],
+                    "title":  H.getYouTubeIconForCategoryId(categoryResourceId.id) + " " + title,
+                };
 
-                var r1 = Math.floor(Math.random() * count)
-                var r2 = Math.floor(Math.random() * count)
-                if (r1 == r2) {
-                    if (r1 == count) {
-                        r2 = r1 - 1
-                    } else {
-                        r2 = r1 + 1
-                    }
+                var start = Math.floor(Math.random() * count)
+                for (var i = 0; i < 12; ++i) {
+                    data.images.push(model.get((start + i) % count).snippet.thumbnails)
                 }
-
-                coverData = {
-                    "img1" : _f(model.get(r1)),
-                    "img2" : _f(model.get(r2)),
-                    "title": H.getYouTubeIconForCategoryId(categoryResourceId.id) + " " + title
-                }
-                requestCoverPage("CategoryVideoList.qml", coverData)
+                requestCoverPage("CategoryVideoList.qml", data)
+                savedCoverData = data
             }
         }
 

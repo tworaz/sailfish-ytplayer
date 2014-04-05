@@ -29,45 +29,59 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "../common/Helpers.js" as H
 import "../common"
 
 CoverBackground {
+    id: root
+
     Component.onCompleted: {
-        _img1.source = coverData.img1
-        _img2.source = coverData.img2
         category.text = coverData.title
+        for (var i = 0; i < coverData.images.length; ++i) {
+            Qt.createQmlObject(
+                'import QtQuick 2.0;' +
+                'import "../common";' +
+                'AsyncImage { width: ' + (parent.width / 2) + ';' +
+                             'height: ' + (parent.width / 2 * thumbnailAspectRatio) + ';' +
+                             'fillMode: Image.PreserveAspectCrop;' +
+                             'source: "' + coverData.images[i].default.url + '"}',
+                imageGrid, "img" + i);
+        }
     }
 
-    AsyncImage {
-        id: _img1
+    Grid {
+        id: imageGrid
+        anchors.fill: parent
+        columns: 2
+    }
+
+    Image {
+        anchors.margins: Theme.paddingMedium
         anchors.top: parent.top
-        width: parent.width
-        height: width * thumbnailAspectRatio
-        fillMode: Image.PreserveAspectCrop
+        anchors.bottom: header.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        fillMode: Image.PreserveAspectFit
+        source: datadir + "/images/logo.png"
+        z: imageGrid.z + 1
     }
-    AsyncImage {
-        id: _img2
-        anchors.top: _img1.bottom
-        width: parent.width
-        height: width * thumbnailAspectRatio
-        fillMode: Image.PreserveAspectCrop
-    }
-    Item {
+
+    Rectangle {
+        id: header
         x: Theme.paddingMedium
-        anchors.top: _img2.bottom
-        anchors.bottom: parent.bottom
-        width: parent.width - 2 * Theme.paddingMedium
+        anchors.centerIn: parent
+        width: root.width
+        height: children[0].height + 2 * Theme.paddingMedium
+        z: imageGrid.z + 1
+        color: "#AA000000"
 
         Label {
             id: category
             anchors.centerIn: parent
-            width: parent.width
-            //elide: Text.ElideRight
+            width: parent.width - 2 * Theme.paddingMedium
             horizontalAlignment: Text.AlignHCenter
-            color: Theme.primaryColor
             font.family: "youtube-icons"
             font.pixelSize: Theme.fontSizeSmall
+            color: Theme.primaryColor
             maximumLineCount: 2
             wrapMode: Text.Wrap
         }
