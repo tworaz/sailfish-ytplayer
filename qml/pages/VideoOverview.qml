@@ -58,6 +58,8 @@ Dialog {
             if (!dataLoaded) {
                 Yt.getVideoDetails(videoId, onVideoDetailsLoaded, onFailure)
             }
+
+            ranking.enabled = Yt.isAuthEnabled()
             requestCoverPage("VideoOverview.qml", {
                 "thumbnails" : thumbnails,
                 "videoId"    : videoId,
@@ -91,7 +93,7 @@ Dialog {
             id: wrapper
             width: parent.width - 2 * Theme.paddingMedium
             x: Theme.paddingMedium
-            spacing: Theme.paddingLarge
+            spacing: Theme.paddingMedium
 
             DialogHeader {
                 id: header
@@ -144,26 +146,11 @@ Dialog {
                 }
             }
 
-            Row {
+            YTLikeButtons {
+                id: ranking
                 width: parent.width
-                spacing: Theme.paddingLarge
                 visible: !indicator.running
-
-                StatItem {
-                    id: viewCount
-                    image: "image://theme/icon-s-cloud-download?" + Theme.highlightColor
-                }
-
-                StatItem {
-                    id: likeCount
-                    image: "image://theme/icon-s-like?" + Theme.highlightColor
-                }
-
-                StatItem {
-                    id: dislikeCount
-                    image: "image://theme/icon-s-like?" + Theme.highlightColor
-                    imageRotation: 180.0
-                }
+                videoId: page.videoId
             }
 
             Separator {
@@ -192,9 +179,9 @@ Dialog {
             description.visible = false
         }
 
-        viewCount.text = details.statistics.viewCount
-        likeCount.text = details.statistics.likeCount
-        dislikeCount.text = details.statistics.dislikeCount
+        ranking.likes = details.statistics.likeCount
+        ranking.dislikes = details.statistics.dislikeCount
+        ranking.dataValid = true
 
         var pd = new Date(details.snippet.publishedAt)
         publishDate.value = Qt.formatDateTime(pd, "d MMMM yyyy")

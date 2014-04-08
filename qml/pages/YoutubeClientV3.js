@@ -31,6 +31,10 @@
 
 var _youtube_data_v3_url = "https://www.googleapis.com/youtube/v3/";
 
+var VIDEO_RANKING_LIKE = "like"
+var VIDEO_RANKING_DISLIKE = "dislike"
+var VIDEO_RANKING_NONE = "none"
+
 function _getYoutubeV3Url(reference, queryParams)
 {
     var locale = Qt.locale().name;
@@ -324,6 +328,36 @@ function isChannelSubscribed(channelId, onSuccess, onFailure)
     };
 
     getSubscriptions(_successHandler, onFailure);
+}
+
+
+function isVideoLiked(videoId, onSuccess, onFailure)
+{
+    var url = _getYoutubeV3Url("videos/getRating", { "id" : videoId });
+
+    _asyncJsonRequest(url, function(response) {
+        console.assert(response.kind === "youtube#videoGetRatingResponse")
+        console.assert(response.items.length === 1)
+        console.assert(response.items[0].videoId === videoId)
+        onSuccess(response.items[0]);
+    }, onFailure);
+}
+
+
+function rankVideo(videoId, rating, onSuccess, onFailure)
+{
+    var url = _youtube_data_v3_url + "videos/rate?id=" + videoId + "&rating=" + rating;
+
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        _xhr_onreadystate(xhr, function(response) {
+            console.assert(response === undefined);
+            onSuccess();
+        }, onFailure);
+    }
+    xhr.open("POST", url);
+    xhr.setRequestHeader("Authorization", _getAuthHeader());
+    xhr.send();
 }
 
 

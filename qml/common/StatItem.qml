@@ -12,6 +12,7 @@ Row {
         id: image
         anchors.verticalCenter: parent.verticalCenter
     }
+
     Label {
         id: label
         font.pixelSize: Theme.fontSizeExtraSmall

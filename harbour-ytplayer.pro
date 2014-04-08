@@ -54,7 +54,8 @@ OTHER_FILES += \
         qml/pages/YTVideoList.qml \
         qml/pages/YTOAuth2.qml \
         qml/pages/Subscriptions.qml \
-        qml/pages/YTPagesTopMenu.qml
+        qml/pages/YTPagesTopMenu.qml \
+        qml/pages/YTLikeButtons.qml
 
 include(third_party/notifications.pri)
 
