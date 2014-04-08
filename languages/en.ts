@@ -6,7 +6,7 @@
     <message id="ytplayer-title-video-categories">
         <source>Video Categories</source>
         <extracomment>Video categories page title</extracomment>
-        <translation>Video Categories</translation>
+        <translation>Categories</translation>
     </message>
     <message id="ytplayer-action-show-more">
         <source>Show more</source>
@@ -96,7 +96,7 @@ Menu option to show settings page</extracomment>
         <source>Play Video</source>
         <oldsource>Play</oldsource>
         <extracomment>Label for video play button</extracomment>
-        <translation>Play Video</translation>
+        <translation>Play</translation>
     </message>
     <message id="ytplayer-label-publish-date">
         <source>Published on</source>
@@ -255,7 +255,7 @@ Menu option to show settings page</extracomment>
     <message id="ytplayer-action-video-categories">
         <source>Video Categories</source>
         <extracomment>Video categories page title</extracomment>
-        <translation>Video Categories</translation>
+        <translation>Categories</translation>
     </message>
 </context>
 </TS>
