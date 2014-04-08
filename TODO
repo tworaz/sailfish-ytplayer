@@ -8,3 +8,4 @@
 - Log browser and bug report dialog
 - New videos in subscribed channels notification
 - "Similar videos" popup in VideoOverview / VideoPlayer
+- Allow the user to change the default startup page (Search/Subscriptions/VideoCategories)
