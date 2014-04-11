@@ -61,7 +61,7 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Active) {
             requestCoverPage("Default.qml")
-            topMenu.subscriptionsMenuVisible = Yt.isAuthEnabled()
+            topMenu.accountMenuVisible = Yt.isAuthEnabled()
         }
     }
 

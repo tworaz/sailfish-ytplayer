@@ -186,12 +186,11 @@ function getVideoCategories(onSuccess, onFailure)
 
 function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
 {
-    var qParams = {};
-    qParams["part"] = "snippet";
-    qParams["chart"] = "mostPopular";
-    qParams["videoCategoryId"] = categoryId;
-
-    var url = _getYoutubeV3Url("videos", qParams);
+    var url = _getYoutubeV3Url("videos", {
+        "part"            : "snippet",
+        "chart"           : "mostPopular",
+        "videoCategoryId" : categoryId,
+    });
 
     if (pageToken !== undefined) {
         url += "&pageToken=" + pageToken;
@@ -361,12 +360,32 @@ function rankVideo(videoId, rating, onSuccess, onFailure)
 }
 
 
+function getVideosForRanking(rank, onSuccess, onFailure, pageToken)
+{
+    var opts = {
+        "part"     : "snippet",
+        "myRating" : rank,
+    };
+    if (pageToken) {
+        opts.pageToken = pageToken
+    }
+
+    var url = _getYoutubeV3Url("videos", opts)
+
+    _asyncJsonRequest(url, function(response) {
+        console.assert(response.kind === "youtube#videoListResponse");
+        onSuccess(response);
+    }, onFailure);
+}
+
+
 function getSearchResults(query, onSuccess, onFailure, pageToken)
 {
-    var qParams = {};
-    qParams["q"] = query;
-    qParams["part"] = "snippet";
-    qParams["type"] = "video,channel";
+    var qParams = {
+        "q"    : query,
+        "part" : "snippet",
+        "type" : "video,channel",
+    };
 
     var safeSearchValue = undefined;
     switch (parseInt(Settings.get(Settings.SAFE_SEARCH))) {
@@ -374,18 +393,18 @@ function getSearchResults(query, onSuccess, onFailure, pageToken)
         Log.warn("Unknown safe search value: " + Settings.get(Settings.SAFE_SEARCH));
         break;
     case Settings.SAFE_SEARCH_NONE:
-        qParams["safeSearch"] = "none";
+        qParams.safeSearch = "none";
         break;
     case Settings.SAFE_SEARCH_MODERATE:
-        qParams["safeSearch"] = "moderate";
+        qParams.safeSearch = "moderate";
         break;
     case Settings.SAFE_SEARCH_STRICT:
-        qParams["safeSearch"] = "strict";
+        qParams.safeSearch = "strict";
         break;
     }
 
     if (pageToken) {
-        qParams["pageToken"] = pageToken;
+        qParams.pageToken = pageToken;
     }
 
     var url = _getYoutubeV3Url("search", qParams);

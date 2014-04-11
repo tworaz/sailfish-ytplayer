@@ -53,7 +53,7 @@ OTHER_FILES += \
         qml/pages/YTListItem.qml \
         qml/pages/YTVideoList.qml \
         qml/pages/YTOAuth2.qml \
-        qml/pages/Subscriptions.qml \
+        qml/pages/Account.qml \
         qml/pages/YTPagesTopMenu.qml \
         qml/pages/YTLikeButtons.qml
 

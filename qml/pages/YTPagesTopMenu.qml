@@ -31,7 +31,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 PullDownMenu {
-    property alias subscriptionsMenuVisible: subscriptions.visible
+    property alias accountMenuVisible: account.visible
     property alias categoriesMenuVisible: categories.visible
     property alias searchMenuVisible: search.visible
 
@@ -42,11 +42,11 @@ PullDownMenu {
         onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
     }
     MenuItem {
-        id: subscriptions
-        //: Menu option to show user YouTube subscriptions page
-        //% "Subscriptions"
-        text: qsTrId("ytplayer-action-subscriptions")
-        onClicked: pageStack.replace(Qt.resolvedUrl("Subscriptions.qml"))
+        id: account
+        //: Menu option to show user YouTube account page
+        //% "Account"
+        text: qsTrId("ytplayer-action-account")
+        onClicked: pageStack.replace(Qt.resolvedUrl("Account.qml"))
         visible: false
     }
     MenuItem {
