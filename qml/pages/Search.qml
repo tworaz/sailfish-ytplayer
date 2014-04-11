@@ -84,6 +84,15 @@ Page {
             }
         }
 
+        Label {
+            anchors.centerIn: parent
+            color: Theme.secondaryHighlightColor
+            visible: resultsListModel.count === 0 && !indicator.running
+            //: Background label informing the user there are no search results
+            //% "No results"
+            text: qsTrId("ytplayer-search-no-results")
+        }
+
         Timer {
             id: searchHandler
             interval: 1000
@@ -92,9 +101,12 @@ Page {
             property string queryStr
 
             function search(str) {
+                queryStr = str
                 if (str.length) {
-                    queryStr = str
                     restart()
+                } else {
+                    stop()
+                    resultsListModel.clear()
                 }
             }
 

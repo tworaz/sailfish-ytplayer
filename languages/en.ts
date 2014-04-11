@@ -278,7 +278,12 @@ Menu option to show settings page</extracomment>
     <message id="ytplayer-account-no-content">
         <source>No content</source>
         <extracomment>Background text informing the user there are no videos in a given category</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>No content</translation>
+    </message>
+    <message id="ytplayer-search-no-results">
+        <source>No results</source>
+        <extracomment>&quot;Background label informing the user there are no search results&quot;</extracomment>
+        <translation>No results</translation>
     </message>
 </context>
 </TS>
