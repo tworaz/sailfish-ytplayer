@@ -205,9 +205,16 @@ function getVideosInCategory(categoryId, onSuccess, onFailure, pageToken)
 }
 
 
-function getVideosInPlaylist(playlistId, onSuccess, onFailure)
+function getVideosInPlaylist(playlistId, onSuccess, onFailure, pageToken)
 {
-    var url = _getYoutubeV3Url("playlistItems",{"part" : "snippet", "playlistId" : playlistId});
+    var url = _getYoutubeV3Url("playlistItems", {
+        "part"       : "snippet",
+        "playlistId" : playlistId
+    });
+
+    if (pageToken !== undefined) {
+        url += "&pageToken=" + pageToken;
+    }
 
     _asyncJsonRequest(url, function(response) {
         console.assert(response.kind === "youtube#playlistItemListResponse");
