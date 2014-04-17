@@ -62,14 +62,7 @@ ApplicationWindow
 
     Notification {
         id: errorNotification
-
-        function showMessage(summary, body) {
-            previewSummary = summary
-            if (!body) {
-                previewBody = ""
-            }
-            publish()
-        }
+        category: "network.error"
 
         function show(error) {
             Log.error("HTTP error code: " + error.code)

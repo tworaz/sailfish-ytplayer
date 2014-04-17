@@ -30,6 +30,7 @@
 import QtQuick 2.0
 import QtWebKit 3.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer.notifications 1.0
 import "YoutubeClientV3.js" as YT
 import "Settings.js" as S
 
@@ -49,6 +50,29 @@ Page {
         anchors.centerIn: parent
         running: !webview.visible
         size: BusyIndicatorSize.Large
+    }
+
+    Label {
+        anchors.top: indicator.bottom
+        width: parent.width
+        text: "Signing in"
+        font.family: Theme.fontFamily
+        font.pixelSize: Theme.fontSizeMedium
+        color: Theme.highlightColor
+        horizontalAlignment: Text.AlignHCenter
+    }
+
+    Notification {
+        id: successNotification
+        //: Notification informing the user that YouTube sign in succeeded
+        //% "Sign in successful"
+        previewBody: qsTrId("ytplayer-youtube-sign-in-successful")
+        category: "network"
+    }
+
+    Notification {
+        id: failureNotification
+        category: "network.error"
     }
 
     SilicaWebView {
@@ -80,7 +104,8 @@ Page {
                 Log.warn("Authorization page loading failed!")
                 //: YouTube OAuth page loading failure message
                 //% "Failed to load OAuth authorization page!"
-                errorNotification.showMessage(qsTrId("ytplayer-oauth-page-loading-failed"))
+                failureNotification.previewBody = qsTrId("ytplayer-oauth-page-loading-failed")
+                failureNotification.publish()
                 break
             }
         }
@@ -94,7 +119,8 @@ Page {
                 Log.debug("Youtube OAuth access denied!")
                 //: Message informing the user about YouTube OAuth autorization denial
                 //% "YouTube OAuth access denined!"
-                errorNotification.showMessage(qsTrId("ytplayer-oauth-access-denied"))
+                failureNotification.previewBody = qsTrId("ytplayer-oauth-access-denied")
+                failureNotification.publish()
                 pageStack.navigateBack(PageStackAction.Animated)
             } else if (title.length > 0) {
                 Log.debug("OAuth page title changed: " + title)
@@ -105,13 +131,12 @@ Page {
         function onSuccess(result) {
             console.assert(result.hasOwnProperty('access_token'))
             console.assert(result.hasOwnProperty('refresh_token'))
+            console.assert(result.hasOwnProperty('token_type'))
             S.set(S.YOUTUBE_ACCESS_TOKEN, result["access_token"])
             S.set(S.YOUTUBE_REFRESH_TOKEN, result["refresh_token"])
             S.set(S.YOUTUBE_ACCESS_TOKEN_TYPE, result["token_type"])
             S.set(S.YOUTUBE_ACCOUNT_INTEGRATION, S.ENABLE)
-            //: Notification informing the user that YouTube sign in succeeded
-            //% "Sign in successful"
-            errorNotification.showMessage(qsTrId("ytplayer-youtube-sign-in-successful"))
+            successNotification.publish()
             pageStack.pop(undefined, PageStackAction.Animated)
         }
 
@@ -119,7 +144,8 @@ Page {
             Log.debug("Error: " + JSON.stringify(error, undefined, 2))
             //: Error message informing the user about OAuth authorization failure
             //% "OAuth authorization failed!"
-            errorNotification.showMessage(qsTrId("ytplayer-oauth-failed"))
+            failureNotification.previewBody = qsTrId("ytplayer-oauth-failed")
+            failureNotification.publish()
             pageStack.pop(undefined, PageStackAction.Animated)
         }
     }
