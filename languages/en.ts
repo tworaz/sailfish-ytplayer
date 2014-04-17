@@ -6,7 +6,7 @@
     <message id="ytplayer-title-video-categories">
         <source>Video Categories</source>
         <extracomment>Video categories page title</extracomment>
-        <translation>Categories</translation>
+        <translation>Video Categories</translation>
     </message>
     <message id="ytplayer-action-show-more">
         <source>Show more</source>
@@ -224,7 +224,7 @@ Menu option to show settings page</extracomment>
         <source>Allow YTPlayer to manage YouTube user account</source>
         <oldsource>Allow YTPlayer to access YouTube user account</oldsource>
         <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
-        <translation>Allow YTPlayer to manage YouTube user account</translation>
+        <translation>Allow YTPlayer to manage YouTube account</translation>
     </message>
     <message id="ytplayer-channel-unsubscribe">
         <source>Unsubscribe</source>
@@ -243,7 +243,7 @@ Menu option to show settings page</extracomment>
     <message id="ytplayer-action-video-categories">
         <source>Video Categories</source>
         <extracomment>Video categories page title</extracomment>
-        <translation>Categories</translation>
+        <translation>Video Categories</translation>
     </message>
     <message id="ytplayer-account-page-title">
         <source>My Account</source>
