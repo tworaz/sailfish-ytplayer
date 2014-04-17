@@ -60,6 +60,12 @@ Page {
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
+            if (!Yt.isAuthEnabled()) {
+                Log.info("YouTube authorization disabled, returning to categories page")
+                pageStack.replace(Qt.resolvedUrl("VideoCategories.qml"))
+                return
+            }
+
             Log.info("Subscriptions page activated, loading user subscriptions list")
             requestCoverPage("Default.qml")
             if (reloadOnActivate) {
