@@ -54,6 +54,11 @@ CoverBackground {
         columns: 2
     }
 
+    OpacityRampEffect {
+        sourceItem: imageGrid
+        direction: OpacityRamp.TopToBottom
+    }
+
     Image {
         anchors.margins: Theme.paddingMedium
         anchors.top: parent.top
@@ -79,11 +84,22 @@ CoverBackground {
             anchors.centerIn: parent
             width: parent.width - 2 * Theme.paddingMedium
             horizontalAlignment: Text.AlignHCenter
-            font.family: "youtube-icons"
+            font.family: youtubeWebFont.name
             font.pixelSize: Theme.fontSizeSmall
             color: Theme.primaryColor
             maximumLineCount: 2
             wrapMode: Text.Wrap
+        }
+    }
+
+    CoverActionList {
+        CoverAction {
+            iconSource: "image://theme/icon-cover-search"
+            onTriggered: {
+                pageStack.clear();
+                pageStack.push(Qt.resolvedUrl("../pages/Search.qml"))
+                activate()
+            }
         }
     }
 }

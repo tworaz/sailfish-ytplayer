@@ -29,14 +29,89 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../pages/YoutubeClientV3.js" as Yt
 
 CoverBackground {
+    id: root
+
+    Component.onCompleted: {
+        if (!defaultCoverData) {
+            Log.debug("Fetching data for defaut cover")
+            Yt.search({
+                "part"       : "snippet",
+                "maxResults" : "12",
+                "order"      : "rating"
+            }, function (result) {
+                var thumbs = [];
+                for (var i = 0; i < result.items.length; i++) {
+                    thumbs.push(result.items[i].snippet.thumbnails)
+                }
+                defaultCoverData = thumbs
+                displayThumbnails()
+            }, function (error) {
+                errorNotification.show(error)
+            })
+        } else {
+            displayThumbnails()
+        }
+    }
+
+    function displayThumbnails() {
+        console.assert(defaultCoverData)
+        for (var i = 0; i < defaultCoverData.length; ++i) {
+            Qt.createQmlObject(
+                'import QtQuick 2.0;' +
+                'import "../common";' +
+                'AsyncImage { width: ' + (parent.width / 2) + ';' +
+                             'height: ' + (parent.width / 2 * thumbnailAspectRatio) + ';' +
+                             'fillMode: Image.PreserveAspectCrop;' +
+                             'source: "' + defaultCoverData[i].default.url + '"}',
+                imageGrid, "img" + i);
+        }
+    }
+
+    Grid {
+        id: imageGrid
+        anchors.fill: parent
+        columns: 2
+    }
+
+    OpacityRampEffect {
+        sourceItem: imageGrid
+        direction: OpacityRamp.TopToBottom
+    }
+
     Image {
-        anchors.horizontalCenter: parent.horizontalCenter
-        y: Theme.paddingMedium
-        width: parent.width - 2 * Theme.paddingMedium
+        anchors.margins: Theme.paddingMedium
+        anchors.top: parent.top
+        anchors.bottom: header.top
+        anchors.left: parent.left
+        anchors.right: parent.right
         fillMode: Image.PreserveAspectFit
         source: datadir + "/images/logo.png"
+        z: imageGrid.z + 1
+    }
+
+    Rectangle {
+        id: header
+        x: Theme.paddingMedium
+        anchors.centerIn: parent
+        width: root.width
+        height: children[0].height + 2 * Theme.paddingMedium
+        z: imageGrid.z + 1
+        color: "#AA000000"
+
+        Label {
+            anchors.centerIn: parent
+            width: parent.width - 2 * Theme.paddingMedium
+            horizontalAlignment: Text.AlignHCenter
+            font.family: "youtube-icons"
+            font.pixelSize: Theme.fontSizeSmall
+            color: Theme.primaryColor
+            maximumLineCount: 2
+            wrapMode: Text.Wrap
+            text: "YTPlayer"
+        }
     }
 
     CoverActionList {

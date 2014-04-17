@@ -426,6 +426,17 @@ function getSearchResults(query, onSuccess, onFailure, pageToken)
 }
 
 
+function search(parameters, onSuccess, onFailure)
+{
+    var url = _getYoutubeV3Url("search", parameters);
+
+    _asyncJsonRequest(url, function(response) {
+        console.assert(response.kind === "youtube#searchListResponse");
+        onSuccess(response);
+    }, onFailure);
+}
+
+
 function getVideoUrl(videoId, onSuccess, onFailure)
 {
     var req = "http://www.youtube.com/get_video_info?video_id=" + videoId +

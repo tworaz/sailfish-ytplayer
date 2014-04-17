@@ -44,20 +44,6 @@ Page {
         size: BusyIndicatorSize.Large
     }
 
-    FontLoader {
-        id: youtubeIconsLoader
-        source: "https://www.youtube.com/s/tv/fonts/youtube-icons.ttf"
-        onStatusChanged: {
-            if (status === FontLoader.Ready) {
-                Log.debug("YouTube icons loaded, loading categories")
-                videoCategoryListView.refresh()
-            } else if (status === FontLoader.Error) {
-                Log.warn("Failed to load youtube category icons")
-                videoCategoryListView.refresh()
-            }
-        }
-    }
-
     onStatusChanged: {
         if (status === PageStatus.Active) {
             requestCoverPage("Default.qml")
@@ -97,11 +83,11 @@ Page {
                     anchors.verticalCenter: parent.verticalCenter
                     horizontalAlignment: Text.AlignHCenter
                     width: 60
-                    font.family: "youtube-icons"
+                    font.family: youtubeWebFont.name
                     font.pixelSize: Theme.fontSizeLarge
                     color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
                     text: H.getYouTubeIconForCategoryId(id)
-                    visible: youtubeIconsLoader.status === FontLoader.Ready
+                    visible: youtubeWebFont.status === FontLoader.Ready
                 }
 
                 Label {
@@ -159,10 +145,7 @@ Page {
 
         Component.onCompleted: {
             Log.debug("Video category list page created")
-            if (youtubeIconsLoader.status === FontLoader.Ready) {
-                Log.debug("Youtube icons already loaded, loading categories")
-                Yt.getVideoCategories(onSuccess, onFailure)
-            }
+            Yt.getVideoCategories(onSuccess, onFailure)
             Settings.initialize();
         }
 

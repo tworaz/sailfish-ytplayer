@@ -44,6 +44,7 @@ ApplicationWindow
     initialPage: Component { VideoCategories { } }
     cover: Qt.resolvedUrl("cover/Default.qml")
     property variant coverData
+    property variant defaultCoverData
 
     function requestCoverPage(coverFile, props) {
         var coverUrl = Qt.resolvedUrl("cover/" + coverFile)
@@ -52,6 +53,11 @@ ApplicationWindow
             cover = coverUrl
             coverData = props
         }
+    }
+
+    FontLoader {
+        id: youtubeWebFont
+        source: "https://www.youtube.com/s/tv/fonts/youtube-icons.ttf"
     }
 
     Notification {
