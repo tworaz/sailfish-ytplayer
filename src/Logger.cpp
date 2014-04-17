@@ -29,8 +29,6 @@
 
 #include "Logger.h"
 
-#include <stdio.h>
-
 #define LOG_CACHE_SIZE 50
 
 static QString _log_str_arr[] = {
@@ -41,9 +39,8 @@ static QString _log_str_arr[] = {
 };
 
 QtMessageHandler Logger::_original_handler = NULL;
-QContiguousCache<Logger::LogEntry> *Logger::_log_cache =
-		new QContiguousCache<Logger::LogEntry>(LOG_CACHE_SIZE);
-
+//QContiguousCache<Logger::LogEntry> *Logger::_log_cache =
+//		new QContiguousCache<Logger::LogEntry>(LOG_CACHE_SIZE);
 
 Logger::Logger(QObject *parent)
 	: QObject(parent)
@@ -61,13 +58,24 @@ Logger::_log(LogType type, QString message)
 {
 	const QString& prefix = _log_str_arr[type];
 	QString fullMessage = prefix + message;
-	fprintf(stdout, "%s\n", fullMessage.toLocal8Bit().data());
-	_log_cache->append(LogEntry(type, message));
+	//_log_cache->append(LogEntry(type, message));
+	switch (type) {
+	case LOG_DEBUG:
+	case LOG_INFO:
+		_original_handler(QtDebugMsg, QMessageLogContext(), fullMessage);
+		return;
+	case LOG_ERROR:
+		_original_handler(QtCriticalMsg, QMessageLogContext(), fullMessage);
+		return;
+	case LOG_WARN:
+		_original_handler(QtWarningMsg, QMessageLogContext(), fullMessage);
+		return;
+	}
 }
 
 void
 Logger::_messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
-	_log_cache->append(LogEntry(LOG_DEBUG, msg));
+	//_log_cache->append(LogEntry(LOG_DEBUG, msg));
 	_original_handler(type, context, msg);
 }
