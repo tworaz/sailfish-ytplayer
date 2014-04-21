@@ -34,16 +34,18 @@ import "../pages/YoutubeClientV3.js" as Yt
 CoverBackground {
     id: root
 
+    readonly property int _maxThumbs: 12
+
     Component.onCompleted: {
         if (!defaultCoverData) {
             Log.debug("Fetching data for default cover")
             Yt.search({
                 "part"       : "snippet",
-                "maxResults" : "12",
+                "maxResults" : _maxThumbs,
                 "order"      : "rating"
             }, function (result) {
                 var thumbs = [];
-                for (var i = 0; i < result.items.length; i++) {
+                for (var i = 0; i < _maxThumbs; i++) {
                     thumbs.push(result.items[i].snippet.thumbnails)
                 }
                 defaultCoverData = thumbs
@@ -58,7 +60,7 @@ CoverBackground {
 
     function displayThumbnails() {
         console.assert(defaultCoverData)
-        for (var i = 0; i < defaultCoverData.length; ++i) {
+        for (var i = 0; i < _maxThumbs; ++i) {
             Qt.createQmlObject(
                 'import QtQuick 2.0;' +
                 'import "../common";' +
