@@ -27,47 +27,59 @@
  * SUCH DAMAGE.
  */
 
-#ifndef _LOGGER_H_
-#define _LOGGER_H_
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-#include <QPair>
-#include <QObject>
-#include <QString>
-#include <QMessageLogContext>
-#include <QVariantMap>
-#include <QContiguousCache>
+Page {
 
-class Logger : public QObject
-{
-	Q_OBJECT
+    Component.onCompleted: {
+        for (var i = 0; i < Log.history.length; ++i) {
+            logsList.append(Log.history[i])
+        }
+    }
 
-	Q_PROPERTY(QVariant history READ getHistory)
+    onStatusChanged: {
+        if (status === PageStatus.Active) {
+            requestCoverPage("Default.qml")
+        }
+    }
 
-public:
-	explicit Logger(QObject *parent = 0);
+    SilicaListView {
+        anchors.fill: parent
 
-	static void Register();
+        header: PageHeader {
+            //% "Log Viewer"
+            title: qsTrId("ytplayer-title-log-viewer")
+        }
 
-	Q_INVOKABLE void debug(QString msg) { _log(LOG_DEBUG, msg); }
-	Q_INVOKABLE void error(QString msg) { _log(LOG_ERROR, msg); }
-	Q_INVOKABLE void warn(QString msg)  { _log(LOG_WARN, msg); }
-	Q_INVOKABLE void info(QString msg)  { _log(LOG_INFO, msg); }
+        model: ListModel {
+            id: logsList
+        }
 
-private:
-	enum LogType {
-		LOG_DEBUG = 0,
-		LOG_ERROR,
-		LOG_WARN,
-		LOG_INFO
-	};
+        delegate: Component {
+            Rectangle {
+                width: parent.width
+                height: children[0].height + Theme.paddingSmall
 
-	QVariant getHistory() const;
+                color: {
+                    switch (type) {
+                    case 0: return "#662219B2"
+                    case 1: return "#66FF0000"
+                    case 2: return "#66FFFD00"
+                    case 3: return "#6641DB00"
+                    }
+                }
 
-	void _log(LogType, QString);
-	static void _messageHandler(QtMsgType, const QMessageLogContext&, const QString&);
+                Label {
+                    x: Theme.paddingMedium
+                    width: parent.width - 2 * Theme.paddingMedium
+                    anchors.centerIn: parent
+                    font.pixelSize: Theme.fontSizeTiny
+                    wrapMode: Text.Wrap
+                    text: message
+                }
+            }
+        }
+    }
 
-	static QtMessageHandler _original_handler;
-	static QContiguousCache<QVariantMap> *_log_cache;
-};
-
-#endif // _LOGGER_H_
+}

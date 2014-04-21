@@ -29,7 +29,9 @@
 
 #include "Logger.h"
 
-#define LOG_CACHE_SIZE 50
+#include <QDebug>
+
+#define LOG_CACHE_SIZE 200
 
 static QString _log_str_arr[] = {
 	QString("[DEBUG] "),
@@ -39,8 +41,8 @@ static QString _log_str_arr[] = {
 };
 
 QtMessageHandler Logger::_original_handler = NULL;
-//QContiguousCache<Logger::LogEntry> *Logger::_log_cache =
-//		new QContiguousCache<Logger::LogEntry>(LOG_CACHE_SIZE);
+QContiguousCache<QVariantMap> *Logger::_log_cache =
+		new QContiguousCache<QVariantMap>(LOG_CACHE_SIZE);
 
 Logger::Logger(QObject *parent)
 	: QObject(parent)
@@ -53,12 +55,27 @@ Logger::Register()
 	_original_handler = qInstallMessageHandler(Logger::_messageHandler);
 }
 
+QVariant
+Logger::getHistory() const
+{
+	QList<QVariant> list;
+	for (int i = _log_cache->firstIndex(); i < _log_cache->lastIndex(); ++i) {
+		list.append(_log_cache->at(i));
+	}
+	return QVariant(list);
+}
+
 void
 Logger::_log(LogType type, QString message)
 {
 	const QString& prefix = _log_str_arr[type];
 	QString fullMessage = prefix + message;
-	//_log_cache->append(LogEntry(type, message));
+
+	QVariantMap entry;
+	entry.insert("type", type);
+	entry.insert("message", message);
+	_log_cache->append(entry);
+
 	switch (type) {
 	case LOG_DEBUG:
 	case LOG_INFO:
@@ -76,6 +93,10 @@ Logger::_log(LogType type, QString message)
 void
 Logger::_messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
-	//_log_cache->append(LogEntry(LOG_DEBUG, msg));
+	QVariantMap entry;
+	entry.insert("type", LOG_DEBUG);
+	entry.insert("message", msg);
+	_log_cache->append(entry);
+
 	_original_handler(type, context, msg);
 }

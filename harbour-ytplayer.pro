@@ -55,7 +55,8 @@ OTHER_FILES += \
         qml/pages/YTOAuth2.qml \
         qml/pages/Account.qml \
         qml/pages/YTPagesTopMenu.qml \
-        qml/pages/YTLikeButtons.qml
+        qml/pages/YTLikeButtons.qml \
+        qml/pages/LogViewer.qml
 
 include(third_party/notifications.pri)
 

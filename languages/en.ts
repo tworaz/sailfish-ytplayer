@@ -282,8 +282,16 @@ Menu option to show settings page</extracomment>
     </message>
     <message id="ytplayer-search-no-results">
         <source>No results</source>
-        <extracomment>&quot;Background label informing the user there are no search results&quot;</extracomment>
+        <extracomment>Background label informing the user there are no search results</extracomment>
         <translation>No results</translation>
+    </message>
+    <message id="ytplayer-title-log-viewer">
+        <source>Log Viewer</source>
+        <translation>YTPlayer Logs</translation>
+    </message>
+    <message id="ytplayer-title-show-logs">
+        <source>View Logs</source>
+        <translation>View Logs</translation>
     </message>
 </context>
 </TS>
