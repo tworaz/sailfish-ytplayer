@@ -59,7 +59,7 @@ QVariant
 Logger::getHistory() const
 {
 	QList<QVariant> list;
-	for (int i = _log_cache->firstIndex(); i < _log_cache->lastIndex(); ++i) {
+	for (int i = _log_cache->firstIndex(); i <= _log_cache->lastIndex(); ++i) {
 		list.append(_log_cache->at(i));
 	}
 	return QVariant(list);
