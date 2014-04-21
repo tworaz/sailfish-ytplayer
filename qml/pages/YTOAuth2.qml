@@ -32,7 +32,6 @@ import QtWebKit 3.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer.notifications 1.0
 import "YoutubeClientV3.js" as YT
-import "Settings.js" as S
 
 Page {
     id: page
@@ -132,10 +131,10 @@ Page {
             console.assert(result.hasOwnProperty('access_token'))
             console.assert(result.hasOwnProperty('refresh_token'))
             console.assert(result.hasOwnProperty('token_type'))
-            S.set(S.YOUTUBE_ACCESS_TOKEN, result["access_token"])
-            S.set(S.YOUTUBE_REFRESH_TOKEN, result["refresh_token"])
-            S.set(S.YOUTUBE_ACCESS_TOKEN_TYPE, result["token_type"])
-            S.set(S.YOUTUBE_ACCOUNT_INTEGRATION, S.ENABLE)
+            Prefs.set("YouTubeAccessToken", result["access_token"])
+            Prefs.set("YouTubeRefreshToken", result["refresh_token"])
+            Prefs.set("YouTubeaAccessTokenType", result["token_type"])
+            Prefs.set("YouTubeAccountIntegration", true)
             successNotification.publish()
             pageStack.pop(undefined, PageStackAction.Animated)
         }

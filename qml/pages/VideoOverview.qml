@@ -59,7 +59,7 @@ Dialog {
                 Yt.getVideoDetails(videoId, onVideoDetailsLoaded, onFailure)
             }
 
-            ranking.enabled = Yt.isAuthEnabled()
+            ranking.enabled = Prefs.isAuthEnabled()
             requestCoverPage("VideoOverview.qml", {
                 "thumbnails" : thumbnails,
                 "videoId"    : videoId,

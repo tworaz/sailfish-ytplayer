@@ -54,12 +54,12 @@ Page {
             if (coverData) {
                 requestCoverPage("ChannelBrowser.qml", coverData)
             }
-            subscriptionMenu.visible = Yt.isAuthEnabled()
+            subscriptionMenu.visible = Prefs.isAuthEnabled()
         }
     }
 
     onChannelIdChanged: {
-        if (Yt.isAuthEnabled()) {
+        if (Prefs.isAuthEnabled()) {
             Log.debug("Authorization enabled, checking channel subscription status")
             Yt.isChannelSubscribed(channelId, function(response) {
                 page.channelSubscribed = response ? true : false

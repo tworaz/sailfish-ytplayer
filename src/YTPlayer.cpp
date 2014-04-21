@@ -42,6 +42,7 @@
 
 #include "NativeUtil.h"
 #include "Logger.h"
+#include "Prefs.h"
 
 class YTPNetworkAccessManagerFactory: public QQmlNetworkAccessManagerFactory
 {
@@ -65,12 +66,14 @@ int main(int argc, char *argv[])
 {
 	QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
 	QScopedPointer<QQuickView> view(SailfishApp::createView());
+	QScopedPointer<Prefs> prefs(new Prefs(app.data()));
 	QScopedPointer<NativeUtil> nativeUtil(new NativeUtil(app.data()));
 	QScopedPointer<Logger> logger(new Logger(app.data()));
 	QTranslator translator;
 	QString lang = QLocale::system().name();
 	QString dir = SailfishApp::pathTo(QString("languages")).toLocalFile();
 
+	prefs->Initialize();
 	Logger::Register();
 
 	qDebug("System language : %s", qPrintable(lang));
@@ -85,6 +88,7 @@ int main(int argc, char *argv[])
 	qmlRegisterType<Notification>("harbour.ytplayer.notifications", 1, 0, "Notification");
 	view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
 	view->rootContext()->setContextProperty("Log", logger.data());
+	view->rootContext()->setContextProperty("Prefs", prefs.data());
 	view->setSource(SailfishApp::pathTo("qml/YTPlayer.qml"));
 	view->engine()->setNetworkAccessManagerFactory(new YTPNetworkAccessManagerFactory());
 

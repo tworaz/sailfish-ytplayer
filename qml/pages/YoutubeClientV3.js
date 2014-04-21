@@ -27,8 +27,6 @@
  * SUCH DAMAGE.
  */
 
-.import "Settings.js" as Settings
-
 var _youtube_data_v3_url = "https://www.googleapis.com/youtube/v3/";
 
 var VIDEO_RANKING_LIKE = "like"
@@ -46,7 +44,7 @@ function _getYoutubeV3Url(reference, queryParams)
             "?regionCode=" + regionCode +
             "&key=" + NativeUtil.YouTubeDataKey +
             "&hl=" + locale +
-            "&maxResults=" + Settings.get(Settings.RESULTS_PER_PAGE);
+            "&maxResults=" + Prefs.get("ResultsPerPage");
 
     for (var key in queryParams) {
         if (queryParams.hasOwnProperty(key)) {
@@ -57,14 +55,9 @@ function _getYoutubeV3Url(reference, queryParams)
 }
 
 
-function isAuthEnabled() {
-    return Settings.get(Settings.YOUTUBE_ACCOUNT_INTEGRATION) === Settings.ENABLE;
-}
-
-
 function _getAuthHeader() {
-    return Settings.get(Settings.YOUTUBE_ACCESS_TOKEN_TYPE) + " " +
-           Settings.get(Settings.YOUTUBE_ACCESS_TOKEN);
+    return Prefs.get("YouTubeAccessTokenType") + " " +
+           Prefs.get("YouTubeAccessToken");
 }
 
 
@@ -85,7 +78,7 @@ function _asyncFormPost(url, content, onSuccess, onFailure)
     xhr.open("POST", url);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     xhr.setRequestHeader('Content-Length', content.length);
-    if (isAuthEnabled()) {
+    if (Prefs.isAuthEnabled()) {
         xhr.setRequestHeader("Authorization", _getAuthHeader());
     }
     xhr.send(content);
@@ -96,14 +89,14 @@ function _refreshOAuthToken(onSuccess, onFailure)
 {
     var body = "client_id=" + NativeUtil.YouTubeAuthData["client_id"] +
             "&client_secret=" + NativeUtil.YouTubeAuthData["client_secret"] +
-            "&refresh_token=" + Settings.get(Settings.YOUTUBE_REFRESH_TOKEN) +
+            "&refresh_token=" + Prefs.get("YouTubeRefreshToken") +
             "&grant_type=refresh_token";
 
     _asyncFormPost(NativeUtil.YouTubeAuthData["token_uri"], body,
         function(response) {
             Log.debug("Token refresh succeeded");
-            Settings.set(Settings.YOUTUBE_ACCESS_TOKEN, response.access_token);
-            Settings.set(Settings.YOUTUBE_ACCESS_TOKEN_TYPE, response.token_type);
+            Prefs.set("YouTubeAccessToken", response.access_token);
+            Prefs.set("YouTubeAccessTokenType", response.token_type);
             onSuccess(response);
         }, function(error) {
             onFailure(error);
@@ -119,7 +112,7 @@ function _xhr_onreadystate(xhr, onSuccess, onFailure, onRetry)
             onSuccess(response);
         } else if (xhr.status === 204) {
             onSuccess();
-        } else if (xhr.status === 401 && isAuthEnabled()) {
+        } else if (xhr.status === 401 && Prefs.isAuthEnabled()) {
             Log.debug("Refreshing OAuth2 token");
             _refreshOAuthToken(function (response) {
                 if (onRetry) {
@@ -150,7 +143,7 @@ function _asyncJsonRequest(url, onSuccess, onFailure, method)
         xhr.open("GET", url);
     }
     xhr._url = url;
-    if (isAuthEnabled()) {
+    if (Prefs.isAuthEnabled()) {
         xhr.setRequestHeader("Authorization", _getAuthHeader());
     }
     xhr.send();
@@ -395,17 +388,17 @@ function getSearchResults(query, onSuccess, onFailure, pageToken)
     };
 
     var safeSearchValue = undefined;
-    switch (parseInt(Settings.get(Settings.SAFE_SEARCH))) {
+    switch (parseInt(Prefs.get(Prefs.SafeSearch))) {
     default:
-        Log.warn("Unknown safe search value: " + Settings.get(Settings.SAFE_SEARCH));
+        Log.warn("Unknown safe search value: " + Prefs.get(Prefs.SafeSearch));
         break;
-    case Settings.SAFE_SEARCH_NONE:
+    case 0:
         qParams.safeSearch = "none";
         break;
-    case Settings.SAFE_SEARCH_MODERATE:
+    case 1:
         qParams.safeSearch = "moderate";
         break;
-    case Settings.SAFE_SEARCH_STRICT:
+    case 2:
         qParams.safeSearch = "strict";
         break;
     }

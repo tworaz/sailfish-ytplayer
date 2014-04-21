@@ -29,14 +29,13 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "Settings.js" as S
 
 Page {
     id: settingsPage
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            accountSwitch.checked = (S.get(S.YOUTUBE_ACCOUNT_INTEGRATION) === S.ENABLE)
+            accountSwitch.checked = Prefs.isAuthEnabled()
             requestCoverPage("Default.qml")
         }
     }
@@ -50,6 +49,7 @@ Page {
                 text: qsTrId("ytplayer-title-show-logs")
                 onClicked: pageStack.push(Qt.resolvedUrl("LogViewer.qml"))
             }
+
             MenuItem {
                 //% "About YTPlater"
                 text: qsTrId("ytplayer-title-about")
@@ -88,12 +88,12 @@ Page {
                 automaticCheck: false
 
                 onClicked: {
-                    if (S.get(S.YOUTUBE_ACCOUNT_INTEGRATION) === S.ENABLE) {
+                    if (Prefs.isAuthEnabled()) {
                         Log.info("Disabling account integration")
-                        S.set(S.YOUTUBE_ACCESS_TOKEN, "")
-                        S.set(S.YOUTUBE_REFRESH_TOKEN, "")
-                        S.set(S.YOUTUBE_TOKEN_TYPE, "")
-                        S.set(S.YOUTUBE_ACCOUNT_INTEGRATION, S.DISABLE)
+                        Prefs.set("YouTubeAccessToken", "")
+                        Prefs.set("YouTubeRefreshToken", "")
+                        Prefs.set("YouTubeAccessTokenType", "")
+                        Prefs.set("YouTubeAccountIntegration", false)
                         checked = false
                     } else {
                         Log.info("Enabling account integration")
@@ -116,10 +116,9 @@ Page {
                 //% "Content filtering"
                 label: qsTrId("ytplayer-label-content-filtering")
                 width: parent.width
-                currentIndex: S.get(S.SAFE_SEARCH)
+                currentIndex: Prefs.get("SafeSearch")
 
                 menu: ContextMenu {
-                    // Indexes of menu items should match SAFE_SEARCH_ keys in Settings.js
                     MenuItem {
                         //: Option value for lack of any content filtering
                         //% "None"
@@ -137,7 +136,7 @@ Page {
                     }
                 }
 
-                onCurrentIndexChanged: S.set(S.SAFE_SEARCH, currentIndex);
+                onCurrentIndexChanged: Prefs.set("SafeSearch", currentIndex)
             }
 
             Label {
@@ -154,12 +153,12 @@ Page {
                 minimumValue: 15
                 maximumValue: 50
                 stepSize: 5
-                value: S.get(S.RESULTS_PER_PAGE)
+                value: Prefs.get("ResultsPerPage")
                 valueText: value
                 //: Label of results per page slider in display settings menu
                 //% "Results per page"
                 label: qsTrId("ytplayer-label-results-per-page")
-                onValueChanged: S.set(S.RESULTS_PER_PAGE, value)
+                onValueChanged: Prefs.set("ResultsPerPage", value)
             }
         }
     }

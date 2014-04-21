@@ -30,7 +30,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "YoutubeClientV3.js" as Yt
-import "Settings.js" as Settings
 import "../common/Helpers.js" as H
 
 
@@ -47,7 +46,7 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Active) {
             requestCoverPage("Default.qml")
-            topMenu.accountMenuVisible = Yt.isAuthEnabled()
+            topMenu.accountMenuVisible = Prefs.isAuthEnabled()
         }
     }
 
@@ -146,7 +145,6 @@ Page {
         Component.onCompleted: {
             Log.debug("Video category list page created")
             Yt.getVideoCategories(onSuccess, onFailure)
-            Settings.initialize();
         }
 
         VerticalScrollDecorator {}

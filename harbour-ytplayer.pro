@@ -14,11 +14,13 @@ QT += dbus
 SOURCES += \
         src/YTPlayer.cpp \
         src/NativeUtil.cpp \
-        src/Logger.cpp
+        src/Logger.cpp \
+        src/Prefs.cpp
 
 HEADERS += \
         src/NativeUtil.h \
-        src/Logger.h
+        src/Logger.h \
+        src/Prefs.h
 
 OTHER_FILES += \
         scripts/generate-mcc-json.py \
@@ -38,7 +40,6 @@ OTHER_FILES += \
         qml/cover/ChannelBrowser.qml \
         qml/cover/CategoryVideoList.qml \
         qml/pages/YoutubeClientV3.js \
-        qml/pages/Settings.js \
         qml/pages/duration.js \
         qml/pages/VideoOverview.qml \
         qml/pages/VideoPlayer.qml \
