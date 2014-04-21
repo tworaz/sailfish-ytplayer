@@ -36,7 +36,7 @@ CoverBackground {
 
     Component.onCompleted: {
         if (!defaultCoverData) {
-            Log.debug("Fetching data for defaut cover")
+            Log.debug("Fetching data for default cover")
             Yt.search({
                 "part"       : "snippet",
                 "maxResults" : "12",

@@ -60,7 +60,7 @@ Page {
                 "mediaPlayer" : mediaPlayer
             })
         } else if (status == PageStatus.Deactivating) {
-            Log.debug("VidePlayer page deactiated");
+            Log.debug("VidePlayer page deactivating");
             mediaPlayer.stop()
             videoOutput.source = null
         }
