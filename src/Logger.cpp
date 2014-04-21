@@ -94,7 +94,24 @@ void
 Logger::_messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
 	QVariantMap entry;
-	entry.insert("type", LOG_DEBUG);
+	LogType type_;
+
+	switch (type) {
+	case QtDebugMsg:
+		type_ = LOG_DEBUG;
+		break;
+	case QtWarningMsg:
+		type_ = LOG_WARN;
+		break;
+	case QtSystemMsg:
+		type_ = LOG_INFO;
+		break;
+	case QtFatalMsg:
+	default:
+		type_ = LOG_ERROR;
+		break;
+	}
+	entry.insert("type", type_);
 	entry.insert("message", msg);
 	_log_cache->append(entry);
 

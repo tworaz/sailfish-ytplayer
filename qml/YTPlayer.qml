@@ -49,7 +49,7 @@ ApplicationWindow
     function requestCoverPage(coverFile, props) {
         var coverUrl = Qt.resolvedUrl("cover/" + coverFile)
         if (coverUrl !== cover) {
-            Log.debug("Current page requested new cover: " + coverFile)
+            Log.info("Changing cover to: " + coverFile)
             cover = coverUrl
             coverData = props
         }
