@@ -31,17 +31,11 @@
 #define NATIVEUTIL_H
 
 #include <QObject>
-#include <QVariantMap>
-#include <QJsonObject>
-#include <QDBusConnection>
-#include <QDBusObjectPath>
 
 class NativeUtil : public QObject
 {
 	Q_OBJECT
 
-	Q_PROPERTY(QString YouTubeDataKey READ getYouTubeDataKey CONSTANT)
-	Q_PROPERTY(QVariantMap YouTubeAuthData READ getYouTubeAuthData CONSTANT)
 	Q_PROPERTY(QString version READ getVersion CONSTANT)
 	Q_PROPERTY(QString regionCode READ getRegionCode CONSTANT)
 
@@ -50,16 +44,8 @@ public:
 
 	Q_INVOKABLE void preventScreenBlanking(bool prevent);
 
-	QString getRegionCode() const;
-	QString getYouTubeDataKey() const;
-	QVariantMap getYouTubeAuthData() const;
-	QString getVersion() const;
-
-private:
-	static QDBusObjectPath getModemPath(QDBusConnection conn);
-	static unsigned getMobileCountryCode(QDBusConnection conn, QDBusObjectPath modem);
-	static QJsonObject getMobileCountryCodeMap();
-	static void setPreventScreenBlanking(bool prevent);
+	static QString getRegionCode();
+	static QString getVersion();
 };
 
 #endif // NATIVEUTIL_H

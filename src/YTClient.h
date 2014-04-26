@@ -27,26 +27,53 @@
  * SUCH DAMAGE.
  */
 
-import QtQuick 2.0
+#ifndef YTCLIENT_H
+#define YTCLIENT_H
 
+#include <QNetworkAccessManager>
+#include <QNetworkReply>
+#include <QVariantMap>
+#include <QUrlQuery>
+#include <QVariant>
+#include <QObject>
 
-Timer {
-    interval: 1000
-    repeat: false
-    property int maxRetries: 15
-    property int currentTry: 0
+class YTClient : public QObject
+{
+    Q_OBJECT
 
-    function onRetryFailure(error) {
-        if ((currentTry < maxRetries) && (error.code === 0)) {
-            currentTry++
-            start()
-        } else {
-            currentTry = 0
-            errorNotification.show(error)
-        }
-    }
+    Q_PROPERTY(QString OAuth2URL READ getOAuth2URL CONSTANT)
 
-    function reset() {
-        currentTry = 0
-    }
-}
+public:
+    explicit YTClient(QObject *parent = 0);
+    ~YTClient();
+
+    Q_INVOKABLE void list(QString resource, QVariantMap params);
+    Q_INVOKABLE void post(QString resource, QVariantMap params, QVariant content);
+    Q_INVOKABLE void del(QString resource, QVariantMap params);
+
+    Q_INVOKABLE void requestOAuth2Token(QString authCode);
+
+signals:
+    void error(QVariant details);
+    void success(QVariant response);
+    void retry();
+
+private slots:
+    void onRequestFinished(QNetworkReply *reply);
+    void onNetworkAccessibleChanged(QNetworkAccessManager::NetworkAccessibility);
+
+private:
+    void refreshToken() const;
+    void handleSuccess(QNetworkReply*);
+    void handleError(QNetworkReply*);
+    void handleTokenReply(QNetworkReply*);
+
+    void appendCommonParams(QUrlQuery& query);
+
+    QString getOAuth2URL() const;
+
+    QNetworkAccessManager *_manager;
+    QString _regionCode;
+};
+
+#endif // YTCLIENT_H

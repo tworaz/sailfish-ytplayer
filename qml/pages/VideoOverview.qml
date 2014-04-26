@@ -29,7 +29,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "YoutubeClientV3.js" as Yt
 import "duration.js" as DUtil
 import "../common"
 
@@ -56,16 +55,52 @@ Dialog {
     onStatusChanged: {
         if (status === PageStatus.Active) {
             if (!dataLoaded) {
-                Yt.getVideoDetails(videoId, onVideoDetailsLoaded, onFailure)
+                loadData()
             }
 
-            ranking.enabled = Prefs.isAuthEnabled()
+            rating.enabled = Prefs.isAuthEnabled()
             requestCoverPage("VideoOverview.qml", {
                 "thumbnails" : thumbnails,
                 "videoId"    : videoId,
                 "title"      : title
             })
         }
+    }
+
+    function loadData() {
+        ytDataAPIClient.list("videos", {
+            "part" : "snippet,contentDetails,statistics",
+            "id"   : videoId
+        }, function (response) {
+            console.assert(response.kind === "youtube#videoListResponse")
+            console.assert(response.items.length === 1)
+            console.assert(response.items[0].kind === "youtube#video")
+            var details = response.items[0]
+            //Log.debug("Have video details: " + JSON.stringify(details, undefined, 2))
+            if (details.snippet.description) {
+                description.text = details.snippet.description
+            } else {
+                description.visible = false
+            }
+
+            rating.likes = details.statistics.likeCount
+            rating.dislikes = details.statistics.dislikeCount
+            rating.dataValid = true
+
+            var pd = new Date(details.snippet.publishedAt)
+            publishDate.value = Qt.formatDateTime(pd, "d MMMM yyyy")
+
+            var dur = new DUtil.Duration(details.contentDetails.duration)
+            duration.value = dur.asClock();
+
+            header.title = details.snippet.title
+            indicator.running = false
+            dataLoaded = true
+        }, function (error) {
+            errorNotification.show(error);
+            indicator.running = false
+            dataLoaded = true
+        })
     }
 
     BusyIndicator {
@@ -147,7 +182,7 @@ Dialog {
             }
 
             YTLikeButtons {
-                id: ranking
+                id: rating
                 width: parent.width
                 visible: !indicator.running
                 videoId: page.videoId
@@ -169,34 +204,5 @@ Dialog {
             }
         }
         VerticalScrollDecorator {}
-    }
-
-    function onVideoDetailsLoaded(details) {
-        //Log.debug("Have video details: " + JSON.stringify(details, undefined, 2))
-        if (details.snippet.description) {
-            description.text = details.snippet.description
-        } else {
-            description.visible = false
-        }
-
-        ranking.likes = details.statistics.likeCount
-        ranking.dislikes = details.statistics.dislikeCount
-        ranking.dataValid = true
-
-        var pd = new Date(details.snippet.publishedAt)
-        publishDate.value = Qt.formatDateTime(pd, "d MMMM yyyy")
-
-        var dur = new DUtil.Duration(details.contentDetails.duration)
-        duration.value = dur.asClock();
-
-        header.title = details.snippet.title
-        indicator.running = false
-        dataLoaded = true
-    }
-
-    function onFailure(error) {
-        errorNotification.show(error);
-        indicator.running = false
-        dataLoaded = true
     }
 }

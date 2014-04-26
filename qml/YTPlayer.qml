@@ -30,7 +30,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer.notifications 1.0
-import "pages/YoutubeClientV3.js" as Yt
 import "pages"
 
 ApplicationWindow
@@ -58,6 +57,10 @@ ApplicationWindow
     FontLoader {
         id: youtubeWebFont
         source: "https://www.youtube.com/s/tv/fonts/youtube-icons.ttf"
+    }
+
+    YTDataAPIClient {
+        id: ytDataAPIClient
     }
 
     Notification {

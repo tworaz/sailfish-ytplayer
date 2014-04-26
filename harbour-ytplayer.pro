@@ -15,12 +15,14 @@ SOURCES += \
         src/YTPlayer.cpp \
         src/NativeUtil.cpp \
         src/Logger.cpp \
-        src/Prefs.cpp
+        src/Prefs.cpp \
+        src/YTClient.cpp
 
 HEADERS += \
         src/NativeUtil.h \
         src/Logger.h \
-        src/Prefs.h
+        src/Prefs.h \
+        src/YTClient.h
 
 OTHER_FILES += \
         scripts/generate-mcc-json.py \
@@ -47,7 +49,6 @@ OTHER_FILES += \
         qml/pages/VideoCategories.qml \
         qml/pages/Settings.qml \
         qml/pages/About.qml \
-        qml/pages/ConnectionRetryTimer.qml \
         qml/pages/ChannelBrowser.qml \
         qml/pages/VideoController.qml \
         qml/pages/CategoryVideoList.qml \
@@ -57,7 +58,8 @@ OTHER_FILES += \
         qml/pages/Account.qml \
         qml/pages/YTPagesTopMenu.qml \
         qml/pages/YTLikeButtons.qml \
-        qml/pages/LogViewer.qml
+        qml/pages/LogViewer.qml \
+        qml/pages/YTDataAPIClient.qml
 
 include(third_party/notifications.pri)
 

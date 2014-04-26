@@ -41,6 +41,7 @@
 #include <notification.h>
 
 #include "NativeUtil.h"
+#include "YTClient.h"
 #include "Logger.h"
 #include "Prefs.h"
 
@@ -86,6 +87,7 @@ int main(int argc, char *argv[])
 	app->installTranslator(&translator);
 
 	qmlRegisterType<Notification>("harbour.ytplayer.notifications", 1, 0, "Notification");
+	qmlRegisterType<YTClient>("harbour.ytplayer", 1, 0, "YTClient");
 	view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
 	view->rootContext()->setContextProperty("Log", logger.data());
 	view->rootContext()->setContextProperty("Prefs", prefs.data());

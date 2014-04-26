@@ -29,8 +29,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "YoutubeClientV3.js" as Yt
-
 
 SilicaListView {
     id: root
@@ -61,36 +59,49 @@ SilicaListView {
         }
     }
 
-    function onFailure(error) {
-        errorNotification.show(error)
-        root.busy = false
-    }
-
-    function onVideoListLoaded(response) {
-        console.assert(response.kind === "youtube#playlistItemListResponse" ||
-                       response.kind === "youtube#videoListResponse")
-        for (var i = 0; i < response.items.length; i++) {
-            videoListModel.append(response.items[i])
-        }
-        if (response.nextPageToken !== undefined) {
-            nextPageToken = response.nextPageToken
-        } else {
-            nextPageToken = ""
-        }
-        root.busy = false
-    }
-
     function loadNextResultsPage() {
-        var token = nextPageToken.length > 0 ? nextPageToken : undefined
+        var params = {};
+        var resource = undefined;
+
         if (videoResourceId.kind === "youtube#videoCategory") {
-            Yt.getVideosInCategory(videoResourceId.id, onVideoListLoaded, onFailure, token)
-            root.busy = true
+            resource = "videos"
+            params = {
+                "part"            : "snippet",
+                "chart"           : "mostPopular",
+                "videoCategoryId" : videoResourceId.id,
+            }
         } else if (videoResourceId.kind === "#channelPlaylist") {
-            Yt.getVideosInPlaylist(videoResourceId.id, onVideoListLoaded, onFailure, token)
-            root.busy = true
+            resource = "playlistItems"
+            params = {
+                "part"       : "snippet",
+                "playlistId" : videoResourceId.id,
+            }
         } else {
             Log.error("Unrecognized video listing types: " + videoResourceId.kind)
+            return
         }
+
+        if (nextPageToken.length > 0) {
+            params.pageToken = nextPageToken
+        }
+
+        ytDataAPIClient.list(resource, params, function(response) {
+            console.assert(response.kind === "youtube#playlistItemListResponse" ||
+                           response.kind === "youtube#videoListResponse")
+            for (var i = 0; i < response.items.length; i++) {
+                videoListModel.append(response.items[i])
+            }
+            if (response.nextPageToken !== undefined) {
+                nextPageToken = response.nextPageToken
+            } else {
+                nextPageToken = ""
+            }
+            root.busy = false
+        }, function (error) {
+            errorNotification.show(error)
+            root.busy = false
+        })
+        root.busy = true
     }
 
     function refresh() {

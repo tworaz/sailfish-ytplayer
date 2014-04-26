@@ -74,3 +74,13 @@ Prefs::isAuthEnabled()
 	QVariant auth = get("YouTubeAccountIntegration");
 	return auth.isValid() && auth.toBool();
 }
+
+void
+Prefs::disableAuth()
+{
+	QSettings settings;
+	settings.remove("YouTubeAccessToken");
+	settings.remove("YouTubeRefreshToken");
+	settings.remove("YouTubeAccessTokenType");
+	settings.setValue("YouTubeAccountIntegration", false);
+}

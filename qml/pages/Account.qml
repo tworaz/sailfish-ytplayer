@@ -29,7 +29,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "YoutubeClientV3.js" as Yt
 
 Page {
     id: root
@@ -77,14 +76,62 @@ Page {
     }
 
     function fetchDataForCurrentState(token) {
-        loadingData = true
+        var resource = undefined
+        var params = {}
+
         if (state === "SUBSCRIPTIONS") {
-            Yt.getSubscriptions(onVideoListFetched, onError, token)
+            resource = "subscriptions"
+            params = {
+                "part" : "id",
+                "mine" : true,
+                "part" : "snippet"
+            }
         } else if (state === "LIKES") {
-            Yt.getVideosForRanking(Yt.VIDEO_RANKING_LIKE, onVideoListFetched, onError, token)
+            resource = "videos"
+            params = {
+                "part"     : "snippet",
+                "myRating" : "like"
+            }
         } else if (state === "DISLIKES") {
-            Yt.getVideosForRanking(Yt.VIDEO_RANKING_DISLIKE, onVideoListFetched, onError, token)
+            resource = "videos"
+            params = {
+                "part"     : "snippet",
+                "myRating" : "dislike"
+            }
         }
+
+        if (token) {
+            params.pageToken = token
+        }
+
+        ytDataAPIClient.list(resource, params, function(response) {
+            loadingData = false
+
+            if (reloadOnActivate) {
+                reloadOnActivate = false
+                if (response.etag === listView.etag) {
+                    return
+                }
+                listView.etag = ""
+                listView.nextPageToken = ""
+                listModel.clear()
+            }
+
+            for (var i = 0; i < response.items.length; ++i) {
+                listModel.append(response.items[i])
+            }
+            if (response.nextPageToken !== undefined) {
+                listView.nextPageToken = response.nextPageToken
+            } else {
+                listView.nextPageToken = ""
+            }
+            listView.etag = response.etag
+
+        }, function (error) {
+            loadingData = false
+            errorNotification.show(error)
+        })
+        loadingData = true
     }
 
     function onVideoListFetched(response) {

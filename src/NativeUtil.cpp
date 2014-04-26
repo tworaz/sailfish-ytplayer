@@ -28,86 +28,22 @@
  */
 
 #include <QFile>
+#include <QJsonObject>
 #include <QJsonDocument>
 #include <QDBusMessage>
 #include <QDBusArgument>
-#include <sailfishapp.h>
+#include <QDBusConnection>
+#include <QDBusObjectPath>
 #include <QDebug>
+#include <sailfishapp.h>
 
 #include "config.h"
 #include "NativeUtil.h"
 
 static QString FALLBACK_COUNTRY_CODE = QString("US");
 
-NativeUtil::NativeUtil(QObject *parent) :
-    QObject(parent)
-{
-}
-
-QString
-NativeUtil::getRegionCode() const
-{
-	QDBusConnection systemBus = QDBusConnection::connectToBus(QDBusConnection::SystemBus, "system");
-	if (systemBus.isConnected()) {
-		QDBusObjectPath modem = getModemPath(systemBus);
-		if (modem.path().isEmpty()) {
-			qDebug() << "Failed to find modem";
-			return FALLBACK_COUNTRY_CODE;
-		}
-		qDebug() << "Modem Path: " << modem.path();
-
-		unsigned mcc = getMobileCountryCode(systemBus, modem);
-		qDebug() << "Mobile Country Code: " << mcc;
-
-		QJsonObject mccMap = getMobileCountryCodeMap();
-		QJsonObject::Iterator iter =  mccMap.find(QString::number(mcc));
-		if (iter == mccMap.end()) {
-			qDebug() << "No country could be found for code " << mcc;
-			return FALLBACK_COUNTRY_CODE;
-		}
-		QString countryCode = static_cast<QJsonValue>(*iter).toString();
-		qDebug() << "Country code: " << countryCode;
-		return countryCode;
-	} else {
-		qDebug("Failed to connect to system bus!");
-	}
-	return FALLBACK_COUNTRY_CODE;
-}
-
-QString
-NativeUtil::getYouTubeDataKey() const
-{
-#ifndef YOUTUBE_DATA_API_V3_KEY
-#error "Please define YOUTUBE_DATA_API_V3_KEY"
-#else
-	return QString(YOUTUBE_DATA_API_V3_KEY);
-#endif
-}
-
-QVariantMap
-NativeUtil::getYouTubeAuthData() const
-{
-	QVariantMap map;
-	map.insert("auth_uri", YOUTUBE_AUTH_URI);
-	map.insert("client_id", YOUTUBE_AUTH_CLIENT_ID);
-	map.insert("client_secret", YOUTUBE_AUTH_CLIENT_SECRET);
-	map.insert("token_uri", YOUTUBE_AUTH_TOKEN_URI);
-	map.insert("redirect_uri", YOUTUBE_AUTH_REDIRECT_URI);
-	return map;
-}
-
-QString
-NativeUtil::getVersion() const
-{
-#ifdef VERSION_STR
-	return QString(VERSION_STR);
-#else
-	return QString("Unknown");
-#endif
-}
-
-QDBusObjectPath
-NativeUtil::getModemPath(QDBusConnection connection)
+static QDBusObjectPath
+getModemPath(QDBusConnection connection)
 {
 	QDBusMessage msg = QDBusMessage::createMethodCall("org.ofono", "/", "org.ofono.Manager", "GetModems");
 	QDBusMessage reply = connection.call(msg);
@@ -132,11 +68,11 @@ NativeUtil::getModemPath(QDBusConnection connection)
 	return pathVariant.variant().value<QDBusObjectPath>();
 }
 
-unsigned
-NativeUtil::getMobileCountryCode(QDBusConnection conn, QDBusObjectPath modem)
+static unsigned
+getMobileCountryCode(QDBusConnection conn, QDBusObjectPath modem)
 {
 	QDBusMessage msg = QDBusMessage::createMethodCall("org.ofono", modem.path(),
-	                                                  "org.ofono.SimManager", "GetProperties");
+													  "org.ofono.SimManager", "GetProperties");
 	QDBusMessage reply = conn.call(msg);
 	unsigned mcc = 0;
 
@@ -167,8 +103,8 @@ NativeUtil::getMobileCountryCode(QDBusConnection conn, QDBusObjectPath modem)
 	return mcc;
 }
 
-QJsonObject
-NativeUtil::getMobileCountryCodeMap()
+static QJsonObject
+getMobileCountryCodeMap()
 {
 	QString mccPath = SailfishApp::pathTo(QString("mcc-data.json")).toLocalFile();
 	QFile mccFile(mccPath);
@@ -188,6 +124,51 @@ NativeUtil::getMobileCountryCodeMap()
 		qDebug("Invalid Mobile Country Code dictionary, please check your installation!");
 	}
 	return QJsonObject();
+}
+
+NativeUtil::NativeUtil(QObject *parent) :
+    QObject(parent)
+{
+}
+
+QString
+NativeUtil::getRegionCode()
+{
+	QDBusConnection systemBus = QDBusConnection::connectToBus(QDBusConnection::SystemBus, "system");
+	if (systemBus.isConnected()) {
+		QDBusObjectPath modem = getModemPath(systemBus);
+		if (modem.path().isEmpty()) {
+			qDebug() << "Failed to find modem";
+			return FALLBACK_COUNTRY_CODE;
+		}
+		qDebug() << "Modem Path: " << modem.path();
+
+		unsigned mcc = getMobileCountryCode(systemBus, modem);
+		qDebug() << "Mobile Country Code: " << mcc;
+
+		QJsonObject mccMap = getMobileCountryCodeMap();
+		QJsonObject::Iterator iter =  mccMap.find(QString::number(mcc));
+		if (iter == mccMap.end()) {
+			qDebug() << "No country could be found for code " << mcc;
+			return FALLBACK_COUNTRY_CODE;
+		}
+		QString countryCode = static_cast<QJsonValue>(*iter).toString();
+		qDebug() << "Country code: " << countryCode;
+		return countryCode;
+	} else {
+		qDebug("Failed to connect to system bus!");
+	}
+	return FALLBACK_COUNTRY_CODE;
+}
+
+QString
+NativeUtil::getVersion()
+{
+#ifdef VERSION_STR
+	return QString(VERSION_STR);
+#else
+	return QString("Unknown");
+#endif
 }
 
 void

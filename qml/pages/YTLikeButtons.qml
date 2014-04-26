@@ -29,8 +29,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "YoutubeClientV3.js" as Yt
-
 
 Row {
     id: root
@@ -43,18 +41,21 @@ Row {
     property alias likes: likeCount.text
 
     function updateState() {
-        var ranking
+        var rating
         if (likeButton.selected) {
-            ranking = Yt.VIDEO_RANKING_LIKE
+            rating = "like"
         } else if (dislikeButton.selected) {
-            ranking = Yt.VIDEO_RANKING_DISLIKE
+            rating = "dislike"
         } else {
-            ranking = Yt.VIDEO_RANKING_NONE
+            rating = "none"
         }
-        Log.info("Video ranking changed: " + ranking)
+        Log.info("Trying to change video " + videoId + " user ranting to: " + rating)
 
-        Yt.rankVideo(videoId, ranking, function() {
-            Log.debug("Video rank changed succesfully")
+        ytDataAPIClient.post("videos/rate", {
+            "id"     : videoId,
+            "rating" : rating,
+        }, undefined, function (response) {
+            Log.info("Video user rating changed succesfully")
         }, function (error) {
             errorNotification.show(error)
         })
@@ -62,11 +63,13 @@ Row {
 
     function refresh() {
         if (root.enabled && dataValid) {
-            Yt.isVideoLiked(videoId, function (response) {
-                Log.debug("Video ranking status: " + response.rating)
-                if (response.rating === Yt.VIDEO_RANKING_DISLIKE) {
+            ytDataAPIClient.list("videos/getRating", { "id" : videoId }, function (response) {
+                console.assert(response.kind === "youtube#videoGetRatingResponse" &&
+                               response.items.length === 1)
+                Log.info("Video " + videoId + " ranting status: " + response.items[0].rating)
+                if (response.items[0].rating === "dislike") {
                     dislikeButton.selected = true
-                } else if (response.rating === Yt.VIDEO_RANKING_LIKE) {
+                } else if (response.items[0].rating === "like") {
                     likeButton.selected = true
                 }
             }, function (error) {

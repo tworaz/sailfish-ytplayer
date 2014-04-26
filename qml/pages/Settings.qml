@@ -90,10 +90,7 @@ Page {
                 onClicked: {
                     if (Prefs.isAuthEnabled()) {
                         Log.info("Disabling account integration")
-                        Prefs.set("YouTubeAccessToken", "")
-                        Prefs.set("YouTubeRefreshToken", "")
-                        Prefs.set("YouTubeAccessTokenType", "")
-                        Prefs.set("YouTubeAccountIntegration", false)
+                        Prefs.disableAuth();
                         checked = false
                     } else {
                         Log.info("Enabling account integration")

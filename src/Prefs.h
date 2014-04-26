@@ -37,8 +37,6 @@ class Prefs: public QObject
 {
     Q_OBJECT
 
-    Q_ENUMS(Keys)
-
 public:
     explicit Prefs(QObject *parent = 0);
 
@@ -47,6 +45,7 @@ public:
     Q_INVOKABLE void set(const QString& key, const QVariant& value);
     Q_INVOKABLE QVariant get(const QString& key);
     Q_INVOKABLE bool isAuthEnabled();
+    Q_INVOKABLE void disableAuth();
 };
 
 #endif // SETTINGS_H

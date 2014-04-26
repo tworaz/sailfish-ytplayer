@@ -29,12 +29,17 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "YoutubeClientV3.js" as Yt
 import "../common/Helpers.js" as H
-
 
 Page {
     id: page
+
+    onStatusChanged: {
+        if (status === PageStatus.Active) {
+            requestCoverPage("Default.qml")
+            topMenu.accountMenuVisible = Prefs.isAuthEnabled()
+        }
+    }
 
     BusyIndicator {
         id: indicator
@@ -43,11 +48,21 @@ Page {
         size: BusyIndicatorSize.Large
     }
 
-    onStatusChanged: {
-        if (status === PageStatus.Active) {
-            requestCoverPage("Default.qml")
-            topMenu.accountMenuVisible = Prefs.isAuthEnabled()
-        }
+    function loadData() {
+        ytDataAPIClient.list("videoCategories", {"part" : "snippet"}, function (response) {
+            console.assert(response.kind === "youtube#videoCategoryListResponse")
+            for (var i = 0; i < response.items.length; i++) {
+                var category = response.items[i]
+                console.assert(category.kind === "youtube#videoCategory")
+                if (category.snippet.assignable) {
+                    videoCategoryListModel.append(category)
+                }
+            }
+            indicator.running = false
+        }, function (error) {
+            errorNotification.show(error)
+            indicator.running = false
+        })
     }
 
     SilicaListView {
@@ -74,7 +89,7 @@ Page {
 
             Row {
                 x: Theme.paddingMedium
-                width: page.width;
+                width: page.width
                 spacing: Theme.paddingLarge
                 anchors.verticalCenter: parent.verticalCenter
 
@@ -109,42 +124,9 @@ Page {
             }
         }
 
-        ConnectionRetryTimer {
-            id: connectionRetryTimer
-            onTriggered: {
-                Yt.getVideoCategories(videoCategoryListView.onSuccess, onRetryFailure)
-            }
-        }
-
-        function onSuccess(categories) {
-            for (var i = 0; i < categories.length; i++) {
-                var category = categories[i];
-                if (category.snippet.assignable) {
-                    videoCategoryListModel.append(category);
-                }
-            }
-            indicator.running = false
-        }
-
-        function onFailure(error) {
-            if (error.code === 0) {
-                connectionRetryTimer.reset();
-                connectionRetryTimer.start();
-            } else {
-                errorNotification.show(error);
-                indicator.running = false
-            }
-        }
-
-        function refresh() {
-            indicator.running = true
-            videoCategoryListModel.clear()
-            Yt.getVideoCategories(onSuccess, onFailure)
-        }
-
         Component.onCompleted: {
             Log.debug("Video category list page created")
-            Yt.getVideoCategories(onSuccess, onFailure)
+            loadData()
         }
 
         VerticalScrollDecorator {}

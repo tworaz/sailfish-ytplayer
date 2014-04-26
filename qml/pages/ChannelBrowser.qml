@@ -29,7 +29,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "YoutubeClientV3.js" as Yt
 import "../common"
 
 Page {
@@ -60,19 +59,24 @@ Page {
 
     onChannelIdChanged: {
         if (Prefs.isAuthEnabled()) {
-            Log.debug("Authorization enabled, checking channel subscription status")
-            Yt.isChannelSubscribed(channelId, function(response) {
-                page.channelSubscribed = response ? true : false
-                Log.debug("Channel subscribed: " + page.channelSubscribed)
+            Log.info("YouTube account integration enabled, checking channel subscription status")
+            ytDataAPIClient.list("subscriptions", {
+                "part"         : "snippet",
+                "forChannelId" : channelId,
+                "mine"         : true,
+            }, function (response) {
+                page.channelSubscribed = response.items.length > 0 ? true : false
                 if (page.channelSubscribed) {
-                    page.subscriptionId = response.id
-                    Log.debug("Subscription ID: " + page.subscriptionId)
+                    console.assert(response.items.length === 1)
+                    page.subscriptionId = response.items[0].id
+                    Log.info("Channel " + channelId + " is subscribed by the user")
                 } else {
-                    page.subscriptionId = "";
+                    page.subscriptionId = ""
+                    Log.info("Channel " + channelId + " is not subscribed by the user")
                 }
-            }, function(error) {
+            }, function (error) {
                 errorNotification.show(error)
-            });
+            })
         }
     }
 
@@ -90,23 +94,32 @@ Page {
         function changeChanelSubscription(subscribe) {
             if (subscribe) {
                 Log.debug("Subscribing channel: " + channelId)
-                Yt.subscribeChannel(channelId, function(response) {
-                    Log.debug("Channel subscribed successfully: " + response.id)
+                ytDataAPIClient.post("subscriptions", { "part" : "snippet" },
+                {
+                    "snippet" : {
+                        "resourceId" : {
+                            "kind"      : "youtube#channel",
+                            "channelId" : channelId,
+                        }
+                    }
+                }, function(response) {
+                    Log.info("Channel subscribed successfully: " + response.id)
                     page.channelSubscribed = true
                     page.subscriptionId = response.id
                 }, function(error) {
                     errorNotification.show(error)
                 })
             } else {
-                Log.debug("Unsubscribing channel: " + page.subscriptionId);
+                Log.debug("Unsubscribing channel: " + page.subscriptionId)
                 console.assert(page.subscriptionId.length > 0)
-                Yt.unsubscribe(page.subscriptionId, function(response) {
-                    Log.debug("Channel unsubscribed successfully")
+                ytDataAPIClient.del("subscriptions", { "id" : subscriptionId }, function(response)
+                {
+                    Log.info("Channel unsubscribed successfully")
                     page.channelSubscribed = false
                     page.subscriptionId = ""
                 }, function (error) {
-                    errorNotification.show(error);
-                });
+                    errorNotification.show(error)
+                })
             }
         }
 
@@ -150,6 +163,42 @@ Page {
             x: Theme.paddingMedium
             width: parent.width - 2 * Theme.paddingMedium
             spacing: Theme.paddingMedium
+
+            Component.onCompleted: {
+                Log.debug("Channel browser page created for: " + channelId)
+                ytDataAPIClient.list("channels", {
+                    "part" : "snippet,statistics,contentDetails",
+                    "id"   : channelId,
+                }, function (response) {
+                    console.assert(response.kind ==="youtube#channelListResponse" &&
+                                   response.items.length === 1 &&
+                                   response.items[0].kind === "youtube#channel")
+
+					var d = new Date(response.items[0].snippet.publishedAt)
+					creationDate.value = Qt.formatDate(d, "d MMMM yyyy")
+
+					channelVideoList.channelPlaylistId =
+						response.items[0].contentDetails.relatedPlaylists.uploads
+
+					var stats = response.items[0].statistics
+					videoCount.value = stats.videoCount
+					subscribersCount.text = stats.subscriberCount
+					commentCount.text = stats.commentCount
+					viewCount.text = stats.viewCount
+					indicator.running = false
+
+					coverData = {
+						"thumbnails" : page.thumbnails,
+						"videoCount" : stats.videoCount,
+						"title"      : title
+					}
+					requestCoverPage("ChannelBrowser.qml", coverData)
+
+                    channelVideoList.refresh()
+                }, function (error) {
+                    errorNotification.show(error)
+                })
+            }
 
             PageHeader {
                 title: page.title
@@ -229,42 +278,6 @@ Page {
             }
 
             VerticalScrollDecorator {}
-
-            Component.onCompleted: {
-                Log.debug("Channel browser page created for: " + channelId)
-                Yt.getChannelDetails(channelId, onChannelDetailsFetched, onChannelDetailsFetchFailed)
-            }
-
-            function onChannelDetailsFetched(result) {
-                console.assert(result.items[0].kind === "youtube#channel")
-
-                var details = result.items[0].snippet
-                var d = new Date(details.publishedAt)
-                creationDate.value = Qt.formatDate(d, "d MMMM yyyy")
-
-                channelVideoList.channelPlaylistId = result.items[0].contentDetails.relatedPlaylists.uploads
-
-                var stats = result.items[0].statistics
-                videoCount.value = stats.videoCount
-                subscribersCount.text = stats.subscriberCount
-                commentCount.text = stats.commentCount
-                viewCount.text = stats.viewCount
-                indicator.running = false
-
-                coverData = {
-                    "thumbnails" : page.thumbnails,
-                    "videoCount" : stats.videoCount,
-                    "title"      : title
-                };
-                requestCoverPage("ChannelBrowser.qml", coverData)
-
-                channelVideoList.refresh()
-            }
-
-            function onChannelDetailsFetchFailed(error) {
-                errorNotification.show(error)
-                indicator.running = false
-            }
         }
     }
 }

@@ -31,16 +31,9 @@ import QtQuick 2.0
 import QtWebKit 3.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer.notifications 1.0
-import "YoutubeClientV3.js" as YT
 
 Page {
     id: page
-
-    readonly property string scope: "https://www.googleapis.com/auth/youtube"
-    readonly property string youtubeOAuthUri: NativeUtil.YouTubeAuthData["auth_uri"]
-    readonly property string clientId: NativeUtil.YouTubeAuthData["client_id"]
-    readonly property string clientSecret: NativeUtil.YouTubeAuthData["client_secret"]
-    readonly property string redirectUri: NativeUtil.YouTubeAuthData["redirect_uri"]
 
     property string pageTitle: ""
 
@@ -79,23 +72,18 @@ Page {
         anchors.fill: parent
         visible: false
 
-        property string authCode: ""
+        property string _authCode: ""
 
         header: PageHeader {
             title: page.pageTitle
         }
 
-        url: youtubeOAuthUri +
-             "?client_id=" + encodeURIComponent(clientId) +
-             "&redirect_uri=" + encodeURIComponent(redirectUri) +
-             "&scope=" + encodeURIComponent(scope) +
-             "&response_type=code" +
-             "&access_type=offline"
+        url: ytDataAPIClient.oAuth2URL
 
         onLoadingChanged: {
             switch(loadRequest.status) {
             case WebView.LoadSucceededStatus:
-                if (authCode.length === 0) {
+                if (_authCode.length === 0) {
                     visible = true
                 }
                 break
@@ -111,9 +99,20 @@ Page {
 
         onTitleChanged: {
             if (title.indexOf('Success code') !== -1) {
-                authCode = title.replace('Success code=', '')
+                _authCode = title.replace('Success code=', '')
                 visible = false
-                YT.requestOAuthTokens(authCode, onSuccess, onFailure)
+                ytDataAPIClient.requestOAuth2Token(_authCode, function (response) {
+                    Log.info("YouTube OAuth2 sign in successful")
+                    successNotification.publish()
+                    pageStack.pop(undefined, PageStackAction.Animated)
+                }, function (error) {
+                    Log.error("YouTube authorization process failed")
+                    //: Error message informing the user about OAuth authorization failure
+                    //% "OAuth authorization failed!"
+                    failureNotification.previewBody = qsTrId("ytplayer-oauth-failed")
+                    failureNotification.publish()
+                    pageStack.pop(undefined, PageStackAction.Animated)
+                })
             } else if (title.indexOf('Denied error') !== -1) {
                 Log.debug("Youtube OAuth access denied!")
                 //: Message informing the user about YouTube OAuth autorization denial
@@ -125,27 +124,6 @@ Page {
                 Log.debug("OAuth page title changed: " + title)
                 pageTitle = title
             }
-        }
-
-        function onSuccess(result) {
-            console.assert(result.hasOwnProperty('access_token'))
-            console.assert(result.hasOwnProperty('refresh_token'))
-            console.assert(result.hasOwnProperty('token_type'))
-            Prefs.set("YouTubeAccessToken", result["access_token"])
-            Prefs.set("YouTubeRefreshToken", result["refresh_token"])
-            Prefs.set("YouTubeaAccessTokenType", result["token_type"])
-            Prefs.set("YouTubeAccountIntegration", true)
-            successNotification.publish()
-            pageStack.pop(undefined, PageStackAction.Animated)
-        }
-
-        function onFailure(error) {
-            Log.debug("Error: " + JSON.stringify(error, undefined, 2))
-            //: Error message informing the user about OAuth authorization failure
-            //% "OAuth authorization failed!"
-            failureNotification.previewBody = qsTrId("ytplayer-oauth-failed")
-            failureNotification.publish()
-            pageStack.pop(undefined, PageStackAction.Animated)
         }
     }
 }

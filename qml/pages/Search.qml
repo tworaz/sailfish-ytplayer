@@ -29,8 +29,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "YoutubeClientV3.js" as Yt
-
 
 Page {
     id: page
@@ -51,6 +49,44 @@ Page {
         }
     }
 
+    function _getSafeSearchValue() {
+        switch(parseInt(Prefs.get("SafeSearch"))) {
+        case 0: return "none"
+        case 1: return "moderate"
+        case 2: return "strict"
+        }
+    }
+
+    function performSearch(queryStr, pageToken) {
+        var params = {
+            "q"          : queryStr,
+            "part"       : "snippet",
+            "type"       : "video,channel",
+            "safeSearch" : _getSafeSearchValue(),
+        }
+        if (pageToken) {
+            params.pageToken = pageToken
+        }
+
+        ytDataAPIClient.list("search", params, function (response) {
+            console.assert(response.kind === "youtube#searchListResponse")
+            for (var i = 0; i < response.items.length; i++) {
+                console.assert(response.items[i].kind ===  "youtube#searchResult");
+                resultsListModel.append(response.items[i])
+            }
+            if (response.hasOwnProperty("nextPageToken")) {
+                page.nextPageToken = response.nextPageToken
+            }
+            indicator.running = false
+            bottomMenu.busy = false
+        }, function (error) {
+            Log.error("Error: " + JSON.stringify(error, undefined, 2))
+            page.nextPageToken = ""
+            indicator.running = false
+        })
+        indicator.running = true
+    }
+
     SilicaListView {
         id: searchView
         anchors.fill: parent
@@ -65,7 +101,6 @@ Page {
             visible: page.nextPageToken.length > 0
             quickSelect: true
             MenuItem {
-                visible: parent.visible
                 //: Menu option load additional list elements
                 //% "Show more"
                 text: qsTrId("ytplayer-action-show-more")
@@ -107,6 +142,7 @@ Page {
                 } else {
                     stop()
                     resultsListModel.clear()
+                    page.nextPageToken = ""
                 }
             }
 
@@ -114,7 +150,7 @@ Page {
                 Log.debug("Searching for: " + queryStr)
                 resultsListModel.clear()
                 page.nextPageToken = ""
-                Yt.getSearchResults(queryStr, searchView.onSearchSuccessful, searchView.onSearchFailed)
+                performSearch(queryStr)
                 indicator.running = true
             }
         }
@@ -146,26 +182,8 @@ Page {
 
         function loadNextResultsPage() {
             Log.debug("Loading next page of results, token: " + page.nextPageToken)
-            Yt.getSearchResults(searchHandler.queryStr, searchView.onSearchSuccessful,
-                                searchView.onSearchFailed, page.nextPageToken)
+            performSearch(searchHandler.queryStr, page.nextPageToken)
             bottomMenu.busy = true
-        }
-
-        function onSearchSuccessful(results) {
-            for (var i = 0; i < results.items.length; i++) {
-                resultsListModel.append(results.items[i])
-            }
-            if (results.hasOwnProperty("nextPageToken")) {
-                page.nextPageToken = results.nextPageToken
-            }
-            indicator.running = false
-            bottomMenu.busy = false
-        }
-
-        function onSearchFailed(msg) {
-            Log.error("Search Failed: " + msg)
-            page.nextPageToken = ""
-            indicator.running = false
         }
 
         Component.onCompleted: {

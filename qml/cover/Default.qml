@@ -29,24 +29,21 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "../pages/YoutubeClientV3.js" as Yt
 
 CoverBackground {
     id: root
 
-    readonly property int _maxThumbs: 12
-
     Component.onCompleted: {
         if (!defaultCoverData) {
             Log.debug("Fetching data for default cover")
-            Yt.search({
-                "part"       : "snippet",
-                "maxResults" : _maxThumbs,
-                "order"      : "rating"
-            }, function (result) {
+            ytDataAPIClient.list("search", {
+                "part" : "snippet",
+                "maxResults" : 12,
+                "order" : "rating",
+            }, function (response) {
                 var thumbs = [];
-                for (var i = 0; i < _maxThumbs; i++) {
-                    thumbs.push(result.items[i].snippet.thumbnails)
+                for (var i = 0; i < response.items.length; i++) {
+                    thumbs.push(response.items[i].snippet.thumbnails)
                 }
                 defaultCoverData = thumbs
                 displayThumbnails()
@@ -60,7 +57,7 @@ CoverBackground {
 
     function displayThumbnails() {
         console.assert(defaultCoverData)
-        for (var i = 0; i < _maxThumbs; ++i) {
+        for (var i = 0; i < defaultCoverData.length; ++i) {
             Qt.createQmlObject(
                 'import QtQuick 2.0;' +
                 'import "../common";' +
