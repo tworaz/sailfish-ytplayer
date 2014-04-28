@@ -317,23 +317,20 @@ function unsubscribe(subscriptionId, onSuccess, onFailure)
 
 function isChannelSubscribed(channelId, onSuccess, onFailure)
 {
-    var _successHandler = function (response) {
-        for (var i = 0; i < response.items.length; ++i) {
-            var item = response.items[i];
-            console.assert(item.snippet.resourceId.kind === "youtube#channel");
-            if (item.snippet.resourceId.channelId === channelId) {
-                console.assert(item.kind === "youtube#subscription");
-                onSuccess(item);
-                return;
-            }
-        }
-        if (response.hasOwnProperty('nextPageToken')) {
-            getSubscriptions(_successHandler, onFailure, response.nextPageToken);
-        }
-        onSuccess(undefined);
-    };
+    var url = _getYoutubeV3Url("subscriptions", {
+        "forChannelId" : channelId,
+        "mine"         : true,
+        "part"         : "snippet"
+    });
 
-    getSubscriptions(_successHandler, onFailure);
+    _asyncJsonRequest(url, function(response) {
+        console.assert(response.kind === "youtube#subscriptionListResponse")
+        if (response.items.length > 0) {
+            onSuccess(response.items[0]);
+        } else {
+            onSuccess(undefined);
+        }
+    }, onFailure);
 }
 
 
