@@ -54,6 +54,7 @@ function _setDefaultValue(transaction, key, value) {
 
 function initialize()
 {
+    Log.info("Initializing settings database")
     var db = _getDatabase();
     db.transaction(function(tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS settings(key TEXT unique, value TEXT)');
