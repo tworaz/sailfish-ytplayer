@@ -13,7 +13,7 @@ Name:       harbour-ytplayer
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Native YouTube client for SailfishOS
-Version:    0.2.0
+Version:    0.2.1
 Release:    1
 Group:      Qt/Qt
 License:    BSD-3-Clause
@@ -63,8 +63,8 @@ desktop-file-install --delete-original       \
    %{buildroot}%{_datadir}/applications/*.desktop
 
 %files
-%defattr(0644,root,root,-)
-%attr(0755,root,root) %{_bindir}/%{name}
+%defattr(-,root,root,-)
+%{_bindir}
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
