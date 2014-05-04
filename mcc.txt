@@ -5,7 +5,7 @@
 214	ES	Spain
 222	IT	Italy
 230	CZ	Czech Republic
-234	UK	United Kingdom
+234	GB	Great Britain
 244	FI	Finland
 250 	RU 	Russia
 260	PL	Poland
