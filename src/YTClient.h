@@ -75,7 +75,6 @@ private:
     QString getOAuth2URL() const;
 
     QNetworkAccessManager *_manager;
-    QString _regionCode;
 };
 
 #endif // YTCLIENT_H

@@ -134,6 +134,12 @@ NativeUtil::NativeUtil(QObject *parent) :
 QString
 NativeUtil::getRegionCode()
 {
+	static QString regionCode;
+
+	if (!regionCode.isEmpty()) {
+		return regionCode;
+	}
+
 	QDBusConnection systemBus = QDBusConnection::connectToBus(QDBusConnection::SystemBus, "system");
 	if (systemBus.isConnected()) {
 		QDBusObjectPath modem = getModemPath(systemBus);
@@ -152,9 +158,9 @@ NativeUtil::getRegionCode()
 			qDebug() << "No country could be found for code " << mcc;
 			return FALLBACK_COUNTRY_CODE;
 		}
-		QString countryCode = static_cast<QJsonValue>(*iter).toString();
-		qDebug() << "Country code: " << countryCode;
-		return countryCode;
+		regionCode = static_cast<QJsonValue>(*iter).toString();
+		qDebug() << "Country code: " << regionCode;
+		return regionCode;
 	} else {
 		qDebug("Failed to connect to system bus!");
 	}

@@ -75,7 +75,6 @@ appendAuthHeader(QNetworkRequest& request)
 YTClient::YTClient(QObject *parent)
     : QObject(parent)
     , _manager(new QNetworkAccessManager(this))
-    , _regionCode(NativeUtil::getRegionCode())
 {
     connect(_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onRequestFinished(QNetworkReply*)));
     connect(_manager, SIGNAL(networkAccessibleChanged(QNetworkAccessManager::NetworkAccessibility)),
@@ -159,7 +158,7 @@ YTClient::getDirectVideoURL(QString videoId)
     QUrlQuery query;
     query.addQueryItem("video_id", videoId);
     query.addQueryItem("el", "player_embedded");
-    query.addQueryItem("gl", _regionCode);
+    query.addQueryItem("gl", NativeUtil::getRegionCode());
     if (QLocale::system().name() != "C") {
         query.addQueryItem("hl", QLocale::system().name());
     } else {
@@ -356,7 +355,7 @@ YTClient::appendCommonParams(QUrlQuery& query)
 {
 	QSettings settings;
 	query.addQueryItem("key", YOUTUBE_DATA_API_V3_KEY);
-	query.addQueryItem("regionCode", _regionCode);
+	query.addQueryItem("regionCode", NativeUtil::getRegionCode());
 	if (QLocale::system().name() != "C") {
 		query.addQueryItem("hl", QLocale::system().name());
 	} else {
