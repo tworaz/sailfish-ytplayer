@@ -49,7 +49,7 @@ Row {
         } else {
             rating = "none"
         }
-        Log.info("Trying to change video " + videoId + " user ranting to: " + rating)
+        Log.info("Trying to change video " + videoId + " user rating to: " + rating)
 
         ytDataAPIClient.post("videos/rate", {
             "id"     : videoId,
@@ -64,7 +64,7 @@ Row {
             ytDataAPIClient.list("videos/getRating", { "id" : videoId }, function (response) {
                 console.assert(response.kind === "youtube#videoGetRatingResponse" &&
                                response.items.length === 1)
-                Log.info("Video " + videoId + " ranting status: " + response.items[0].rating)
+                Log.info("Video " + videoId + " rating status: " + response.items[0].rating)
                 if (response.items[0].rating === "dislike") {
                     dislikeButton.selected = true
                 } else if (response.items[0].rating === "like") {
