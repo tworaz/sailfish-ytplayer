@@ -210,7 +210,7 @@ YTClient::onRequestFinished(QNetworkReply *reply)
         handleError(reply);
     }
 
-    delete reply;
+    reply->deleteLater();
 }
 
 void
