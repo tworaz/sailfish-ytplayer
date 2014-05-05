@@ -105,11 +105,10 @@ Page {
         }
 
         ytDataAPIClient.list(resource, params, function(response) {
-            loadingData = false
-
             if (reloadOnActivate) {
                 reloadOnActivate = false
                 if (response.etag === listView.etag) {
+                    loadingData = false
                     return
                 }
                 listView.etag = ""
@@ -117,50 +116,32 @@ Page {
                 listModel.clear()
             }
 
+            /*
+            utilityWorkerScript.appendToModel(listModel, response.items, function() {
+                if (response.nextPageToken) {
+                    listView.nextPageToken = response.nextPageToken
+                } else {
+                    listView.nextPageToken = ""
+                }
+                listView.etag = response.etag
+                loadingData = false
+            })
+            */
             for (var i = 0; i < response.items.length; ++i) {
                 listModel.append(response.items[i])
             }
-            if (response.nextPageToken !== undefined) {
+            if (response.nextPageToken) {
                 listView.nextPageToken = response.nextPageToken
             } else {
                 listView.nextPageToken = ""
             }
             listView.etag = response.etag
-
+            loadingData = false
         }, function (error) {
             loadingData = false
             errorNotification.show(error)
         })
         loadingData = true
-    }
-
-    function onVideoListFetched(response) {
-        loadingData = false
-
-        if (reloadOnActivate) {
-            reloadOnActivate = false
-            if (response.etag === listView.etag) {
-                return
-            }
-            listView.etag = ""
-            listView.nextPageToken = ""
-            listModel.clear()
-        }
-
-        for (var i = 0; i < response.items.length; ++i) {
-            listModel.append(response.items[i])
-        }
-        if (response.nextPageToken !== undefined) {
-            listView.nextPageToken = response.nextPageToken
-        } else {
-            listView.nextPageToken = ""
-        }
-        listView.etag = response.etag
-    }
-
-    function onError(error) {
-        loadingData = false
-        errorNotification.show(error)
     }
 
     BusyIndicator {
@@ -249,14 +230,14 @@ Page {
         delegate: YTListItem {
             title: snippet.title
             thumbnails: snippet.thumbnails
-            //youtubeId: snippet.resourceId
             youtubeId: {
                 if (snippet.hasOwnProperty("resourceId")) {
                     return snippet.resourceId
                 } else if (kind && kind === "youtube#video") {
                     return { "kind" : kind, "videoId" : id }
                 } else {
-                    Log.error("Unknown item in the list!")
+                    Log.error("Unknown item type in the list!")
+                    return undefined
                 }
             }
         }

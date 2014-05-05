@@ -29,9 +29,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "duration.js" as DUtil
 import "../common"
-
 
 Dialog {
     id: page
@@ -90,8 +88,9 @@ Dialog {
             var pd = new Date(details.snippet.publishedAt)
             publishDate.value = Qt.formatDateTime(pd, "d MMMM yyyy")
 
-            var dur = new DUtil.Duration(details.contentDetails.duration)
-            duration.value = dur.asClock();
+            utilityWorkerScript.parseDuration(details.contentDetails.duration, function(d) {
+                duration.value = d
+            })
 
             header.title = details.snippet.title
             indicator.running = false

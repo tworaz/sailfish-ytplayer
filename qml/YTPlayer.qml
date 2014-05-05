@@ -63,6 +63,10 @@ ApplicationWindow
         id: ytDataAPIClient
     }
 
+    UtilityWorkerScript {
+        id: utilityWorkerScript
+    }
+
     Notification {
         id: errorNotification
         category: "network.error"

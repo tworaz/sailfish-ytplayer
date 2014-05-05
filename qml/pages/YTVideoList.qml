@@ -88,15 +88,14 @@ SilicaListView {
         ytDataAPIClient.list(resource, params, function(response) {
             console.assert(response.kind === "youtube#playlistItemListResponse" ||
                            response.kind === "youtube#videoListResponse")
-            for (var i = 0; i < response.items.length; i++) {
-                videoListModel.append(response.items[i])
-            }
-            if (response.nextPageToken !== undefined) {
-                nextPageToken = response.nextPageToken
-            } else {
-                nextPageToken = ""
-            }
-            root.busy = false
+            utilityWorkerScript.appendToModel(videoListModel, response.items, function() {
+                if (response.nextPageToken !== undefined) {
+                    nextPageToken = response.nextPageToken
+                } else {
+                    nextPageToken = ""
+                }
+                root.busy = false
+            })
         }, function (error) {
             errorNotification.show(error)
             root.busy = false

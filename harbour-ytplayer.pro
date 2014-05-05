@@ -59,7 +59,9 @@ OTHER_FILES += \
         qml/pages/YTPagesTopMenu.qml \
         qml/pages/YTLikeButtons.qml \
         qml/pages/LogViewer.qml \
-        qml/pages/YTDataAPIClient.qml
+        qml/pages/YTDataAPIClient.qml \
+        qml/pages/UtilityWorkerScript.qml \
+        qml/pages/UtilityWorkerScript.js
 
 include(third_party/notifications.pri)
 

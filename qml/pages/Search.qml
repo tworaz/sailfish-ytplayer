@@ -70,15 +70,13 @@ Page {
 
         ytDataAPIClient.list("search", params, function (response) {
             console.assert(response.kind === "youtube#searchListResponse")
-            for (var i = 0; i < response.items.length; i++) {
-                console.assert(response.items[i].kind ===  "youtube#searchResult");
-                resultsListModel.append(response.items[i])
-            }
-            if (response.hasOwnProperty("nextPageToken")) {
-                page.nextPageToken = response.nextPageToken
-            }
-            indicator.running = false
-            bottomMenu.busy = false
+            utilityWorkerScript.appendToModel(resultsListModel, response.items, function() {
+                if (response.hasOwnProperty("nextPageToken")) {
+                    page.nextPageToken = response.nextPageToken
+                }
+                indicator.running = false
+                bottomMenu.busy = false
+            })
         }, function (error) {
             Log.error("Error: " + JSON.stringify(error, undefined, 2))
             page.nextPageToken = ""

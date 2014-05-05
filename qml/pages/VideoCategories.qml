@@ -51,14 +51,11 @@ Page {
     function loadData() {
         ytDataAPIClient.list("videoCategories", {"part" : "snippet"}, function (response) {
             console.assert(response.kind === "youtube#videoCategoryListResponse")
-            for (var i = 0; i < response.items.length; i++) {
-                var category = response.items[i]
-                console.assert(category.kind === "youtube#videoCategory")
-                if (category.snippet.assignable) {
-                    videoCategoryListModel.append(category)
+            utilityWorkerScript.appendCategoryToModel(videoCategoryListModel, response.items,
+                function () {
+                    indicator.running = false
                 }
-            }
-            indicator.running = false
+            )
         }, function (error) {
             errorNotification.show(error)
             indicator.running = false
