@@ -56,8 +56,6 @@ Row {
             "rating" : rating,
         }, undefined, function (response) {
             Log.info("Video user rating changed succesfully")
-        }, function (error) {
-            errorNotification.show(error)
         })
     }
 
@@ -72,8 +70,6 @@ Row {
                 } else if (response.items[0].rating === "like") {
                     likeButton.selected = true
                 }
-            }, function (error) {
-                errorNotification.show(error)
             })
         } else if (!root.enabled) {
             likeButton.selected = false

@@ -137,9 +137,8 @@ Page {
             }
             listView.etag = response.etag
             loadingData = false
-        }, function (error) {
+        }, function () {
             loadingData = false
-            errorNotification.show(error)
         })
         loadingData = true
     }

@@ -27,59 +27,14 @@
  * SUCH DAMAGE.
  */
 
-#ifndef YTCLIENT_H
-#define YTCLIENT_H
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-#include <QNetworkConfigurationManager>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QVariantMap>
-#include <QUrlQuery>
-#include <QVariant>
-#include <QObject>
-
-class YTClient : public QObject
-{
-    Q_OBJECT
-
-    Q_PROPERTY(QString OAuth2URL READ getOAuth2URL CONSTANT)
-    Q_PROPERTY(bool online READ online)
-
-public:
-    explicit YTClient(QObject *parent = 0);
-    ~YTClient();
-
-    Q_INVOKABLE void list(QString resource, QVariantMap params);
-    Q_INVOKABLE void post(QString resource, QVariantMap params, QVariant content);
-    Q_INVOKABLE void del(QString resource, QVariantMap params);
-
-    Q_INVOKABLE void getDirectVideoURL(QString videoId);
-    Q_INVOKABLE void requestOAuth2Token(QString authCode);
-
-signals:
-    void error(QVariant details);
-    void networkError();
-    void success(QVariant response);
-    void retry();
-
-private slots:
-    void onOnlineStateChanged(bool isOnline);
-    void onRequestFinished(QNetworkReply *reply);
-
-private:
-    bool online() const;
-    void refreshToken() const;
-    void handleSuccess(QNetworkReply*);
-    void handleError(QNetworkReply*);
-    void handleTokenReply(QNetworkReply*);
-    void handleVideoInfoReply(QNetworkReply*);
-
-    void appendCommonParams(QUrlQuery& query);
-
-    QString getOAuth2URL() const;
-
-    QNetworkAccessManager *_access_manager;
-    QNetworkConfigurationManager *_config_manager;
-};
-
-#endif // YTCLIENT_H
+Page {
+    Label {
+        anchors.fill: parent
+        text: "Network Error"
+        verticalAlignment: Text.AlignVCenter
+        horizontalAlignment: Text.AlignHCenter
+    }
+}

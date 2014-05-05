@@ -95,10 +95,8 @@ Dialog {
             header.title = details.snippet.title
             indicator.running = false
             dataLoaded = true
-        }, function (error) {
-            errorNotification.show(error);
+        }, function () {
             indicator.running = false
-            dataLoaded = true
         })
     }
 
@@ -189,7 +187,7 @@ Dialog {
 
             Separator {
                 color: Theme.highlightColor
-                width: parent.width;
+                width: parent.width
                 visible: !indicator.running
             }
 

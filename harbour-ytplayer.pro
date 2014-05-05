@@ -60,7 +60,8 @@ OTHER_FILES += \
         qml/pages/LogViewer.qml \
         qml/pages/YTDataAPIClient.qml \
         qml/pages/UtilityWorkerScript.qml \
-        qml/pages/UtilityWorkerScript.js
+        qml/pages/UtilityWorkerScript.js \
+        qml/pages/NetworkError.qml
 
 include(third_party/notifications.pri)
 

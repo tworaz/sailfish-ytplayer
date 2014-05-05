@@ -36,17 +36,31 @@ Item {
     property var _requestQueue: []
 
     function list(resource, params, onSuccess, onFailure) {
+        if (!client.online) {
+            if (onFailure) {
+                onFailure()
+            }
+            pageStack.push(Qt.resolvedUrl("NetworkError.qml"))
+            return
+        }
         _requestQueue.push({
             "method"   : "list",
             "resource" : resource,
             "params"   : params,
             "success"  : onSuccess,
             "failure"  : onFailure,
-        });
+        })
         client.process()
     }
 
     function post(resource, params, content, onSuccess, onFailure) {
+        if (!client.online) {
+            if (onFailure) {
+                onFailure()
+            }
+            pageStack.push(Qt.resolvedUrl("NetworkError.qml"))
+            return
+        }
         _requestQueue.push({
             "method"   : "post",
             "resource" : resource,
@@ -59,6 +73,13 @@ Item {
     }
 
     function del(resource, params, onSuccess, onFailure) {
+        if (!client.online) {
+            if (onFailure) {
+                onFailure()
+            }
+            pageStack.push(Qt.resolvedUrl("NetworkError.qml"))
+            return
+        }
         _requestQueue.push({
             "method"   : "delete",
             "resource" : resource,
@@ -66,10 +87,17 @@ Item {
             "success"  : onSuccess,
             "failure"  : onFailure,
         })
-        client.process();
+        client.process()
     }
 
     function requestOAuth2Token(authCode, onSuccess, onFailure) {
+        if (!client.online) {
+            if (onFailure) {
+                onFailure()
+            }
+            pageStack.push(Qt.resolvedUrl("NetworkError.qml"))
+            return
+        }
         _requestQueue.push({
             "method"   : "requestOAuth2Token",
             "authCode" : authCode,
@@ -80,6 +108,11 @@ Item {
     }
 
     function getDirectVideoURL(videoId, onSuccess, onFailure) {
+        if (!client.online) {
+            onFailure()
+            pageStack.push(Qt.resolvedUrl("NetworkError.qml"))
+            return
+        }
         _requestQueue.push({
             "method"   : "getDirectVideoURL",
             "videoId"  : videoId,
@@ -96,14 +129,15 @@ Item {
         property var request
 
         function process() {
+            Log.debug("Request queue status, busy: " + busy + ", length: " + _requestQueue.length)
             if (!busy && _requestQueue.length > 0) {
                 request = _requestQueue.pop()
-                //Log.debug("Executing request: " + JSON.stringify(request))
                 _run(request)
             }
         }
 
         function _run(req) {
+            Log.debug("Executing request: " + JSON.stringify(req))
             if (req.method === "list") {
                 client.list(req.resource, req.params)
             } else if (req.method === "post") {
@@ -119,6 +153,13 @@ Item {
             busy = true
         }
 
+        function _clearQueue() {
+            while (_requestQueue.length > 0) {
+                var req = _requestQueue.pop()
+                req.failure()
+            }
+        }
+
         onSuccess: {
             request.success(response)
             request = undefined
@@ -126,14 +167,29 @@ Item {
             process()
         }
 
-        onError: {
-            request.failure(details)
+        onNetworkError: {
+            if (request.failure) {
+                request.failure()
+            }
             request = undefined
             busy = false
-            process()
+            _clearQueue()
+            pageStack.push(Qt.resolvedUrl("NetworkError.qml"))
+            Log.error("Network Error")
+        }
+
+        onError: {
+            if (request.failure) {
+                request.failure()
+            }
+            request = undefined
+            busy = false
+            _clearQueue()
+            Log.error("Generic Error: " + JSON.stringify(details, undefined, 2))
         }
 
         onRetry: {
+            Log.debug("Network request retry requested")
             _run(request)
         }
     }

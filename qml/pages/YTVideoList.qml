@@ -96,8 +96,7 @@ SilicaListView {
                 }
                 root.busy = false
             })
-        }, function (error) {
-            errorNotification.show(error)
+        }, function () {
             root.busy = false
         })
         root.busy = true

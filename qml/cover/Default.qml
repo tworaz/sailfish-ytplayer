@@ -47,8 +47,6 @@ CoverBackground {
                 }
                 defaultCoverData = thumbs
                 displayThumbnails()
-            }, function (error) {
-                errorNotification.show(error)
             })
         } else {
             displayThumbnails()

@@ -74,8 +74,6 @@ Page {
                     page.subscriptionId = ""
                     Log.info("Channel " + channelId + " is not subscribed by the user")
                 }
-            }, function (error) {
-                errorNotification.show(error)
             })
         }
     }
@@ -106,8 +104,6 @@ Page {
                     Log.info("Channel subscribed successfully: " + response.id)
                     page.channelSubscribed = true
                     page.subscriptionId = response.id
-                }, function(error) {
-                    errorNotification.show(error)
                 })
             } else {
                 Log.debug("Unsubscribing channel: " + page.subscriptionId)
@@ -117,8 +113,6 @@ Page {
                     Log.info("Channel unsubscribed successfully")
                     page.channelSubscribed = false
                     page.subscriptionId = ""
-                }, function (error) {
-                    errorNotification.show(error)
                 })
             }
         }
@@ -195,8 +189,6 @@ Page {
 					requestCoverPage("ChannelBrowser.qml", coverData)
 
                     channelVideoList.refresh()
-                }, function (error) {
-                    errorNotification.show(error)
                 })
             }
 

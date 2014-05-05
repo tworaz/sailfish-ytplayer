@@ -74,21 +74,24 @@ appendAuthHeader(QNetworkRequest& request)
 
 YTClient::YTClient(QObject *parent)
     : QObject(parent)
-    , _manager(new QNetworkAccessManager(this))
+    , _access_manager(new QNetworkAccessManager(this))
+    , _config_manager(new QNetworkConfigurationManager(this))
 {
-    connect(_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onRequestFinished(QNetworkReply*)));
-    connect(_manager, SIGNAL(networkAccessibleChanged(QNetworkAccessManager::NetworkAccessibility)),
-            this, SLOT(onNetworkAccessibleChanged(QNetworkAccessManager::NetworkAccessibility)));
+    connect(_access_manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onRequestFinished(QNetworkReply*)));
+    connect(_config_manager, SIGNAL(onlineStateChanged(bool)), this, SLOT(onOnlineStateChanged(bool)));
 }
 
 YTClient::~YTClient()
 {
-    delete _manager;
+    delete _access_manager;
+    delete _config_manager;
 }
 
 void
 YTClient::list(QString resource, QVariantMap params)
 {
+    Q_ASSERT(online());
+
     QUrlQuery query;
     appendParams(params, query);
     qDebug() << "resource: " << resource << ", params: " << query.toString();
@@ -101,12 +104,14 @@ YTClient::list(QString resource, QVariantMap params)
     request.setUrl(url);
     appendAuthHeader(request);
 
-    _manager->get(request);
+    _access_manager->get(request);
 }
 
 void
 YTClient::post(QString resource, QVariantMap params, QVariant content)
 {
+    Q_ASSERT(online());
+
     QUrlQuery query;
     appendParams(params, query);
     qDebug() << "resource: " << resource << ", params: " << query.toString();
@@ -131,12 +136,14 @@ YTClient::post(QString resource, QVariantMap params, QVariant content)
 
     appendAuthHeader(request);
 
-    _manager->post(request, data);
+    _access_manager->post(request, data);
 }
 
 void
 YTClient::del(QString resource, QVariantMap params)
 {
+    Q_ASSERT(online());
+
     QUrlQuery query;
     appendParams(params, query);
     qDebug() << "resource: " << resource << ", params: " << query.toString();
@@ -149,12 +156,14 @@ YTClient::del(QString resource, QVariantMap params)
     request.setUrl(url);
     appendAuthHeader(request);
 
-    _manager->deleteResource(request);
+    _access_manager->deleteResource(request);
 }
 
 void
 YTClient::getDirectVideoURL(QString videoId)
 {
+    Q_ASSERT(online());
+
     QUrlQuery query;
     query.addQueryItem("video_id", videoId);
     query.addQueryItem("el", "player_embedded");
@@ -171,12 +180,14 @@ YTClient::getDirectVideoURL(QString videoId)
     QNetworkRequest request;
     request.setUrl(url);
 
-    _manager->get(request);
+    _access_manager->get(request);
 }
 
 void
 YTClient::requestOAuth2Token(QString authCode)
 {
+	Q_ASSERT(online());
+
 	QUrlQuery query;
 	query.addQueryItem("code", authCode);
 	query.addQueryItem("client_id", YOUTUBE_AUTH_CLIENT_ID);
@@ -190,13 +201,20 @@ YTClient::requestOAuth2Token(QString authCode)
 	QNetworkRequest request(QUrl(YOUTUBE_AUTH_TOKEN_URI));
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
-	_manager->post(request, data);
+	_access_manager->post(request, data);
+}
+
+void
+YTClient::onOnlineStateChanged(bool isOnline)
+{
+	qDebug() << "Network is " << (isOnline ? "online" : "offline");
 }
 
 void
 YTClient::onRequestFinished(QNetworkReply *reply)
 {
-    if (reply->error() == QNetworkReply::NoError) {
+    switch (reply->error()) {
+    case QNetworkReply::NoError:
         if (reply->request().url() == QUrl(YOUTUBE_AUTH_TOKEN_URI)) {
             handleTokenReply(reply);
         } else if (reply->request().url().toString().startsWith(YouTubeGetVideoInfoUrl)) {
@@ -204,19 +222,29 @@ YTClient::onRequestFinished(QNetworkReply *reply)
         } else {
             handleSuccess(reply);
         }
-    } else if (reply->error() == QNetworkReply::AuthenticationRequiredError && authEnabled()) {
-        refreshToken();
-    } else {
+        break;
+    case QNetworkReply::HostNotFoundError:
+    case QNetworkReply::NetworkSessionFailedError:
+        emit networkError();
+        break;
+    case QNetworkReply::AuthenticationRequiredError:
+        if (authEnabled()) {
+            refreshToken();
+            break;
+        }
+    default:
+        qDebug() << "Network error: " << reply->error();
         handleError(reply);
+        break;
     }
 
     reply->deleteLater();
 }
 
-void
-YTClient::onNetworkAccessibleChanged(QNetworkAccessManager::NetworkAccessibility accessible)
+bool
+YTClient::online() const
 {
-    qDebug() << "Network accessibility changed: " << accessible;
+    return _config_manager->isOnline();
 }
 
 void
@@ -238,7 +266,7 @@ YTClient::refreshToken() const
 	QNetworkRequest request(QUrl(YOUTUBE_AUTH_TOKEN_URI));
 	request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
-	_manager->post(request, data);
+	_access_manager->post(request, data);
 }
 
 void

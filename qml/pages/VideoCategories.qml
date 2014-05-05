@@ -34,8 +34,15 @@ import "../common/Helpers.js" as H
 Page {
     id: page
 
+    Component.onCompleted: {
+        Log.info("Video categories list page created")
+    }
+
     onStatusChanged: {
         if (status === PageStatus.Active) {
+            if (videoCategoryListModel.count == 0) {
+                loadData()
+            }
             requestCoverPage("Default.qml")
             topMenu.accountMenuVisible = Prefs.isAuthEnabled()
         }
@@ -56,10 +63,10 @@ Page {
                     indicator.running = false
                 }
             )
-        }, function (error) {
-            errorNotification.show(error)
+        }, function () {
             indicator.running = false
         })
+        indicator.running = true
     }
 
     SilicaListView {
@@ -119,11 +126,6 @@ Page {
                                { "categoryResourceId": listingType,
                                  "title" : snippet.title})
             }
-        }
-
-        Component.onCompleted: {
-            Log.debug("Video category list page created")
-            loadData()
         }
 
         VerticalScrollDecorator {}
