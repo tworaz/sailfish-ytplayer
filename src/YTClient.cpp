@@ -33,6 +33,7 @@
 #include <QJsonDocument>
 #include <QNetworkReply>
 #include <QJsonObject>
+#include <QStringList>
 #include <QSettings>
 #include <QLocale>
 #include <QDebug>
@@ -42,6 +43,7 @@
 #include "config.h"
 
 static QString YouTubeDataV3Url("https://www.googleapis.com/youtube/v3/");
+static QString YouTubeGetVideoInfoUrl("http://www.youtube.com/get_video_info");
 
 static void
 appendParams(QVariantMap& params, QUrlQuery& query)
@@ -152,6 +154,28 @@ YTClient::del(QString resource, QVariantMap params)
 }
 
 void
+YTClient::getDirectVideoURL(QString videoId)
+{
+    QUrlQuery query;
+    query.addQueryItem("video_id", videoId);
+    query.addQueryItem("el", "player_embedded");
+    query.addQueryItem("gl", _regionCode);
+    if (QLocale::system().name() != "C") {
+        query.addQueryItem("hl", QLocale::system().name());
+    } else {
+        query.addQueryItem("hl", "en");
+    }
+
+    QUrl url(YouTubeGetVideoInfoUrl);
+    url.setQuery(query);
+
+    QNetworkRequest request;
+    request.setUrl(url);
+
+    _manager->get(request);
+}
+
+void
 YTClient::requestOAuth2Token(QString authCode)
 {
 	QUrlQuery query;
@@ -176,6 +200,8 @@ YTClient::onRequestFinished(QNetworkReply *reply)
     if (reply->error() == QNetworkReply::NoError) {
         if (reply->request().url() == QUrl(YOUTUBE_AUTH_TOKEN_URI)) {
             handleTokenReply(reply);
+        } else if (reply->request().url().toString().startsWith(YouTubeGetVideoInfoUrl)) {
+            handleVideoInfoReply(reply);
         } else {
             handleSuccess(reply);
         }
@@ -226,6 +252,7 @@ YTClient::handleSuccess(QNetworkReply *reply)
 		QJsonDocument json = QJsonDocument::fromJson(data);
 		emit success(QVariant(json.object()));
 	} else {
+		qDebug() << "Unknown response: " << contentType.toString();
 		emit success(QVariant());
 	}
 }
@@ -283,6 +310,45 @@ YTClient::handleTokenReply(QNetworkReply *reply)
         settings.setValue("YouTubeRefreshToken", map["refresh_token"]);
         emit success(QVariant(json.object()));
     }
+}
+
+void
+YTClient::handleVideoInfoReply(QNetworkReply *reply)
+{
+    QUrlQuery query(reply->readAll());
+    typedef QList<QPair<QString, QString> > QueryItemList;
+
+    QString streamMap = query.queryItemValue("url_encoded_fmt_stream_map");
+    if (streamMap.isEmpty()) {
+        qWarning() << "YouTube get_video_info did not return proper stream map!";
+        emit error(QVariant());
+        return;
+    }
+
+    QStringList mapEntries = streamMap.split(",", QString::SkipEmptyParts);
+    if (mapEntries.size() == 0) {
+        qWarning() << "YouTube stream map empty";
+        emit error(QVariant());
+    }
+
+    QVariantList streamList;
+    for (int i = 0; i < mapEntries.size(); ++i) {
+        query = QUrlQuery(mapEntries[i]);
+        QueryItemList items = query.queryItems();
+        QueryItemList::Iterator it;
+        QVariantMap map;
+        for (it = items.begin(); it != items.end(); ++it) {
+            if (it->first == "url") {
+                QString decodedUrl = QUrl::fromPercentEncoding(it->second.toLocal8Bit());
+                decodedUrl = QUrl::fromPercentEncoding(decodedUrl.toLocal8Bit());
+                map.insert(it->first, QVariant(decodedUrl));
+            } else {
+                map.insert(it->first, QVariant(it->second));
+            }
+        }
+        streamList.append(map);
+    }
+    emit success(streamList);
 }
 
 void

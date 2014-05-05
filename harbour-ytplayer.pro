@@ -41,7 +41,6 @@ OTHER_FILES += \
         qml/cover/VideoPlayer.qml \
         qml/cover/ChannelBrowser.qml \
         qml/cover/CategoryVideoList.qml \
-        qml/pages/YoutubeClientV3.js \
         qml/pages/duration.js \
         qml/pages/VideoOverview.qml \
         qml/pages/VideoPlayer.qml \

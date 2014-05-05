@@ -38,6 +38,8 @@ WorkerScript.onMessage = function(task)
         appendCategoryToModel(task.model, task.data);
     } else if (task.name === "parseDuration") {
         response = parseDuration(task.value);
+    } else if (task.name === "parseStreamsInfo") {
+        response = parseStreamsInfo(task.data);
     } else {
         console.error("Unknown task type: " + JSON.stringify(task, undefined, 2));
     }
@@ -66,4 +68,35 @@ function parseDuration(value)
 {
     var d = new Duration(value);
     return d.asClock();
+}
+
+function parseStreamsInfo(info)
+{
+    var ret = {};
+
+    for (var i = 0; i < info.length; ++i) {
+        console.assert(info[i].hasOwnProperty("itag"));
+        console.assert(info[i].hasOwnProperty("url"));
+
+        if (info[i].hasOwnProperty("s")) {
+            console.warn("Playback of encrypted videos not supported, yet")
+            break;
+        }
+
+        switch (parseInt(info[i].itag)) {
+        case 18:
+            ret["medium"] = info[i].url;
+            break;
+        case 22:
+            ret["high"] = info[i].url;
+            break;
+        case 36:
+            ret["small"] = info[i].url;
+            break;
+        default:
+            //console.debug("Unhandled itag value: " + info[i].itag);
+            break;
+        }
+    }
+    return ret;
 }

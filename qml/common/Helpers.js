@@ -48,6 +48,14 @@ function parseDuration(dur) {
     }
 }
 
+function isEmptyObject(obj)
+{
+    for ( var name in obj ) {
+        return false;
+    }
+    return true;
+}
+
 function getYouTubeIconForCategoryId(category)
 {
     var categoryId = parseInt(category);

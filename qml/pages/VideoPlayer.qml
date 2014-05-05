@@ -32,7 +32,7 @@ import Sailfish.Silica 1.0
 import QtMultimedia 5.0
 //import Sailfish.Media 1.0
 import harbour.ytplayer.Media 1.0
-import "YoutubeClientV3.js" as Yt
+import "../common/Helpers.js" as H
 
 Page {
     id: page
@@ -42,9 +42,9 @@ Page {
     property alias mediaPlayer: videoController.mediaPlayer
     property alias title: header.title
     property variant thumbnails
-    readonly property string coverFile: "VideoPlayer.qml"
     property bool applicationActive: Qt.application.active
     property string videoId
+    property variant _streams
 
     Component.onCompleted: {
         Log.debug("Video player page created, video ID: " + videoId)
@@ -53,7 +53,20 @@ Page {
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            Yt.getVideoUrl(videoId, onVideoUrlObtained, onFailure)
+            ytDataAPIClient.getDirectVideoURL(videoId, function(response) {
+                utilityWorkerScript.parseStreamsInfo(response, function(map) {
+                    if (H.isEmptyObject(map)) {
+                        _streams = getFallbackUrls()
+                    } else {
+                        _streams = map
+                    }
+                    selectStream()
+                })
+            }, function (error) {
+                _streams = getFallbackUrls()
+                selectStream()
+            })
+
             requestCoverPage("VideoPlayer.qml", {
                 "title"       : page.title,
                 "thumbnails"  : thumbnails,
@@ -64,6 +77,26 @@ Page {
             mediaPlayer.stop()
             videoOutput.source = null
         }
+    }
+
+    function getFallbackUrls() {
+        var base = "http://ytapi.com/?vid=" + videoId + "&format=direct&itag="
+        return {
+            "small"  : base + 36,
+            "medium" : base + 18,
+            "high"   : base + 22,
+        }
+    }
+
+    function selectStream() {
+        if (_streams.high) {
+            mediaPlayer.source = _streams.high
+        } else if (_streams.medium) {
+            mediaPlayer.source = _streams.medium
+        } else {
+            mediaPlayer.source = _streams.small
+        }
+        Log.debug("Selected URL: " + mediaPlayer.source)
     }
 
     onApplicationActiveChanged:  {
@@ -222,15 +255,5 @@ Page {
                 stop()
             }
         }
-    }
-
-    function onFailure(error) {
-        errorNotification.show(error)
-        videoController.showIndicator = false
-    }
-
-    function onVideoUrlObtained(url) {
-        Log.debug("Selected URL: " + url)
-        mediaPlayer.source = url
     }
 }

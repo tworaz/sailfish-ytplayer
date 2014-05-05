@@ -51,6 +51,7 @@ public:
     Q_INVOKABLE void post(QString resource, QVariantMap params, QVariant content);
     Q_INVOKABLE void del(QString resource, QVariantMap params);
 
+    Q_INVOKABLE void getDirectVideoURL(QString videoId);
     Q_INVOKABLE void requestOAuth2Token(QString authCode);
 
 signals:
@@ -67,6 +68,7 @@ private:
     void handleSuccess(QNetworkReply*);
     void handleError(QNetworkReply*);
     void handleTokenReply(QNetworkReply*);
+    void handleVideoInfoReply(QNetworkReply*);
 
     void appendCommonParams(QUrlQuery& query);
 

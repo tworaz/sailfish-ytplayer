@@ -79,6 +79,16 @@ Item {
         client.process()
     }
 
+    function getDirectVideoURL(videoId, onSuccess, onFailure) {
+        _requestQueue.push({
+            "method"   : "getDirectVideoURL",
+            "videoId"  : videoId,
+            "success"  : onSuccess,
+            "failure"  : onFailure,
+        })
+        client.process()
+    }
+
     YTClient {
         id: client
 
@@ -100,6 +110,8 @@ Item {
                 client.post(req.resource, req.params, req.content)
             } else if (req.method === "delete") {
                 client.del(req.resource, req.params)
+            } else if (req.method === "getDirectVideoURL") {
+                client.getDirectVideoURL(req.videoId)
             } else {
                 console.assert(req.method === "requestOAuth2Token")
                 client.requestOAuth2Token(req.authCode)

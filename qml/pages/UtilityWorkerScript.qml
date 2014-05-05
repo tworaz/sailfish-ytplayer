@@ -61,6 +61,15 @@ Item {
         worker.process()
     }
 
+    function parseStreamsInfo(info, done) {
+        _taskQueue.push({
+            "name" : "parseStreamsInfo",
+            "data" : info,
+            "done" : done,
+        })
+        worker.process()
+    }
+
     WorkerScript {
         id: worker
         source: "UtilityWorkerScript.js"
