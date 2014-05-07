@@ -101,7 +101,7 @@ CoverBackground {
     CoverActionList {
         id: actions
         property bool playing: (mediaPlayer != undefined &&
-            (mediaPlayer.playbackState === MediaPlayer.PlayingState))
+                                (mediaPlayer.playbackState === MediaPlayer.PlayingState))
 
         CoverAction {
             iconSource: {

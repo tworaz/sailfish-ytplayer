@@ -33,54 +33,54 @@
 #include <QDebug>
 
 Prefs::Prefs(QObject *parent)
-	: QObject(parent)
+    : QObject(parent)
 {
 }
 
 void
 Prefs::Initialize()
 {
-	QSettings settings;
-	qDebug("Initializing settings");
-	if (!settings.contains("ResultsPerPage")) {
-		settings.setValue("ResultsPerPage", 25);
-	}
-	if (!settings.contains("SafeSearch")) {
-		settings.setValue("SafeSearch", 1);
-	}
-	if (!settings.contains("YouTubeAccountIntegration")) {
-		settings.setValue("YouTubeAccountIntegration", false);
-	}
+    QSettings settings;
+    qDebug("Initializing settings");
+    if (!settings.contains("ResultsPerPage")) {
+        settings.setValue("ResultsPerPage", 25);
+    }
+    if (!settings.contains("SafeSearch")) {
+        settings.setValue("SafeSearch", 1);
+    }
+    if (!settings.contains("YouTubeAccountIntegration")) {
+        settings.setValue("YouTubeAccountIntegration", false);
+    }
 }
 
 void
 Prefs::set(const QString& key, const QVariant &value)
 {
-	QSettings settings;
-	settings.setValue(key, value);
+    QSettings settings;
+    settings.setValue(key, value);
 }
 
 QVariant
 Prefs::get(const QString& key)
 {
-	QSettings settings;
-	QVariant value = settings.value(key);
-	return value;
+    QSettings settings;
+    QVariant value = settings.value(key);
+    return value;
 }
 
 bool
 Prefs::isAuthEnabled()
 {
-	QVariant auth = get("YouTubeAccountIntegration");
-	return auth.isValid() && auth.toBool();
+    QVariant auth = get("YouTubeAccountIntegration");
+    return auth.isValid() && auth.toBool();
 }
 
 void
 Prefs::disableAuth()
 {
-	QSettings settings;
-	settings.remove("YouTubeAccessToken");
-	settings.remove("YouTubeRefreshToken");
-	settings.remove("YouTubeAccessTokenType");
-	settings.setValue("YouTubeAccountIntegration", false);
+    QSettings settings;
+    settings.remove("YouTubeAccessToken");
+    settings.remove("YouTubeRefreshToken");
+    settings.remove("YouTubeAccessTokenType");
+    settings.setValue("YouTubeAccountIntegration", false);
 }

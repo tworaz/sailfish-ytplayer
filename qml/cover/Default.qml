@@ -48,8 +48,8 @@ CoverBackground {
         resource: "search"
         params: {
             "part"       : "snippet",
-            "maxResults" : 12,
-            "order"      : "rating",
+                    "maxResults" : 12,
+                    "order"      : "rating",
         }
 
         onSuccess: {
@@ -69,10 +69,11 @@ CoverBackground {
                 'import QtQuick 2.0;' +
                 'import "../common";' +
                 'AsyncImage { width: ' + (parent.width / 2) + ';' +
-                             'height: ' + (parent.width / 2 * thumbnailAspectRatio) + ';' +
-                             'fillMode: Image.PreserveAspectCrop;' +
-                             'source: "' + defaultCoverData[i].default.url + '"}',
-                imageGrid, "img" + i);
+                'height: ' + (parent.width / 2 * thumbnailAspectRatio) + ';' +
+                'fillMode: Image.PreserveAspectCrop;' +
+                'source: "' + defaultCoverData[i].default.url + '"}',
+                imageGrid, "img" + i
+            );
         }
     }
 

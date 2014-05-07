@@ -40,11 +40,12 @@ CoverBackground {
             Qt.createQmlObject(
                 'import QtQuick 2.0;' +
                 'import "../common";' +
-                'AsyncImage { width: ' + (parent.width / 2) + ';' +
-                             'height: ' + (parent.width / 2 * thumbnailAspectRatio) + ';' +
-                             'fillMode: Image.PreserveAspectCrop;' +
-                             'source: "' + coverData.images[i].default.url + '"}',
-                imageGrid, "img" + i);
+                 'AsyncImage { width: ' + (parent.width / 2) + ';' +
+                 'height: ' + (parent.width / 2 * thumbnailAspectRatio) + ';' +
+                 'fillMode: Image.PreserveAspectCrop;' +
+                 'source: "' + coverData.images[i].default.url + '"}',
+                 imageGrid, "img" + i
+            );
         }
     }
 

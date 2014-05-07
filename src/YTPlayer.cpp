@@ -48,62 +48,61 @@
 class YTPNetworkAccessManagerFactory: public QQmlNetworkAccessManagerFactory
 {
 public:
-	QNetworkAccessManager *create(QObject *parent)
-	{
-		QNetworkAccessManager *manager = new QNetworkAccessManager(parent);
-		QNetworkDiskCache *cache = new QNetworkDiskCache(manager);
-		QString datadir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-		cache->setCacheDirectory(datadir);
-		cache->setMaximumCacheSize(10*1024*1024);
-		manager->setCache(cache);
-		qDebug() << "Disk cache location: " << datadir;
-		qDebug() << "Disk cache size: " << cache->maximumCacheSize() / (1024*1024) << "MB";
-		return manager;
-	}
+    QNetworkAccessManager *create(QObject *parent)
+    {
+        QNetworkAccessManager *manager = new QNetworkAccessManager(parent);
+        QNetworkDiskCache *cache = new QNetworkDiskCache(manager);
+        QString datadir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+        cache->setCacheDirectory(datadir);
+        cache->setMaximumCacheSize(10*1024*1024);
+        manager->setCache(cache);
+        qDebug() << "Disk cache location: " << datadir;
+        qDebug() << "Disk cache size: " << cache->maximumCacheSize() / (1024*1024) << "MB";
+        return manager;
+    }
 };
 
 
 int main(int argc, char *argv[])
 {
-	QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
-	QScopedPointer<QQuickView> view(SailfishApp::createView());
-	QScopedPointer<Prefs> prefs(new Prefs(app.data()));
-	QScopedPointer<NativeUtil> nativeUtil(new NativeUtil(app.data()));
-	QScopedPointer<Logger> logger(new Logger(app.data()));
-	QTranslator translator;
-	QString lang = QLocale::system().name();
-	QString dir = SailfishApp::pathTo(QString("languages")).toLocalFile();
+    QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
+    QScopedPointer<QQuickView> view(SailfishApp::createView());
+    QScopedPointer<Prefs> prefs(new Prefs(app.data()));
+    QScopedPointer<NativeUtil> nativeUtil(new NativeUtil(app.data()));
+    QScopedPointer<Logger> logger(new Logger(app.data()));
+    QTranslator translator;
+    QString lang = QLocale::system().name();
+    QString dir = SailfishApp::pathTo(QString("languages")).toLocalFile();
 
-	prefs->Initialize();
-	Logger::Register();
+    prefs->Initialize();
+    Logger::Register();
 
-	qDebug("System language : %s", qPrintable(lang));
+    qDebug("System language : %s", qPrintable(lang));
 
-	bool ret = translator.load(lang, dir);
-	if (!ret) {
-		qDebug("No translation for current system language, falling back to en");
-		translator.load("en", dir);
-	}
-	app->installTranslator(&translator);
+    bool ret = translator.load(lang, dir);
+    if (!ret) {
+        qDebug("No translation for current system language, falling back to en");
+        translator.load("en", dir);
+    }
+    app->installTranslator(&translator);
 
-	qmlRegisterType<Notification>("harbour.ytplayer.notifications", 1, 0, "Notification");
-	qmlRegisterType<YTRequest>("harbour.ytplayer", 1, 0, "YTRequest");
-	view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
-	view->rootContext()->setContextProperty("Log", logger.data());
-	view->rootContext()->setContextProperty("Prefs", prefs.data());
-	view->setSource(SailfishApp::pathTo("qml/YTPlayer.qml"));
-	view->engine()->setNetworkAccessManagerFactory(new YTPNetworkAccessManagerFactory());
+    qmlRegisterType<Notification>("harbour.ytplayer.notifications", 1, 0, "Notification");
+    qmlRegisterType<YTRequest>("harbour.ytplayer", 1, 0, "YTRequest");
+    view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
+    view->rootContext()->setContextProperty("Log", logger.data());
+    view->rootContext()->setContextProperty("Prefs", prefs.data());
+    view->setSource(SailfishApp::pathTo("qml/YTPlayer.qml"));
+    view->engine()->setNetworkAccessManagerFactory(new YTPNetworkAccessManagerFactory());
 
-	// Ugly hack to work around harbour restrictions
-	QString mediaPlugin("/usr/lib/qt5/qml/Sailfish/Media/libsailfishmediaplugin.so");
-	QList<QQmlError> errors;
-	if (!view->engine()->importPlugin(mediaPlugin, QString("harbour.ytplayer.Media"), &errors)) {
-		qDebug() << "Failed to import sailfish media plugin: " << errors;
-	}
-	// End hack
+    // Ugly hack to work around harbour restrictions
+    QString mediaPlugin("/usr/lib/qt5/qml/Sailfish/Media/libsailfishmediaplugin.so");
+    QList<QQmlError> errors;
+    if (!view->engine()->importPlugin(mediaPlugin, QString("harbour.ytplayer.Media"), &errors)) {
+        qDebug() << "Failed to import sailfish media plugin: " << errors;
+    }
+    // End hack
 
-	view->showFullScreen();
+    view->showFullScreen();
 
-	return app->exec();
+    return app->exec();
 }
-

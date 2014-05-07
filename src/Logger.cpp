@@ -34,86 +34,86 @@
 #define LOG_CACHE_SIZE 200
 
 static QString _log_str_arr[] = {
-	QString("[DEBUG] "),
-	QString("[ERROR] "),
-	QString("[WARN]  "),
-	QString("[INFO]  ")
+    QString("[DEBUG] "),
+    QString("[ERROR] "),
+    QString("[WARN]  "),
+    QString("[INFO]  ")
 };
 
 QtMessageHandler Logger::_original_handler = NULL;
 QContiguousCache<QVariantMap> *Logger::_log_cache =
-		new QContiguousCache<QVariantMap>(LOG_CACHE_SIZE);
+        new QContiguousCache<QVariantMap>(LOG_CACHE_SIZE);
 
 Logger::Logger(QObject *parent)
-	: QObject(parent)
+    : QObject(parent)
 {
 }
 
 void
 Logger::Register()
 {
-	_original_handler = qInstallMessageHandler(Logger::_messageHandler);
+    _original_handler = qInstallMessageHandler(Logger::_messageHandler);
 }
 
 QVariant
 Logger::getHistory() const
 {
-	QList<QVariant> list;
-	for (int i = _log_cache->firstIndex(); i <= _log_cache->lastIndex(); ++i) {
-		list.append(_log_cache->at(i));
-	}
-	return QVariant(list);
+    QList<QVariant> list;
+    for (int i = _log_cache->firstIndex(); i <= _log_cache->lastIndex(); ++i) {
+        list.append(_log_cache->at(i));
+    }
+    return QVariant(list);
 }
 
 void
 Logger::_log(LogType type, QString message)
 {
-	const QString& prefix = _log_str_arr[type];
-	QString fullMessage = prefix + message;
+    const QString& prefix = _log_str_arr[type];
+    QString fullMessage = prefix + message;
 
-	QVariantMap entry;
-	entry.insert("type", type);
-	entry.insert("message", message);
-	_log_cache->append(entry);
+    QVariantMap entry;
+    entry.insert("type", type);
+    entry.insert("message", message);
+    _log_cache->append(entry);
 
-	switch (type) {
-	case LOG_DEBUG:
-	case LOG_INFO:
-		_original_handler(QtDebugMsg, QMessageLogContext(), fullMessage);
-		return;
-	case LOG_ERROR:
-		_original_handler(QtCriticalMsg, QMessageLogContext(), fullMessage);
-		return;
-	case LOG_WARN:
-		_original_handler(QtWarningMsg, QMessageLogContext(), fullMessage);
-		return;
-	}
+    switch (type) {
+    case LOG_DEBUG:
+    case LOG_INFO:
+        _original_handler(QtDebugMsg, QMessageLogContext(), fullMessage);
+        return;
+    case LOG_ERROR:
+        _original_handler(QtCriticalMsg, QMessageLogContext(), fullMessage);
+        return;
+    case LOG_WARN:
+        _original_handler(QtWarningMsg, QMessageLogContext(), fullMessage);
+        return;
+    }
 }
 
 void
 Logger::_messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
-	QVariantMap entry;
-	LogType type_;
+    QVariantMap entry;
+    LogType type_;
 
-	switch (type) {
-	case QtDebugMsg:
-		type_ = LOG_DEBUG;
-		break;
-	case QtWarningMsg:
-		type_ = LOG_WARN;
-		break;
-	case QtSystemMsg:
-		type_ = LOG_INFO;
-		break;
-	case QtFatalMsg:
-	default:
-		type_ = LOG_ERROR;
-		break;
-	}
-	entry.insert("type", type_);
-	entry.insert("message", msg);
-	_log_cache->append(entry);
+    switch (type) {
+    case QtDebugMsg:
+        type_ = LOG_DEBUG;
+        break;
+    case QtWarningMsg:
+        type_ = LOG_WARN;
+        break;
+    case QtSystemMsg:
+        type_ = LOG_INFO;
+        break;
+    case QtFatalMsg:
+    default:
+        type_ = LOG_ERROR;
+        break;
+    }
+    entry.insert("type", type_);
+    entry.insert("message", msg);
+    _log_cache->append(entry);
 
-	_original_handler(type, context, msg);
+    _original_handler(type, context, msg);
 }

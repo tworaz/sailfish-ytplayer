@@ -186,7 +186,7 @@ Page {
                 resource: "channels"
                 params: {
                     "part" : "snippet,statistics,contentDetails",
-                    "id"   : channelId
+                    "id"   : channelId,
                 }
 
                 onSuccess: {
@@ -194,25 +194,25 @@ Page {
                                    response.items.length === 1 &&
                                    response.items[0].kind === "youtube#channel")
 
-					var d = new Date(response.items[0].snippet.publishedAt)
-					creationDate.value = Qt.formatDate(d, "d MMMM yyyy")
+                    var d = new Date(response.items[0].snippet.publishedAt)
+                    creationDate.value = Qt.formatDate(d, "d MMMM yyyy")
 
-					channelVideoList.channelPlaylistId =
-						response.items[0].contentDetails.relatedPlaylists.uploads
+                    channelVideoList.channelPlaylistId =
+                            response.items[0].contentDetails.relatedPlaylists.uploads
 
-					var stats = response.items[0].statistics
-					videoCount.value = stats.videoCount
-					subscribersCount.text = stats.subscriberCount
-					commentCount.text = stats.commentCount
-					viewCount.text = stats.viewCount
-					indicator.running = false
+                    var stats = response.items[0].statistics
+                    videoCount.value = stats.videoCount
+                    subscribersCount.text = stats.subscriberCount
+                    commentCount.text = stats.commentCount
+                    viewCount.text = stats.viewCount
+                    indicator.running = false
 
-					coverData = {
-						"thumbnails" : page.thumbnails,
-						"videoCount" : stats.videoCount,
-						"title"      : title
-					}
-					requestCoverPage("ChannelBrowser.qml", coverData)
+                    coverData = {
+                        "thumbnails" : page.thumbnails,
+                        "videoCount" : stats.videoCount,
+                        "title"      : title
+                    }
+                    requestCoverPage("ChannelBrowser.qml", coverData)
 
                     channelVideoList.refresh()
                 }

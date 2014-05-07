@@ -200,7 +200,7 @@ Page {
                 repeat: false
                 onTriggered: {
                     if (!videoController.playbackFinished &&
-                        videoController.playing && page.isLandscape) {
+                            videoController.playing && page.isLandscape) {
                         Log.debug("Video controls timeout, hiding")
                         showVideoControls(false)
                     }

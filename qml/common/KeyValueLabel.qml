@@ -14,4 +14,3 @@ Label {
     text: "<font color=\"" + highlightColor + "\">" +
           key + "</font> " + value
 }
-

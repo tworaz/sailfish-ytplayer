@@ -34,18 +34,18 @@
 
 class NativeUtil : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	Q_PROPERTY(QString version READ getVersion CONSTANT)
-	Q_PROPERTY(QString regionCode READ getRegionCode CONSTANT)
+    Q_PROPERTY(QString version READ getVersion CONSTANT)
+    Q_PROPERTY(QString regionCode READ getRegionCode CONSTANT)
 
 public:
-	explicit NativeUtil(QObject *parent = 0);
+    explicit NativeUtil(QObject *parent = 0);
 
-	Q_INVOKABLE void preventScreenBlanking(bool prevent);
+    Q_INVOKABLE void preventScreenBlanking(bool prevent);
 
-	static QString getRegionCode();
-	static QString getVersion();
+    static QString getRegionCode();
+    static QString getVersion();
 };
 
 #endif // NATIVEUTIL_H

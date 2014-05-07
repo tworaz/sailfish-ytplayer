@@ -54,7 +54,7 @@ DockedPanel {
 
         onStatusChanged: {
             Log.debug("Media Player status changed to: " +
-                          mediaPlayerStatusToString(status))
+                      mediaPlayerStatusToString(status))
             switch (status) {
             case MediaPlayer.Loading:
             case MediaPlayer.Buffering:
@@ -114,7 +114,6 @@ DockedPanel {
         }
 
         function mediaPlayerStatusToString(status) {
-            // TODO: Translate status strings
             switch(status) {
             //: Media player status indicating there is no content to play
             //% "No media"

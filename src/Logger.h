@@ -39,35 +39,35 @@
 
 class Logger : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
-	Q_PROPERTY(QVariant history READ getHistory)
+    Q_PROPERTY(QVariant history READ getHistory)
 
 public:
-	explicit Logger(QObject *parent = 0);
+    explicit Logger(QObject *parent = 0);
 
-	static void Register();
+    static void Register();
 
-	Q_INVOKABLE void debug(QString msg) { _log(LOG_DEBUG, msg); }
-	Q_INVOKABLE void error(QString msg) { _log(LOG_ERROR, msg); }
-	Q_INVOKABLE void warn(QString msg)  { _log(LOG_WARN, msg); }
-	Q_INVOKABLE void info(QString msg)  { _log(LOG_INFO, msg); }
+    Q_INVOKABLE void debug(QString msg) { _log(LOG_DEBUG, msg); }
+    Q_INVOKABLE void error(QString msg) { _log(LOG_ERROR, msg); }
+    Q_INVOKABLE void warn(QString msg)  { _log(LOG_WARN, msg); }
+    Q_INVOKABLE void info(QString msg)  { _log(LOG_INFO, msg); }
 
 private:
-	enum LogType {
-		LOG_DEBUG = 0,
-		LOG_ERROR,
-		LOG_WARN,
-		LOG_INFO
-	};
+    enum LogType {
+        LOG_DEBUG = 0,
+        LOG_ERROR,
+        LOG_WARN,
+        LOG_INFO
+    };
 
-	QVariant getHistory() const;
+    QVariant getHistory() const;
 
-	void _log(LogType, QString);
-	static void _messageHandler(QtMsgType, const QMessageLogContext&, const QString&);
+    void _log(LogType, QString);
+    static void _messageHandler(QtMsgType, const QMessageLogContext&, const QString&);
 
-	static QtMessageHandler _original_handler;
-	static QContiguousCache<QVariantMap> *_log_cache;
+    static QtMessageHandler _original_handler;
+    static QContiguousCache<QVariantMap> *_log_cache;
 };
 
 #endif // _LOGGER_H_

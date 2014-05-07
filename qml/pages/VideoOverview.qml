@@ -42,8 +42,8 @@ Dialog {
     acceptDestinationAction: PageStackAction.Push
     acceptDestinationProperties: {
         "thumbnails" : thumbnails,
-        "videoId"    : videoId,
-        "title"      : title,
+                "videoId"    : videoId,
+                "title"      : title,
     }
 
     Component.onCompleted: {
