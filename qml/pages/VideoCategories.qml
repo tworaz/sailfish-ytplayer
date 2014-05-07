@@ -29,6 +29,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer 1.0
 import "../common/Helpers.js" as H
 
 Page {
@@ -41,7 +42,7 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Active) {
             if (videoCategoryListModel.count == 0) {
-                loadData()
+                request.run()
             }
             requestCoverPage("Default.qml")
             topMenu.accountMenuVisible = Prefs.isAuthEnabled()
@@ -51,22 +52,20 @@ Page {
     BusyIndicator {
         id: indicator
         anchors.centerIn: parent
-        running: true
         size: BusyIndicatorSize.Large
+        running: request.busy
     }
 
-    function loadData() {
-        ytDataAPIClient.list("videoCategories", {"part" : "snippet"}, function (response) {
+    YTRequest {
+        id: request
+        method: YTRequest.List
+        resource: "videoCategories"
+        params: { "part" : "snippet" }
+
+        onSuccess: {
             console.assert(response.kind === "youtube#videoCategoryListResponse")
-            utilityWorkerScript.appendCategoryToModel(videoCategoryListModel, response.items,
-                function () {
-                    indicator.running = false
-                }
-            )
-        }, function () {
-            indicator.running = false
-        })
-        indicator.running = true
+            utilityWorkerScript.appendCategoryToModel(videoCategoryListModel, response.items)
+        }
     }
 
     SilicaListView {

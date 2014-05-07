@@ -29,6 +29,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer 1.0
 
 Page {
     id: page
@@ -38,7 +39,7 @@ Page {
     BusyIndicator {
         id: indicator
         anchors.centerIn: parent
-        running: false
+        running: request.busy && resultsListModel.count == 0
         size: BusyIndicatorSize.Large
     }
 
@@ -58,31 +59,33 @@ Page {
     }
 
     function performSearch(queryStr, pageToken) {
-        var params = {
+        request.params = {
             "q"          : queryStr,
             "part"       : "snippet",
             "type"       : "video,channel",
             "safeSearch" : _getSafeSearchValue(),
         }
         if (pageToken) {
-            params.pageToken = pageToken
+            request.params.pageToken = pageToken
         }
+        request.run()
+    }
 
-        ytDataAPIClient.list("search", params, function (response) {
+    YTRequest {
+        id: request
+        method: YTRequest.List
+        resource: "search"
+
+        onSuccess: {
             console.assert(response.kind === "youtube#searchListResponse")
-            utilityWorkerScript.appendToModel(resultsListModel, response.items, function() {
-                if (response.hasOwnProperty("nextPageToken")) {
-                    page.nextPageToken = response.nextPageToken
-                }
-                indicator.running = false
-                bottomMenu.busy = false
-            })
-        }, function (error) {
-            Log.error("Error: " + JSON.stringify(error, undefined, 2))
-            page.nextPageToken = ""
-            indicator.running = false
-        })
-        indicator.running = true
+            if (response.hasOwnProperty("nextPageToken")) {
+                page.nextPageToken = response.nextPageToken
+            }
+            //utilityWorkerScript.appendToModel(resultsListModel, response.items)
+            for (var i = 0; i < response.items.length; ++i) {
+                resultsListModel.append(response.items[i])
+            }
+        }
     }
 
     SilicaListView {
@@ -95,9 +98,9 @@ Page {
         }
 
         PushUpMenu {
-            id: bottomMenu
             visible: page.nextPageToken.length > 0
             quickSelect: true
+            busy: request.busy
             MenuItem {
                 //: Menu option load additional list elements
                 //% "Show more"
@@ -149,7 +152,6 @@ Page {
                 resultsListModel.clear()
                 page.nextPageToken = ""
                 performSearch(queryStr)
-                indicator.running = true
             }
         }
 
@@ -181,7 +183,6 @@ Page {
         function loadNextResultsPage() {
             Log.debug("Loading next page of results, token: " + page.nextPageToken)
             performSearch(searchHandler.queryStr, page.nextPageToken)
-            bottomMenu.busy = true
         }
 
         Component.onCompleted: {

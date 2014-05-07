@@ -16,13 +16,13 @@ SOURCES += \
         src/NativeUtil.cpp \
         src/Logger.cpp \
         src/Prefs.cpp \
-        src/YTClient.cpp
+        src/YTRequest.cpp
 
 HEADERS += \
         src/NativeUtil.h \
         src/Logger.h \
         src/Prefs.h \
-        src/YTClient.h
+        src/YTRequest.h
 
 OTHER_FILES += \
         scripts/generate-mcc-json.py \
@@ -58,7 +58,6 @@ OTHER_FILES += \
         qml/pages/YTPagesTopMenu.qml \
         qml/pages/YTLikeButtons.qml \
         qml/pages/LogViewer.qml \
-        qml/pages/YTDataAPIClient.qml \
         qml/pages/UtilityWorkerScript.qml \
         qml/pages/UtilityWorkerScript.js \
         qml/pages/NetworkError.qml

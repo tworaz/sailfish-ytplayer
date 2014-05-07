@@ -27,59 +27,76 @@
  * SUCH DAMAGE.
  */
 
-#ifndef YTCLIENT_H
-#define YTCLIENT_H
+#ifndef YTREQUEST_H
+#define YTREQUEST_H
 
-#include <QNetworkConfigurationManager>
-#include <QNetworkAccessManager>
-#include <QNetworkReply>
-#include <QVariantMap>
-#include <QUrlQuery>
-#include <QVariant>
 #include <QObject>
+#include <QString>
+#include <QVariantMap>
+#include <QNetworkReply>
 
-class YTClient : public QObject
+class YTRequest : public QObject
 {
     Q_OBJECT
 
-    Q_PROPERTY(QString OAuth2URL READ getOAuth2URL CONSTANT)
-    Q_PROPERTY(bool online READ online)
+    Q_ENUMS(Method)
+
+    Q_PROPERTY(QUrl oAuth2Url READ oAuth2Url CONSTANT)
+    Q_PROPERTY(QString resource READ resource WRITE setResource)
+    Q_PROPERTY(Method method READ method WRITE setMethod)
+    Q_PROPERTY(QVariantMap params READ params WRITE setParams)
+    Q_PROPERTY(QVariant content READ content WRITE setContent)
+    Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
+    Q_PROPERTY(bool loaded READ loaded)
 
 public:
-    explicit YTClient(QObject *parent = 0);
-    ~YTClient();
+    explicit YTRequest(QObject *parent = 0);
+    ~YTRequest();
 
-    Q_INVOKABLE void list(QString resource, QVariantMap params);
-    Q_INVOKABLE void post(QString resource, QVariantMap params, QVariant content);
-    Q_INVOKABLE void del(QString resource, QVariantMap params);
+    enum Method {
+        List,
+        Post,
+        Delete
+    };
 
-    Q_INVOKABLE void getDirectVideoURL(QString videoId);
-    Q_INVOKABLE void requestOAuth2Token(QString authCode);
+    Q_INVOKABLE void run();
 
 signals:
-    void error(QVariant details);
-    void networkError();
     void success(QVariant response);
-    void retry();
+    void error(QVariant details);
+    void busyChanged();
 
-private slots:
-    void onOnlineStateChanged(bool isOnline);
-    void onRequestFinished(QNetworkReply *reply);
+protected slots:
+    void onTokenRequestFinished();
+    void onFinished();
 
 private:
-    bool online() const;
-    void refreshToken() const;
     void handleSuccess(QNetworkReply*);
     void handleError(QNetworkReply*);
     void handleTokenReply(QNetworkReply*);
     void handleVideoInfoReply(QNetworkReply*);
+    void requestToken();
+    void refreshToken();
 
-    void appendCommonParams(QUrlQuery& query);
+    QString resource() const { return _resource; }
+    void setResource(QString resource) { _resource = resource; }
+    Method method() const { return _method; }
+    void setMethod(Method method) { _method = method; }
+    QVariantMap params() const { return _params; }
+    void setParams(QVariantMap params) { _params = params; }
+    QVariant content() const { return _content; }
+    void setContent(QVariant content) { _content = content; }
+    bool busy() const { return _reply != NULL; }
+    bool loaded() const { return _loaded; }
+    QUrl oAuth2Url() const;
 
-    QString getOAuth2URL() const;
-
-    QNetworkAccessManager *_access_manager;
-    QNetworkConfigurationManager *_config_manager;
+    QNetworkReply *_reply;
+    QNetworkReply *_token_reply;
+    QString _resource;
+    Method _method;
+    QVariantMap _params;
+    QVariant _content;
+    bool _loaded;
 };
 
-#endif // YTCLIENT_H
+#endif // YTREQUEST_H

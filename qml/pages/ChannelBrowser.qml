@@ -29,6 +29,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer 1.0
 import "../common"
 
 Page {
@@ -60,11 +61,23 @@ Page {
     onChannelIdChanged: {
         if (Prefs.isAuthEnabled()) {
             Log.info("YouTube account integration enabled, checking channel subscription status")
-            ytDataAPIClient.list("subscriptions", {
+            subscriptionRequest.params = {
                 "part"         : "snippet",
                 "forChannelId" : channelId,
                 "mine"         : true,
-            }, function (response) {
+            }
+            subscriptionRequest.method = YTRequest.List
+            subscriptionRequest.run()
+        }
+    }
+
+    YTRequest {
+        id: subscriptionRequest
+        resource: "subscriptions"
+
+        onSuccess: {
+            switch(method) {
+            case YTRequest.List:
                 page.channelSubscribed = response.items.length > 0 ? true : false
                 if (page.channelSubscribed) {
                     console.assert(response.items.length === 1)
@@ -74,7 +87,21 @@ Page {
                     page.subscriptionId = ""
                     Log.info("Channel " + channelId + " is not subscribed by the user")
                 }
-            })
+                break
+            case YTRequest.Post:
+                Log.info("Channel subscribed successfully: " + response.id)
+                page.channelSubscribed = true
+                page.subscriptionId = response.id
+                break
+            case YTRequest.Delete:
+                Log.info("Channel unsubscribed successfully")
+                page.channelSubscribed = false
+                page.subscriptionId = ""
+                break
+            default:
+                Log.error("Unrecognized method type: " + method)
+                break
+            }
         }
     }
 
@@ -92,28 +119,23 @@ Page {
         function changeChanelSubscription(subscribe) {
             if (subscribe) {
                 Log.debug("Subscribing channel: " + channelId)
-                ytDataAPIClient.post("subscriptions", { "part" : "snippet" },
-                {
+                subscriptionRequest.method = YTRequest.Post
+                subscriptionRequest.params = { "part" : "snippet" }
+                subscriptionRequest.content = {
                     "snippet" : {
                         "resourceId" : {
                             "kind"      : "youtube#channel",
                             "channelId" : channelId,
                         }
                     }
-                }, function(response) {
-                    Log.info("Channel subscribed successfully: " + response.id)
-                    page.channelSubscribed = true
-                    page.subscriptionId = response.id
-                })
+                }
+                subscriptionRequest.run()
             } else {
                 Log.debug("Unsubscribing channel: " + page.subscriptionId)
                 console.assert(page.subscriptionId.length > 0)
-                ytDataAPIClient.del("subscriptions", { "id" : subscriptionId }, function(response)
-                {
-                    Log.info("Channel unsubscribed successfully")
-                    page.channelSubscribed = false
-                    page.subscriptionId = ""
-                })
+                subscriptionRequest.method = YTRequest.Delete
+                subscriptionRequest.params = { "id" : subscriptionId };
+                subscriptionRequest.run()
             }
         }
 
@@ -158,12 +180,16 @@ Page {
             width: parent.width - 2 * Theme.paddingMedium
             spacing: Theme.paddingMedium
 
-            Component.onCompleted: {
-                Log.debug("Channel browser page created for: " + channelId)
-                ytDataAPIClient.list("channels", {
+            YTRequest {
+                id: channelRequest
+                method: YTRequest.List
+                resource: "channels"
+                params: {
                     "part" : "snippet,statistics,contentDetails",
-                    "id"   : channelId,
-                }, function (response) {
+                    "id"   : channelId
+                }
+
+                onSuccess: {
                     console.assert(response.kind ==="youtube#channelListResponse" &&
                                    response.items.length === 1 &&
                                    response.items[0].kind === "youtube#channel")
@@ -189,7 +215,12 @@ Page {
 					requestCoverPage("ChannelBrowser.qml", coverData)
 
                     channelVideoList.refresh()
-                })
+                }
+            }
+
+            Component.onCompleted: {
+                Log.info("Channel browser page created for: " + channelId)
+                channelRequest.run()
             }
 
             PageHeader {

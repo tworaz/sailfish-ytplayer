@@ -29,11 +29,11 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer 1.0
 
 Page {
     id: root
 
-    property bool loadingData: false
     property bool reloadOnActivate: false
     state: "SUBSCRIPTIONS"
 
@@ -75,40 +75,14 @@ Page {
         }
     }
 
-    function fetchDataForCurrentState(token) {
-        var resource = undefined
-        var params = {}
+    YTRequest {
+        id: request
+        method: YTRequest.List
 
-        if (state === "SUBSCRIPTIONS") {
-            resource = "subscriptions"
-            params = {
-                "part" : "id",
-                "mine" : true,
-                "part" : "snippet"
-            }
-        } else if (state === "LIKES") {
-            resource = "videos"
-            params = {
-                "part"     : "snippet",
-                "myRating" : "like"
-            }
-        } else if (state === "DISLIKES") {
-            resource = "videos"
-            params = {
-                "part"     : "snippet",
-                "myRating" : "dislike"
-            }
-        }
-
-        if (token) {
-            params.pageToken = token
-        }
-
-        ytDataAPIClient.list(resource, params, function(response) {
+        onSuccess: {
             if (reloadOnActivate) {
                 reloadOnActivate = false
                 if (response.etag === listView.etag) {
-                    loadingData = false
                     return
                 }
                 listView.etag = ""
@@ -124,7 +98,6 @@ Page {
                     listView.nextPageToken = ""
                 }
                 listView.etag = response.etag
-                loadingData = false
             })
             */
             for (var i = 0; i < response.items.length; ++i) {
@@ -136,18 +109,43 @@ Page {
                 listView.nextPageToken = ""
             }
             listView.etag = response.etag
-            loadingData = false
-        }, function () {
-            loadingData = false
-        })
-        loadingData = true
+        }
+    }
+
+    function fetchDataForCurrentState(token) {
+        if (state === "SUBSCRIPTIONS") {
+            request.resource = "subscriptions"
+            request.params = {
+                "part" : "id",
+                "mine" : true,
+                "part" : "snippet"
+            }
+        } else if (state === "LIKES") {
+            request.resource = "videos"
+            request.params = {
+                "part"     : "snippet",
+                "myRating" : "like"
+            }
+        } else if (state === "DISLIKES") {
+            request.resource = "videos"
+            request.params = {
+                "part"     : "snippet",
+                "myRating" : "dislike"
+            }
+        }
+
+        if (token) {
+            request.params.pageToken = token
+        }
+
+        request.run()
     }
 
     BusyIndicator {
         id: indicator
         anchors.centerIn: parent
         size: BusyIndicatorSize.Large
-        running: loadingData && (listModel.count === 0)
+        running: request.busy && (listModel.count === 0)
     }
 
     SilicaListView {
@@ -164,17 +162,17 @@ Page {
             //: Background text informing the user there are no videos in a given category
             //% "No content"
             text: qsTrId("ytplayer-account-no-content")
-            visible: listModel.count === 0 && loadingData === false
+            visible: listModel.count === 0 && request.busy === false
         }
 
         YTPagesTopMenu {
-            busy: root.loadingData
+            busy: request.busy
             accountMenuVisible: false
         }
 
         PushUpMenu {
             visible: listView.nextPageToken.length > 0
-            busy: root.loadingData
+            busy: request.busy
             quickSelect: true
             MenuItem {
                 visible: parent.visible

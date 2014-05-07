@@ -32,6 +32,7 @@ import Sailfish.Silica 1.0
 import QtMultimedia 5.0
 //import Sailfish.Media 1.0
 import harbour.ytplayer.Media 1.0
+import harbour.ytplayer 1.0
 import "../common/Helpers.js" as H
 
 Page {
@@ -53,29 +54,37 @@ Page {
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            ytDataAPIClient.getDirectVideoURL(videoId, function(response) {
-                utilityWorkerScript.parseStreamsInfo(response, function(map) {
-                    if (H.isEmptyObject(map)) {
-                        _streams = getFallbackUrls()
-                    } else {
-                        _streams = map
-                    }
-                    selectStream()
-                })
-            }, function (error) {
-                _streams = getFallbackUrls()
-                selectStream()
-            })
-
             requestCoverPage("VideoPlayer.qml", {
                 "title"       : page.title,
                 "thumbnails"  : thumbnails,
                 "mediaPlayer" : mediaPlayer
             })
+            request.run()
         } else if (status == PageStatus.Deactivating) {
             Log.debug("VidePlayer page deactivating");
             mediaPlayer.stop()
             videoOutput.source = null
+        }
+    }
+
+    YTRequest {
+        id: request
+        method: YTClient.List
+        resource: "video/url"
+        params: {
+            "video_id" : videoId,
+        }
+
+        onSuccess: {
+            utilityWorkerScript.parseStreamsInfo(response, function(map) {
+                Log.debug("Streams map: " + JSON.stringify(map, undefined, 2))
+                if (H.isEmptyObject(map)) {
+                    _streams = getFallbackUrls()
+                } else {
+                    _streams = map
+                }
+                selectStream()
+            })
         }
     }
 

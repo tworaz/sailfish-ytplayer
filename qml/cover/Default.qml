@@ -29,26 +29,35 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer 1.0
 
 CoverBackground {
     id: root
 
     Component.onCompleted: {
         if (!defaultCoverData) {
-            Log.debug("Fetching data for default cover")
-            ytDataAPIClient.list("search", {
-                "part" : "snippet",
-                "maxResults" : 12,
-                "order" : "rating",
-            }, function (response) {
-                var thumbs = [];
-                for (var i = 0; i < response.items.length; i++) {
-                    thumbs.push(response.items[i].snippet.thumbnails)
-                }
-                defaultCoverData = thumbs
-                displayThumbnails()
-            })
+            request.run()
         } else {
+            displayThumbnails()
+        }
+    }
+
+    YTRequest {
+        id: request
+        method: YTRequest.List
+        resource: "search"
+        params: {
+            "part"       : "snippet",
+            "maxResults" : 12,
+            "order"      : "rating",
+        }
+
+        onSuccess: {
+            var thumbs = [];
+            for (var i = 0; i < response.items.length; i++) {
+                thumbs.push(response.items[i].snippet.thumbnails)
+            }
+            defaultCoverData = thumbs
             displayThumbnails()
         }
     }

@@ -29,14 +29,16 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer 1.0
 
 SilicaListView {
     id: root
     property alias count: videoListModel.count
+    property alias busy: request.busy
+
     property variant videoResourceId: {"kind" : "", "id" : ""}
     property string nextPageToken: ""
     property bool hasNextPage: nextPageToken.length > 0
-    property bool busy: true
 
     model: ListModel {
         id: videoListModel
@@ -59,20 +61,33 @@ SilicaListView {
         }
     }
 
-    function loadNextResultsPage() {
-        var params = {};
-        var resource = undefined;
+    YTRequest {
+        id: request
+        method: YTRequest.List
 
+        onSuccess: {
+            console.assert(response.kind === "youtube#playlistItemListResponse" ||
+                           response.kind === "youtube#videoListResponse")
+            if (response.nextPageToken !== undefined) {
+                nextPageToken = response.nextPageToken
+            } else {
+                nextPageToken = ""
+            }
+            utilityWorkerScript.appendToModel(videoListModel, response.items)
+        }
+    }
+
+    function loadNextResultsPage() {
         if (videoResourceId.kind === "youtube#videoCategory") {
-            resource = "videos"
-            params = {
+            request.resource = "videos"
+            request.params = {
                 "part"            : "snippet",
                 "chart"           : "mostPopular",
                 "videoCategoryId" : videoResourceId.id,
             }
         } else if (videoResourceId.kind === "#channelPlaylist") {
-            resource = "playlistItems"
-            params = {
+            request.resource = "playlistItems"
+            request.params = {
                 "part"       : "snippet",
                 "playlistId" : videoResourceId.id,
             }
@@ -82,24 +97,10 @@ SilicaListView {
         }
 
         if (nextPageToken.length > 0) {
-            params.pageToken = nextPageToken
+            request.params.pageToken = nextPageToken
         }
 
-        ytDataAPIClient.list(resource, params, function(response) {
-            console.assert(response.kind === "youtube#playlistItemListResponse" ||
-                           response.kind === "youtube#videoListResponse")
-            utilityWorkerScript.appendToModel(videoListModel, response.items, function() {
-                if (response.nextPageToken !== undefined) {
-                    nextPageToken = response.nextPageToken
-                } else {
-                    nextPageToken = ""
-                }
-                root.busy = false
-            })
-        }, function () {
-            root.busy = false
-        })
-        root.busy = true
+        request.run()
     }
 
     function refresh() {

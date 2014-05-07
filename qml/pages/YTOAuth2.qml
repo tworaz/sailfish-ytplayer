@@ -30,6 +30,7 @@
 import QtQuick 2.0
 import QtWebKit 3.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer 1.0
 import harbour.ytplayer.notifications 1.0
 
 Page {
@@ -67,6 +68,28 @@ Page {
         category: "network.error"
     }
 
+    YTRequest {
+        id: request
+        method: YTRequest.Post
+        resource: "oauth2"
+        params: { "code" : webview._authCode }
+
+        onSuccess: {
+            Log.info("YouTube OAuth2 sign in successful")
+            successNotification.publish()
+            pageStack.pop(undefined, PageStackAction.Animated)
+        }
+
+        onError: {
+            Log.error("YouTube authorization process failed")
+            //: Error message informing the user about OAuth authorization failure
+            //% "OAuth authorization failed!"
+            failureNotification.previewBody = qsTrId("ytplayer-oauth-failed")
+            failureNotification.publish()
+            pageStack.pop(undefined, PageStackAction.Animated)
+        }
+    }
+
     SilicaWebView {
         id: webview
         anchors.fill: parent
@@ -78,7 +101,7 @@ Page {
             title: page.pageTitle
         }
 
-        url: ytDataAPIClient.oAuth2URL
+        url: request.oAuth2Url
 
         onLoadingChanged: {
             switch(loadRequest.status) {
@@ -101,18 +124,7 @@ Page {
             if (title.indexOf('Success code') !== -1) {
                 _authCode = title.replace('Success code=', '')
                 visible = false
-                ytDataAPIClient.requestOAuth2Token(_authCode, function (response) {
-                    Log.info("YouTube OAuth2 sign in successful")
-                    successNotification.publish()
-                    pageStack.pop(undefined, PageStackAction.Animated)
-                }, function (error) {
-                    Log.error("YouTube authorization process failed")
-                    //: Error message informing the user about OAuth authorization failure
-                    //% "OAuth authorization failed!"
-                    failureNotification.previewBody = qsTrId("ytplayer-oauth-failed")
-                    failureNotification.publish()
-                    pageStack.pop(undefined, PageStackAction.Animated)
-                })
+                request.run()
             } else if (title.indexOf('Denied error') !== -1) {
                 Log.debug("Youtube OAuth access denied!")
                 //: Message informing the user about YouTube OAuth autorization denial

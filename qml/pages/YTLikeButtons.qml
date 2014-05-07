@@ -29,6 +29,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer 1.0
 
 Row {
     id: root
@@ -40,40 +41,56 @@ Row {
     property alias dislikes: dislikeCount.text
     property alias likes: likeCount.text
 
-    function updateState() {
-        var rating
-        if (likeButton.selected) {
-            rating = "like"
-        } else if (dislikeButton.selected) {
-            rating = "dislike"
-        } else {
-            rating = "none"
+    function updateRating() {
+        var params = {
+            "id" : videoId
         }
-        Log.info("Trying to change video " + videoId + " user rating to: " + rating)
-
-        ytDataAPIClient.post("videos/rate", {
-            "id"     : videoId,
-            "rating" : rating,
-        }, undefined, function (response) {
-            Log.info("Video user rating changed succesfully")
-        })
+        if (likeButton.selected) {
+            params.rating = "like"
+        } else if (dislikeButton.selected) {
+            params.rating = "dislike"
+        } else {
+            params.rating = "none"
+        }
+        Log.info("Trying to change video " + videoId + " user rating to: " + params.rating)
+        rateVideo.params = params
+        rateVideo.run()
     }
 
     function refresh() {
         if (root.enabled && dataValid) {
-            ytDataAPIClient.list("videos/getRating", { "id" : videoId }, function (response) {
-                console.assert(response.kind === "youtube#videoGetRatingResponse" &&
-                               response.items.length === 1)
-                Log.info("Video " + videoId + " rating status: " + response.items[0].rating)
-                if (response.items[0].rating === "dislike") {
-                    dislikeButton.selected = true
-                } else if (response.items[0].rating === "like") {
-                    likeButton.selected = true
-                }
-            })
+            getRating.run()
         } else if (!root.enabled) {
             likeButton.selected = false
             dislikeButton.selected = false
+        }
+    }
+
+    YTRequest {
+        id: rateVideo
+        method: YTRequest.Post
+        resource: "videos/rate"
+
+        onSuccess: {
+            Log.info("User video rating changed succesfully")
+        }
+    }
+
+    YTRequest {
+        id: getRating
+        method: YTRequest.List
+        resource: "videos/getRating"
+        params: { "id" : videoId }
+
+        onSuccess: {
+            console.assert(response.kind === "youtube#videoGetRatingResponse" &&
+                           response.items.length === 1)
+            Log.info("Video " + videoId + " rating status: " + response.items[0].rating)
+            if (response.items[0].rating === "dislike") {
+                dislikeButton.selected = true
+            } else if (response.items[0].rating === "like") {
+                likeButton.selected = true
+            }
         }
     }
 
@@ -121,7 +138,7 @@ Row {
             if (selected && dislikeButton.selected) {
                 dislikeButton.selected = false;
             }
-            root.updateState()
+            root.updateRating()
         }
     }
 
@@ -168,7 +185,7 @@ Row {
             if (selected && likeButton.selected) {
                 likeButton.selected = false;
             }
-            root.updateState()
+            root.updateRating()
         }
     }
 }

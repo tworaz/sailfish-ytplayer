@@ -29,6 +29,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer 1.0
 import "../common"
 
 Dialog {
@@ -36,7 +37,6 @@ Dialog {
     property string videoId
     property variant thumbnails
     property alias title: header.title
-    property bool dataLoaded: false
 
     acceptDestination: Qt.resolvedUrl("VideoPlayer.qml")
     acceptDestinationAction: PageStackAction.Push
@@ -52,8 +52,8 @@ Dialog {
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            if (!dataLoaded) {
-                loadData()
+            if (!request.loaded) {
+                request.run()
             }
 
             rating.enabled = Prefs.isAuthEnabled()
@@ -65,11 +65,16 @@ Dialog {
         }
     }
 
-    function loadData() {
-        ytDataAPIClient.list("videos", {
+    YTRequest {
+        id: request
+        method: YTRequest.List
+        resource: "videos"
+        params: {
             "part" : "snippet,contentDetails,statistics",
             "id"   : videoId
-        }, function (response) {
+        }
+
+        onSuccess: {
             console.assert(response.kind === "youtube#videoListResponse")
             console.assert(response.items.length === 1)
             console.assert(response.items[0].kind === "youtube#video")
@@ -94,10 +99,7 @@ Dialog {
 
             header.title = details.snippet.title
             indicator.running = false
-            dataLoaded = true
-        }, function () {
-            indicator.running = false
-        })
+        }
     }
 
     BusyIndicator {

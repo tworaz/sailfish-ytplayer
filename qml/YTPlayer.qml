@@ -59,10 +59,6 @@ ApplicationWindow
         source: "https://www.youtube.com/s/tv/fonts/youtube-icons.ttf"
     }
 
-    YTDataAPIClient {
-        id: ytDataAPIClient
-    }
-
     UtilityWorkerScript {
         id: utilityWorkerScript
     }

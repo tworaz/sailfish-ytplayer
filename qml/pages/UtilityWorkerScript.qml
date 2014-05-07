@@ -87,7 +87,9 @@ Item {
         }
 
         onMessage: {
-            task.done(messageObject)
+            if (task.done) {
+                task.done(messageObject)
+            }
             task = undefined
             busy = false
             process()
