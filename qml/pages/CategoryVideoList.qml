@@ -83,8 +83,9 @@ Page {
             title: page.title
         }
 
-        onBusyChanged: {
-            if (!busy && count > 0) {
+        onCountChanged: {
+            if (count > 0 && !savedCoverData) {
+                Log.info("Category videos loaded, building cover page")
                 var data = {
                     "images" : [],
                     "title":  H.getYouTubeIconForCategoryId(categoryResourceId.id) + " " + title,
