@@ -69,7 +69,7 @@ Page {
 
     YTRequest {
         id: request
-        method: YTClient.List
+        method: YTRequest.List
         resource: "video/url"
         params: {
             "video_id" : videoId,
