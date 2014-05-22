@@ -80,5 +80,7 @@ Page {
                 }
             }
         }
+
+        VerticalScrollDecorator {}
     }
 }
