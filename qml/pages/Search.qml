@@ -59,15 +59,16 @@ Page {
     }
 
     function performSearch(queryStr, pageToken) {
-        request.params = {
+        var params = {
             "q"          : queryStr,
             "part"       : "snippet",
             "type"       : "video,channel",
             "safeSearch" : _getSafeSearchValue(),
         }
         if (pageToken) {
-            request.params.pageToken = pageToken
+            params.pageToken = pageToken
         }
+        request.params = params
         request.run()
     }
 
@@ -169,7 +170,9 @@ Page {
         onMovementStarted: {
             if (count > 0) {
                 currentIndex = 0
-                currentItem.forceActiveFocus()
+                if (currentItem) {
+                    currentItem.forceActiveFocus()
+                }
             }
         }
 
