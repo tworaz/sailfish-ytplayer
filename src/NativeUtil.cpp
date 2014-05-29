@@ -40,7 +40,7 @@
 #include "config.h"
 #include "NativeUtil.h"
 
-static QString FALLBACK_COUNTRY_CODE = QString("US");
+static QString FALLBACK_COUNTRY_CODE = QString("US"); // Worldwide (All)
 
 static QDBusObjectPath
 getModemPath(QDBusConnection connection)
@@ -145,7 +145,7 @@ NativeUtil::getRegionCode()
         QDBusObjectPath modem = getModemPath(systemBus);
         if (modem.path().isEmpty()) {
             qDebug() << "Failed to find modem";
-            return FALLBACK_COUNTRY_CODE;
+            return (regionCode = FALLBACK_COUNTRY_CODE);
         }
         qDebug() << "Modem Path: " << modem.path();
 
@@ -156,15 +156,17 @@ NativeUtil::getRegionCode()
         QJsonObject::Iterator iter =  mccMap.find(QString::number(mcc));
         if (iter == mccMap.end()) {
             qDebug() << "No country could be found for code " << mcc;
-            return FALLBACK_COUNTRY_CODE;
+            return (regionCode = FALLBACK_COUNTRY_CODE);
         }
-        regionCode = static_cast<QJsonValue>(*iter).toString();
+        QJsonObject obj = static_cast<QJsonValue>(*iter).toObject();
+        Q_ASSERT(obj.contains("name"));
+        regionCode = obj.value("gl").toString();
         qDebug() << "Country code: " << regionCode;
         return regionCode;
     } else {
         qDebug("Failed to connect to system bus!");
     }
-    return FALLBACK_COUNTRY_CODE;
+    return (regionCode = FALLBACK_COUNTRY_CODE);
 }
 
 QString

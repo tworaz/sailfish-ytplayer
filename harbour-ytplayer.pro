@@ -25,7 +25,7 @@ HEADERS += \
         src/YTRequest.h
 
 OTHER_FILES += \
-        scripts/generate-mcc-json.py \
+        scripts/mcc-data-util.py \
         scripts/generate-config-h.py \
         scripts/get_version_str.sh \
         harbour-ytplayer.desktop \
@@ -74,10 +74,10 @@ include(third_party/notifications.pri)
 # mobile county code json target
 mcc_data.target = mcc-data.json
 mcc_data.commands = \
-    $$top_srcdir/scripts/generate-mcc-json.py \
-            -i $$top_srcdir/mcc.txt \
-            -o $$top_builddir/mcc-data.json
-mcc_data.depends = $$top_srcdir/mcc.txt
+    $$top_srcdir/scripts/mcc-data-util.py \
+            --keyfile=$$top_srcdir/youtube-data-api-v3.key \
+            --mccfile=$$top_srcdir/mcc-data.json \
+            --verbose --mode check
 
 # config.h target
 config_h.target = config.h
@@ -95,7 +95,7 @@ PRE_TARGETDEPS += config.h mcc-data.json
 
 DEFINES += VERSION_STR=\\\"$$system($${top_srcdir}/scripts/get_version_str.sh)\\\"
 
-mcc.files = $$top_builddir/mcc-data.json
+mcc.files = $$top_srcdir/mcc-data.json
 mcc.path = /usr/share/$${TARGET}
 
 artwork.files = $$files(images/*)
