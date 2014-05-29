@@ -35,6 +35,8 @@
 #include <QVariantMap>
 #include <QNetworkReply>
 
+#include "YTListModel.h"
+
 class YTRequest : public QObject
 {
     Q_OBJECT
@@ -48,6 +50,7 @@ class YTRequest : public QObject
     Q_PROPERTY(QVariant content READ content WRITE setContent)
     Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
     Q_PROPERTY(bool loaded READ loaded)
+    Q_PROPERTY(YTListModel* model READ model WRITE setModel)
 
 public:
     explicit YTRequest(QObject *parent = 0);
@@ -88,6 +91,8 @@ private:
     void setContent(QVariant content) { _content = content; }
     bool busy() const { return _reply != NULL; }
     bool loaded() const { return _loaded; }
+    void setModel(YTListModel *model) { _model = model; }
+    YTListModel *model() const { return _model; }
     QUrl oAuth2Url() const;
 
     QNetworkReply *_reply;
@@ -97,6 +102,7 @@ private:
     QVariantMap _params;
     QVariant _content;
     bool _loaded;
+    YTListModel *_model;
 };
 
 #endif // YTREQUEST_H

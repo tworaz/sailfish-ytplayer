@@ -135,6 +135,7 @@ YTRequest::YTRequest(QObject *parent)
     , _reply(NULL)
     , _token_reply(NULL)
     , _loaded(false)
+    , _model(NULL)
 {
     if (_network_access_manager.isNull()) {
         qDebug() << "Network access manager for YouTube requests created";
@@ -271,6 +272,12 @@ YTRequest::handleSuccess(QNetworkReply *reply)
     if (contentType.isValid() && contentType.toString().contains("application/json")) {
         QByteArray data = reply->readAll();
         QJsonDocument json = QJsonDocument::fromJson(data);
+        if (_model && (_params.end() != _params.find("part"))) {
+            Q_ASSERT(json.isObject());
+            QJsonValue val = json.object().value("items");
+            Q_ASSERT(val.toVariant().isValid());
+            _model->append(val.toVariant().toList());
+        }
         emit success(QVariant(json.object()));
     } else if (contentType.isValid()) {
         qDebug() << "Unknown response content type: " << contentType.toString();

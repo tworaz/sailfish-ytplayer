@@ -16,13 +16,15 @@ SOURCES += \
         src/NativeUtil.cpp \
         src/Logger.cpp \
         src/Prefs.cpp \
-        src/YTRequest.cpp
+        src/YTRequest.cpp \
+        src/YTListModel.cpp
 
 HEADERS += \
         src/NativeUtil.h \
         src/Logger.h \
         src/Prefs.h \
-        src/YTRequest.h
+        src/YTRequest.h \
+        src/YTListModel.h
 
 OTHER_FILES += \
         scripts/mcc-data-util.py \

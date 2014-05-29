@@ -39,7 +39,7 @@ Page {
     BusyIndicator {
         id: indicator
         anchors.centerIn: parent
-        running: request.busy && resultsListModel.count == 0
+        running: request.busy && resultsListModel.count === 0
         size: BusyIndicatorSize.Large
     }
 
@@ -76,15 +76,12 @@ Page {
         id: request
         method: YTRequest.List
         resource: "search"
+        model: resultsListModel
 
         onSuccess: {
             console.assert(response.kind === "youtube#searchListResponse")
             if (response.hasOwnProperty("nextPageToken")) {
                 page.nextPageToken = response.nextPageToken
-            }
-            //utilityWorkerScript.appendToModel(resultsListModel, response.items)
-            for (var i = 0; i < response.items.length; ++i) {
-                resultsListModel.append(response.items[i])
             }
         }
     }
@@ -156,7 +153,7 @@ Page {
             }
         }
 
-        model: ListModel {
+        model: YTListModel {
             id: resultsListModel
         }
 

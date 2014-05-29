@@ -40,7 +40,7 @@ SilicaListView {
     property string nextPageToken: ""
     property bool hasNextPage: nextPageToken.length > 0
 
-    model: ListModel {
+    model: YTListModel {
         id: videoListModel
     }
 
@@ -64,6 +64,7 @@ SilicaListView {
     YTRequest {
         id: request
         method: YTRequest.List
+        model: videoListModel
 
         onSuccess: {
             console.assert(response.kind === "youtube#playlistItemListResponse" ||
@@ -73,7 +74,6 @@ SilicaListView {
             } else {
                 nextPageToken = ""
             }
-            utilityWorkerScript.appendToModel(videoListModel, response.items)
         }
     }
 

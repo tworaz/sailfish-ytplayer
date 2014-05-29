@@ -90,16 +90,6 @@ Page {
                 listModel.clear()
             }
 
-            /*
-            utilityWorkerScript.appendToModel(listModel, response.items, function() {
-                if (response.nextPageToken) {
-                    listView.nextPageToken = response.nextPageToken
-                } else {
-                    listView.nextPageToken = ""
-                }
-                listView.etag = response.etag
-            })
-            */
             for (var i = 0; i < response.items.length; ++i) {
                 listModel.append(response.items[i])
             }

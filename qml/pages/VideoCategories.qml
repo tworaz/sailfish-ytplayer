@@ -41,7 +41,7 @@ Page {
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            if (videoCategoryListModel.count == 0) {
+            if (videoCategoriesModel.count === 0) {
                 request.run()
             }
             requestCoverPage("Default.qml")
@@ -61,11 +61,7 @@ Page {
         method: YTRequest.List
         resource: "videoCategories"
         params: { "part" : "snippet" }
-
-        onSuccess: {
-            console.assert(response.kind === "youtube#videoCategoryListResponse")
-            utilityWorkerScript.appendCategoryToModel(videoCategoryListModel, response.items)
-        }
+        model: videoCategoriesModel
     }
 
     SilicaListView {
@@ -83,8 +79,8 @@ Page {
             title: qsTrId("ytplayer-title-video-categories")
         }
 
-        model: ListModel {
-            id: videoCategoryListModel
+        model: YTListModel {
+            id: videoCategoriesModel
         }
 
         delegate: BackgroundItem {
