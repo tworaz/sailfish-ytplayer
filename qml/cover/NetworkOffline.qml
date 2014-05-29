@@ -30,11 +30,40 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-Page {
-    Label {
-        anchors.fill: parent
-        text: "Network Error"
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
+CoverBackground {
+    id: root
+
+    Image {
+        anchors.margins: Theme.paddingMedium
+        anchors.top: parent.top
+        anchors.bottom: header.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        fillMode: Image.PreserveAspectFit
+        source: datadir + "/images/logo.png"
+    }
+
+    Rectangle {
+        id: header
+        x: Theme.paddingMedium
+        anchors.centerIn: parent
+        width: root.width
+        height: children[0].height + 2 * Theme.paddingMedium
+        color: "#AA000000"
+
+        Label {
+            anchors.centerIn: parent
+            width: parent.width - 2 * Theme.paddingMedium
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: Theme.fontSizeSmall
+            font.family: Theme.fontFamilyHeading
+            color: Theme.primaryColor
+            maximumLineCount: 2
+            wrapMode: Text.Wrap
+            //: Network offline screen label
+            //% "Network Offline"
+            text: qsTrId("ytplayer-label-network-offline")
+        }
     }
 }
+

@@ -30,6 +30,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer.notifications 1.0
+import harbour.ytplayer 1.0
 import "pages"
 
 ApplicationWindow
@@ -61,6 +62,19 @@ ApplicationWindow
 
     UtilityWorkerScript {
         id: utilityWorkerScript
+    }
+
+    NetworkManager {
+        id: networkManager
+
+        onOnlineChanged: {
+            if (online) {
+                pageStack.pop(undefined, PageStackAction.Immediate)
+            } else {
+                pageStack.push(Qt.resolvedUrl("pages/NetworkOffline.qml"),
+                               undefined, PageStackAction.Immediate)
+            }
+        }
     }
 
     Notification {

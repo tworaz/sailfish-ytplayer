@@ -41,6 +41,7 @@
 #include <notification.h>
 
 #include "YTListModel.h"
+#include "NetworkManager.h"
 #include "NativeUtil.h"
 #include "YTRequest.h"
 #include "Logger.h"
@@ -90,6 +91,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Notification>("harbour.ytplayer.notifications", 1, 0, "Notification");
     qmlRegisterType<YTRequest>("harbour.ytplayer", 1, 0, "YTRequest");
     qmlRegisterType<YTListModel>("harbour.ytplayer", 1, 0, "YTListModel");
+    qmlRegisterType<NetworkManager>("harbour.ytplayer", 1, 0, "NetworkManager");
     view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
     view->rootContext()->setContextProperty("Log", logger.data());
     view->rootContext()->setContextProperty("Prefs", prefs.data());

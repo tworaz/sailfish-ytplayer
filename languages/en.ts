@@ -293,5 +293,10 @@ Menu option to show settings page</extracomment>
         <source>View Logs</source>
         <translation>View Logs</translation>
     </message>
+    <message id="ytplayer-label-network-offline">
+        <source>Network Offline</source>
+        <extracomment>Network offline screen label</extracomment>
+        <translation>Network Offline</translation>
+    </message>
 </context>
 </TS>

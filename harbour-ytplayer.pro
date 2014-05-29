@@ -17,14 +17,16 @@ SOURCES += \
         src/Logger.cpp \
         src/Prefs.cpp \
         src/YTRequest.cpp \
-        src/YTListModel.cpp
+        src/YTListModel.cpp \
+        src/NetworkManager.cpp
 
 HEADERS += \
         src/NativeUtil.h \
         src/Logger.h \
         src/Prefs.h \
         src/YTRequest.h \
-        src/YTListModel.h
+        src/YTListModel.h \
+        src/NetworkManager.h
 
 OTHER_FILES += \
         scripts/mcc-data-util.py \
@@ -43,6 +45,7 @@ OTHER_FILES += \
         qml/cover/VideoPlayer.qml \
         qml/cover/ChannelBrowser.qml \
         qml/cover/CategoryVideoList.qml \
+        qml/cover/NetworkOffline.qml \
         qml/pages/duration.js \
         qml/pages/VideoOverview.qml \
         qml/pages/VideoPlayer.qml \
@@ -62,7 +65,7 @@ OTHER_FILES += \
         qml/pages/LogViewer.qml \
         qml/pages/UtilityWorkerScript.qml \
         qml/pages/UtilityWorkerScript.js \
-        qml/pages/NetworkError.qml
+        qml/pages/NetworkOffline.qml
 
 include(third_party/notifications.pri)
 
