@@ -42,7 +42,7 @@
 #include "config.h"
 #include "NativeUtil.h"
 
-static QScopedPointer<QNetworkAccessManager> _network_access_manager;
+QScopedPointer<QNetworkAccessManager> _network_access_manager;
 static QString YouTubeDataV3Url("https://www.googleapis.com/youtube/v3/");
 static QString YouTubeGetVideoInfoUrl("http://www.youtube.com/get_video_info");
 

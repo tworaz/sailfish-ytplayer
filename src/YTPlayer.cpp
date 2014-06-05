@@ -44,6 +44,7 @@
 #include "NetworkManager.h"
 #include "NativeUtil.h"
 #include "YTRequest.h"
+#include "YTWebFontLoader.h"
 #include "Logger.h"
 #include "Prefs.h"
 
@@ -91,11 +92,14 @@ int main(int argc, char *argv[])
     qmlRegisterType<Notification>("harbour.ytplayer.notifications", 1, 0, "Notification");
     qmlRegisterType<YTRequest>("harbour.ytplayer", 1, 0, "YTRequest");
     qmlRegisterType<YTListModel>("harbour.ytplayer", 1, 0, "YTListModel");
+    qmlRegisterType<YTWebFontLoader>("harbour.ytplayer", 1, 0, "YTWebFontLoader");
     qmlRegisterType<NetworkManager>("harbour.ytplayer", 1, 0, "NetworkManager");
     qmlRegisterType<Logger>("harbour.ytplayer", 1, 0, "LogModel");
+
     view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
     view->rootContext()->setContextProperty("Log", logger.data());
     view->rootContext()->setContextProperty("Prefs", prefs.data());
+
     view->setSource(SailfishApp::pathTo("qml/YTPlayer.qml"));
     view->engine()->setNetworkAccessManagerFactory(new YTPNetworkAccessManagerFactory());
 

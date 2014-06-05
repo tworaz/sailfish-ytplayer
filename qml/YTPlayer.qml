@@ -38,10 +38,11 @@ ApplicationWindow
     property string regionCode: NativeUtil.regionCode
     readonly property string mainIconColor: "#FF980093"
     readonly property double thumbnailAspectRatio: 9 / 16
+    readonly property string youtubeIconsFontName: "youtube-icons"
     // TODO don't hardcode this
     readonly property string datadir: "/usr/share/harbour-ytplayer/"
 
-    initialPage: Component { VideoCategories { } }
+    initialPage: Component { LoadingScreen { } }
     cover: Qt.resolvedUrl("cover/Default.qml")
     property variant coverData
     property variant defaultCoverData
@@ -53,11 +54,6 @@ ApplicationWindow
             cover = coverUrl
             coverData = props
         }
-    }
-
-    FontLoader {
-        id: youtubeWebFont
-        source: "https://www.youtube.com/s/tv/fonts/youtube-icons.ttf"
     }
 
     UtilityWorkerScript {

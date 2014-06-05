@@ -96,11 +96,10 @@ Page {
                     anchors.verticalCenter: parent.verticalCenter
                     horizontalAlignment: Text.AlignHCenter
                     width: 60
-                    font.family: youtubeWebFont.name
+                    font.family: youtubeIconsFontName
                     font.pixelSize: Theme.fontSizeLarge
                     color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
                     text: H.getYouTubeIconForCategoryId(id)
-                    visible: youtubeWebFont.status === FontLoader.Ready
                 }
 
                 Label {

@@ -112,7 +112,6 @@ CoverBackground {
             anchors.centerIn: parent
             width: parent.width - 2 * Theme.paddingMedium
             horizontalAlignment: Text.AlignHCenter
-            font.family: "youtube-icons"
             font.pixelSize: Theme.fontSizeSmall
             color: Theme.primaryColor
             maximumLineCount: 2

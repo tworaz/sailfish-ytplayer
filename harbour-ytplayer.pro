@@ -18,7 +18,8 @@ SOURCES += \
         src/Prefs.cpp \
         src/YTRequest.cpp \
         src/YTListModel.cpp \
-        src/NetworkManager.cpp
+        src/NetworkManager.cpp \
+        src/YTWebFontLoader.cpp
 
 HEADERS += \
         src/NativeUtil.h \
@@ -26,7 +27,8 @@ HEADERS += \
         src/Prefs.h \
         src/YTRequest.h \
         src/YTListModel.h \
-        src/NetworkManager.h
+        src/NetworkManager.h \
+        src/YTWebFontLoader.h
 
 OTHER_FILES += \
         scripts/mcc-data-util.py \
@@ -65,7 +67,8 @@ OTHER_FILES += \
         qml/pages/LogViewer.qml \
         qml/pages/UtilityWorkerScript.qml \
         qml/pages/UtilityWorkerScript.js \
-        qml/pages/NetworkOffline.qml
+        qml/pages/NetworkOffline.qml \
+        qml/pages/LoadingScreen.qml
 
 include(third_party/notifications.pri)
 
