@@ -8,17 +8,6 @@
         <extracomment>Video categories page title</extracomment>
         <translation>Video Categories</translation>
     </message>
-    <message id="ytplayer-action-show-more">
-        <source>Show more</source>
-        <extracomment>Menu option show/load additional list elements
-----------
-Menu option show/load additional list elements
-----------
-Menu option show/load additional list elements
-----------
-Menu option load additional list elements</extracomment>
-        <translation>Show more</translation>
-    </message>
     <message id="ytplayer-label-search">
         <source>Search</source>
         <extracomment>Label of video search text field
@@ -295,8 +284,15 @@ Menu option to show settings page</extracomment>
     </message>
     <message id="ytplayer-label-network-offline">
         <source>Network Offline</source>
-        <extracomment>Network offline screen label</extracomment>
+        <extracomment>Network offline screen label
+----------
+Network offline screen label</extracomment>
         <translation>Network Offline</translation>
+    </message>
+    <message id="ytplayer-label-loading">
+        <source>Loading</source>
+        <extracomment>Generic label informing user some content is being loaded</extracomment>
+        <translation>Loading</translation>
     </message>
 </context>
 </TS>

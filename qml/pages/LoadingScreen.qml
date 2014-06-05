@@ -75,7 +75,9 @@ Page {
         }
 
         Label {
-            text: "Loading"
+            //: Generic label informing user some content is being loaded
+            //% "Loading"
+            text: qsTrId("ytplayer-label-loading")
             anchors.top: indicator.bottom
             anchors.horizontalCenter: parent.horizontalCenter
             width: parent.width
