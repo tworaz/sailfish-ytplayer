@@ -78,16 +78,17 @@ SilicaListView {
     }
 
     function loadNextResultsPage() {
+        var params = {};
         if (videoResourceId.kind === "youtube#videoCategory") {
             request.resource = "videos"
-            request.params = {
+            params = {
                 "part"            : "snippet",
                 "chart"           : "mostPopular",
                 "videoCategoryId" : videoResourceId.id,
             }
         } else if (videoResourceId.kind === "#channelPlaylist") {
             request.resource = "playlistItems"
-            request.params = {
+            params = {
                 "part"       : "snippet",
                 "playlistId" : videoResourceId.id,
             }
@@ -97,9 +98,10 @@ SilicaListView {
         }
 
         if (nextPageToken.length > 0) {
-            request.params.pageToken = nextPageToken
+            params.pageToken = nextPageToken
         }
 
+        request.params = params
         request.run()
     }
 
