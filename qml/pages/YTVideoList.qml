@@ -77,6 +77,12 @@ SilicaListView {
         }
     }
 
+    onAtYEndChanged: {
+        if (atYEnd && nextPageToken.length > 0 && !busy) {
+            loadNextResultsPage();
+        }
+    }
+
     function loadNextResultsPage() {
         var params = {};
         if (videoResourceId.kind === "youtube#videoCategory") {

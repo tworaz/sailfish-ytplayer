@@ -96,15 +96,8 @@ Page {
         }
 
         PushUpMenu {
-            visible: page.nextPageToken.length > 0
-            quickSelect: true
-            busy: request.busy
-            MenuItem {
-                //: Menu option load additional list elements
-                //% "Show more"
-                text: qsTrId("ytplayer-action-show-more")
-                onClicked: searchView.loadNextResultsPage()
-            }
+            visible: request.busy
+            busy: true
         }
 
         header: SearchField {
@@ -173,10 +166,16 @@ Page {
             }
         }
 
-        onContentYChanged: {
-            if (contentY === -searchView.headerItem.height && !pageStack.busy) {
+        onAtYBeginningChanged: {
+            if (atYBeginning && !pageStack.busy) {
                 currentIndex = -1
                 searchView.headerItem.forceActiveFocus()
+            }
+        }
+
+        onAtYEndChanged: {
+            if (atYEnd && page.nextPageToken.length > 0 && !request.busy) {
+                loadNextResultsPage()
             }
         }
 

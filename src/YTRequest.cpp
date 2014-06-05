@@ -211,7 +211,7 @@ YTRequest::run()
     }
 
     connect(_reply, SIGNAL(finished()), this, SLOT(onFinished()));
-    emit busyChanged();
+    emit busyChanged(true);
 }
 
 void
@@ -262,7 +262,7 @@ YTRequest::onFinished()
 
     _reply->deleteLater();
     _reply = NULL;
-    emit busyChanged();
+    emit busyChanged(false);
 }
 
 void

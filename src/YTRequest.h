@@ -67,7 +67,7 @@ public:
 signals:
     void success(QVariant response);
     void error(QVariant details);
-    void busyChanged();
+    void busyChanged(bool busy);
 
 protected slots:
     void onTokenRequestFinished();

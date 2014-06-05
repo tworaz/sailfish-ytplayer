@@ -103,30 +103,32 @@ Page {
     }
 
     function fetchDataForCurrentState(token) {
+        var params = {}
         if (state === "SUBSCRIPTIONS") {
             request.resource = "subscriptions"
-            request.params = {
+            params = {
                 "part" : "id",
                 "mine" : true,
                 "part" : "snippet"
             }
         } else if (state === "LIKES") {
             request.resource = "videos"
-            request.params = {
+            params = {
                 "part"     : "snippet",
                 "myRating" : "like"
             }
         } else if (state === "DISLIKES") {
             request.resource = "videos"
-            request.params = {
+            params = {
                 "part"     : "snippet",
                 "myRating" : "dislike"
             }
         }
 
         if (token) {
-            request.params.pageToken = token
+            params.pageToken = token
         }
+        request.params = params
 
         request.run()
     }
@@ -161,15 +163,13 @@ Page {
         }
 
         PushUpMenu {
-            visible: listView.nextPageToken.length > 0
-            busy: request.busy
-            quickSelect: true
-            MenuItem {
-                visible: parent.visible
-                //: Menu option show/load additional list elements
-                //% "Show more"
-                text: qsTrId("ytplayer-action-show-more")
-                onClicked: root.fetchDataForCurrentState(nextPageToken)
+            visible: request.busy
+            busy: true
+        }
+
+        onAtYEndChanged: {
+            if (atYEnd && nextPageToken.length > 0 && !request.busy) {
+                root.fetchDataForCurrentState(nextPageToken)
             }
         }
 
