@@ -45,7 +45,7 @@ QContiguousCache<QVariantMap> *Logger::_log_cache =
         new QContiguousCache<QVariantMap>(LOG_CACHE_SIZE);
 
 Logger::Logger(QObject *parent)
-    : QObject(parent)
+    : QAbstractListModel(parent)
 {
 }
 
@@ -55,14 +55,42 @@ Logger::Register()
     _original_handler = qInstallMessageHandler(Logger::_messageHandler);
 }
 
-QVariant
-Logger::getHistory() const
+int
+Logger::rowCount(const QModelIndex&) const
 {
-    QList<QVariant> list;
-    for (int i = _log_cache->firstIndex(); i <= _log_cache->lastIndex(); ++i) {
-        list.append(_log_cache->at(i));
+    return _log_cache->size();
+}
+
+QVariant
+Logger::data(const QModelIndex &index, int role) const
+{
+    if (index.row() < 0 || index.row() >= _log_cache->size()) {
+        return QVariant();
     }
-    return QVariant(list);
+
+    if (!_log_cache->areIndexesValid()) {
+        _log_cache->normalizeIndexes();
+    }
+
+    QVariantMap map = _log_cache->at(_log_cache->firstIndex() + index.row());
+
+    if (role == Qt::UserRole + 1) {
+        return map.value("type").toInt();
+    } else if (role == Qt::UserRole + 2) {
+        return map.value("message").toString();
+    } else {
+        qWarning() << "Unknown role type: " << role;
+        return QVariant();
+    }
+}
+
+QHash<int, QByteArray>
+Logger::roleNames() const
+{
+    QHash<int, QByteArray> roles;
+    roles[Qt::UserRole + 1] = "type";
+    roles[Qt::UserRole + 2] = "message";
+    return roles;
 }
 
 void

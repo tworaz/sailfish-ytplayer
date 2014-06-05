@@ -29,15 +29,9 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer 1.0
 
 Page {
-
-    Component.onCompleted: {
-        for (var i = 0; i < Log.history.length; ++i) {
-            logsList.append(Log.history[i])
-        }
-    }
-
     onStatusChanged: {
         if (status === PageStatus.Active) {
             requestCoverPage("Default.qml")
@@ -52,21 +46,23 @@ Page {
             title: qsTrId("ytplayer-title-log-viewer")
         }
 
-        model: ListModel {
-            id: logsList
-        }
+        model: LogModel { }
 
         delegate: Component {
             Rectangle {
                 width: parent.width
-                height: children[0].height + Theme.paddingSmall
+                height: children[0].height + Theme.paddingMedium
 
                 color: {
                     switch (type) {
-                    case 0: return "#662219B2"
-                    case 1: return "#66FF0000"
-                    case 2: return "#66FFFD00"
-                    case 3: return "#6641DB00"
+                    case LogModel.LOG_DEBUG:
+                        return "#662219B2"
+                    case LogModel.LOG_ERROR:
+                        return "#66FF0000"
+                    case LogModel.LOG_WARN:
+                        return "#66FFFD00"
+                    case LogModel.LOG_INFO:
+                        return "#6641DB00"
                     }
                 }
 

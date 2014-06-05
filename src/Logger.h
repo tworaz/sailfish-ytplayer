@@ -36,14 +36,21 @@
 #include <QMessageLogContext>
 #include <QVariantMap>
 #include <QContiguousCache>
+#include <QAbstractListModel>
 
-class Logger : public QObject
+class Logger : public QAbstractListModel
 {
     Q_OBJECT
-
-    Q_PROPERTY(QVariant history READ getHistory)
+    Q_ENUMS(LogType)
 
 public:
+    enum LogType {
+        LOG_DEBUG = 0,
+        LOG_ERROR,
+        LOG_WARN,
+        LOG_INFO
+    };
+
     explicit Logger(QObject *parent = 0);
 
     static void Register();
@@ -53,16 +60,12 @@ public:
     Q_INVOKABLE void warn(QString msg)  { _log(LOG_WARN, msg); }
     Q_INVOKABLE void info(QString msg)  { _log(LOG_INFO, msg); }
 
+    // QAbstractListModel
+    int rowCount(const QModelIndex& parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role) const;
+    QHash<int, QByteArray> roleNames() const;
+
 private:
-    enum LogType {
-        LOG_DEBUG = 0,
-        LOG_ERROR,
-        LOG_WARN,
-        LOG_INFO
-    };
-
-    QVariant getHistory() const;
-
     void _log(LogType, QString);
     static void _messageHandler(QtMsgType, const QMessageLogContext&, const QString&);
 

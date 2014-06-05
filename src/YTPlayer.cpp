@@ -92,6 +92,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<YTRequest>("harbour.ytplayer", 1, 0, "YTRequest");
     qmlRegisterType<YTListModel>("harbour.ytplayer", 1, 0, "YTListModel");
     qmlRegisterType<NetworkManager>("harbour.ytplayer", 1, 0, "NetworkManager");
+    qmlRegisterType<Logger>("harbour.ytplayer", 1, 0, "LogModel");
     view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
     view->rootContext()->setContextProperty("Log", logger.data());
     view->rootContext()->setContextProperty("Prefs", prefs.data());
