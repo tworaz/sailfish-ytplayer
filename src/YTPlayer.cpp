@@ -88,14 +88,6 @@ int main(int argc, char *argv[])
 	view->setSource(SailfishApp::pathTo("qml/YTPlayer.qml"));
 	view->engine()->setNetworkAccessManagerFactory(new YTPNetworkAccessManagerFactory());
 
-	// Ugly hack to work around harbour restrictions
-	QString mediaPlugin("/usr/lib/qt5/qml/Sailfish/Media/libsailfishmediaplugin.so");
-	QList<QQmlError> errors;
-	if (!view->engine()->importPlugin(mediaPlugin, QString("harbour.ytplayer.Media"), &errors)) {
-		qDebug() << "Failed to import sailfish media plugin: " << errors;
-	}
-	// End hack
-
 	view->showFullScreen();
 
 	return app->exec();

@@ -30,8 +30,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtMultimedia 5.0
-//import Sailfish.Media 1.0
-import harbour.ytplayer.Media 1.0
 import "YoutubeClientV3.js" as Yt
 
 Page {
@@ -128,8 +126,7 @@ Page {
         anchors.topMargin: topDockPanel.margin
         anchors.bottomMargin: videoController.margin
 
-        // TODO: Use VideoOutput once it's working
-        GStreamerVideoOutput {
+        VideoOutput {
             id: videoOutput
             source: mediaPlayer
             anchors.fill: parent
