@@ -56,10 +56,6 @@ ApplicationWindow
         }
     }
 
-    UtilityWorkerScript {
-        id: utilityWorkerScript
-    }
-
     NetworkManager {
         id: networkManager
 

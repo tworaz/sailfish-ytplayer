@@ -65,8 +65,6 @@ OTHER_FILES += \
         qml/pages/YTPagesTopMenu.qml \
         qml/pages/YTLikeButtons.qml \
         qml/pages/LogViewer.qml \
-        qml/pages/UtilityWorkerScript.qml \
-        qml/pages/UtilityWorkerScript.js \
         qml/pages/NetworkOffline.qml \
         qml/pages/LoadingScreen.qml
 

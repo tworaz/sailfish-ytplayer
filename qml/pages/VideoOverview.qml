@@ -30,6 +30,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer 1.0
+import "duration.js" as DJS
 import "../common"
 
 Dialog {
@@ -92,10 +93,7 @@ Dialog {
 
             var pd = new Date(details.snippet.publishedAt)
             publishDate.value = Qt.formatDateTime(pd, "d MMMM yyyy")
-
-            utilityWorkerScript.parseDuration(details.contentDetails.duration, function(d) {
-                duration.value = d
-            })
+            duration.value = (new DJS.Duration(details.contentDetails.duration)).asClock()
 
             header.title = details.snippet.title
             indicator.running = false
