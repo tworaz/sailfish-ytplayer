@@ -147,15 +147,7 @@ Page {
 
         PushUpMenu {
             visible: listView.nextPageToken.length > 0
-            busy: root.loadingData
-            quickSelect: true
-            MenuItem {
-                visible: parent.visible
-                //: Menu option show/load additional list elements
-                //% "Show more"
-                text: qsTrId("ytplayer-action-show-more")
-                onClicked: root.fetchDataForCurrentState(nextPageToken)
-            }
+            busy: true
         }
 
         header: Column {
@@ -211,6 +203,12 @@ Page {
                 } else {
                     Log.error("Unknown item in the list!")
                 }
+            }
+        }
+
+        onAtYEndChanged: {
+            if (atYEnd && listView.nextPageToken.length > 0 && !loadingData) {
+                root.fetchDataForCurrentState(listView.nextPageToken)
             }
         }
 

@@ -70,15 +70,8 @@ Page {
         }
 
         PushUpMenu {
-            visible: videoListView.hasNextPage
-            busy: videoListView.busy
-            quickSelect: true
-            MenuItem {
-                //: Menu option show/load additional list elements
-                //% "Show more"
-                text: qsTrId("ytplayer-action-show-more")
-                onClicked: videoListView.loadNextResultsPage()
-            }
+            visible: videoListView.busy
+            busy: true
         }
 
         header: PageHeader {

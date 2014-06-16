@@ -135,14 +135,7 @@ Page {
 
         PushUpMenu {
             visible: (channelVideoList.hasNextPage || channelVideoList.busy)
-            busy: channelVideoList.busy
-            quickSelect: true
-            MenuItem {
-                //: Menu option show/load additional list elements
-                //% "Show more"
-                text: qsTrId("ytplayer-action-show-more")
-                onClicked: channelVideoList.loadNextResultsPage()
-            }
+            busy: true
         }
 
         header: Column {

@@ -61,16 +61,8 @@ Page {
         }
 
         PushUpMenu {
-            id: bottomMenu
             visible: page.nextPageToken.length > 0
-            quickSelect: true
-            MenuItem {
-                visible: parent.visible
-                //: Menu option load additional list elements
-                //% "Show more"
-                text: qsTrId("ytplayer-action-show-more")
-                onClicked: searchView.loadNextResultsPage()
-            }
+            busy: true
         }
 
         header: SearchField {
@@ -133,7 +125,15 @@ Page {
         onMovementStarted: {
             if (count > 0) {
                 currentIndex = 0
-                currentItem.forceActiveFocus()
+                if (currentItem) {
+                    currentItem.forceActiveFocus()
+                }
+            }
+        }
+
+        onAtYEndChanged: {
+            if (atYEnd && nextPageToken.length > 0 && !indicator.running) {
+                searchView.loadNextResultsPage()
             }
         }
 
@@ -148,7 +148,6 @@ Page {
             Log.debug("Loading next page of results, token: " + page.nextPageToken)
             Yt.getSearchResults(searchHandler.queryStr, searchView.onSearchSuccessful,
                                 searchView.onSearchFailed, page.nextPageToken)
-            bottomMenu.busy = true
         }
 
         function onSearchSuccessful(results) {
@@ -159,7 +158,6 @@ Page {
                 page.nextPageToken = results.nextPageToken
             }
             indicator.running = false
-            bottomMenu.busy = false
         }
 
         function onSearchFailed(msg) {

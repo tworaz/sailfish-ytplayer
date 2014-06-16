@@ -61,6 +61,12 @@ SilicaListView {
         }
     }
 
+    onAtYEndChanged: {
+        if (atYEnd && hasNextPage && !root.busy) {
+            loadNextResultsPage()
+        }
+    }
+
     function onFailure(error) {
         errorNotification.show(error)
         root.busy = false
