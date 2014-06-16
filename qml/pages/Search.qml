@@ -169,7 +169,9 @@ Page {
         onAtYBeginningChanged: {
             if (atYBeginning && !pageStack.busy) {
                 currentIndex = -1
-                searchView.headerItem.forceActiveFocus()
+                if (searchView.headerItem) {
+                    searchView.headerItem.forceActiveFocus()
+                }
             }
         }
 
