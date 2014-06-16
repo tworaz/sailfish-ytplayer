@@ -294,5 +294,10 @@ Network offline screen label</extracomment>
         <extracomment>Generic label informing user some content is being loaded</extracomment>
         <translation>Loading</translation>
     </message>
+    <message id="ytplayer-label-video-quality">
+        <source>Video quality</source>
+        <extracomment>Label for menu option allowing the user to change video quality</extracomment>
+        <translation type="unfinished">Video quality</translation>
+    </message>
 </context>
 </TS>

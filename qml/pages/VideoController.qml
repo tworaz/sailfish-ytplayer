@@ -30,17 +30,36 @@
 import QtQuick 2.0
 import QtMultimedia 5.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer 1.0
 import "../common/Helpers.js" as H
 
 
 DockedPanel {
+    id: root
+    flickableDirection: Flickable.VerticalFlick
+    width: parent.width
+    height: controls.height + 2 * Theme.paddingLarge
+    contentHeight: height
+
     property alias mediaPlayer: _mediaPlayer
     property alias seeking: progressSlider.down
     property bool playing: _mediaPlayer.playbackState === MediaPlayer.PlayingState
     property bool playbackFinished: _mediaPlayer.status === MediaPlayer.EndOfMedia
     property bool showIndicator: false
+    property string videoId
+    property variant streams
 
-    flickableDirection: Flickable.VerticalFlick
+    onStreamsChanged: menu.handleNewStreams()
+
+    function activate() {
+        if (!streams) {
+            request.run()
+        }
+    }
+
+    function hideBottomMenu() {
+        menu.close(true)
+    }
 
     Rectangle {
         anchors.fill: parent
@@ -48,9 +67,140 @@ DockedPanel {
         opacity: 0.5
     }
 
+    YTRequest {
+        id: request
+        method: YTRequest.List
+        resource: "video/url"
+        params: {
+            "video_id" : videoId,
+        }
+
+        onSuccess: {
+            streams = response ? response : getFallbackUrls()
+        }
+
+        function getFallbackUrls() {
+            var base = "http://ytapi.com/?vid=" + videoId + "&format=direct&itag="
+            return {
+                "240p" : { "url" : base + 36 },
+                "360p" : { "url" : base + 18 },
+                "720p" : { "url" : base + 22 },
+            }
+        }
+    }
+
+    Connections {
+        target: root
+
+        // Make sure video quality menu is closed together with the panel
+        onOpenChanged: {
+            if (!root.open) {
+                Log.debug("Hiding video controls bottom menu")
+                menu.close(false)
+            }
+        }
+    }
+
+    PushUpMenu {
+        id: menu
+        bottomMargin: Theme.paddingLarge
+        topMargin: Theme.paddingLarge
+
+        property Item selectedItem
+        property int visibleChildren: 3
+        property int switchWidth: width / visibleChildren
+
+        MenuLabel {
+            //: Label for menu option allowing the user to change video quality
+            //% "Video quality"
+            text: qsTrId("ytplayer-label-video-quality")
+        }
+        Row {
+            width: parent.width
+            TextSwitch {
+                id: q360p
+                text: "360p"
+                automaticCheck: false
+                width: menu.switchWidth
+                onClicked: menu.handleClickOn(q360p)
+            }
+            TextSwitch {
+                id: q720p
+                text: "720p"
+                automaticCheck: false
+                width: menu.switchWidth
+                onClicked: menu.handleClickOn(q720p)
+            }
+            TextSwitch {
+                id: q1080p
+                text: "1080p"
+                automaticCheck: false
+                width: menu.switchWidth
+                onClicked: menu.handleClickOn(q720p)
+            }
+        }
+
+        function handleClickOn(item) {
+            if (item.checked) {
+                menu.close(false)
+                return;
+            }
+            if (selectedItem) {
+                selectedItem.checked = false
+            }
+            selectedItem = item
+            selectedItem.checked = true
+            _mediaPlayer.savePosition()
+            _mediaPlayer.source = root.streams[item.text].url
+            menu.close(false)
+        }
+
+        function handleNewStreams() {
+            var keys = Object.keys(root.streams)
+            Log.debug("Available video stream qualities: " + keys)
+
+            if (keys.length === 1) {
+                Log.debug("Only one video quality available, hiding quality selection menu")
+                visible = false
+                _mediaPlayer.source = root.streams[keys[0]].url
+                return
+            }
+
+            var initialItem, visibleItems = 0
+            var _h = function (item, makeDefault) {
+                if (root.streams.hasOwnProperty(item.text)) {
+                    item.visible = true
+                    visibleItems++
+                    if (makeDefault) {
+                        initialItem = item
+                    }
+                } else {
+                    item.visible = false
+                }
+            }
+            _h(q360p, true)
+            _h(q720p, true)
+            _h(q1080p)
+
+            // Don't change quality in case it was already selected
+            if (selectedItem) {
+                initialItem = selectedItem
+            }
+            visibleChildren = visibleItems
+            handleClickOn(initialItem)
+        }
+    }
+
     MediaPlayer {
         id: _mediaPlayer
-        autoPlay: true
+        autoPlay: _savedPosition === 0
+
+        property int _savedPosition: 0
+
+        function savePosition() {
+            Log.debug("Saving current playback position: " + H.parseDuration(position))
+            _savedPosition = position
+        }
 
         onStatusChanged: {
             Log.debug("Media Player status changed to: " +
@@ -63,6 +213,13 @@ DockedPanel {
                 break
             case MediaPlayer.Buffered:
                 showIndicator = false
+                break
+            case MediaPlayer.EndOfMedia:
+                if (position < duration) {
+                    Log.debug("End of media signal received, but positon < duration")
+                    savePosition()
+                    request.run()
+                }
                 break
             }
 
@@ -84,6 +241,10 @@ DockedPanel {
         }
 
         onPositionChanged: {
+            if (_savedPosition > 0 && position <= _savedPosition) {
+                return
+            }
+
             if (!progressSlider.down && status === MediaPlayer.Buffered) {
                 progressSlider.value = position
             }
@@ -91,8 +252,19 @@ DockedPanel {
 
         onDurationChanged: {
             Log.debug("Media player duration changed: " + H.parseDuration(duration))
-            progressSlider.value = 0
+            if (_savedPosition === 0) {
+                progressSlider.value = 0
+            }
             progressSlider.maximumValue = duration
+        }
+
+        onSeekableChanged: {
+            Log.debug("Seekable changed: " + seekable)
+            if (seekable && _savedPosition) {
+                seek(_savedPosition)
+                _savedPosition = 0
+                play()
+            }
         }
 
         onError: {
@@ -147,6 +319,7 @@ DockedPanel {
     }
 
     Row {
+        id: controls
         x: Theme.paddingLarge
         width: parent.width - Theme.paddingLarge
         height: parent.height

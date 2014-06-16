@@ -351,6 +351,7 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
     QString streamMap = query.queryItemValue("url_encoded_fmt_stream_map");
     if (streamMap.isEmpty()) {
         qWarning() << "YouTube get_video_info did not return proper stream map!";
+        qDebug() << "Reply: " << reply->readAll();
         emit success(QVariant());
         return;
     }
@@ -361,24 +362,50 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
         emit success(QVariant());
     }
 
-    QVariantList streamList;
+    QVariantMap outMap;
     for (int i = 0; i < mapEntries.size(); ++i) {
         query = QUrlQuery(mapEntries[i]);
         QueryItemList items = query.queryItems();
         QueryItemList::Iterator it;
-        QVariantMap map;
+
+        int itag = -1;
+        QMap<QString, QVariant> streamDetailsMap;
+
         for (it = items.begin(); it != items.end(); ++it) {
             if (it->first == "url") {
                 QString decodedUrl = QUrl::fromPercentEncoding(it->second.toLocal8Bit());
                 decodedUrl = QUrl::fromPercentEncoding(decodedUrl.toLocal8Bit());
-                map.insert(it->first, QVariant(decodedUrl));
+                streamDetailsMap.insert(it->first, decodedUrl);
+            } else if (it->first == "itag") {
+                itag = it->second.toInt();
+            } else if (it->first == "s" ) {
+                qWarning() << "Playback of encrypted content not supported, yet";
+                emit success(QVariant());
+                return;
             } else {
-                map.insert(it->first, QVariant(it->second));
+                streamDetailsMap.insert(it->first, it->second);
             }
         }
-        streamList.append(map);
+        Q_ASSERT(!streamDetailsMap.empty());
+
+        // TODO: Allow steaming only audio
+        // 139 MP4 Low bitrate AO
+        // 140 MP4 Med bitrate AO
+        // 141 MP4 Hi bitrate AO
+        switch (itag) {
+        case 18: // MP4 480 x 360
+            outMap.insert("360p", streamDetailsMap);
+            break;
+        case 22: // MP4 1280 x 720
+            outMap.insert("720p", streamDetailsMap);
+            break;
+        case 37: // MP4 1920 x 1080
+            outMap.insert("1080p", streamDetailsMap);
+            break;
+        }
     }
-    emit success(streamList);
+
+    emit success(outMap);
 }
 
 void

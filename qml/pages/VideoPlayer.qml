@@ -40,10 +40,9 @@ Page {
 
     property alias mediaPlayer: videoController.mediaPlayer
     property alias title: header.title
+    property alias videoId: videoController.videoId
     property variant thumbnails
     property bool applicationActive: Qt.application.active
-    property string videoId
-    property variant _streams
 
     Component.onCompleted: {
         Log.debug("Video player page created, video ID: " + videoId)
@@ -57,53 +56,11 @@ Page {
                 "thumbnails"  : thumbnails,
                 "mediaPlayer" : mediaPlayer
             })
-            request.run()
+            videoController.activate()
         } else if (status === PageStatus.Deactivating) {
             Log.debug("VidePlayer page deactivating");
             mediaPlayer.stop()
-            videoOutput.source = null
         }
-    }
-
-    YTRequest {
-        id: request
-        method: YTRequest.List
-        resource: "video/url"
-        params: {
-            "video_id" : videoId,
-        }
-
-        onSuccess: {
-            utilityWorkerScript.parseStreamsInfo(response, function(map) {
-                Log.debug("Streams map: " + JSON.stringify(map, undefined, 2))
-                if (H.isEmptyObject(map)) {
-                    _streams = getFallbackUrls()
-                } else {
-                    _streams = map
-                }
-                selectStream()
-            })
-        }
-    }
-
-    function getFallbackUrls() {
-        var base = "http://ytapi.com/?vid=" + videoId + "&format=direct&itag="
-        return {
-            "small"  : base + 36,
-            "medium" : base + 18,
-            "high"   : base + 22,
-        }
-    }
-
-    function selectStream() {
-        if (_streams.high) {
-            mediaPlayer.source = _streams.high
-        } else if (_streams.medium) {
-            mediaPlayer.source = _streams.medium
-        } else {
-            mediaPlayer.source = _streams.small
-        }
-        Log.debug("Selected URL: " + mediaPlayer.source)
     }
 
     onApplicationActiveChanged:  {
@@ -119,6 +76,7 @@ Page {
         if (page.orientation & (Orientation.Landscape | Orientation.LandscapeInverted)) {
             Log.debug("Video player orientation changed to landscape")
             showVideoControls(!videoController.playing)
+            videoController.hideBottomMenu()
             if (videoController.playing) {
                 controlsTimer.restart()
             }
