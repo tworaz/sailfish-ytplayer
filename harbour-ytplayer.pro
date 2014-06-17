@@ -69,6 +69,7 @@ OTHER_FILES += \
         qml/pages/LoadingScreen.qml
 
 include(third_party/notifications.pri)
+include(languages/translations.pri)
 
 !exists($${top_srcdir}/youtube-data-api-v3.key) {
     error("YouTube data api key file not found: youtube-data-api-v3.key")
@@ -107,13 +108,7 @@ mcc.path = /usr/share/$${TARGET}
 artwork.files = $$files(images/*)
 artwork.path = /usr/share/$${TARGET}/images
 
-localization.files = $$files(languages/*.qm)
-localization.path = /usr/share/$${TARGET}/languages
-
-INSTALLS += localization mcc artwork
-
-TRANSLATIONS += \
-        languages/en.ts
+INSTALLS += mcc artwork
 
 lupdate_only{
 SOURCES += \
