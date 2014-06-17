@@ -40,7 +40,7 @@ CoverBackground {
         anchors.left: parent.left
         anchors.right: parent.right
         fillMode: Image.PreserveAspectFit
-        source: datadir + "/images/logo.png"
+        source: "qrc:///misc/logo.png"
     }
 
     Rectangle {

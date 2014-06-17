@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/misc">
+        <file>logo.png</file>
+        <file>mcc-data.json</file>
+    </qresource>
+</RCC>

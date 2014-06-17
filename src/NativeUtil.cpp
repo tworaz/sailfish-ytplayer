@@ -106,11 +106,10 @@ getMobileCountryCode(QDBusConnection conn, QDBusObjectPath modem)
 static QJsonObject
 getMobileCountryCodeMap()
 {
-    QString mccPath = SailfishApp::pathTo(QString("mcc-data.json")).toLocalFile();
-    QFile mccFile(mccPath);
+    QFile mccFile(":/misc/mcc-data.json");
 
     if (!mccFile.open(QIODevice::ReadOnly)) {
-        qDebug("Mobile Country Code file not found, please check your installation");
+        qCritical("mcc-data.json not found in application resources!");
         return QJsonObject();
     }
 
@@ -121,7 +120,7 @@ getMobileCountryCodeMap()
     if (doc.isObject()) {
         return doc.object();
     } else {
-        qDebug("Invalid Mobile Country Code dictionary, please check your installation!");
+        qCritical("Invalid Mobile Country Code data file!");
     }
     return QJsonObject();
 }

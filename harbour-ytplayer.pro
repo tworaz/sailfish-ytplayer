@@ -31,10 +31,10 @@ HEADERS += \
         src/YTWebFontLoader.h
 
 OTHER_FILES += \
+        harbour-ytplayer.desktop \
         scripts/mcc-data-util.py \
         scripts/generate-config-h.py \
         scripts/get_version_str.sh \
-        harbour-ytplayer.desktop \
         rpm/harbour-ytplayer.yaml \
         rpm/harbour-ytplayer.spec \
         qml/YTPlayer.qml \
@@ -70,6 +70,7 @@ OTHER_FILES += \
 
 include(third_party/notifications.pri)
 include(languages/translations.pri)
+include(resources/resources.pri)
 
 !exists($${top_srcdir}/youtube-data-api-v3.key) {
     error("YouTube data api key file not found: youtube-data-api-v3.key")
@@ -77,14 +78,6 @@ include(languages/translations.pri)
 !exists($${top_srcdir}/youtube-client-id.json) {
     warning("YouTube client ID file not found, client authotization won't work!")
 }
-
-# mobile county code json target
-mcc_data.target = mcc-data.json
-mcc_data.commands = \
-    $$top_srcdir/scripts/mcc-data-util.py \
-            --keyfile=$$top_srcdir/youtube-data-api-v3.key \
-            --mccfile=$$top_srcdir/mcc-data.json \
-            --verbose --mode check
 
 # config.h target
 config_h.target = config.h
@@ -97,18 +90,18 @@ config_h.depends = \
     $$top_srcdir/youtube-data-api-v3.key \
     $$top_srcdir/youtube-client-id.json
 
-QMAKE_EXTRA_TARGETS += config_h mcc_data
-PRE_TARGETDEPS += config.h mcc-data.json
+QMAKE_EXTRA_TARGETS += config_h
+PRE_TARGETDEPS += config.h
 
 DEFINES += VERSION_STR=\\\"$$system($${top_srcdir}/scripts/get_version_str.sh)\\\"
 
-mcc.files = $$top_srcdir/mcc-data.json
-mcc.path = /usr/share/$${TARGET}
+#mcc.files = $$top_srcdir/mcc-data.json
+#mcc.path = /usr/share/$${TARGET}
 
-artwork.files = $$files(images/*)
-artwork.path = /usr/share/$${TARGET}/images
+#artwork.files = $$files(images/*)
+#artwork.path = /usr/share/$${TARGET}/images
 
-INSTALLS += mcc artwork
+#INSTALLS += mcc artwork
 
 lupdate_only{
 SOURCES += \

@@ -48,8 +48,8 @@ CoverBackground {
         resource: "search"
         params: {
             "part"       : "snippet",
-                    "maxResults" : 12,
-                    "order"      : "rating",
+            "maxResults" : 12,
+            "order"      : "rating",
         }
 
         onSuccess: {
@@ -95,7 +95,7 @@ CoverBackground {
         anchors.left: parent.left
         anchors.right: parent.right
         fillMode: Image.PreserveAspectFit
-        source: datadir + "/images/logo.png"
+        source: "qrc:///misc/logo.png"
         z: imageGrid.z + 1
     }
 
