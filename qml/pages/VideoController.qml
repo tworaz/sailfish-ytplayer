@@ -43,18 +43,30 @@ DockedPanel {
 
     property alias mediaPlayer: _mediaPlayer
     property alias seeking: progressSlider.down
-    property bool playing: _mediaPlayer.playbackState === MediaPlayer.PlayingState
-    property bool playbackFinished: _mediaPlayer.status === MediaPlayer.EndOfMedia
+    property alias playing: _mediaPlayer.playing
+    property alias playbackFinished: _mediaPlayer.finished
     property bool showIndicator: false
     property string videoId
-    property variant streams
 
-    onStreamsChanged: menu.handleNewStreams()
+    QtObject {
+        id: priv
+        property bool resumeOnActivate: false
+        property variant streams
+    }
+
 
     function activate() {
-        if (!streams) {
+        if (!priv.streams) {
             request.run()
+        } else if (priv.resumeOnActivate && Qt.application.active) {
+            Log.debug("Video player activated, resuming video playback")
+            _mediaPlayer.play()
         }
+    }
+
+    function deactivate() {
+        priv.resumeOnActivate = _mediaPlayer.playing
+        mediaPlayer.pause()
     }
 
     function hideBottomMenu() {
@@ -76,7 +88,8 @@ DockedPanel {
         }
 
         onSuccess: {
-            streams = response ? response : getFallbackUrls()
+            priv.streams = response ? response : getFallbackUrls()
+            menu.handleNewStreams()
         }
 
         function getFallbackUrls() {
@@ -151,24 +164,24 @@ DockedPanel {
             selectedItem = item
             selectedItem.checked = true
             _mediaPlayer.savePosition()
-            _mediaPlayer.source = root.streams[item.text].url
+            _mediaPlayer.source = priv.streams[item.text].url
             menu.close(false)
         }
 
         function handleNewStreams() {
-            var keys = Object.keys(root.streams)
+            var keys = Object.keys(priv.streams)
             Log.debug("Available video stream qualities: " + keys)
 
             if (keys.length === 1) {
                 Log.debug("Only one video quality available, hiding quality selection menu")
                 visible = false
-                _mediaPlayer.source = root.streams[keys[0]].url
+                _mediaPlayer.source = priv.streams[keys[0]].url
                 return
             }
 
             var initialItem, visibleItems = 0
             var _h = function (item, makeDefault) {
-                if (root.streams.hasOwnProperty(item.text)) {
+                if (priv.streams.hasOwnProperty(item.text)) {
                     item.visible = true
                     visibleItems++
                     if (makeDefault) {
@@ -193,13 +206,15 @@ DockedPanel {
 
     MediaPlayer {
         id: _mediaPlayer
-        autoPlay: _savedPosition === 0
+        autoPlay: savedPosition === 0
 
-        property int _savedPosition: 0
+        property int savedPosition: 0
+        readonly property bool playing: playbackState === MediaPlayer.PlayingState
+        readonly property bool finished: status === MediaPlayer.EndOfMedia
 
         function savePosition() {
             Log.debug("Saving current playback position: " + H.parseDuration(position))
-            _savedPosition = position
+            savedPosition = position
         }
 
         onStatusChanged: {
@@ -241,7 +256,7 @@ DockedPanel {
         }
 
         onPositionChanged: {
-            if (_savedPosition > 0 && position <= _savedPosition) {
+            if (savedPosition > 0 && position <= savedPosition) {
                 return
             }
 
@@ -252,7 +267,7 @@ DockedPanel {
 
         onDurationChanged: {
             Log.debug("Media player duration changed: " + H.parseDuration(duration))
-            if (_savedPosition === 0) {
+            if (savedPosition === 0) {
                 progressSlider.value = 0
             }
             progressSlider.maximumValue = duration
@@ -260,9 +275,9 @@ DockedPanel {
 
         onSeekableChanged: {
             Log.debug("Seekable changed: " + seekable)
-            if (seekable && _savedPosition) {
-                seek(_savedPosition)
-                _savedPosition = 0
+            if (seekable && savedPosition) {
+                seek(savedPosition)
+                savedPosition = 0
                 play()
             }
         }

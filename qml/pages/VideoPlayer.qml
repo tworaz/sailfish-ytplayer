@@ -59,7 +59,7 @@ Page {
             videoController.activate()
         } else if (status === PageStatus.Deactivating) {
             Log.debug("VidePlayer page deactivating");
-            mediaPlayer.stop()
+            videoController.deactivate()
         }
     }
 
