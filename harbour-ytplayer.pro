@@ -49,6 +49,7 @@ OTHER_FILES += \
         qml/cover/CategoryVideoList.qml \
         qml/cover/NetworkOffline.qml \
         qml/pages/duration.js \
+        qml/pages/Account.qml \
         qml/pages/VideoOverview.qml \
         qml/pages/VideoPlayer.qml \
         qml/pages/Search.qml \
@@ -61,12 +62,12 @@ OTHER_FILES += \
         qml/pages/YTListItem.qml \
         qml/pages/YTVideoList.qml \
         qml/pages/YTOAuth2.qml \
-        qml/pages/Account.qml \
-        qml/pages/YTPagesTopMenu.qml \
         qml/pages/YTLikeButtons.qml \
         qml/pages/LogViewer.qml \
         qml/pages/NetworkOffline.qml \
-        qml/pages/LoadingScreen.qml
+        qml/pages/LoadingScreen.qml \
+        qml/pages/MainMenu.qml \
+        qml/pages/MainMenuItem.qml
 
 include(third_party/notifications.pri)
 include(languages/translations.pri)
@@ -95,15 +96,7 @@ PRE_TARGETDEPS += config.h
 
 DEFINES += VERSION_STR=\\\"$$system($${top_srcdir}/scripts/get_version_str.sh)\\\"
 
-#mcc.files = $$top_srcdir/mcc-data.json
-#mcc.path = /usr/share/$${TARGET}
-
-#artwork.files = $$files(images/*)
-#artwork.path = /usr/share/$${TARGET}/images
-
-#INSTALLS += mcc artwork
-
-lupdate_only{
+lupdate_only {
 SOURCES += \
         qml/*.qml \
         qml/cover/*.qml \

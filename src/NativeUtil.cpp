@@ -106,7 +106,7 @@ getMobileCountryCode(QDBusConnection conn, QDBusObjectPath modem)
 static QJsonObject
 getMobileCountryCodeMap()
 {
-    QFile mccFile(":/misc/mcc-data.json");
+    QFile mccFile(":/mcc-data.json");
 
     if (!mccFile.open(QIODevice::ReadOnly)) {
         qCritical("mcc-data.json not found in application resources!");

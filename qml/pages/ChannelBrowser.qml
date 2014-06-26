@@ -141,15 +141,8 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                //: Menu option to show settings page
-                //% "Settings"
-                text: qsTrId("ytplayer-action-settings")
-                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
-            }
-            MenuItem {
                 id: subscriptionMenu
                 visible: false
-                // TODO: translate
                 text: channelSubscribed ?
                           //: Menu option to unsubscribe from YouTube channel
                           //% "Unsubscribe"

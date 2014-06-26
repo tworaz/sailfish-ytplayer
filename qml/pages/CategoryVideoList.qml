@@ -59,12 +59,8 @@ Page {
         anchors.fill: parent
 
         PullDownMenu {
-            MenuItem {
-                //: Menu option to show settings page
-                //% "Settings"
-                text: qsTrId("ytplayer-action-settings")
-                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
-            }
+            visible: videoListView.busy
+            busy: true
         }
 
         PushUpMenu {

@@ -1,6 +1,13 @@
 <RCC>
-    <qresource prefix="/misc">
+    <qresource prefix="/">
         <file>logo.png</file>
         <file>mcc-data.json</file>
+        <file>icons/search-m.png</file>
+        <file>icons/settings-m.png</file>
+        <file>icons/video-multi-m.png</file>
+        <file>icons/like-m.png</file>
+        <file>icons/rss-m.png</file>
+        <file>icons/star-m.png</file>
+        <file>icons/dislike-m.png</file>
     </qresource>
 </RCC>

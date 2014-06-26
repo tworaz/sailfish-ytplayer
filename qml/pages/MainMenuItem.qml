@@ -30,37 +30,33 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-PullDownMenu {
-    property alias accountMenuVisible: account.visible
-    property alias categoriesMenuVisible: categories.visible
-    property alias searchMenuVisible: search.visible
+BackgroundItem {
+    id: root
 
-    MenuItem {
-        //: Menu option to show settings page
-        //% "Settings"
-        text: qsTrId("ytplayer-action-settings")
-        onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
-    }
-    MenuItem {
-        id: account
-        //: Menu option to show user YouTube account page
-        //% "Account"
-        text: qsTrId("ytplayer-action-account")
-        onClicked: pageStack.replace(Qt.resolvedUrl("Account.qml"))
-        visible: false
-    }
-    MenuItem {
-        id: categories
-        //: Video categories page title
-        //% "Video Categories"
-        text: qsTrId("ytplayer-action-video-categories")
-        onClicked: pageStack.replace(Qt.resolvedUrl("VideoCategories.qml"))
-    }
-    MenuItem {
-        id: search
-        //: Menu option to show search page
-        //% "Search"
-        text: qsTrId("ytplayer-action-search")
-        onClicked: pageStack.replace(Qt.resolvedUrl("Search.qml"))
+    property alias text: label.text
+    property alias icon: image.source
+    property int sidePadding: Theme.paddingMedium
+    property bool active: false
+
+    Row {
+        id: wrapper
+        x: root.sidePadding
+        width: parent.width - 2 * root.sidePadding
+        height: parent.height
+        spacing: Theme.paddingLarge
+
+        Image {
+            id: image
+            anchors.verticalCenter: parent.verticalCenter
+            fillMode: Image.PreserveAspectFit
+        }
+
+        Label {
+            id: label
+            anchors.verticalCenter: parent.verticalCenter
+            color: root.highlighted ? Theme.highlightColor : Theme.primaryColor
+            font.family: Theme.fontFamilyHeading
+            font.pixelSize: Theme.fontSizeLarge
+        }
     }
 }

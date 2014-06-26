@@ -95,7 +95,7 @@ CoverBackground {
         anchors.left: parent.left
         anchors.right: parent.right
         fillMode: Image.PreserveAspectFit
-        source: "qrc:///misc/logo.png"
+        source: "qrc:///logo.png"
         z: imageGrid.z + 1
     }
 
@@ -124,8 +124,7 @@ CoverBackground {
         CoverAction {
             iconSource: "image://theme/icon-cover-search"
             onTriggered: {
-                pageStack.clear();
-                pageStack.push(Qt.resolvedUrl("../pages/Search.qml"))
+                pageStack.replaceAbove(null, Qt.resolvedUrl("../pages/Search.qml"))
                 activate()
             }
         }

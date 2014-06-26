@@ -47,13 +47,7 @@ Search settings section label</extracomment>
     </message>
     <message id="ytplayer-action-settings">
         <source>Settings</source>
-        <extracomment>Menu option to show settings page
-----------
-Menu option to show settings page
-----------
-Menu option to show settings page
-----------
-Menu option to show settings page</extracomment>
+        <extracomment>Menu option to show settings page</extracomment>
         <translation>Settings</translation>
     </message>
     <message id="ytplayer-title-about">
@@ -201,7 +195,9 @@ Menu option to show settings page</extracomment>
     </message>
     <message id="ytplayer-label-account">
         <source>Account</source>
-        <extracomment>Account settings section label</extracomment>
+        <extracomment>Label for YouTube account related options in main menu
+----------
+Account settings section label</extracomment>
         <translation>Account</translation>
     </message>
     <message id="ytplayer-account-integration-label">
@@ -231,43 +227,8 @@ Menu option to show settings page</extracomment>
     </message>
     <message id="ytplayer-action-video-categories">
         <source>Video Categories</source>
-        <extracomment>Video categories page title</extracomment>
+        <extracomment>Menu option to show video categories page</extracomment>
         <translation>Video Categories</translation>
-    </message>
-    <message id="ytplayer-account-page-title">
-        <source>My Account</source>
-        <extracomment>Title of user&apos;s YouTube accound details page</extracomment>
-        <translation>My Account</translation>
-    </message>
-    <message id="ytplayer-account-video-categories-label">
-        <source>My</source>
-        <extracomment>Label for combo box allowing the user to view different video categories on uesr account page. The possible categires are, subscriptions, likes, dislikes</extracomment>
-        <translation>My</translation>
-    </message>
-    <message id="ytplayer-account-subscriptions-label">
-        <source>Subscriptions</source>
-        <extracomment>Label for combo box item responsible for showing user&apos;s YouTube ChannelBrowser subscriptions</extracomment>
-        <translation>Subscriptions</translation>
-    </message>
-    <message id="ytplayer-account-likes-label">
-        <source>Likes</source>
-        <extracomment>Label for combo box item repsonsible for displaying user&apos;s YouTube liked videos</extracomment>
-        <translation>Likes</translation>
-    </message>
-    <message id="ytplayer-account-dislikes-label">
-        <source>Dislikes</source>
-        <extracomment>Label for combo box item responsible for displaying user&apos;s YouTube disliked videos</extracomment>
-        <translation>Dislikes</translation>
-    </message>
-    <message id="ytplayer-action-account">
-        <source>Account</source>
-        <extracomment>Menu option to show user YouTube account page</extracomment>
-        <translation>My Account</translation>
-    </message>
-    <message id="ytplayer-account-no-content">
-        <source>No content</source>
-        <extracomment>Background text informing the user there are no videos in a given category</extracomment>
-        <translation>No content</translation>
     </message>
     <message id="ytplayer-search-no-results">
         <source>No results</source>
@@ -297,7 +258,47 @@ Network offline screen label</extracomment>
     <message id="ytplayer-label-video-quality">
         <source>Video quality</source>
         <extracomment>Label for menu option allowing the user to change video quality</extracomment>
-        <translation type="unfinished">Video quality</translation>
+        <translation>Video quality</translation>
+    </message>
+    <message id="ytplayer-title-subscriptions">
+        <source>Subscriptions</source>
+        <extracomment>YouTube subscriptions page title</extracomment>
+        <translation>Subscriptions</translation>
+    </message>
+    <message id="ytplayer-title-likes">
+        <source>Likes</source>
+        <extracomment>YouTube likes page title</extracomment>
+        <translation>Likes</translation>
+    </message>
+    <message id="ytplayer-title-dislikes">
+        <source>Dislikes</source>
+        <extracomment>YouTube dislikes page title</extracomment>
+        <translation>Dislikes</translation>
+    </message>
+    <message id="ytplayer-action-recommended">
+        <source>Recommended for you</source>
+        <extracomment>Menu option fo show YouTube recommendations page</extracomment>
+        <translation>Recommended for you</translation>
+    </message>
+    <message id="ytplayer-action-subscriptions">
+        <source>Subscriptions</source>
+        <extracomment>Menu option responsible for showing user subscriptions page</extracomment>
+        <translation>Subscriptions</translation>
+    </message>
+    <message id="ytplayer-action-likes">
+        <source>Likes</source>
+        <extracomment>Menu option responsible for showing user likes page</extracomment>
+        <translation>Likes</translation>
+    </message>
+    <message id="ytplayer-action-dislikes">
+        <source>Dislikes</source>
+        <extracomment>Menu option responsible for showing user dislikes page</extracomment>
+        <translation>Dislikes</translation>
+    </message>
+    <message id="ytplayer-action-other">
+        <source>Other</source>
+        <extracomment>Label for misc items in main application menu</extracomment>
+        <translation>Other</translation>
     </message>
 </context>
 </TS>

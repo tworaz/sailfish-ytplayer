@@ -32,84 +32,78 @@ import Sailfish.Silica 1.0
 import harbour.ytplayer 1.0
 
 Page {
-    id: root
+    id: page
 
-    property bool reloadOnActivate: false
     state: "SUBSCRIPTIONS"
 
     states: [
         State {
             name: "SUBSCRIPTIONS"
+            PropertyChanges {
+                target: priv
+                //: YouTube subscriptions page title
+                //% "Subscriptions"
+                title: qsTrId("ytplayer-title-subscriptions")
+            }
         },
         State {
             name: "LIKES"
+            PropertyChanges {
+                target: priv
+                //: YouTube likes page title
+                //% "Likes"
+                title: qsTrId("ytplayer-title-likes")
+            }
         },
         State {
             name: "DISLIKES"
+            PropertyChanges {
+                target: priv
+                //: YouTube dislikes page title
+                //% "Dislikes"
+                title: qsTrId("ytplayer-title-dislikes")
+            }
         }
     ]
 
-    onStateChanged: {
-        Log.debug("Now showing: " + state)
-        listModel.clear()
-        listView.etag = ""
-        listView.nextPageToken = ""
-        fetchDataForCurrentState()
+    QtObject {
+        id: priv
+        property string title: ""
     }
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
+            Log.info("Account page activated, state: " + state)
             if (!Prefs.isAuthEnabled()) {
                 Log.info("YouTube authorization disabled, returning to categories page")
-                pageStack.replace(Qt.resolvedUrl("VideoCategories.qml"))
+                pageStack.replaceAbove(null, Qt.resolvedUrl("VideoCategories.qml"))
                 return
             }
-
-            Log.info("Subscriptions page activated, loading user subscriptions list")
-            requestCoverPage("Default.qml")
-            if (reloadOnActivate) {
-                fetchDataForCurrentState()
+            if (listModel.count === 0) {
+                loadDataForCurrentState()
             }
-        } else if (status === PageStatus.Inactive) {
-            reloadOnActivate = true
-        }
-    }
-
-    YTRequest {
-        id: request
-        method: YTRequest.List
-
-        onSuccess: {
-            if (reloadOnActivate) {
-                reloadOnActivate = false
-                if (response.etag === listView.etag) {
-                    return
+            if (pageStack.depth === 1) {
+                var data = {}
+                if (state === "SUBSCRIPTIONS") {
+                    data = { "subscriptionsActive" : true }
+                } else if (state === "LIKES") {
+                    data = { "likesActive" : true }
+                } else if (state === "DISLIKES") {
+                    data = { "dislikesActive" : true }
                 }
-                listView.etag = ""
-                listView.nextPageToken = ""
-                listModel.clear()
+                pageStack.pushAttached(Qt.resolvedUrl("MainMenu.qml"), data)
             }
-
-            for (var i = 0; i < response.items.length; ++i) {
-                listModel.append(response.items[i])
-            }
-            if (response.nextPageToken) {
-                listView.nextPageToken = response.nextPageToken
-            } else {
-                listView.nextPageToken = ""
-            }
-            listView.etag = response.etag
+            requestCoverPage("Default.qml")
         }
     }
 
-    function fetchDataForCurrentState(token) {
+    function loadDataForCurrentState(token) {
         var params = {}
         if (state === "SUBSCRIPTIONS") {
             request.resource = "subscriptions"
             params = {
-                "part" : "id",
+                "part" : "id,snippet",
                 "mine" : true,
-                "part" : "snippet"
             }
         } else if (state === "LIKES") {
             request.resource = "videos"
@@ -133,6 +127,19 @@ Page {
         request.run()
     }
 
+    YTRequest {
+        id: request
+        method: YTRequest.List
+        model: listModel
+        onSuccess: {
+            if (response.nextPageToken) {
+                listView.nextPageToken = response.nextPageToken
+            } else {
+                listView.nextPageToken = ""
+            }
+        }
+    }
+
     BusyIndicator {
         id: indicator
         anchors.centerIn: parent
@@ -143,74 +150,22 @@ Page {
     SilicaListView {
         id: listView
         anchors.fill: parent
-
-        property string etag: ""
         property string nextPageToken: ""
-        property Item contextMenu
 
-        Label {
-            anchors.centerIn: parent
-            color: Theme.secondaryHighlightColor
-            //: Background text informing the user there are no videos in a given category
-            //% "No content"
-            text: qsTrId("ytplayer-account-no-content")
-            visible: listModel.count === 0 && request.busy === false
+        PullDownMenu {
+            visible: request.busy
+            busy: true
         }
-
-        YTPagesTopMenu {
-            busy: request.busy
-            accountMenuVisible: false
-        }
-
         PushUpMenu {
             visible: request.busy
             busy: true
         }
 
-        onAtYEndChanged: {
-            if (atYEnd && nextPageToken.length > 0 && !request.busy) {
-                root.fetchDataForCurrentState(nextPageToken)
-            }
+        header: PageHeader {
+            title: priv.title
         }
 
-        header: Column {
-            width: parent.width
-            PageHeader {
-                //: Title of user's YouTube accound details page
-                //% "My Account"
-                title: qsTrId("ytplayer-account-page-title")
-            }
-            ComboBox {
-                width: parent.width
-                //: Label for combo box allowing the user to view different video categories
-                //: on uesr account page. The possible categires are, subscriptions, likes, dislikes
-                //% "My"
-                label: qsTrId("ytplayer-account-video-categories-label")
-                menu: ContextMenu {
-                    MenuItem {
-                        //: Label for combo box item responsible for showing user's YouTube ChannelBrowser
-                        //: subscriptions
-                        //% "Subscriptions"
-                        text: qsTrId("ytplayer-account-subscriptions-label")
-                        onClicked: root.state = "SUBSCRIPTIONS"
-                    }
-                    MenuItem {
-                        //: Label for combo box item repsonsible for displaying user's YouTube liked videos
-                        //% "Likes"
-                        text: qsTrId("ytplayer-account-likes-label")
-                        onClicked: root.state = "LIKES"
-                    }
-                    MenuItem {
-                        //: Label for combo box item responsible for displaying user's YouTube disliked videos
-                        //% "Dislikes"
-                        text: qsTrId("ytplayer-account-dislikes-label")
-                        onClicked: root.state = "DISLIKES"
-                    }
-                }
-            }
-        }
-
-        model: ListModel {
+        model: YTListModel {
             id: listModel
         }
 
@@ -229,6 +184,13 @@ Page {
             }
         }
 
+        onAtYEndChanged: {
+            if (atYEnd && nextPageToken.length > 0 && !request.busy) {
+                page.loadDataForCurrentState(nextPageToken)
+            }
+        }
+
         VerticalScrollDecorator {}
     }
+
 }

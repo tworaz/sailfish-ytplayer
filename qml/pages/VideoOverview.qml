@@ -43,8 +43,8 @@ Dialog {
     acceptDestinationAction: PageStackAction.Push
     acceptDestinationProperties: {
         "thumbnails" : thumbnails,
-                "videoId"    : videoId,
-                "title"      : title,
+        "videoId"    : videoId,
+        "title"      : title,
     }
 
     Component.onCompleted: {
@@ -111,15 +111,6 @@ Dialog {
         id: flickable
         anchors.fill: parent
         contentHeight: wrapper.height
-
-        PullDownMenu {
-            MenuItem {
-                //: Menu option to show settings page
-                //% "Settings"
-                text: qsTrId("ytplayer-action-settings")
-                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
-            }
-        }
 
         Column {
             id: wrapper

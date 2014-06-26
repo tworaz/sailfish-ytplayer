@@ -49,7 +49,7 @@ Page {
         Image {
             anchors.centerIn: parent
             fillMode: Image.PreserveAspectFit
-            source: "qrc:///misc/logo.png"
+            source: "qrc:///logo.png"
         }
     }
 
