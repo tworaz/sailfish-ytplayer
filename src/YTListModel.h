@@ -35,11 +35,31 @@
 #include <QHash>
 #include <QList>
 
+
+class YTListModelFilter: public QObject
+{
+    Q_OBJECT
+    Q_PROPERTY(QString key READ key WRITE setKey)
+    Q_PROPERTY(QVariant value READ value WRITE setValue)
+
+public:
+    YTListModelFilter(QObject *parent = 0) : QObject(parent) {}
+    QString key() const { return _key; }
+    QVariant value() const { return _value; }
+
+private:
+    void setKey(QString k) { _key = k; }
+    void setValue(QVariant val) { _value = val; }
+
+    QString _key;
+    QVariant _value;
+};
+
 class YTListModel: public QAbstractListModel
 {
     Q_OBJECT
-
     Q_PROPERTY(int count READ rowCount NOTIFY countChanged)
+    Q_PROPERTY(YTListModelFilter* filter READ filter CONSTANT)
 
 public:
     explicit YTListModel(QObject *parent = 0);
@@ -57,11 +77,14 @@ signals:
     void countChanged(int);
 
 private:
+    YTListModelFilter *filter() const { return _filter; }
     void initializeRoles(QList<QVariant>&);
     void filter(QList<QVariant>&);
+    bool shouldFilterOut(QVariant item, QStringList tokens);
 
     QList<QVariant> _list;
     QHash<int, QByteArray> _roles;
+    YTListModelFilter *_filter;
 
     Q_DISABLE_COPY(YTListModel)
 };

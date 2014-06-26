@@ -79,6 +79,8 @@ Page {
 
         model: YTListModel {
             id: videoCategoriesModel
+            filter.key: "snippet.assignable"
+            filter.value: true
         }
 
         delegate: BackgroundItem {

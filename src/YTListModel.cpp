@@ -29,16 +29,19 @@
 
 #include "YTListModel.h"
 
+#include <QStringList>
 #include <QDebug>
 
 YTListModel::YTListModel(QObject *parent)
     : QAbstractListModel(parent)
+    , _filter(new YTListModelFilter(this))
 {
 }
 
 YTListModel::~YTListModel()
 {
     clear();
+    delete _filter;
 }
 
 int
@@ -126,19 +129,35 @@ YTListModel::initializeRoles(QList<QVariant>& list)
 void
 YTListModel::filter(QList<QVariant>& list)
 {
-    QString kind = list.first().toMap().value("kind").toString();
+    if (_filter->key().isEmpty() || !_filter->value().isValid()) {
+        qDebug() << "No filter specified";
+        return;
+    }
 
-    if (kind == "youtube#videoCategory") {
-        QList<QVariant>::iterator it = list.begin();
-        while (it != list.end()) {
-            QVariantMap map = it->toMap();
-            QVariantMap snippet = map.value("snippet").toMap();
-            Q_ASSERT(!snippet.isEmpty());
-            if (!snippet.value("assignable").toBool()) {
-                it = list.erase(it);
-            } else {
-                it++;
-            }
+    QStringList tokens = _filter->key().split(".");
+    QList<QVariant>::iterator it = list.begin();
+    while (it != list.end()) {
+        if (shouldFilterOut(*it, tokens)) {
+            it = list.erase(it);
+        } else {
+            it++;
         }
     }
+}
+
+bool
+YTListModel::shouldFilterOut(QVariant item, QStringList tokens)
+{
+    foreach (QString tok, tokens) {
+        if (item.canConvert(QVariant::Map)) {
+            QVariantMap map = item.toMap();
+            item = map[tok];
+            if (!item.isValid()) {
+                return true;
+            }
+        } else {
+            return true;
+        }
+    }
+    return (item != _filter->value());
 }

@@ -92,6 +92,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<Notification>("harbour.ytplayer.notifications", 1, 0, "Notification");
     qmlRegisterType<YTRequest>("harbour.ytplayer", 1, 0, "YTRequest");
     qmlRegisterType<YTListModel>("harbour.ytplayer", 1, 0, "YTListModel");
+    qmlRegisterType<YTListModelFilter>("harbour.ytplayer", 1, 0, "YTListModelFilter");
     qmlRegisterType<YTWebFontLoader>("harbour.ytplayer", 1, 0, "YTWebFontLoader");
     qmlRegisterType<NetworkManager>("harbour.ytplayer", 1, 0, "NetworkManager");
     qmlRegisterType<Logger>("harbour.ytplayer", 1, 0, "LogModel");
