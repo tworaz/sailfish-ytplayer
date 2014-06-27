@@ -38,7 +38,7 @@ Page {
     property alias subscriptionsActive: subscriptions.active
     property alias likesActive: likes.active
     property alias dislikesActive: dislikes.active
-    //property alias recommendedActive: recommended.active
+    property alias recommendedActive: recommended.active
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
@@ -100,7 +100,6 @@ Page {
             horizontalAlignment: Text.AlignRight
             color: Theme.highlightColor
         }
-        /*
         MainMenuItem {
             id: recommended
             //: Menu option fo show YouTube recommendations page
@@ -108,8 +107,9 @@ Page {
             text: qsTrId("ytplayer-action-recommended")
             visible: priv.showAccount
             icon: "qrc:///icons/star-m.png"
+            onClicked: parent.handleClick(recommended, "Account.qml",
+                                          { "state" : "RECOMMENDED" })
         }
-        */
         MainMenuItem {
             id: subscriptions
             //: Menu option responsible for showing user subscriptions page

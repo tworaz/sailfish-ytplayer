@@ -63,6 +63,15 @@ Page {
                 //% "Dislikes"
                 title: qsTrId("ytplayer-title-dislikes")
             }
+        },
+        State {
+            name: "RECOMMENDED"
+            PropertyChanges {
+                target: priv
+                //: YouTube recommendations page title
+                //% "Recommended for you"
+                title: qsTrId("ytplayer-title-recommended")
+            }
         }
     ]
 
@@ -90,6 +99,8 @@ Page {
                     data = { "likesActive" : true }
                 } else if (state === "DISLIKES") {
                     data = { "dislikesActive" : true }
+                } else if (state === "RECOMMENDED") {
+                    data = { "recommendedActive" : true }
                 }
                 pageStack.pushAttached(Qt.resolvedUrl("MainMenu.qml"), data)
             }
@@ -117,6 +128,15 @@ Page {
                 "part"     : "snippet",
                 "myRating" : "dislike"
             }
+        } else if (state === "RECOMMENDED") {
+            request.resource = "activities"
+            params = {
+                "part"       : "id,snippet,contentDetails",
+                "home"       : true,
+                "maxResults" : 50
+            }
+            listModel.filter.key = "snippet.type"
+            listModel.filter.value = "recommendation"
         }
 
         if (token) {
@@ -136,6 +156,10 @@ Page {
                 listView.nextPageToken = response.nextPageToken
             } else {
                 listView.nextPageToken = ""
+            }
+            if (state === "RECOMMENDED" && listView.nextPageToken.length &&
+                listView.count < Prefs.get("ResultsPerPage")) {
+                page.loadDataForCurrentState(listView.nextPageToken)
             }
         }
     }
@@ -177,8 +201,20 @@ Page {
                     return snippet.resourceId
                 } else if (kind && kind === "youtube#video") {
                     return { "kind" : kind, "videoId" : id }
+                } else if (kind && kind === "youtube#activity") {
+                    if (snippet.type === "upload") {
+                        return { "kind"    : "youtube#video",
+                                 "videoId" : contentDetails.upload.videoId }
+                    } else if (snippet.type === "recommendation") {
+                        return contentDetails.recommendation.resourceId;
+                    } else {
+                        Log.error("Unhandled activity type: " + snippet.type);
+                        Log.error(JSON.stringify(contentDetails, undefined, 2))
+                        return undefined;
+                    }
                 } else {
-                    Log.error("Unknown item type in the list!")
+                    Log.error("Unknown item type in the list: " +
+                              JSON.stringify(listModel.get(index), undefined, 2))
                     return undefined
                 }
             }
@@ -192,5 +228,4 @@ Page {
 
         VerticalScrollDecorator {}
     }
-
 }

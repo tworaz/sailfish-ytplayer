@@ -300,5 +300,10 @@ Network offline screen label</extracomment>
         <extracomment>Label for misc items in main application menu</extracomment>
         <translation>Other</translation>
     </message>
+    <message id="ytplayer-title-recommended">
+        <source>Recommended for you</source>
+        <extracomment>YouTube recommendations page title</extracomment>
+        <translation>Recommended for you</translation>
+    </message>
 </context>
 </TS>
