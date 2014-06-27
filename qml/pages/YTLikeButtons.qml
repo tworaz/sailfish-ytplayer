@@ -37,6 +37,7 @@ Row {
     property bool enabled: false
     property bool dataValid: false
     property string videoId: ""
+    readonly property int animationDuration: 300
 
     property alias dislikes: dislikeCount.text
     property alias likes: likeCount.text
@@ -118,12 +119,20 @@ Row {
             id: likeBackground
             anchors.fill: parent
             color: parent.pressed ? Theme.secondaryHighlightColor : parent.activeColor
+            Behavior on color {
+                enabled: !likeButton.pressed
+                ColorAnimation { duration: root.animationDuration; easing.type: Easing.InCirc }
+            }
         }
         Image {
             property color hcolor: parent.pressed ? Theme.highlightColor : Theme.primaryColor
             id: likeIcon
-            source: "image://theme/icon-m-like?" + hcolor
+            source: "qrc:///icons/like-m.png"
             anchors.verticalCenter: parent.verticalCenter
+            opacity: parent.selected ? 1 : 0.3
+            Behavior on opacity {
+                NumberAnimation { duration: root.animationDuration }
+            }
         }
         Label {
             id: likeCount
@@ -163,6 +172,10 @@ Row {
             id: dislikeBackground
             anchors.fill: parent
             color: parent.pressed ? Theme.secondaryHighlightColor : parent.activeColor
+            Behavior on color {
+                enabled: !dislikeButton.pressed
+                ColorAnimation { duration: root.animationDuration; easing.type: Easing.InCirc }
+            }
         }
         Label {
             id: dislikeCount
@@ -174,10 +187,13 @@ Row {
         Image {
             property color hcolor: parent.pressed ? Theme.highlightColor : Theme.primaryColor
             id: dislikeIcon
-            source: "image://theme/icon-m-like?" + hcolor
+            source: "qrc:///icons/dislike-m.png"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            rotation: 180
+            opacity: parent.selected ? 1 : 0.3
+            Behavior on opacity {
+                NumberAnimation { duration: root.animationDuration }
+            }
         }
 
         onReleased: {
