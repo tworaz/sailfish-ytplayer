@@ -112,7 +112,9 @@ CoverBackground {
             anchors.centerIn: parent
             width: parent.width - 2 * Theme.paddingMedium
             horizontalAlignment: Text.AlignHCenter
+            font.family: Theme.fontFamilyHeading
             font.pixelSize: Theme.fontSizeSmall
+            font.bold: true
             color: Theme.primaryColor
             maximumLineCount: 2
             wrapMode: Text.Wrap

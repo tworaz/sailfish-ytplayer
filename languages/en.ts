@@ -75,12 +75,6 @@ Search settings section label</extracomment>
         <extracomment>Label of results per page slider in display settings menu</extracomment>
         <translation>Results per page</translation>
     </message>
-    <message id="ytplayer-action-play">
-        <source>Play Video</source>
-        <oldsource>Play</oldsource>
-        <extracomment>Label for video play button</extracomment>
-        <translation>Play</translation>
-    </message>
     <message id="ytplayer-label-publish-date">
         <source>Published on</source>
         <oldsource>Published at</oldsource>
@@ -219,11 +213,6 @@ Account settings section label</extracomment>
     <message id="ytplayer-channel-subscribe">
         <source>Subscribe</source>
         <translation>Subscribe</translation>
-    </message>
-    <message id="ytplayer-action-back">
-        <source>Back</source>
-        <extracomment>Label for back button in dialog</extracomment>
-        <translation>Back</translation>
     </message>
     <message id="ytplayer-action-video-categories">
         <source>Video Categories</source>

@@ -33,18 +33,15 @@ import harbour.ytplayer 1.0
 import "duration.js" as DJS
 import "../common"
 
-Dialog {
+Page {
     id: page
     property string videoId
     property variant thumbnails
     property alias title: header.title
 
-    acceptDestination: Qt.resolvedUrl("VideoPlayer.qml")
-    acceptDestinationAction: PageStackAction.Push
-    acceptDestinationProperties: {
-        "thumbnails" : thumbnails,
-        "videoId"    : videoId,
-        "title"      : title,
+    QtObject {
+        id: priv
+        property bool playerPushed: false
     }
 
     Component.onCompleted: {
@@ -63,6 +60,14 @@ Dialog {
                 "videoId"    : videoId,
                 "title"      : title
             })
+            if (!priv.playerPushed) {
+                pageStack.pushAttached(Qt.resolvedUrl("VideoPlayer.qml"), {
+                    "thumbnails" : thumbnails,
+                    "videoId"    : videoId,
+                    "title"      : title,
+                })
+                priv.playerPushed = true
+            }
         }
     }
 
@@ -118,14 +123,8 @@ Dialog {
             x: Theme.paddingMedium
             spacing: Theme.paddingMedium
 
-            DialogHeader {
+            PageHeader {
                 id: header
-                //: Label for video play button
-                //% "Play Video"
-                acceptText: qsTrId('ytplayer-action-play')
-                //: Label for back button in dialog
-                //% "Back"
-                cancelText: qsTrId('ytplayer-action-back')
             }
 
             AsyncImage {
