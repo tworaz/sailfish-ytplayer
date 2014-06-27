@@ -34,16 +34,25 @@ import harbour.ytplayer 1.0
 Page {
     id: page
 
-    state: "SUBSCRIPTIONS"
+    state: ""
 
     states: [
         State {
-            name: "SUBSCRIPTIONS"
+            name: "SUBSCRIPTION_CHANNELS"
             PropertyChanges {
                 target: priv
-                //: YouTube subscriptions page title
-                //% "Subscriptions"
-                title: qsTrId("ytplayer-title-subscriptions")
+                //: YouTube subscribed channels page title
+                //% "Subscribed Channels"
+                title: qsTrId("ytplayer-title-subscribed-channels")
+            }
+        },
+        State {
+            name: "SUBSCRIPTION_VIDEOS"
+            PropertyChanges {
+                target: priv
+                //: YouTube latest subscribed videos page title
+                //% "Latest Videos"
+                title: qsTrId("ytplayer-title-subscription-videos")
             }
         },
         State {
@@ -93,8 +102,10 @@ Page {
             }
             if (pageStack.depth === 1) {
                 var data = {}
-                if (state === "SUBSCRIPTIONS") {
-                    data = { "subscriptionsActive" : true }
+                if (state === "SUBSCRIPTION_CHANNELS") {
+                    data = { "subscriptionChannelsActive" : true }
+                } else if (state === "SUBSCRIPTION_VIDEOS") {
+                    data = { "subscriptionVideosActive" : true }
                 } else if (state === "LIKES") {
                     data = { "likesActive" : true }
                 } else if (state === "DISLIKES") {
@@ -110,7 +121,7 @@ Page {
 
     function loadDataForCurrentState(token) {
         var params = {}
-        if (state === "SUBSCRIPTIONS") {
+        if (state === "SUBSCRIPTION_CHANNELS") {
             request.resource = "subscriptions"
             params = {
                 "part" : "id,snippet",
@@ -137,6 +148,15 @@ Page {
             }
             listModel.filter.key = "snippet.type"
             listModel.filter.value = "recommendation"
+        } else if (state === "SUBSCRIPTION_VIDEOS") {
+            request.resource = "activities"
+            params = {
+                "part"       : "id,snippet,contentDetails",
+                "home"       : true,
+                "maxResults" : 50
+            }
+            listModel.filter.key = "snippet.type"
+            listModel.filter.value = "upload"
         }
 
         if (token) {

@@ -260,11 +260,6 @@ Network offline screen label</extracomment>
         <extracomment>Label for menu option allowing the user to change video quality</extracomment>
         <translation>Video quality</translation>
     </message>
-    <message id="ytplayer-title-subscriptions">
-        <source>Subscriptions</source>
-        <extracomment>YouTube subscriptions page title</extracomment>
-        <translation>Subscriptions</translation>
-    </message>
     <message id="ytplayer-title-likes">
         <source>Likes</source>
         <extracomment>YouTube likes page title</extracomment>
@@ -304,6 +299,27 @@ Network offline screen label</extracomment>
         <source>Recommended for you</source>
         <extracomment>YouTube recommendations page title</extracomment>
         <translation>Recommended for you</translation>
+    </message>
+    <message id="ytplayer-title-subscribed-channels">
+        <source>Subscribed Channels</source>
+        <extracomment>YouTube subscribed channels page title</extracomment>
+        <translation>Subscribed Channels</translation>
+    </message>
+    <message id="ytplayer-title-subscription-videos">
+        <source>Latest Videos</source>
+        <oldsource>Subscription Videos</oldsource>
+        <extracomment>YouTube latest subscribed videos page title</extracomment>
+        <translation>Latest Videos</translation>
+    </message>
+    <message id="ytplayer-action-latest-subscribed-videos">
+        <source>Latest videos</source>
+        <extracomment>Sub-Menu option responsible for showing latest subsribed videos page</extracomment>
+        <translation>Latest videos</translation>
+    </message>
+    <message id="ytplayer-action-subscribed-channels">
+        <source>Channels</source>
+        <extracomment>Sub-Menu option responsible for showing user subscribed channels</extracomment>
+        <translation>Channels</translation>
     </message>
 </context>
 </TS>

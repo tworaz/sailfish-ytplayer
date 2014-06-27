@@ -35,14 +35,34 @@ BackgroundItem {
 
     property alias text: label.text
     property alias icon: image.source
+    property alias submenu: loader.sourceComponent
+    property alias menuItem: loader.item
     property int sidePadding: Theme.paddingMedium
     property bool active: false
+    property bool _menuOpened: menuItem && menuItem.active
+
+    height: menuItem ?  + menuItem.height + wrapper.height : wrapper.height
+
+    function toggleSubMenu() {
+        if (menuItem) {
+            if (!_menuOpened) {
+                menuItem.show(root)
+            } else {
+                menuItem.hide()
+            }
+        }
+    }
+
+    Connections {
+        target: root
+        onClicked: root.toggleSubMenu()
+    }
 
     Row {
         id: wrapper
         x: root.sidePadding
         width: parent.width - 2 * root.sidePadding
-        height: parent.height
+        height: label.height + 2 * Theme.paddingMedium
         spacing: Theme.paddingLarge
 
         Image {
@@ -50,13 +70,23 @@ BackgroundItem {
             anchors.verticalCenter: parent.verticalCenter
             fillMode: Image.PreserveAspectFit
         }
-
         Label {
             id: label
             anchors.verticalCenter: parent.verticalCenter
             color: root.highlighted ? Theme.highlightColor : Theme.primaryColor
             font.family: Theme.fontFamilyHeading
             font.pixelSize: Theme.fontSizeLarge
+            width: parent.width - image.width - submenuIcon.width - 2 * parent.spacing
         }
+        Image {
+            id: submenuIcon
+            source: "qrc:///icons/arrow-down-s.png"
+            visible: root.menuItem != null
+            anchors.verticalCenter: parent.verticalCenter
+            fillMode: Image.PreserveAspectFit
+        }
+    }
+    Loader {
+        id: loader
     }
 }

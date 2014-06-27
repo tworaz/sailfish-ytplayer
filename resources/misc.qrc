@@ -9,5 +9,7 @@
         <file>icons/rss-m.png</file>
         <file>icons/star-m.png</file>
         <file>icons/dislike-m.png</file>
+        <file>icons/arrow-down-m.png</file>
+        <file>icons/arrow-down-s.png</file>
     </qresource>
 </RCC>
