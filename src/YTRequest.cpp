@@ -32,6 +32,7 @@
 #include <QNetworkAccessManager>
 #include <QScopedPointer>
 #include <QJsonDocument>
+#include <QNetworkReply>
 #include <QJsonObject>
 #include <QStringList>
 #include <QUrlQuery>
@@ -42,9 +43,11 @@
 #include "config.h"
 #include "NativeUtil.h"
 
-QScopedPointer<QNetworkAccessManager> _network_access_manager;
-static QString YouTubeDataV3Url("https://www.googleapis.com/youtube/v3/");
-static QString YouTubeGetVideoInfoUrl("http://www.youtube.com/get_video_info");
+
+extern QSharedPointer<QNetworkAccessManager> GetNetworkAccessManager();
+
+static QString kYouTubeDataV3Url("https://www.googleapis.com/youtube/v3/");
+static QString kYouTubeGetVideoInfoUrl("http://www.youtube.com/get_video_info");
 
 static void
 appendParams(QUrlQuery& query, QVariantMap& params)
@@ -107,7 +110,7 @@ youtubeDataAPIUrl(QString resource, QVariantMap params)
     appendParams(query, params);
     appendCommonParams(query);
 
-    QUrl url(YouTubeDataV3Url + resource);
+    QUrl url(kYouTubeDataV3Url + resource);
     url.setQuery(query);
     return url;
 }
@@ -125,7 +128,7 @@ youtubeVideoInfoUrl(QVariantMap params)
         query.addQueryItem("hl", "en");
     }
 
-    QUrl url(YouTubeGetVideoInfoUrl);
+    QUrl url(kYouTubeGetVideoInfoUrl);
     url.setQuery(query);
     return url;
 }
@@ -134,13 +137,10 @@ YTRequest::YTRequest(QObject *parent)
     : QObject(parent)
     , _reply(NULL)
     , _token_reply(NULL)
+    , _network_access_manager(GetNetworkAccessManager())
     , _loaded(false)
     , _model(NULL)
 {
-    if (_network_access_manager.isNull()) {
-        qDebug() << "Network access manager for YouTube requests created";
-        _network_access_manager.reset(new QNetworkAccessManager);
-    }
 }
 
 YTRequest::~YTRequest()
@@ -243,7 +243,7 @@ YTRequest::onFinished()
 
     switch (_reply->error()) {
     case QNetworkReply::NoError:
-        if (_reply->request().url().toString().startsWith(YouTubeGetVideoInfoUrl)) {
+        if (_reply->request().url().toString().startsWith(kYouTubeGetVideoInfoUrl)) {
             handleVideoInfoReply(_reply);
         } else {
             handleSuccess(_reply);

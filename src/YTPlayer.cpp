@@ -48,6 +48,7 @@
 #include "Logger.h"
 #include "Prefs.h"
 
+
 class YTPNetworkAccessManagerFactory: public QQmlNetworkAccessManagerFactory
 {
 public:
@@ -65,6 +66,15 @@ public:
     }
 };
 
+QSharedPointer<QNetworkAccessManager> GetNetworkAccessManager()
+{
+    static QSharedPointer<QNetworkAccessManager> instance;
+    if (instance.isNull()) {
+        qDebug() << "Creating global QNetworkAccessManager instance";
+        instance.reset(new QNetworkAccessManager);
+    }
+    return instance;
+}
 
 int main(int argc, char *argv[])
 {

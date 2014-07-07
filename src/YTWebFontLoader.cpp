@@ -37,18 +37,16 @@
 #include <QFile>
 #include <QDebug>
 
-//bool YTWebFontLoader::_loaded = false;
-extern QScopedPointer<QNetworkAccessManager> _network_access_manager;
+
+static QUrl kYouTubeWebFontURL = QUrl("https://www.youtube.com/s/tv/fonts/youtube-icons.ttf");
+
+extern QSharedPointer<QNetworkAccessManager> GetNetworkAccessManager();
 
 YTWebFontLoader::YTWebFontLoader(QObject *parent)
     : QObject(parent)
     , _loaded(false)
+    , _network_access_manager(GetNetworkAccessManager())
 {
-    if (_network_access_manager.isNull()) {
-        qDebug() << "Network access manager for YouTube requests created";
-        _network_access_manager.reset(new QNetworkAccessManager);
-    }
-
     _fontPath = QStandardPaths::writableLocation(
         QStandardPaths::DataLocation).append("/youtube-icons.ttf");
 }
@@ -60,7 +58,7 @@ YTWebFontLoader::~YTWebFontLoader()
 void
 YTWebFontLoader::load()
 {
-    QNetworkRequest request(QUrl("https://www.youtube.com/s/tv/fonts/youtube-icons.ttf"));
+    QNetworkRequest request(kYouTubeWebFontURL);
     if (QFile::exists(_fontPath) && installFont()) {
         return;
     }

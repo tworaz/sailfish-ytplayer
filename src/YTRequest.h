@@ -30,12 +30,16 @@
 #ifndef YTREQUEST_H
 #define YTREQUEST_H
 
+#include <QUrl>
 #include <QObject>
 #include <QString>
 #include <QVariantMap>
-#include <QNetworkReply>
+#include <QSharedPointer>
 
 #include "YTListModel.h"
+
+class QNetworkAccessManager;
+class QNetworkReply;
 
 class YTRequest : public QObject
 {
@@ -97,6 +101,7 @@ private:
 
     QNetworkReply *_reply;
     QNetworkReply *_token_reply;
+    QSharedPointer<QNetworkAccessManager> _network_access_manager;
     QString _resource;
     Method _method;
     QVariantMap _params;

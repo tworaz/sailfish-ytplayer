@@ -31,8 +31,10 @@
 #define YTWEBFONTLOADER_H
 
 #include <QObject>
+#include <QSharedPointer>
 
 class QNetworkReply;
+class QNetworkAccessManager;
 
 class YTWebFontLoader : public QObject
 {
@@ -60,6 +62,7 @@ private:
     bool _loaded;
     QNetworkReply *_reply;
     QString _fontPath;
+    QSharedPointer<QNetworkAccessManager> _network_access_manager;
 };
 
 #endif // YTWEBFONTLOADER_H
