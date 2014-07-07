@@ -58,10 +58,15 @@ YTWebFontLoader::~YTWebFontLoader()
 void
 YTWebFontLoader::load()
 {
-    QNetworkRequest request(kYouTubeWebFontURL);
+    if (_loaded) {
+        return;
+    }
+
     if (QFile::exists(_fontPath) && installFont()) {
         return;
     }
+
+    QNetworkRequest request(kYouTubeWebFontURL);
     _reply = _network_access_manager->get(request);
     connect(_reply, SIGNAL(finished()), this, SLOT(onFinished()));
 }
