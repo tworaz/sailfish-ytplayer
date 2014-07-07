@@ -37,10 +37,11 @@ Page {
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            if (!networkManager.online) {
-                networkManager.onOnlineStateChanged(networkManager.online)
+            if (networkManager.online) {
+                webfont.load()
+            } else {
+                networkManager.onOnlineChanged(false)
             }
-            webfont.load()
         }
     }
 

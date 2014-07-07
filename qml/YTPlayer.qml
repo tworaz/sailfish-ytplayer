@@ -59,7 +59,7 @@ ApplicationWindow
 
         onOnlineChanged: {
             if (online) {
-                pageStack.pop(undefined, PageStackAction.Immediate)
+                pageStack.pop()
             } else {
                 pageStack.push(Qt.resolvedUrl("pages/NetworkOffline.qml"),
                                undefined, PageStackAction.Immediate)

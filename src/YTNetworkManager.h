@@ -31,17 +31,20 @@
 #define YTNETWORKMANAGER_H
 
 #include <QObject>
-#include <QNetworkConfigurationManager>
+
+class QNetworkConfigurationManager;
+class QNetworkConfguration;
 
 class YTNetworkManager : public QObject
 {
     Q_OBJECT
-
     Q_PROPERTY(bool online READ online NOTIFY onlineChanged)
 
 public:
     explicit YTNetworkManager(QObject *parent = 0);
     ~YTNetworkManager();
+
+    Q_INVOKABLE void tryConnect() const;
 
 signals:
     void onlineChanged();

@@ -29,7 +29,16 @@
 
 #include "YTNetworkManager.h"
 
+#include <QNetworkConfigurationManager>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QSharedPointer>
 #include <QDebug>
+
+
+static QUrl kTryConnectUrl("https://www.youtube.com/index.html");
+
+extern QSharedPointer<QNetworkAccessManager> GetNetworkAccessManager();
 
 YTNetworkManager::YTNetworkManager(QObject *parent)
     : QObject(parent)
@@ -42,6 +51,14 @@ YTNetworkManager::YTNetworkManager(QObject *parent)
 YTNetworkManager::~YTNetworkManager()
 {
     delete _manager;
+}
+
+void
+YTNetworkManager::tryConnect() const
+{
+    qDebug() << "Trying to connect to internet";
+    QNetworkRequest request(kTryConnectUrl);
+    GetNetworkAccessManager()->get(request);
 }
 
 void

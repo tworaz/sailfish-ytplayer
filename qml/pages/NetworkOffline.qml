@@ -65,17 +65,13 @@ Page {
         font.family: Theme.fontFamilyHeading
     }
 
-    /* TODO: Would be nice to have an ability trigger sailfish
-             network selection dialog
-
     Button {
         anchors.bottom: parent.bottom
         anchors.margins: Theme.paddingLarge
         anchors.horizontalCenter: parent.horizontalCenter
-        text: "Connect to network"
-        onClicked: {
-            Log.debug("Retry button clicked")
-        }
+        //: Label of network connection retry button
+        //% "Retry"
+        text: qsTrId("ytplayer-label-network-connection-retry")
+        onClicked: networkManager.tryConnect()
     }
-    */
 }

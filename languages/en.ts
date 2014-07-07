@@ -310,5 +310,10 @@ Network offline screen label</extracomment>
         <extracomment>Sub-Menu option responsible for showing user subscribed channels</extracomment>
         <translation>Channels</translation>
     </message>
+    <message id="ytplayer-label-network-connection-retry">
+        <source>Retry</source>
+        <extracomment>Label of network connection retry button</extracomment>
+        <translation>Retry</translation>
+    </message>
 </context>
 </TS>
