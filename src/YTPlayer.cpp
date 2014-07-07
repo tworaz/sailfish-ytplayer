@@ -41,7 +41,7 @@
 #include <notification.h>
 
 #include "YTListModel.h"
-#include "NetworkManager.h"
+#include "YTNetworkManager.h"
 #include "NativeUtil.h"
 #include "YTRequest.h"
 #include "YTWebFontLoader.h"
@@ -104,7 +104,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<YTListModel>("harbour.ytplayer", 1, 0, "YTListModel");
     qmlRegisterType<YTListModelFilter>("harbour.ytplayer", 1, 0, "YTListModelFilter");
     qmlRegisterType<YTWebFontLoader>("harbour.ytplayer", 1, 0, "YTWebFontLoader");
-    qmlRegisterType<NetworkManager>("harbour.ytplayer", 1, 0, "NetworkManager");
+    qmlRegisterType<YTNetworkManager>("harbour.ytplayer", 1, 0, "YTNetworkManager");
     qmlRegisterType<Logger>("harbour.ytplayer", 1, 0, "LogModel");
 
     view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());

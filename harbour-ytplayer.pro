@@ -18,8 +18,8 @@ SOURCES += \
         src/Prefs.cpp \
         src/YTRequest.cpp \
         src/YTListModel.cpp \
-        src/NetworkManager.cpp \
-        src/YTWebFontLoader.cpp
+        src/YTWebFontLoader.cpp \
+        src/YTNetworkManager.cpp
 
 HEADERS += \
         src/NativeUtil.h \
@@ -27,8 +27,8 @@ HEADERS += \
         src/Prefs.h \
         src/YTRequest.h \
         src/YTListModel.h \
-        src/NetworkManager.h \
-        src/YTWebFontLoader.h
+        src/YTWebFontLoader.h \
+        src/YTNetworkManager.h
 
 OTHER_FILES += \
         harbour-ytplayer.desktop \

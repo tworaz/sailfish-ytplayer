@@ -54,7 +54,7 @@ ApplicationWindow
         }
     }
 
-    NetworkManager {
+    YTNetworkManager {
         id: networkManager
 
         onOnlineChanged: {

@@ -27,33 +27,29 @@
  * SUCH DAMAGE.
  */
 
-#ifndef NETWORKMANAGER_H
-#define NETWORKMANAGER_H
+#include "YTNetworkManager.h"
 
-#include <QObject>
-#include <QNetworkConfigurationManager>
+#include <QDebug>
 
-class NetworkManager : public QObject
+YTNetworkManager::YTNetworkManager(QObject *parent)
+    : QObject(parent)
+    , _manager(new QNetworkConfigurationManager(parent))
+    , _online(_manager->isOnline())
 {
-    Q_OBJECT
+    connect(_manager, SIGNAL(onlineStateChanged(bool)), this, SLOT(onOnlineStateChanged(bool)));
+}
 
-    Q_PROPERTY(bool online READ online NOTIFY onlineChanged)
+YTNetworkManager::~YTNetworkManager()
+{
+    delete _manager;
+}
 
-public:
-    explicit NetworkManager(QObject *parent = 0);
-    ~NetworkManager();
-
-signals:
-    void onlineChanged();
-
-protected slots:
-    void onOnlineStateChanged(bool isOnline);
-
-private:
-    bool online() const { return _online; }
-
-    QNetworkConfigurationManager *_manager;
-    bool _online;
-};
-
-#endif // NETWORKMANAGER_H
+void
+YTNetworkManager::onOnlineStateChanged(bool isOnline)
+{
+    if (isOnline != _online) {
+        qDebug() << "Network is " << (isOnline ? "online" : "offline");
+        _online = isOnline;
+        emit onlineChanged();
+    }
+}
