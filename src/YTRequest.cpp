@@ -348,7 +348,7 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
     QUrlQuery query(reply->readAll());
     typedef QList<QPair<QString, QString> > QueryItemList;
 
-    QString streamMap = query.queryItemValue("url_encoded_fmt_stream_map");
+    QString streamMap = query.queryItemValue("url_encoded_fmt_stream_map", QUrl::FullyDecoded);
     if (streamMap.isEmpty()) {
         qWarning() << "YouTube get_video_info did not return proper stream map!";
         qDebug() << "Reply: " << reply->readAll();
