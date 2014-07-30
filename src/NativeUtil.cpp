@@ -35,7 +35,6 @@
 #include <QDBusConnection>
 #include <QDBusObjectPath>
 #include <QDebug>
-#include <sailfishapp.h>
 
 #include "config.h"
 #include "NativeUtil.h"
