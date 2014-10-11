@@ -35,6 +35,7 @@
 #include <QQuickView>
 #include <QtQml>
 #include <QDebug>
+#include <QFontDatabase>
 #include <sailfishapp.h>
 
 // third party code
@@ -91,7 +92,7 @@ int main(int argc, char *argv[])
 
     if (QFontDatabase::addApplicationFont(":/fonts/youtube-icons.ttf") < 0) {
         qCritical() << "Failed to install youtube-icons font!";
-	return -1;
+        return -1;
     }
 
     qDebug("System language : %s", qPrintable(lang));

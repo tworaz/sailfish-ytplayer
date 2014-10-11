@@ -45,10 +45,6 @@ Page {
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            if (pageStack.depth === 1) {
-                pageStack.pushAttached(Qt.resolvedUrl("MainMenu.qml"),
-                                       { "searchActive" : true })
-            }
             requestCoverPage("Default.qml")
         }
     }

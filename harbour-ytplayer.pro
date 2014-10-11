@@ -63,7 +63,6 @@ OTHER_FILES += \
         qml/pages/YTLikeButtons.qml \
         qml/pages/LogViewer.qml \
         qml/pages/NetworkOffline.qml \
-        qml/pages/LoadingScreen.qml \
         qml/pages/MainMenu.qml \
         qml/pages/MainMenuItem.qml
 

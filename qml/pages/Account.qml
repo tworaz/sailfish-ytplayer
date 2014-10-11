@@ -100,21 +100,6 @@ Page {
             if (listModel.count === 0) {
                 loadDataForCurrentState()
             }
-            if (pageStack.depth === 1) {
-                var data = {}
-                if (state === "SUBSCRIPTION_CHANNELS") {
-                    data = { "subscriptionChannelsActive" : true }
-                } else if (state === "SUBSCRIPTION_VIDEOS") {
-                    data = { "subscriptionVideosActive" : true }
-                } else if (state === "LIKES") {
-                    data = { "likesActive" : true }
-                } else if (state === "DISLIKES") {
-                    data = { "dislikesActive" : true }
-                } else if (state === "RECOMMENDED") {
-                    data = { "recommendedActive" : true }
-                }
-                pageStack.pushAttached(Qt.resolvedUrl("MainMenu.qml"), data)
-            }
             requestCoverPage("Default.qml")
         }
     }

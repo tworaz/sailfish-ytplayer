@@ -44,10 +44,6 @@ Page {
             if (videoCategoriesModel.count === 0) {
                 request.run()
             }
-            if (pageStack.depth === 1) {
-                pageStack.pushAttached(Qt.resolvedUrl("MainMenu.qml"),
-                                       {"videoCategoriesActive" : true })
-            }
             requestCoverPage("Default.qml")
         }
     }
