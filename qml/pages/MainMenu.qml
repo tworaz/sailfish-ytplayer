@@ -183,6 +183,13 @@ Page {
                 icon: "qrc:///icons/settings-m.png"
                 onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
             }
+            MainMenuItem {
+                //: Menu option to show about page
+                //% "About"
+                text: qsTrId("ytplayer-action-about")
+                icon: "qrc:///icons/about.png"
+                onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
+            }
         }
     }
 }

@@ -315,5 +315,10 @@ Network offline screen label</extracomment>
         <extracomment>Label of network connection retry button</extracomment>
         <translation>Retry</translation>
     </message>
+    <message id="ytplayer-action-about">
+        <source>About</source>
+        <extracomment>Menu option to show about page</extracomment>
+        <translation>About</translation>
+    </message>
 </context>
 </TS>

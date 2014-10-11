@@ -58,17 +58,10 @@ Page {
             text: qsTrId("ytplayer-label-application-description")
         }
 
-        Rectangle {
+        Image {
             anchors.horizontalCenter: parent.horizontalCenter
-            width: 1.60 * play_icon.width
-            height: 1.20 * play_icon.height
-            color: mainIconColor
-            radius: 20
-            Image {
-                id: play_icon
-                anchors.centerIn: parent
-                source: "image://theme/icon-cover-play"
-            }
+            fillMode: Image.PreserveAspectFit
+            source: "qrc:///logo.png"
         }
 
         Label {

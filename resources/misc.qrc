@@ -11,5 +11,6 @@
         <file>icons/dislike-m.png</file>
         <file>icons/arrow-down-m.png</file>
         <file>icons/arrow-down-s.png</file>
+        <file>icons/about.png</file>
     </qresource>
 </RCC>

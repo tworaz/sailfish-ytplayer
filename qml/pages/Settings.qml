@@ -49,12 +49,6 @@ Page {
                 text: qsTrId("ytplayer-title-show-logs")
                 onClicked: pageStack.push(Qt.resolvedUrl("LogViewer.qml"))
             }
-
-            MenuItem {
-                //% "About YTPlater"
-                text: qsTrId("ytplayer-title-about")
-                onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
-            }
         }
 
         Column {
