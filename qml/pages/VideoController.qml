@@ -245,10 +245,13 @@ DockedPanel {
                 showIndicator = false
                 break
             case MediaPlayer.EndOfMedia:
-                if (position < duration) {
-                    Log.debug("End of media signal received, but positon < duration")
+                if (Math.round(position / 1000) < Math.round(duration / 1000)) {
+                    Log.debug("End of media received, but positon < duration")
                     savePosition()
                     request.run()
+                } else {
+                    Log.debug("End of media")
+                    savedPosition = 0
                 }
                 break
             }
