@@ -64,7 +64,9 @@ OTHER_FILES += \
         qml/pages/LogViewer.qml \
         qml/pages/NetworkOffline.qml \
         qml/pages/MainMenu.qml \
-        qml/pages/MainMenuItem.qml
+        qml/pages/MainMenuItem.qml \
+        qml/pages/LicenseViewer.qml \
+        qml/pages/ThirdPartySoftware.qml
 
 include(third_party/notifications.pri)
 include(languages/translations.pri)
@@ -92,6 +94,10 @@ QMAKE_EXTRA_TARGETS += config_h
 PRE_TARGETDEPS += config.h
 
 DEFINES += VERSION_STR=\\\"$$system($${top_srcdir}/scripts/get_version_str.sh)\\\"
+
+licenses.files = $$files($$top_srcdir/LICENSE.*)
+licenses.path = /usr/share/$${TARGET}/licenses
+INSTALLS += licenses
 
 lupdate_only {
 SOURCES += \

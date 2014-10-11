@@ -27,26 +27,44 @@
  * SUCH DAMAGE.
  */
 
-#ifndef NATIVEUTIL_H
-#define NATIVEUTIL_H
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-#include <QObject>
+Page {
+    allowedOrientations: Orientation.All
 
-class NativeUtil : public QObject
-{
-    Q_OBJECT
+    property string licenseFile: ""
 
-    Q_PROPERTY(QString version READ getVersion CONSTANT)
-    Q_PROPERTY(QString regionCode READ getRegionCode CONSTANT)
+    Component.onCompleted: {
+        Log.debug("LicenseViewer, file: " + licenseFile)
+        requestCoverPage("Default.qml")
+    }
 
-public:
-    explicit NativeUtil(QObject *parent = 0);
+    SilicaFlickable {
+        anchors.fill: parent
+        anchors.leftMargin: Theme.paddingMedium
+        anchors.rightMargin: Theme.paddingMedium
+        contentHeight: column.height
 
-    Q_INVOKABLE void preventScreenBlanking(bool prevent);
-    Q_INVOKABLE QString getLicense(QString file);
+        Column {
+            id: column
+            width: parent.width
 
-    static QString getRegionCode();
-    static QString getVersion();
-};
+            PageHeader {
+                //: License viewer page title
+                //% "License"
+                title: qsTrId("ytplayer-title-license-viewer")
+            }
+            Text {
+                id: licenseText
+                width: parent.width
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryColor
+                text: NativeUtil.getLicense(licenseFile)
+                wrapMode: Text.Wrap
+            }
+        }
 
-#endif // NATIVEUTIL_H
+        VerticalScrollDecorator {}
+    }
+}

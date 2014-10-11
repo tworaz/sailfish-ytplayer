@@ -239,11 +239,6 @@ Account settings section label</extracomment>
 Network offline screen label</extracomment>
         <translation>Network Offline</translation>
     </message>
-    <message id="ytplayer-label-loading">
-        <source>Loading</source>
-        <extracomment>Generic label informing user some content is being loaded</extracomment>
-        <translation type="obsolete">Loading</translation>
-    </message>
     <message id="ytplayer-label-video-quality">
         <source>Video quality</source>
         <extracomment>Label for menu option allowing the user to change video quality</extracomment>
@@ -336,6 +331,35 @@ Network offline screen label</extracomment>
         <source>Keep playing after minimize</source>
         <extracomment>Menu option label allowing the user to disable video playback pausing on player minimization.</extracomment>
         <translation>Keep playing after minimize</translation>
+    </message>
+    <message id="ytplayer-action-view-license">
+        <source>View license</source>
+        <extracomment>Button for showing license viewer page
+----------
+Button for showing license viewer page
+----------
+Button for showing license viewer page</extracomment>
+        <translation>View license</translation>
+    </message>
+    <message id="ytplayer-label-application-license">
+        <source>YTPlayer is licensed under 3-clause BSD License</source>
+        <extracomment>Label displaying YTPlayer licensing information</extracomment>
+        <translation>YTPlayer is licensed under 3-clause BSD License</translation>
+    </message>
+    <message id="ytplayer-action-third-party-software">
+        <source>Third party software</source>
+        <extracomment>Label for button showing third party software listing page</extracomment>
+        <translation>Third party software</translation>
+    </message>
+    <message id="ytplayer-title-license-viewer">
+        <source>License</source>
+        <extracomment>License viewer page title</extracomment>
+        <translation>License</translation>
+    </message>
+    <message id="ytplayer-title-third-party-software">
+        <source>Third party software</source>
+        <extracomment>Third party software license page title</extracomment>
+        <translation>Third party software</translation>
     </message>
 </context>
 </TS>

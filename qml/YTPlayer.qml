@@ -46,9 +46,7 @@ ApplicationWindow
     property variant defaultCoverData
 
     Component.onCompleted: {
-        if (!networkManager.online) {
-            networkManager.onOnlineChanged(false)
-        }
+        initialConnectivityCheck.start()
     }
 
     function requestCoverPage(coverFile, props) {
@@ -71,6 +69,17 @@ ApplicationWindow
             return false
         })
         pageStack.replaceAbove(menu, Qt.resolvedUrl("pages/Search.qml"))
+    }
+
+    Timer {
+        id: initialConnectivityCheck
+        repeat: false
+        interval: 100
+        onTriggered: {
+            if (!networkManager.online) {
+                networkManager.onOnlineChanged(false)
+            }
+        }
     }
 
     YTNetworkManager {

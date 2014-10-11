@@ -41,30 +41,9 @@ Page {
         width: parent.width
 
         PageHeader {
-            //: Title of about page
-            //% "About YTPlayer"
-            title: qsTrId("ytplayer-title-about")
-        }
-        Item {
-            width: parent.width
-            height: Theme.paddingLarge
-        }
-        Image {
-            anchors.horizontalCenter: parent.horizontalCenter
-            height: 256
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:///logo.png"
-        }
-        Item {
-            width: parent.width
-            height: 2 * Theme.paddingLarge
-        }
-        Label {
-            anchors.horizontalCenter: parent.horizontalCenter
-            font.pixelSize: Theme.fontSizeSmall
-            //: YTPlayer application description in about page
-            //% "Unofficial YouTube client for Sailfish OS"
-            text: qsTrId("ytplayer-label-application-description")
+            //: Third party software license page title
+            //% "Third party software"
+            title: qsTrId("ytplayer-title-third-party-software")
         }
         Item {
             width: parent.width
@@ -74,35 +53,13 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
-            //: Region code field value
-            //% "Region code: %1"
-            text: qsTrId("ytplayer-label-region-code").arg(regionCode)
+            text: "nemo-qml-plugin-notifications"
         }
         Label {
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
-            //: Version label value
-            //% "Version: %1"
-            text: qsTrId("ytplayer-label-version").arg(NativeUtil.version)
-        }
-        Item {
-            width: parent.width
-            height: Theme.paddingLarge
-        }
-        Label {
-            anchors.horizontalCenter: parent.horizontalCenter
-            font.pixelSize: Theme.fontSizeExtraSmall
-            color: Theme.secondaryColor
-            text: "Copyright \u00A9 2014 Piotr Tworek"
-        }
-        Label {
-            anchors.horizontalCenter: parent.horizontalCenter
-            font.pixelSize: Theme.fontSizeExtraSmall
-            color: Theme.secondaryColor
-            //: Label displaying YTPlayer licensing information
-            //% "YTPlayer is licensed under 3-clause BSD License"
-            text: qsTrId("ytplayer-label-application-license")
+            text: "Copyright \u00A9 2013 Jolla Ltd"
         }
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -110,28 +67,33 @@ Page {
             //% "View license"
             text: qsTrId("ytplayer-action-view-license")
             onClicked: pageStack.push(Qt.resolvedUrl("LicenseViewer.qml"), {
-                "licenseFile": "LICENSE.YTPlayer"
+                "licenseFile": "LICENSE.nemo-notifications"
             })
         }
         Item {
             width: parent.width
-            height: 2 * Theme.paddingLarge
+            height: Theme.paddingLarge
+        }
+        Label {
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: Theme.fontSizeExtraSmall
+            color: Theme.secondaryColor
+            text: "duration.js"
+        }
+        Label {
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: Theme.fontSizeExtraSmall
+            color: Theme.secondaryColor
+            text: "Copyright \u00A9 2013 Evan W. Isnor"
         }
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
-            //: Label for button showing third party software listing page
-            //% "Third party software"
-            text: qsTrId("ytplayer-action-third-party-software")
-            onClicked: pageStack.push(Qt.resolvedUrl("ThirdPartySoftware.qml"))
+            //: Button for showing license viewer page
+            //% "View license"
+            text: qsTrId("ytplayer-action-view-license")
+            onClicked: pageStack.push(Qt.resolvedUrl("LicenseViewer.qml"), {
+                "licenseFile": "LICENSE.durationjs"
+            })
         }
-    }
-
-    Label {
-        anchors.horizontalCenter: parent.horizontalCenter
-        anchors.bottom: parent.bottom
-        anchors.bottomMargin: Theme.paddingSmall
-        color: Theme.secondaryColor
-        font.pixelSize: Theme.fontSizeTiny
-        text: "https://github.com/tworaz/sailfish-ytplayer"
     }
 }
