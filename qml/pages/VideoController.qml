@@ -45,6 +45,7 @@ DockedPanel {
     property alias seeking: progressSlider.down
     property alias playing: _mediaPlayer.playing
     property alias playbackFinished: _mediaPlayer.finished
+    property alias keepPlayingAferMinimize: autoPause.checked
     property bool showIndicator: false
     property string videoId
 
@@ -119,6 +120,7 @@ DockedPanel {
         bottomMargin: Theme.paddingLarge
         topMargin: Theme.paddingLarge
 
+        property bool qualitySelectionEnabled: false
         property Item selectedItem
         property int visibleChildren: 3
         property int switchWidth: width / visibleChildren
@@ -127,9 +129,11 @@ DockedPanel {
             //: Label for menu option allowing the user to change video quality
             //% "Video quality"
             text: qsTrId("ytplayer-label-video-quality")
+            visible: menu.qualitySelectionEnabled
         }
         Row {
             width: parent.width
+            visible: menu.qualitySelectionEnabled
             TextSwitch {
                 id: q360p
                 text: "360p"
@@ -152,6 +156,17 @@ DockedPanel {
                 onClicked: menu.handleClickOn(q720p)
             }
         }
+        MenuLabel {
+            //: Label for extra video player options section
+            //% "Player options"
+            text: qsTrId("ytplayer-label-extra-options")
+        }
+        TextSwitch {
+            id: autoPause
+            //: Menu option label allowing the user to disable video playback pausing on player minimization.
+            //% "Keep playing after minimize
+            text: qsTrId("ytplayer-label-keep-playing-after-minimize")
+        }
 
         function handleClickOn(item) {
             if (item.checked) {
@@ -173,11 +188,11 @@ DockedPanel {
             Log.debug("Available video stream qualities: " + keys)
 
             if (keys.length === 1) {
-                Log.debug("Only one video quality available, hiding quality selection menu")
-                visible = false
+                Log.debug("Only one video quality available")
                 _mediaPlayer.source = priv.streams[keys[0]].url
                 return
             }
+            menu.qualitySelectionEnabled = true
 
             var initialItem, visibleItems = 0
             var _h = function (item, makeDefault) {

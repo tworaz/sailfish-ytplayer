@@ -65,7 +65,9 @@ Page {
 
     onApplicationActiveChanged:  {
         if (!applicationActive) {
-            mediaPlayer.pause()
+            if (!videoController.keepPlayingAferMinimize) {
+                mediaPlayer.pause()
+            }
             screenBlanking.prevent(false)
         } else {
             screenBlanking.prevent(videoController.playing)

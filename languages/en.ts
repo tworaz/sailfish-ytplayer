@@ -326,5 +326,16 @@ Network offline screen label</extracomment>
         <extracomment>Video duration label with value</extracomment>
         <translation>Duration: %1</translation>
     </message>
+    <message id="ytplayer-label-extra-options">
+        <source>Player options</source>
+        <oldsource>Extra options</oldsource>
+        <extracomment>Label for extra video player options section</extracomment>
+        <translation>Player options</translation>
+    </message>
+    <message id="ytplayer-label-keep-playing-after-minimize">
+        <source>Keep playing after minimize</source>
+        <extracomment>Menu option label allowing the user to disable video playback pausing on player minimization.</extracomment>
+        <translation>Keep playing after minimize</translation>
+    </message>
 </context>
 </TS>
