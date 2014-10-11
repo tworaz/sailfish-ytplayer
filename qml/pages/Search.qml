@@ -104,6 +104,10 @@ Page {
         }
 
         header: SearchField {
+            // Workaround for page indicator being covered
+            // by SearchField icon.
+            textLeftMargin: 160
+
             width: parent.width
             //: Label of video search text field
             //% "Search"
