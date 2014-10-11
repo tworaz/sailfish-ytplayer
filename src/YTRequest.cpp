@@ -77,7 +77,7 @@ static bool
 authEnabled()
 {
     QSettings settings;
-    QVariant auth = settings.value("YouTubeAccountIntegration");
+    QVariant auth = settings.value("AccountIntegration");
     return (auth.isValid() && auth.toBool());
 }
 
@@ -86,8 +86,8 @@ appendAuthHeader(QNetworkRequest& request)
 {
     if (authEnabled()) {
         QSettings settings;
-        QString auth = settings.value("YouTubeAccessTokenType").toString() +
-                " " + settings.value("YouTubeAccessToken").toString();
+        QString auth = settings.value("YouTube/AccessTokenType").toString() +
+                " " + settings.value("YouTube/AccessToken").toString();
         request.setRawHeader("Authorization", auth.toLocal8Bit());
     }
 }
@@ -328,16 +328,16 @@ YTRequest::handleTokenReply(QNetworkReply *reply)
         return;
     }
 
-    settings.setValue("YouTubeAccountIntegration", true);
-    settings.setValue("YouTubeAccessToken", map["access_token"]);
-    settings.setValue("YouTubeAccessTokenType", map["token_type"]);
+    settings.setValue("AccountIntegration", true);
+    settings.setValue("YouTube/AccessToken", map["access_token"]);
+    settings.setValue("YouTube/AccessTokenType", map["token_type"]);
 
     if (map.find("refresh_token") == map.end()) {
         qDebug() << "OAuth2 token refreshed";
         run();
     } else {
         qDebug() << "New OAuth2 token obtained";
-        settings.setValue("YouTubeRefreshToken", map["refresh_token"]);
+        settings.setValue("YouTube/RefreshToken", map["refresh_token"]);
         emit success(QVariant(json.object()));
     }
 }
@@ -441,11 +441,11 @@ YTRequest::refreshToken()
     QUrlQuery query;
 
     qDebug() << "OAuth2 token expired, refreshing";
-    Q_ASSERT(settings.value("YouTubeRefreshToken").isValid());
+    Q_ASSERT(settings.value("YouTube/RefreshToken").isValid());
 
     query.addQueryItem("client_id", YOUTUBE_AUTH_CLIENT_ID);
     query.addQueryItem("client_secret", YOUTUBE_AUTH_CLIENT_SECRET);
-    query.addQueryItem("refresh_token", settings.value("YouTubeRefreshToken").toString());
+    query.addQueryItem("refresh_token", settings.value("YouTube/RefreshToken").toString());
     query.addQueryItem("grant_type", "refresh_token");
     QByteArray data = query.toString(QUrl::FullyEncoded).toLocal8Bit();
 
