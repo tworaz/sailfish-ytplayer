@@ -38,28 +38,11 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Active) {
             if (networkManager.online) {
-                webfont.load()
+                pageStack.replace(Qt.resolvedUrl("VideoCategories.qml"),
+                                  undefined, PageStackAction.Immediate)
             } else {
                 networkManager.onOnlineChanged(false)
             }
-        }
-    }
-
-    YTWebFontLoader {
-        id: webfont
-
-        onLoadedChanged: {
-            console.assert(loaded)
-            Log.info("YouTube icons webfont loaded")
-            pageStack.replace(Qt.resolvedUrl("VideoCategories.qml"),
-                              undefined, PageStackAction.Immediate)
-        }
-
-        onError: {
-            // TODO: Display error page
-            Log.error("Failed to load YouTube webfont")
-            pageStack.replace(Qt.resolvedUrl("VideoCategories.qml"),
-                              undefined, PageStackAction.Immediate)
         }
     }
 
