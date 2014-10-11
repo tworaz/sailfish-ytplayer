@@ -242,7 +242,7 @@ Network offline screen label</extracomment>
     <message id="ytplayer-label-loading">
         <source>Loading</source>
         <extracomment>Generic label informing user some content is being loaded</extracomment>
-        <translation>Loading</translation>
+        <translation type="obsolete">Loading</translation>
     </message>
     <message id="ytplayer-label-video-quality">
         <source>Video quality</source>
@@ -319,6 +319,12 @@ Network offline screen label</extracomment>
         <source>About</source>
         <extracomment>Menu option to show about page</extracomment>
         <translation>About</translation>
+    </message>
+    <message id="ytplayer-label-duration-with-value">
+        <source>Duration: %1</source>
+        <oldsource>Duration: %1%</oldsource>
+        <extracomment>Video duration label with value</extracomment>
+        <translation>Duration: %1</translation>
     </message>
 </context>
 </TS>

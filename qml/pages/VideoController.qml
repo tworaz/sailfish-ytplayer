@@ -321,7 +321,17 @@ DockedPanel {
             case MediaPlayer.Stalled: return qsTrId('ytplayer-status-stalled')
             //: Media player status indicating content has been buffered
             //% "Buffered"
-            case MediaPlayer.Buffered: return qsTrId('ytplayer-status-buffered')
+            case MediaPlayer.Buffered:
+                if (duration > 0) {
+                    //: Video duration label with value
+                    //% "Duration: %1"
+                    return qsTrId("ytplayer-label-duration-with-value").arg(
+                                H.parseDuration(duration))
+                } else {
+                    //: Media player status indicating content has been buffered
+                    //% "Buffered"
+                    return qsTrId('ytplayer-status-buffered')
+                }
             //: Media player status indicating end of content has been reached
             //% "End of media"
             case MediaPlayer.EndOfMedia: return qsTrId('ytplayer-status-end-of-media')
