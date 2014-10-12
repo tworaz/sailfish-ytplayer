@@ -207,7 +207,7 @@ DockedPanel {
                 }
             }
             _h(q360p, true)
-            _h(q720p, true)
+            _h(q720p, !networkManager.isMobileNetwork())
             _h(q1080p)
 
             // Don't change quality in case it was already selected

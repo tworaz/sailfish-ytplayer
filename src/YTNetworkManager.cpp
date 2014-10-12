@@ -61,6 +61,29 @@ YTNetworkManager::tryConnect() const
     GetNetworkAccessManager()->get(request);
 }
 
+bool
+YTNetworkManager::isMobileNetwork() const {
+    QList<QNetworkConfiguration> configs = _manager->allConfigurations(QNetworkConfiguration::Active);
+    if (configs.empty()) {
+        return true;
+    }
+
+    qDebug() << "Bearer type: " << configs.first().bearerTypeName();
+
+    Q_ASSERT(configs.size() == 1);
+    switch (configs.first().bearerType()) {
+    case QNetworkConfiguration::Bearer2G:
+    case QNetworkConfiguration::BearerBluetooth:
+    case QNetworkConfiguration::BearerHSPA:
+    case QNetworkConfiguration::BearerCDMA2000:
+    case QNetworkConfiguration::BearerWCDMA:
+    case QNetworkConfiguration::BearerWiMAX:
+        return true;
+    default:
+        return false;
+    }
+}
+
 void
 YTNetworkManager::onOnlineStateChanged(bool isOnline)
 {
