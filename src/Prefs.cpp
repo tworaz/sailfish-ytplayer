@@ -42,9 +42,6 @@ Prefs::Initialize()
 {
     QSettings settings;
     qDebug("Initializing settings");
-    if (!settings.contains("ResultsPerPage")) {
-        settings.setValue("ResultsPerPage", 25);
-    }
     if (!settings.contains("SafeSearch")) {
         settings.setValue("SafeSearch", 1);
     }

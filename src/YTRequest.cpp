@@ -48,6 +48,7 @@ extern QSharedPointer<QNetworkAccessManager> GetNetworkAccessManager();
 
 static QString kYouTubeDataV3Url("https://www.googleapis.com/youtube/v3/");
 static QString kYouTubeGetVideoInfoUrl("http://www.youtube.com/get_video_info");
+static QString kMaxResults("50"); // Maximum allowed by YouTube
 
 static void
 appendParams(QUrlQuery& query, QVariantMap& params)
@@ -63,13 +64,11 @@ appendCommonParams(QUrlQuery& query)
     QSettings settings;
     query.addQueryItem("key", YOUTUBE_DATA_API_V3_KEY);
     query.addQueryItem("regionCode", NativeUtil::getRegionCode());
+    query.addQueryItem("maxResults", kMaxResults);
     if (QLocale::system().name() != "C") {
         query.addQueryItem("hl", QLocale::system().name());
     } else {
         query.addQueryItem("hl", "en");
-    }
-    if (!query.hasQueryItem("maxResults")) {
-        query.addQueryItem("maxResults", settings.value("ResultsPerPage").toString());
     }
 }
 

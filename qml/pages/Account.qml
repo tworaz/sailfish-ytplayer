@@ -162,10 +162,6 @@ Page {
             } else {
                 listView.nextPageToken = ""
             }
-            if (state === "RECOMMENDED" && listView.nextPageToken.length &&
-                listView.count < Prefs.get("ResultsPerPage")) {
-                page.loadDataForCurrentState(listView.nextPageToken)
-            }
         }
     }
 
