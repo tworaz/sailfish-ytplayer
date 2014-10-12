@@ -35,6 +35,7 @@ import harbour.ytplayer.notifications 1.0
 
 Page {
     id: page
+    allowedOrientations: Orientation.All
 
     property string pageTitle: ""
 

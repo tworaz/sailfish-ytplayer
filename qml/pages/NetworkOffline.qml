@@ -33,6 +33,7 @@ import Sailfish.Silica 1.0
 Page {
     backNavigation: false
     showNavigationIndicator: false
+    allowedOrientations: Orientation.All
 
     onStatusChanged: {
         if (status === PageStatus.Active) {

@@ -34,6 +34,7 @@ import "../common/Helpers.js" as H
 
 Page {
     id: page
+    allowedOrientations: Orientation.All
 
     Component.onCompleted: {
         Log.info("Video categories list page created")

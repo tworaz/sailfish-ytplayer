@@ -35,6 +35,8 @@ import "../common"
 
 Page {
     id: page
+    allowedOrientations: Orientation.All
+
     property string videoId
     property variant thumbnails
     property alias title: header.title

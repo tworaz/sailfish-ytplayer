@@ -33,6 +33,7 @@ import harbour.ytplayer 1.0
 
 Page {
     id: page
+    allowedOrientations: Orientation.All
 
     property string nextPageToken: ""
 

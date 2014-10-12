@@ -32,6 +32,7 @@ import Sailfish.Silica 1.0
 
 Page {
     id: settingsPage
+    allowedOrientations: Orientation.All
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
@@ -42,6 +43,7 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
+        contentHeight: column.height
 
         PullDownMenu {
             MenuItem {
@@ -52,6 +54,7 @@ Page {
         }
 
         Column {
+            id: column
             x: Theme.paddingLarge
             width: parent.width - 2 * Theme.paddingLarge
             spacing: Theme.paddingMedium

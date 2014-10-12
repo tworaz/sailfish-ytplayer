@@ -32,6 +32,7 @@ import Sailfish.Silica 1.0
 
 Page {
     objectName: "MainMenu"
+    allowedOrientations: Orientation.All
 
     Component.onCompleted: {
         priv.showAccount = Prefs.isAuthEnabled()
@@ -52,16 +53,17 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
+        contentHeight: column.height
 
-        PageHeader {
-            id: header
-            title: "YTPlayer"
-        }
         Column {
             id: column
-            anchors.top: header.bottom
             width: parent.width
             spacing: Theme.paddingMedium
+
+            PageHeader {
+                id: header
+                title: "YTPlayer"
+            }
 
             MainMenuItem {
                 id: search
@@ -172,5 +174,6 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
             }
         }
+        VerticalScrollDecorator {}
     }
 }
