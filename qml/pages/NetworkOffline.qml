@@ -31,9 +31,24 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Page {
+    id: page
     backNavigation: false
     showNavigationIndicator: false
     allowedOrientations: Orientation.All
+    state: page.isPortrait ? "PORTRAIT" : "LANDSCAPE"
+
+    states: [
+        State {
+            name: "PORTRAIT"
+            PropertyChanges { target: logo; height: 320 }
+            PropertyChanges { target: flickable; anchors.topMargin: 3 * Theme.paddingLarge}
+        },
+        State {
+            name: "LANDSCAPE"
+            PropertyChanges { target: logo; height: 256 }
+            PropertyChanges { target: flickable; anchors.topMargin: Theme.paddingLarge}
+        }
+    ]
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
@@ -41,38 +56,45 @@ Page {
         }
     }
 
-    Item {
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        anchors.bottom: offlineLabel.top
+    SilicaFlickable {
+        id: flickable
+        anchors.fill: parent
+        anchors.topMargin: Theme.paddingLarge
+        anchors.bottomMargin: Theme.paddingLarge
 
-        Image {
-            anchors.centerIn: parent
-            fillMode: Image.PreserveAspectFit
-            source: "qrc:///logo.png"
+        Item {
+            id: logo
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: 256
+            width: parent.width
+            Image {
+                anchors.fill: parent
+                fillMode: Image.PreserveAspectFit
+                source: "qrc:///logo.png"
+            }
         }
-    }
 
-    Label {
-        id: offlineLabel
-        anchors.centerIn: parent
-        //: Network offline screen label
-        //% "Network Offline"
-        text: qsTrId("ytplayer-label-network-offline")
-        verticalAlignment: Text.AlignVCenter
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: Theme.fontSizeExtraLarge
-        font.family: Theme.fontFamilyHeading
-    }
+        Label {
+            width: parent.width
+            anchors.top: logo.bottom
+            anchors.bottom: btn.top
+            //: Network offline screen label
+            //% "Network Offline"
+            text: qsTrId("ytplayer-label-network-offline")
+            verticalAlignment: Text.AlignVCenter
+            horizontalAlignment: Text.AlignHCenter
+            font.pixelSize: Theme.fontSizeExtraLarge
+            font.family: Theme.fontFamilyHeading
+        }
 
-    Button {
-        anchors.bottom: parent.bottom
-        anchors.margins: Theme.paddingLarge
-        anchors.horizontalCenter: parent.horizontalCenter
-        //: Label of network connection retry button
-        //% "Retry"
-        text: qsTrId("ytplayer-label-network-connection-retry")
-        onClicked: networkManager.tryConnect()
+        Button {
+            id: btn
+            anchors.bottom: parent.bottom
+            anchors.horizontalCenter: parent.horizontalCenter
+            //: Label of network connection retry button
+            //% "Retry"
+            text: qsTrId("ytplayer-label-network-connection-retry")
+            onClicked: networkManager.tryConnect()
+        }
     }
 }
