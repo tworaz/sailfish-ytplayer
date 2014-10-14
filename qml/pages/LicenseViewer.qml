@@ -27,42 +27,44 @@
  * SUCH DAMAGE.
  */
 
-#ifndef YTWEBFONTLOADER_H
-#define YTWEBFONTLOADER_H
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-#include <QObject>
-#include <QSharedPointer>
+Page {
+    allowedOrientations: Orientation.All
 
-class QNetworkReply;
-class QNetworkAccessManager;
+    property string licenseFile: ""
 
-class YTWebFontLoader : public QObject
-{
-    Q_OBJECT
-    Q_PROPERTY(bool loaded READ loaded NOTIFY loadedChanged)
+    Component.onCompleted: {
+        Log.debug("LicenseViewer, file: " + licenseFile)
+        requestCoverPage("Default.qml")
+    }
 
-public:
-    explicit YTWebFontLoader(QObject *parent = 0);
-    ~YTWebFontLoader();
+    SilicaFlickable {
+        anchors.fill: parent
+        anchors.leftMargin: Theme.paddingMedium
+        anchors.rightMargin: Theme.paddingMedium
+        contentHeight: column.height
 
-    Q_INVOKABLE void load();
+        Column {
+            id: column
+            width: parent.width
 
-signals:
-    void loadedChanged(bool);
-    void error();
+            PageHeader {
+                //: License viewer page title
+                //% "License"
+                title: qsTrId("ytplayer-title-license-viewer")
+            }
+            Text {
+                id: licenseText
+                width: parent.width
+                font.pixelSize: Theme.fontSizeExtraSmall
+                color: Theme.secondaryColor
+                text: NativeUtil.getLicense(licenseFile)
+                wrapMode: Text.Wrap
+            }
+        }
 
-protected:
-    bool loaded() const { return _loaded; }
-    bool installFont();
-
-private slots:
-    void onFinished();
-
-private:
-    bool _loaded;
-    QNetworkReply *_reply;
-    QString _fontPath;
-    QSharedPointer<QNetworkAccessManager> _network_access_manager;
-};
-
-#endif // YTWEBFONTLOADER_H
+        VerticalScrollDecorator {}
+    }
+}

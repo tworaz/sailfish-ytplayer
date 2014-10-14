@@ -45,6 +45,7 @@ public:
     ~YTNetworkManager();
 
     Q_INVOKABLE void tryConnect() const;
+    Q_INVOKABLE bool isMobileNetwork() const;
 
 signals:
     void onlineChanged();

@@ -1,4 +1,4 @@
-/*-
+﻿/*-
  * Copyright (c) 2014 Peter Tworek
  * All rights reserved.
  *
@@ -35,6 +35,8 @@
 #include <QDBusConnection>
 #include <QDBusObjectPath>
 #include <QDebug>
+#include <QDir>
+#include <sailfishapp.h>
 
 #include "config.h"
 #include "NativeUtil.h"
@@ -193,4 +195,25 @@ NativeUtil::preventScreenBlanking(bool prevent)
     QDBusMessage msg = QDBusMessage::createMethodCall("com.nokia.mce", "/com/nokia/mce/request",
                                                       "com.nokia.mce.request", request);
     (void)systemBus.call(msg);
+}
+
+QString
+NativeUtil::getLicense(QString license)
+{
+    QString dir = SailfishApp::pathTo(QString("licenses")).toLocalFile();
+    QString licenseFile = dir + QDir::separator() + license;
+
+    if (!QFile::exists(licenseFile)) {
+        return "File not found: " + license;
+    }
+
+    QFile file(licenseFile);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        return "Could not open: " + licenseFile;
+
+    QTextStream in(&file);
+    QString content = in.readAll();
+    file.close();
+
+    return content;
 }

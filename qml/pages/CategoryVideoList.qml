@@ -33,6 +33,8 @@ import "../common/Helpers.js" as H
 
 Page {
     id: page
+    allowedOrientations: Orientation.All
+
     property alias categoryResourceId: videoListView.videoResourceId
     property string title
     property variant savedCoverData

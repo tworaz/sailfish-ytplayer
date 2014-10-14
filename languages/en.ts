@@ -239,11 +239,6 @@ Account settings section label</extracomment>
 Network offline screen label</extracomment>
         <translation>Network Offline</translation>
     </message>
-    <message id="ytplayer-label-loading">
-        <source>Loading</source>
-        <extracomment>Generic label informing user some content is being loaded</extracomment>
-        <translation>Loading</translation>
-    </message>
     <message id="ytplayer-label-video-quality">
         <source>Video quality</source>
         <extracomment>Label for menu option allowing the user to change video quality</extracomment>
@@ -314,6 +309,62 @@ Network offline screen label</extracomment>
         <source>Retry</source>
         <extracomment>Label of network connection retry button</extracomment>
         <translation>Retry</translation>
+    </message>
+    <message id="ytplayer-action-about">
+        <source>About</source>
+        <extracomment>Menu option to show about page</extracomment>
+        <translation>About</translation>
+    </message>
+    <message id="ytplayer-label-duration-with-value">
+        <source>Duration: %1</source>
+        <oldsource>Duration: %1%</oldsource>
+        <extracomment>Video duration label with value</extracomment>
+        <translation>Duration: %1</translation>
+    </message>
+    <message id="ytplayer-label-extra-options">
+        <source>Player options</source>
+        <oldsource>Extra options</oldsource>
+        <extracomment>Label for extra video player options section</extracomment>
+        <translation>Player options</translation>
+    </message>
+    <message id="ytplayer-label-keep-playing-after-minimize">
+        <source>Keep playing after minimize</source>
+        <extracomment>Menu option label allowing the user to disable video playback pausing on player minimization.</extracomment>
+        <translation>Keep playing after minimize</translation>
+    </message>
+    <message id="ytplayer-action-view-license">
+        <source>View license</source>
+        <extracomment>Button for showing license viewer page
+----------
+Button for showing license viewer page
+----------
+Button for showing license viewer page</extracomment>
+        <translation>View license</translation>
+    </message>
+    <message id="ytplayer-label-application-license">
+        <source>YTPlayer is licensed under 3-clause BSD License</source>
+        <extracomment>Label displaying YTPlayer licensing information</extracomment>
+        <translation>YTPlayer is licensed under 3-clause BSD License</translation>
+    </message>
+    <message id="ytplayer-action-third-party-software">
+        <source>Third party software</source>
+        <extracomment>Label for button showing third party software listing page</extracomment>
+        <translation>Third party software</translation>
+    </message>
+    <message id="ytplayer-title-license-viewer">
+        <source>License</source>
+        <extracomment>License viewer page title</extracomment>
+        <translation>License</translation>
+    </message>
+    <message id="ytplayer-title-third-party-software">
+        <source>Third party software</source>
+        <extracomment>Third party software license page title</extracomment>
+        <translation>Third party software</translation>
+    </message>
+    <message id="ytplayer-label-signing-in">
+        <source>Signing in:</source>
+        <extracomment>Information label informing the user YouTube sign in process is in progress</extracomment>
+        <translation>Singing in</translation>
     </message>
 </context>
 </TS>

@@ -35,6 +35,7 @@ import harbour.ytplayer.notifications 1.0
 
 Page {
     id: page
+    allowedOrientations: Orientation.All
 
     property string pageTitle: ""
 
@@ -48,7 +49,9 @@ Page {
     Label {
         anchors.top: indicator.bottom
         width: parent.width
-        text: "Signing in"
+        //: Information label informing the user YouTube sign in process is in progress
+        //% "Signing in:
+        text: qsTrId("ytplayer-label-signing-in")
         font.family: Theme.fontFamily
         font.pixelSize: Theme.fontSizeMedium
         color: Theme.highlightColor

@@ -32,6 +32,8 @@ import Sailfish.Silica 1.0
 import harbour.ytplayer 1.0
 
 Page {
+    allowedOrientations: Orientation.All
+
     onStatusChanged: {
         if (status === PageStatus.Active) {
             requestCoverPage("Default.qml")

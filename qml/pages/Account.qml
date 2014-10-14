@@ -33,7 +33,7 @@ import harbour.ytplayer 1.0
 
 Page {
     id: page
-
+    allowedOrientations: Orientation.All
     state: ""
 
     states: [
@@ -100,21 +100,6 @@ Page {
             if (listModel.count === 0) {
                 loadDataForCurrentState()
             }
-            if (pageStack.depth === 1) {
-                var data = {}
-                if (state === "SUBSCRIPTION_CHANNELS") {
-                    data = { "subscriptionChannelsActive" : true }
-                } else if (state === "SUBSCRIPTION_VIDEOS") {
-                    data = { "subscriptionVideosActive" : true }
-                } else if (state === "LIKES") {
-                    data = { "likesActive" : true }
-                } else if (state === "DISLIKES") {
-                    data = { "dislikesActive" : true }
-                } else if (state === "RECOMMENDED") {
-                    data = { "recommendedActive" : true }
-                }
-                pageStack.pushAttached(Qt.resolvedUrl("MainMenu.qml"), data)
-            }
             requestCoverPage("Default.qml")
         }
     }
@@ -176,10 +161,6 @@ Page {
                 listView.nextPageToken = response.nextPageToken
             } else {
                 listView.nextPageToken = ""
-            }
-            if (state === "RECOMMENDED" && listView.nextPageToken.length &&
-                listView.count < Prefs.get("ResultsPerPage")) {
-                page.loadDataForCurrentState(listView.nextPageToken)
             }
         }
     }

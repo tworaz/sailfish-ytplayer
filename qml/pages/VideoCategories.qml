@@ -34,6 +34,7 @@ import "../common/Helpers.js" as H
 
 Page {
     id: page
+    allowedOrientations: Orientation.All
 
     Component.onCompleted: {
         Log.info("Video categories list page created")
@@ -43,10 +44,6 @@ Page {
         if (status === PageStatus.Active) {
             if (videoCategoriesModel.count === 0) {
                 request.run()
-            }
-            if (pageStack.depth === 1) {
-                pageStack.pushAttached(Qt.resolvedUrl("MainMenu.qml"),
-                                       {"videoCategoriesActive" : true })
             }
             requestCoverPage("Default.qml")
         }

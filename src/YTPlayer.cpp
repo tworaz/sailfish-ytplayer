@@ -35,6 +35,7 @@
 #include <QQuickView>
 #include <QtQml>
 #include <QDebug>
+#include <QFontDatabase>
 #include <sailfishapp.h>
 
 // third party code
@@ -44,7 +45,6 @@
 #include "YTNetworkManager.h"
 #include "NativeUtil.h"
 #include "YTRequest.h"
-#include "YTWebFontLoader.h"
 #include "Logger.h"
 #include "Prefs.h"
 
@@ -90,6 +90,11 @@ int main(int argc, char *argv[])
     prefs->Initialize();
     Logger::Register();
 
+    if (QFontDatabase::addApplicationFont(":/fonts/youtube-icons.ttf") < 0) {
+        qCritical() << "Failed to install youtube-icons font!";
+        return -1;
+    }
+
     qDebug("System language : %s", qPrintable(lang));
 
     bool ret = translator.load(lang, dir);
@@ -103,7 +108,6 @@ int main(int argc, char *argv[])
     qmlRegisterType<YTRequest>("harbour.ytplayer", 1, 0, "YTRequest");
     qmlRegisterType<YTListModel>("harbour.ytplayer", 1, 0, "YTListModel");
     qmlRegisterType<YTListModelFilter>("harbour.ytplayer", 1, 0, "YTListModelFilter");
-    qmlRegisterType<YTWebFontLoader>("harbour.ytplayer", 1, 0, "YTWebFontLoader");
     qmlRegisterType<YTNetworkManager>("harbour.ytplayer", 1, 0, "YTNetworkManager");
     qmlRegisterType<Logger>("harbour.ytplayer", 1, 0, "LogModel");
 

@@ -42,14 +42,11 @@ Prefs::Initialize()
 {
     QSettings settings;
     qDebug("Initializing settings");
-    if (!settings.contains("ResultsPerPage")) {
-        settings.setValue("ResultsPerPage", 25);
-    }
     if (!settings.contains("SafeSearch")) {
         settings.setValue("SafeSearch", 1);
     }
-    if (!settings.contains("YouTubeAccountIntegration")) {
-        settings.setValue("YouTubeAccountIntegration", false);
+    if (!settings.contains("AccountIntegration")) {
+        settings.setValue("AccountIntegration", false);
     }
 }
 
@@ -71,7 +68,7 @@ Prefs::get(const QString& key)
 bool
 Prefs::isAuthEnabled()
 {
-    QVariant auth = get("YouTubeAccountIntegration");
+    QVariant auth = get("AccountIntegration");
     return auth.isValid() && auth.toBool();
 }
 
@@ -79,8 +76,8 @@ void
 Prefs::disableAuth()
 {
     QSettings settings;
-    settings.remove("YouTubeAccessToken");
-    settings.remove("YouTubeRefreshToken");
-    settings.remove("YouTubeAccessTokenType");
-    settings.setValue("YouTubeAccountIntegration", false);
+    settings.remove("YouTube/AccessToken");
+    settings.remove("YouTube/RefreshToken");
+    settings.remove("YouTube/AccessTokenType");
+    settings.setValue("AccountIntegration", false);
 }

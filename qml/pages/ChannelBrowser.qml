@@ -34,6 +34,8 @@ import "../common"
 
 Page {
     id: page
+    allowedOrientations: Orientation.All
+
     property string channelId
     property string title
     property variant thumbnails

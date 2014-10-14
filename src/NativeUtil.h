@@ -43,6 +43,7 @@ public:
     explicit NativeUtil(QObject *parent = 0);
 
     Q_INVOKABLE void preventScreenBlanking(bool prevent);
+    Q_INVOKABLE QString getLicense(QString file);
 
     static QString getRegionCode();
     static QString getVersion();

@@ -31,16 +31,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Page {
-    id: page
-
-    property alias searchActive: search.active
-    property alias videoCategoriesActive: videoCategories.active
-    property alias subscriptionsActive: subscriptions.active
-    property alias likesActive: likes.active
-    property alias dislikesActive: dislikes.active
-    property alias recommendedActive: recommended.active
-    property bool subscriptionVideosActive: false
-    property bool subscriptionChannelsActive: false
+    objectName: "MainMenu"
+    allowedOrientations: Orientation.All
 
     Component.onCompleted: {
         priv.showAccount = Prefs.isAuthEnabled()
@@ -61,25 +53,16 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
+        contentHeight: column.height
 
-        PageHeader {
-            id: header
-            title: "YTPlayer"
-        }
         Column {
             id: column
-            anchors.top: header.bottom
             width: parent.width
             spacing: Theme.paddingMedium
 
-            function handleClick(active, page, params) {
-                if (active) {
-                    Log.debug("Active menu option selected, going back to " + page)
-                    pageStack.navigateBack()
-                } else {
-                    Log.debug("New page selected, opening: " + page)
-                    pageStack.replaceAbove(null, Qt.resolvedUrl(page), params)
-                }
+            PageHeader {
+                id: header
+                title: "YTPlayer"
             }
 
             MainMenuItem {
@@ -88,7 +71,7 @@ Page {
                 //% "Search"
                 text: qsTrId("ytplayer-action-search")
                 icon: "qrc:///icons/search-m.png"
-                onClicked: parent.handleClick(active, "Search.qml")
+                onClicked: pageStack.push(Qt.resolvedUrl("Search.qml"))
             }
             MainMenuItem {
                 id: videoCategories
@@ -96,7 +79,7 @@ Page {
                 //% "Video Categories"
                 text: qsTrId("ytplayer-action-video-categories")
                 icon: "qrc:///icons/video-multi-m.png"
-                onClicked: parent.handleClick(active, "VideoCategories.qml")
+                onClicked: pageStack.push(Qt.resolvedUrl("VideoCategories.qml"))
             }
 
             Label {
@@ -116,7 +99,7 @@ Page {
                 text: qsTrId("ytplayer-action-recommended")
                 visible: priv.showAccount
                 icon: "qrc:///icons/star-m.png"
-                onClicked: parent.handleClick(active, "Account.qml",
+                onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
                                               { "state" : "RECOMMENDED" })
             }
             MainMenuItem {
@@ -132,15 +115,15 @@ Page {
                             //: Sub-Menu option responsible for showing latest subsribed videos page
                             //% "Latest videos"
                             text: qsTrId("ytplayer-action-latest-subscribed-videos")
-                            onClicked: column.handleClick(page.subscriptionVideosActive,
-                                "Account.qml", { "state" : "SUBSCRIPTION_VIDEOS" })
+                            onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
+                                { "state" : "SUBSCRIPTION_VIDEOS" })
                         }
                         MenuItem {
                             //: Sub-Menu option responsible for showing user subscribed channels
                             //% "Channels"
                             text: qsTrId("ytplayer-action-subscribed-channels")
-                            onClicked: column.handleClick(page.subscriptionChannelsActive,
-                                "Account.qml", { "state" : "SUBSCRIPTION_CHANNELS" })
+                            onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
+                                { "state" : "SUBSCRIPTION_CHANNELS" })
 
                         }
                     }
@@ -153,7 +136,7 @@ Page {
                 text: qsTrId("ytplayer-action-likes")
                 visible: priv.showAccount
                 icon: "qrc:///icons/like-m.png"
-                onClicked: parent.handleClick(active, "Account.qml",
+                onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
                                               { "state" : "LIKES" })
             }
             MainMenuItem {
@@ -163,7 +146,7 @@ Page {
                 text: qsTrId("ytplayer-action-dislikes")
                 visible: priv.showAccount
                 icon: "qrc:///icons/dislike-m.png"
-                onClicked: parent.handleClick(active, "Account.qml",
+                onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
                                               { "state" : "DISLIKES" })
             }
 
@@ -183,6 +166,14 @@ Page {
                 icon: "qrc:///icons/settings-m.png"
                 onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
             }
+            MainMenuItem {
+                //: Menu option to show about page
+                //% "About"
+                text: qsTrId("ytplayer-action-about")
+                icon: "qrc:///icons/about.png"
+                onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
+            }
         }
+        VerticalScrollDecorator {}
     }
 }

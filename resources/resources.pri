@@ -1,7 +1,3 @@
-OTHER_FILES += \
-        mcc-data.json \
-        logo.png
-
 RESOURCES += resources/misc.qrc
 
 # mobile county code json target
@@ -14,3 +10,4 @@ mcc_data.commands = \
 
 QMAKE_EXTRA_TARGETS += mcc-data
 PRE_TARGETDEPS += mcc-data
+

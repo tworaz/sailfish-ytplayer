@@ -32,6 +32,7 @@ import Sailfish.Silica 1.0
 
 Page {
     id: settingsPage
+    allowedOrientations: Orientation.All
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
@@ -42,6 +43,7 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
+        contentHeight: column.height
 
         PullDownMenu {
             MenuItem {
@@ -49,15 +51,10 @@ Page {
                 text: qsTrId("ytplayer-title-show-logs")
                 onClicked: pageStack.push(Qt.resolvedUrl("LogViewer.qml"))
             }
-
-            MenuItem {
-                //% "About YTPlater"
-                text: qsTrId("ytplayer-title-about")
-                onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
-            }
         }
 
         Column {
+            id: column
             x: Theme.paddingLarge
             width: parent.width - 2 * Theme.paddingLarge
             spacing: Theme.paddingMedium
@@ -134,28 +131,6 @@ Page {
                 }
 
                 onCurrentIndexChanged: Prefs.set("SafeSearch", currentIndex)
-            }
-
-            Label {
-                //: Display settings section label
-                //% "Display"
-                text: qsTrId("ytplayer-label-display")
-                width: parent.width
-                color: Theme.highlightColor
-                horizontalAlignment: Text.AlignRight
-            }
-
-            Slider {
-                width: parent.width
-                minimumValue: 15
-                maximumValue: 50
-                stepSize: 5
-                value: Prefs.get("ResultsPerPage")
-                valueText: value
-                //: Label of results per page slider in display settings menu
-                //% "Results per page"
-                label: qsTrId("ytplayer-label-results-per-page")
-                onValueChanged: Prefs.set("ResultsPerPage", value)
             }
         }
     }

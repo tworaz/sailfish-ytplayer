@@ -126,7 +126,7 @@ CoverBackground {
         CoverAction {
             iconSource: "image://theme/icon-cover-search"
             onTriggered: {
-                pageStack.replaceAbove(null, Qt.resolvedUrl("../pages/Search.qml"))
+                showSearchPage()
                 activate()
             }
         }

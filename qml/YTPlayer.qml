@@ -40,10 +40,14 @@ ApplicationWindow
     readonly property double thumbnailAspectRatio: 9 / 16
     readonly property string youtubeIconsFontName: "youtube-icons"
 
-    initialPage: Component { LoadingScreen { } }
+    initialPage: Component { MainMenu { } }
     cover: Qt.resolvedUrl("cover/Default.qml")
     property variant coverData
     property variant defaultCoverData
+
+    Component.onCompleted: {
+        initialConnectivityCheck.start()
+    }
 
     function requestCoverPage(coverFile, props) {
         var coverUrl = Qt.resolvedUrl("cover/" + coverFile)
@@ -51,6 +55,30 @@ ApplicationWindow
             Log.info("Changing cover to: " + coverFile)
             cover = coverUrl
             coverData = props
+        }
+    }
+
+    function showSearchPage() {
+        if (pageStack.depth === 1) {
+            pageStack.push(Qt.resolvedUrl("pages/Search.qml"))
+        }
+
+        var menu = pageStack.find(function(page){
+            if (page.objectName === "MainMenu")
+                return true
+            return false
+        })
+        pageStack.replaceAbove(menu, Qt.resolvedUrl("pages/Search.qml"))
+    }
+
+    Timer {
+        id: initialConnectivityCheck
+        repeat: false
+        interval: 100
+        onTriggered: {
+            if (!networkManager.online) {
+                networkManager.onOnlineChanged(false)
+            }
         }
     }
 
