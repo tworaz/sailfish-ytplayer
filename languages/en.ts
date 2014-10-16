@@ -364,7 +364,7 @@ Button for showing license viewer page</extracomment>
     <message id="ytplayer-label-signing-in">
         <source>Signing in:</source>
         <extracomment>Information label informing the user YouTube sign in process is in progress</extracomment>
-        <translation>Singing in</translation>
+        <translation>Signing in</translation>
     </message>
 </context>
 </TS>
