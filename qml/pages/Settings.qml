@@ -96,42 +96,15 @@ Page {
                 }
             }
 
-            Label {
-                //: Search settings section label
-                //% "Search"
-                text: qsTrId("ytplayer-label-search")
-                width: parent.width
-                color: Theme.highlightColor
-                horizontalAlignment: Text.AlignRight
-            }
-
-            ComboBox {
-                //: Content filtering settings option label
-                //% "Content filtering"
-                label: qsTrId("ytplayer-label-content-filtering")
-                width: parent.width
-                currentIndex: Prefs.get("SafeSearch")
-
-                menu: ContextMenu {
-                    MenuItem {
-                        //: Option value for lack of any content filtering
-                        //% "None"
-                        text: qsTrId("ytplayer-content-fitering-none")
-                    }
-                    MenuItem {
-                        //: Option value for moderate content filtering
-                        //% "Moderate"
-                        text: qsTrId("ytplayer-content-filtering-moderate")
-                    }
-                    MenuItem {
-                        //: Option value for strict content filtering
-                        //% "Strict
-                        text: qsTrId("ytplayer-content-filtering-strict")
-                    }
-                }
-
-                onCurrentIndexChanged: Prefs.set("SafeSearch", currentIndex)
-            }
+            // XXX: Enable search hints
+            //Label {
+            //    //: Search settings section label
+            //    //% "Search"
+            //    text: qsTrId("ytplayer-label-search")
+            //    width: parent.width
+            //    color: Theme.highlightColor
+            //    horizontalAlignment: Text.AlignRight
+            //}
         }
     }
 }

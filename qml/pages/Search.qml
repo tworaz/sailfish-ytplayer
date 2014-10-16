@@ -35,7 +35,12 @@ Page {
     id: page
     allowedOrientations: Orientation.All
 
-    property string nextPageToken: ""
+    QtObject {
+        id: priv
+        property Item optionsPage
+        property string nextPageToken: ""
+        property variant searchParams: ({})
+    }
 
     BusyIndicator {
         id: indicator
@@ -47,24 +52,41 @@ Page {
     onStatusChanged: {
         if (status === PageStatus.Active) {
             requestCoverPage("Default.qml")
+            if (!priv.optionsPage) {
+                priv.optionsPage = pageStack.pushAttached(
+                    Qt.resolvedUrl("SearchOptions.qml"))
+            }
+            updateSearchParams()
         }
     }
 
-    function _getSafeSearchValue() {
-        switch(parseInt(Prefs.get("SafeSearch"))) {
-        case 0: return "none"
-        case 1: return "moderate"
-        case 2: return "strict"
+    function updateSearchParams() {
+        console.assert(priv.optionsPage !== undefined)
+        console.assert(priv.optionsPage.hasOwnProperty("currentSettings"))
+        console.assert(priv.optionsPage.hasOwnProperty("changed"))
+
+        if (!priv.optionsPage.changed)
+            return
+
+        var s = priv.optionsPage.currentSettings
+        var params = {
+            "part" : "snippet",
+        }
+        for (var prop in s) {
+            params[prop] = s[prop]
+        }
+        priv.searchParams = params
+        priv.optionsPage.changed = false
+        Log.debug("Search params updated: " + JSON.stringify(params, undefined, 2))
+
+        if (searchHandler.queryStr.length > 0) {
+            searchHandler.onTriggered()
         }
     }
 
     function performSearch(queryStr, pageToken) {
-        var params = {
-            "q"          : queryStr,
-            "part"       : "snippet",
-            "type"       : "video,channel",
-            "safeSearch" : _getSafeSearchValue(),
-        }
+        var params = priv.searchParams
+        params.q = queryStr
         if (pageToken) {
             params.pageToken = pageToken
         }
@@ -81,7 +103,7 @@ Page {
         onSuccess: {
             console.assert(response.kind === "youtube#searchListResponse")
             if (response.hasOwnProperty("nextPageToken")) {
-                page.nextPageToken = response.nextPageToken
+                priv.nextPageToken = response.nextPageToken
             }
         }
     }
@@ -100,18 +122,54 @@ Page {
             busy: true
         }
 
-        header: SearchField {
-            // Workaround for page indicator being covered
-            // by SearchField icon.
-            textLeftMargin: 160
+        header: Item {
+            width: page.width
+            height: options.height + searchField.height
 
-            width: parent.width
-            //: Label of video search text field
-            //% "Search"
-            placeholderText: qsTrId("ytplayer-label-search")
-            onTextChanged: {
-                searchView.currentIndex = -1
-                searchHandler.search(text)
+            function focusSearchField() {
+                searchField.forceActiveFocus()
+            }
+
+            BackgroundItem {
+                id: options
+                anchors.right: parent.right
+                width: optionsIcon.width + optionsLabel.width + 3 * Theme.paddingMedium
+                height: Theme.itemSizeLarge
+                onClicked: {
+                    pageStack.navigateForward(PageStackAction.Animated)
+                }
+                Image {
+                    id: optionsIcon
+                    anchors.right: parent.right
+                    anchors.rightMargin: Theme.paddingMedium
+                    anchors.verticalCenter: parent.verticalCenter
+                    source: "qrc:///icons/advanced-48.png"
+                }
+                Label {
+                    id: optionsLabel
+                    //: Generic options menu/button label
+                    //% "Advanced"
+                    text: qsTrId("ytplayer-label-advanced")
+                    color: options.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    truncationMode: TruncationMode.Fade
+                    font.pixelSize: Theme.fontSizeLarge
+                    font.family: Theme.fontFamilyHeading
+                    anchors.right: optionsIcon.left
+                    anchors.rightMargin: Theme.paddingMedium
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+            }
+            SearchField {
+                id: searchField
+                anchors.top: options.bottom
+                width: parent.width
+                //: Label of video search text field
+                //% "Search"
+                placeholderText: qsTrId("ytplayer-label-search")
+                onTextChanged: {
+                    searchView.currentIndex = -1
+                    searchHandler.search(text)
+                }
             }
         }
 
@@ -138,14 +196,14 @@ Page {
                 } else {
                     stop()
                     resultsListModel.clear()
-                    page.nextPageToken = ""
+                    priv.nextPageToken = ""
                 }
             }
 
             onTriggered: {
                 Log.debug("Searching for: " + queryStr)
                 resultsListModel.clear()
-                page.nextPageToken = ""
+                priv.nextPageToken = ""
                 performSearch(queryStr)
             }
         }
@@ -174,25 +232,25 @@ Page {
             if (atYBeginning && !pageStack.busy) {
                 currentIndex = -1
                 if (searchView.headerItem) {
-                    searchView.headerItem.forceActiveFocus()
+                    searchView.headerItem.focusSearchField()
                 }
             }
         }
 
         onAtYEndChanged: {
-            if (atYEnd && page.nextPageToken.length > 0 && !request.busy) {
+            if (atYEnd && priv.nextPageToken.length > 0 && !request.busy) {
                 loadNextResultsPage()
             }
         }
 
         function loadNextResultsPage() {
-            Log.debug("Loading next page of results, token: " + page.nextPageToken)
-            performSearch(searchHandler.queryStr, page.nextPageToken)
+            Log.debug("Loading next page of results, token: " + priv.nextPageToken)
+            performSearch(searchHandler.queryStr, priv.nextPageToken)
         }
 
         Component.onCompleted: {
             Log.debug("YouTube search page created")
-            searchView.headerItem.forceActiveFocus()
+            searchView.headerItem.focusSearchField()
         }
 
         VerticalScrollDecorator {}

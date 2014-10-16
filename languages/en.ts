@@ -10,9 +10,7 @@
     </message>
     <message id="ytplayer-label-search">
         <source>Search</source>
-        <extracomment>Label of video search text field
-----------
-Search settings section label</extracomment>
+        <extracomment>Label of video search text field</extracomment>
         <translation>Search</translation>
     </message>
     <message id="ytplayer-action-search">
@@ -70,11 +68,6 @@ Search settings section label</extracomment>
         <extracomment>Region code field value</extracomment>
         <translation>Region Code: %1</translation>
     </message>
-    <message id="ytplayer-label-results-per-page">
-        <source>Results per page</source>
-        <extracomment>Label of results per page slider in display settings menu</extracomment>
-        <translation>Results per page</translation>
-    </message>
     <message id="ytplayer-label-publish-date">
         <source>Published on</source>
         <oldsource>Published at</oldsource>
@@ -85,31 +78,6 @@ Search settings section label</extracomment>
         <source>Duration</source>
         <extracomment>Label for video duration field</extracomment>
         <translation>Duration</translation>
-    </message>
-    <message id="ytplayer-label-content-filtering">
-        <source>Content filtering</source>
-        <extracomment>Content filtering settings option label</extracomment>
-        <translation>Content filtering</translation>
-    </message>
-    <message id="ytplayer-label-display">
-        <source>Display</source>
-        <extracomment>Display settings section label</extracomment>
-        <translation>Display</translation>
-    </message>
-    <message id="ytplayer-content-fitering-none">
-        <source>None</source>
-        <extracomment>Option value for lack of any content filtering</extracomment>
-        <translation>None</translation>
-    </message>
-    <message id="ytplayer-content-filtering-moderate">
-        <source>Moderate</source>
-        <extracomment>Option value for moderate content filtering</extracomment>
-        <translation>Moderate</translation>
-    </message>
-    <message id="ytplayer-content-filtering-strict">
-        <source>Strict</source>
-        <extracomment>Option value for strict content filtering</extracomment>
-        <translation>Strict</translation>
     </message>
     <message id="ytplayer-label-created-on">
         <source>Created on</source>
@@ -241,7 +209,9 @@ Network offline screen label</extracomment>
     </message>
     <message id="ytplayer-label-video-quality">
         <source>Video quality</source>
-        <extracomment>Label for menu option allowing the user to change video quality</extracomment>
+        <extracomment>Label for video quality selection combo box
+----------
+Label for menu option allowing the user to change video quality</extracomment>
         <translation>Video quality</translation>
     </message>
     <message id="ytplayer-title-likes">
@@ -363,8 +333,184 @@ Button for showing license viewer page</extracomment>
     </message>
     <message id="ytplayer-label-signing-in">
         <source>Signing in:</source>
+        <oldsource>Signing in</oldsource>
         <extracomment>Information label informing the user YouTube sign in process is in progress</extracomment>
         <translation>Signing in</translation>
+    </message>
+    <message id="ytplayer-title-search-options">
+        <source>Search Options</source>
+        <extracomment>Search options page title</extracomment>
+        <translation>Search Options</translation>
+    </message>
+    <message id="ytplayer-label-advanced">
+        <source>Advanced</source>
+        <extracomment>Generic options menu/button label</extracomment>
+        <translation>Advanced</translation>
+    </message>
+    <message id="ytplayer-label-result-type">
+        <source>Result type</source>
+        <extracomment>Label for YouTube content type search combo box</extracomment>
+        <translation>Result type</translation>
+    </message>
+    <message id="ytplayer-label-any">
+        <source>Any</source>
+        <extracomment>Label for generic option menu matching any content type</extracomment>
+        <translation>Any</translation>
+    </message>
+    <message id="ytplayer-label-channel">
+        <source>Channel</source>
+        <extracomment>Label for menu option indicating YouTube channel content type</extracomment>
+        <translation>Channel</translation>
+    </message>
+    <message id="ytplayer-label-video">
+        <source>Video</source>
+        <extracomment>Label for menu option indicating YouTube video content type</extracomment>
+        <translation>Video</translation>
+    </message>
+    <message id="ytplayer-label-high-definition">
+        <source>High definition</source>
+        <extracomment>Label for high video quality menu option</extracomment>
+        <translation>High definition</translation>
+    </message>
+    <message id="ytplayer-label-standard-definition">
+        <source>Standard definition</source>
+        <extracomment>Label for standard video quality menu option</extracomment>
+        <translation>Standard definition</translation>
+    </message>
+    <message id="ytplayer-label-video-duration">
+        <source>Video duration</source>
+        <extracomment>Label for video duration combo box</extracomment>
+        <translation>Video duration</translation>
+    </message>
+    <message id="ytplayer-label-video-duration-long">
+        <source>Longer than 20 minutes</source>
+        <extracomment>Label for long (more than 20 minutes) video option menu</extracomment>
+        <translation>Longer than 20 minutes</translation>
+    </message>
+    <message id="ytplayer-label-video-duration-medium">
+        <source>Between 4 and 20 minutes</source>
+        <extracomment>Label for medium (4-20 miniutes) video option menu</extracomment>
+        <translation>Between 4 and 20 minutes</translation>
+    </message>
+    <message id="ytplayer-label-video-duration-short">
+        <source>Less than 4 minutes</source>
+        <extracomment>Label for short (less than 4 minutes) video option MenuItem</extracomment>
+        <translation>Less than 4 minutes</translation>
+    </message>
+    <message id="ytplayer-label-video-type">
+        <source>Video type</source>
+        <extracomment>Label for video type combo box</extracomment>
+        <translation>Video type</translation>
+    </message>
+    <message id="ytplayer-label-video-episode">
+        <source>Episode</source>
+        <extracomment>Label for episode video type</extracomment>
+        <translation>Episode</translation>
+    </message>
+    <message id="ytplayer-label-video-movie">
+        <source>Movie</source>
+        <extracomment>Label for movie video type</extracomment>
+        <translation>Movie</translation>
+    </message>
+    <message id="ytplayer-label-video-license">
+        <source>Video license</source>
+        <extracomment>Label for video license combo box</extracomment>
+        <translation>Video license</translation>
+    </message>
+    <message id="ytplayer-label-cretive-commons-license">
+        <source>Creative Commons</source>
+        <extracomment>Label for Creative Commons license type</extracomment>
+        <translation>Creative Commons</translation>
+    </message>
+    <message id="ytplayer-label-youtube-license">
+        <source>YouTube</source>
+        <extracomment>Label for YouTube license type</extracomment>
+        <translation>YouTube</translation>
+    </message>
+    <message id="ytplayer-label-video-event-type">
+        <source>Event Type</source>
+        <extracomment>Label for video event type combo box</extracomment>
+        <translation>Event type</translation>
+    </message>
+    <message id="ytplayer-label-completed-event">
+        <source>Completed</source>
+        <extracomment>Label for completed event type option</extracomment>
+        <translation>Completed</translation>
+    </message>
+    <message id="ytplayer-label-live-event">
+        <source>Live</source>
+        <extracomment>Label for live event type option</extracomment>
+        <translation>Live</translation>
+    </message>
+    <message id="ytplayer-label-upcoming-event">
+        <source>Upcoming</source>
+        <extracomment>Label for upcoming event type option</extracomment>
+        <translation>Upcoming</translation>
+    </message>
+    <message id="ytplayer-label-results-order-by">
+        <source>Order by</source>
+        <extracomment>Label for search result ordering combo box</extracomment>
+        <translation>Order by</translation>
+    </message>
+    <message id="ytplayer-label-order-relevance">
+        <source>Relevance</source>
+        <extracomment>Label for relevance ordering menu option</extracomment>
+        <translation>Relevance</translation>
+    </message>
+    <message id="ytplayer-label-order-date">
+        <source>Date</source>
+        <extracomment>Label for date ordering menu option</extracomment>
+        <translation>Date</translation>
+    </message>
+    <message id="ytplayer-label-order-rating">
+        <source>Rating</source>
+        <extracomment>Label for rating ordering menu option</extracomment>
+        <translation>Rating</translation>
+    </message>
+    <message id="ytplayer-label-order-title">
+        <source>Title</source>
+        <extracomment>Label for title ordering menu option</extracomment>
+        <translation>Title</translation>
+    </message>
+    <message id="ytplayer-label-order-video-count">
+        <source>Video count</source>
+        <extracomment>Label for video count ordering menu option</extracomment>
+        <translation>Video count</translation>
+    </message>
+    <message id="ytplayer-label-order-view-count">
+        <source>View count</source>
+        <extracomment>Label for view count ordering menu option</extracomment>
+        <translation>View count</translation>
+    </message>
+    <message id="ytplayer-label-safe-search">
+        <source>Safe search</source>
+        <extracomment>Label for safe search combo box</extracomment>
+        <translation>Safe search</translation>
+    </message>
+    <message id="ytplayer-label-safe-search-moderate">
+        <source>Moderate</source>
+        <extracomment>Label for moderate content search filtering option</extracomment>
+        <translation>Moderate</translation>
+    </message>
+    <message id="ytplayer-label-safe-search-none">
+        <source>None</source>
+        <extracomment>Label for no search content filtering menu option</extracomment>
+        <translation>None</translation>
+    </message>
+    <message id="ytplayer-label-safe-search-strict">
+        <source>Strict</source>
+        <extracomment>Label for strict search content filtering menu option</extracomment>
+        <translation>Strict</translation>
+    </message>
+    <message id="ytplayer-label-published-before">
+        <source>Published before</source>
+        <extracomment>Label for published before search option menu</extracomment>
+        <translation>Published before</translation>
+    </message>
+    <message id="ytplayer-label-published-after">
+        <source>Published after</source>
+        <extracomment>Label for published after search option MenuItem</extracomment>
+        <translation>Published after</translation>
     </message>
 </context>
 </TS>

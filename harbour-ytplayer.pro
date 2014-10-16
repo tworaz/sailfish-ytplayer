@@ -51,6 +51,7 @@ OTHER_FILES += \
         qml/pages/VideoOverview.qml \
         qml/pages/VideoPlayer.qml \
         qml/pages/Search.qml \
+        qml/pages/SearchOptions.qml \
         qml/pages/VideoCategories.qml \
         qml/pages/Settings.qml \
         qml/pages/About.qml \
