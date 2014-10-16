@@ -50,7 +50,7 @@ Page {
         anchors.top: indicator.bottom
         width: parent.width
         //: Information label informing the user YouTube sign in process is in progress
-        //% "Signing in:
+        //% "Signing in"
         text: qsTrId("ytplayer-label-signing-in")
         font.family: Theme.fontFamily
         font.pixelSize: Theme.fontSizeMedium
