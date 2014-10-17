@@ -14,5 +14,6 @@
         <file>icons/about.png</file>
         <file>fonts/youtube-icons.ttf</file>
         <file>icons/advanced-48.png</file>
+        <file>icons/play-48.png</file>
     </qresource>
 </RCC>

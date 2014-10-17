@@ -36,10 +36,24 @@ import "../common"
 Page {
     id: page
     allowedOrientations: Orientation.All
+    state: page.isPortrait ? "PORTRAIT" : "LANDSCAPE"
 
     property string videoId
     property variant thumbnails
-    property alias title: header.title
+    property alias title: titleLabel.text
+
+    states: [
+        State {
+            name: "PORTRAIT"
+            PropertyChanges { target: content; columns: 1; spacing: 0}
+            PropertyChanges { target: videoDetails; columns: 2}
+        },
+        State {
+            name: "LANDSCAPE"
+            PropertyChanges { target: content; columns: 2; spacing: Theme.paddingMedium }
+            PropertyChanges { target: videoDetails; columns: 1}
+        }
+    ]
 
     QtObject {
         id: priv
@@ -102,7 +116,7 @@ Page {
             publishDate.value = Qt.formatDateTime(pd, "d MMMM yyyy")
             duration.value = (new DJS.Duration(details.contentDetails.duration)).asClock()
 
-            header.title = details.snippet.title
+            titleLabel.text = details.snippet.title
             indicator.running = false
         }
     }
@@ -117,81 +131,121 @@ Page {
     SilicaFlickable {
         id: flickable
         anchors.fill: parent
-        contentHeight: wrapper.height
+        contentHeight: header.height + wrapper.height
+        anchors.rightMargin: Theme.paddingMedium
+        anchors.leftMargin: Theme.paddingMedium
+
+        HeaderButton {
+            id: header
+            anchors.top: parent.top
+            anchors.right: parent.right
+            //: Label for video play button
+            //% "Play"
+            text: qsTrId("ytplayer-label-play")
+            icon: "qrc:///icons/play-48.png"
+            onClicked: {
+                pageStack.navigateForward(PageStackAction.Animated)
+            }
+        }
 
         Column {
             id: wrapper
-            width: parent.width - 2 * Theme.paddingMedium
-            x: Theme.paddingMedium
+            visible: !indicator.running
+            anchors.top: header.bottom
+            width: parent.width
             spacing: Theme.paddingMedium
 
-            PageHeader {
-                id: header
-            }
-
-            AsyncImage {
-                id: poster
-                visible: !indicator.running
+            Grid {
+                id: content
                 width: parent.width
-                height: width * thumbnailAspectRatio
-                indicatorSize: BusyIndicatorSize.Medium
-                source: {
-                    if (thumbnails.high) {
-                        return thumbnails.high.url
-                    } else if (thumbnails.medium) {
-                        return thumbnails.medium.url
-                    } else {
-                        return thymbnails.default.url
+                columns: 1
+
+                property int childWidth: (width - spacing) / columns
+
+                AsyncImage {
+                    id: poster
+                    width: parent.childWidth
+                    height: width * thumbnailAspectRatio
+                    indicatorSize: BusyIndicatorSize.Medium
+                    source: {
+                        if (thumbnails.high) {
+                            return thumbnails.high.url
+                        } else if (thumbnails.medium) {
+                            return thumbnails.medium.url
+                        } else {
+                            return thymbnails.default.url
+                        }
                     }
                 }
-            }
 
-            Row {
-                width: parent.width
-                visible: !indicator.running
+                Column {
+                    spacing: Theme.paddingMedium
+                    width: parent.childWidth
 
-                KeyValueLabel {
-                    id: publishDate
-                    width: parent.width * 2 / 3
-                    pixelSize: Theme.fontSizeExtraSmall
-                    //: Label for video upload date field
-                    //% "Published on"
-                    key: qsTrId("ytplayer-label-publish-date")
+                    Label {
+                        id: titleLabel
+                        width: parent.width
+                        font.family: Theme.fontFamilyHeading
+                        font.pixelSize: Theme.fontSizeSmall
+                        truncationMode: TruncationMode.Fade
+                        color: Theme.highlightColor
+                        wrapMode: Text.Wrap
+                        maximumLineCount: 2
+                    }
+
+                    Separator {
+                        color: Theme.highlightColor
+                        width: parent.width
+                    }
+
+                    Grid {
+                        id: videoDetails
+                        width: parent.width
+                        columns: 2
+
+                        KeyValueLabel {
+                            id: publishDate
+                            width: parent.columns === 2 ? parent.width * 2 / 3 : parent.width
+                            pixelSize: Theme.fontSizeExtraSmall
+                            //: Label for video upload date field
+                            //% "Published on"
+                            key: qsTrId("ytplayer-label-publish-date")
+                        }
+
+                        KeyValueLabel {
+                            id: duration
+                            width: parent.columns === 2 ? parent.width * 1 / 3 : parent.width
+                            pixelSize: Theme.fontSizeExtraSmall
+                            horizontalAlignment: parent.columns === 2 ? Text.AlignRight : Text.AlignLeft
+                            //: Label for video duration field
+                            //% "Duration"
+                            key: qsTrId("ytplayer-label-duration")
+                        }
+                    }
+
+                    YTLikeButtons {
+                        id: rating
+                        width: parent.width
+                        visible: !indicator.running
+                        videoId: page.videoId
+                    }
                 }
-
-                KeyValueLabel {
-                    id: duration
-                    width: parent.width / 3
-                    pixelSize: Theme.fontSizeExtraSmall
-                    horizontalAlignment: Text.AlignRight
-                    //: Label for video duration field
-                    //% "Duration"
-                    key: qsTrId("ytplayer-label-duration")
-                }
-            }
-
-            YTLikeButtons {
-                id: rating
-                width: parent.width
-                visible: !indicator.running
-                videoId: page.videoId
             }
 
             Separator {
                 color: Theme.highlightColor
                 width: parent.width
-                visible: !indicator.running
             }
 
             Label {
                 id: description
-                visible: !indicator.running
                 width: parent.width
                 textFormat: Text.PlainText
                 wrapMode: Text.Wrap
-                font.pixelSize: Theme.fontSizeSmall
+                font.pixelSize: Theme.fontSizeExtraSmall
             }
         }
+
         VerticalScrollDecorator {}
     }
 }

@@ -67,7 +67,8 @@ OTHER_FILES += \
         qml/pages/MainMenu.qml \
         qml/pages/MainMenuItem.qml \
         qml/pages/LicenseViewer.qml \
-        qml/pages/ThirdPartySoftware.qml
+        qml/pages/ThirdPartySoftware.qml \
+        qml/pages/HeaderButton.qml
 
 include(third_party/notifications.pri)
 include(languages/translations.pri)

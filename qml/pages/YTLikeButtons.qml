@@ -42,6 +42,11 @@ Row {
     property alias dislikes: dislikeCount.text
     property alias likes: likeCount.text
 
+    QtObject {
+        id: priv
+        readonly property double inactiveButtonOpacity: 0.2
+    }
+
     function updateRating() {
         var params = {
             "id" : videoId
@@ -105,7 +110,6 @@ Row {
         enabled: root.enabled
 
         property bool selected: false
-        property color activeColor: selected ? "#AA00AA00" : "transparent"
 
         onSelectedChanged: {
             if (selected) {
@@ -118,7 +122,7 @@ Row {
         Rectangle {
             id: likeBackground
             anchors.fill: parent
-            color: parent.pressed ? Theme.secondaryHighlightColor : parent.activeColor
+            color: parent.pressed ? Theme.secondaryHighlightColor : "transparent"
             Behavior on color {
                 enabled: !likeButton.pressed
                 ColorAnimation { duration: root.animationDuration; easing.type: Easing.InCirc }
@@ -129,7 +133,7 @@ Row {
             id: likeIcon
             source: "qrc:///icons/like-m.png"
             anchors.verticalCenter: parent.verticalCenter
-            opacity: parent.selected ? 1 : 0.3
+            opacity: parent.selected ? 1 : priv.inactiveButtonOpacity
             Behavior on opacity {
                 NumberAnimation { duration: root.animationDuration }
             }
@@ -158,7 +162,6 @@ Row {
         enabled: root.enabled
 
         property bool selected: false
-        property color activeColor: selected ? "#AAFF0000" : "transparent"
 
         onSelectedChanged: {
             if (selected) {
@@ -171,7 +174,7 @@ Row {
         Rectangle {
             id: dislikeBackground
             anchors.fill: parent
-            color: parent.pressed ? Theme.secondaryHighlightColor : parent.activeColor
+            color: parent.pressed ? Theme.secondaryHighlightColor : "transparent"
             Behavior on color {
                 enabled: !dislikeButton.pressed
                 ColorAnimation { duration: root.animationDuration; easing.type: Easing.InCirc }
@@ -190,7 +193,7 @@ Row {
             source: "qrc:///icons/dislike-m.png"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
-            opacity: parent.selected ? 1 : 0.3
+            opacity: parent.selected ? 1 : priv.inactiveButtonOpacity
             Behavior on opacity {
                 NumberAnimation { duration: root.animationDuration }
             }

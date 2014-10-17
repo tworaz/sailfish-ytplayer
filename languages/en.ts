@@ -511,5 +511,10 @@ Button for showing license viewer page</extracomment>
         <extracomment>Label for published after search option MenuItem</extracomment>
         <translation>Published after</translation>
     </message>
+    <message id="ytplayer-label-play">
+        <source>Play</source>
+        <extracomment>Label for video play button</extracomment>
+        <translation>Play</translation>
+    </message>
 </context>
 </TS>
