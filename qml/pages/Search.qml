@@ -130,33 +130,15 @@ Page {
                 searchField.forceActiveFocus()
             }
 
-            BackgroundItem {
+            HeaderButton {
                 id: options
                 anchors.right: parent.right
-                width: optionsIcon.width + optionsLabel.width + 3 * Theme.paddingMedium
-                height: Theme.itemSizeLarge
+                icon: "qrc:///icons/advanced-48.png"
+                //: Generic options menu/button label
+                //% "Advanced"
+                text: qsTrId("ytplayer-label-advanced")
                 onClicked: {
                     pageStack.navigateForward(PageStackAction.Animated)
-                }
-                Image {
-                    id: optionsIcon
-                    anchors.right: parent.right
-                    anchors.rightMargin: Theme.paddingMedium
-                    anchors.verticalCenter: parent.verticalCenter
-                    source: "qrc:///icons/advanced-48.png"
-                }
-                Label {
-                    id: optionsLabel
-                    //: Generic options menu/button label
-                    //% "Advanced"
-                    text: qsTrId("ytplayer-label-advanced")
-                    color: options.highlighted ? Theme.highlightColor : Theme.primaryColor
-                    truncationMode: TruncationMode.Fade
-                    font.pixelSize: Theme.fontSizeLarge
-                    font.family: Theme.fontFamilyHeading
-                    anchors.right: optionsIcon.left
-                    anchors.rightMargin: Theme.paddingMedium
-                    anchors.verticalCenter: parent.verticalCenter
                 }
             }
             SearchField {
