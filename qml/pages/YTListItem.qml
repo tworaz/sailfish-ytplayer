@@ -56,6 +56,8 @@ BackgroundItem {
         id: itemLabel
         color: ytItem.highlighted ? Theme.highlightColor : Theme.primaryColor
         elide: Text.ElideRight
+        maximumLineCount: 2
+        wrapMode: Text.Wrap
         anchors {
             left: thumbnail.right
             right: parent.right
@@ -65,7 +67,7 @@ BackgroundItem {
         }
         font {
             family: Theme.fontFamily
-            pixelSize: Theme.fontSizeSmall
+            pixelSize: Theme.fontSizeExtraSmall
         }
     }
 
