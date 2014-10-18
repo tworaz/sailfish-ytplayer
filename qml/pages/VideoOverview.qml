@@ -241,14 +241,12 @@ Page {
 
             Separator {
                 color: Theme.highlightColor
-                width: parent.width - 2 * priv.sideMargin
-                x: priv.sideMargin
+                width: parent.width
             }
 
             Label {
                 id: description
-                width: parent.width - 2 * priv.sideMargin
-                x: priv.sideMargin
+                width: parent.width
                 textFormat: Text.PlainText
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeExtraSmall
