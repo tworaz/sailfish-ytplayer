@@ -58,6 +58,7 @@ Page {
     QtObject {
         id: priv
         property bool playerPushed: false
+        readonly property real sideMargin: Theme.paddingMedium
     }
 
     Component.onCompleted: {
@@ -132,8 +133,13 @@ Page {
         id: flickable
         anchors.fill: parent
         contentHeight: header.height + wrapper.height
-        anchors.rightMargin: Theme.paddingMedium
-        anchors.leftMargin: Theme.paddingMedium
+
+        PullDownMenu {
+            MenuItem {
+                text: "Open in browser"
+                onClicked: Qt.openUrlExternally("https://youtube.com/watch?v=" + videoId)
+            }
+        }
 
         HeaderButton {
             id: header
@@ -152,7 +158,8 @@ Page {
             id: wrapper
             visible: !indicator.running
             anchors.top: header.bottom
-            width: parent.width
+            width: parent.width - 2 * priv.sideMargin
+            x: priv.sideMargin
             spacing: Theme.paddingMedium
 
             Grid {
@@ -234,12 +241,14 @@ Page {
 
             Separator {
                 color: Theme.highlightColor
-                width: parent.width
+                width: parent.width - 2 * priv.sideMargin
+                x: priv.sideMargin
             }
 
             Label {
                 id: description
-                width: parent.width
+                width: parent.width - 2 * priv.sideMargin
+                x: priv.sideMargin
                 textFormat: Text.PlainText
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeExtraSmall
