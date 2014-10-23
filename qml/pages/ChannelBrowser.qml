@@ -34,6 +34,7 @@ import "../common"
 
 Page {
     id: page
+    objectName: "ChannelBrowser"
     allowedOrientations: Orientation.All
 
     property string channelId
@@ -195,6 +196,9 @@ Page {
                     viewCount.text = stats.viewCount
                     indicator.running = false
 
+                    if (!page.thumbnails)
+                        page.thumbnails = response.items[0].snippet.thumbnails
+
                     coverData = {
                         "thumbnails" : page.thumbnails,
                         "videoCount" : stats.videoCount,
@@ -220,14 +224,23 @@ Page {
                 width: parent.width
                 height: width * thumbnailAspectRatio
                 indicatorSize: BusyIndicatorSize.Large
-                source : {
+                function pickThumb() {
                     if (thumbnails.high) {
-                        return thumbnails.high.url
+                        source = thumbnails.high.url
                     } else if (thumbnails.medium) {
-                        return thumbnails.medium.url
+                        source = thumbnails.medium.url
                     } else {
-                        return thumbnails.default.url
+                        source = thumbnails.default.url
                     }
+                }
+                Component.onCompleted: {
+                    if (thumbnails)
+                        pickThumb()
+                }
+
+                Connections {
+                    target: page
+                    onThumbnailsChanged: poster.pickThumb()
                 }
             }
 

@@ -58,6 +58,7 @@ Page {
     QtObject {
         id: priv
         property bool playerPushed: false
+        property variant channelBrowserData: ({})
         readonly property real sideMargin: Theme.paddingMedium
     }
 
@@ -120,8 +121,19 @@ Page {
             titleLabel.text = details.snippet.title
             indicator.running = false
 
-            Log.debug("Channel ID: " + details.snippet.channelId)
-            Log.debug("Channel Title: " + details.snippet.channelTitle)
+            channelName.value = details.snippet.channelTitle
+            priv.channelBrowserData = {
+                "channelId" : details.snippet.channelId,
+                "title"     : details.snippet.channelTitle,
+            }
+
+            var browserPage = pageStack.find(function(page) {
+                if (page.objectName === "ChannelBrowser")
+                    return true
+                return false
+            })
+            if (!browserPage)
+                channelBrowserMenu.visible = true
         }
     }
 
@@ -143,6 +155,18 @@ Page {
                 //% "Open in browser"
                 text: qsTrId("ytplayer-label-open-in-browser")
                 onClicked: Qt.openUrlExternally("https://youtube.com/watch?v=" + videoId)
+            }
+            MenuItem {
+                id: channelBrowserMenu
+                visible: false
+                //: Label for menu option allwoing the user to browser YouTube ChannelBrowser
+                //% "Browser channel"
+                text: qsTrId("ytplayer-label-browse-channel")
+                onClicked: {
+                    pageStack.replaceAbove(pageStack.previousPage(),
+                        Qt.resolvedUrl("ChannelBrowser.qml"),
+                        priv.channelBrowserData)
+                }
             }
         }
 
@@ -210,10 +234,10 @@ Page {
                         width: parent.width
                     }
 
-                    Grid {
+                    Flow {
                         id: videoDetails
                         width: parent.width
-                        columns: 2
+                        property int columns: 2
 
                         KeyValueLabel {
                             id: publishDate
@@ -223,7 +247,6 @@ Page {
                             //% "Published on"
                             key: qsTrId("ytplayer-label-publish-date")
                         }
-
                         KeyValueLabel {
                             id: duration
                             width: parent.columns === 2 ? parent.width * 1 / 3 : parent.width
@@ -232,6 +255,14 @@ Page {
                             //: Label for video duration field
                             //% "Duration"
                             key: qsTrId("ytplayer-label-duration")
+                        }
+                        KeyValueLabel {
+                            id: channelName
+                            visible: value.length > 0
+                            width: parent.width
+                            pixelSize: Theme.fontSizeExtraSmall
+                            horizontalAlignment: Text.AlignLeft
+                            key: "Channel"
                         }
                     }
 

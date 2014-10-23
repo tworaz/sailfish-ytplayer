@@ -521,5 +521,10 @@ Button for showing license viewer page</extracomment>
         <extracomment>Label for menu option opening YouTube web page for a video</extracomment>
         <translation>Open in browser</translation>
     </message>
+    <message id="ytplayer-label-browse-channel">
+        <source>Browser channel</source>
+        <extracomment>Label for menu option allwoing the user to browser YouTube ChannelBrowser</extracomment>
+        <translation>Browse channel</translation>
+    </message>
 </context>
 </TS>
