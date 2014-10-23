@@ -119,6 +119,9 @@ Page {
 
             titleLabel.text = details.snippet.title
             indicator.running = false
+
+            Log.debug("Channel ID: " + details.snippet.channelId)
+            Log.debug("Channel Title: " + details.snippet.channelTitle)
         }
     }
 
@@ -136,7 +139,9 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                text: "Open in browser"
+                //: Label for menu option opening YouTube web page for a video
+                //% "Open in browser"
+                text: qsTrId("ytplayer-label-open-in-browser")
                 onClicked: Qt.openUrlExternally("https://youtube.com/watch?v=" + videoId)
             }
         }

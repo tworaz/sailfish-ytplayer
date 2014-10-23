@@ -516,5 +516,10 @@ Button for showing license viewer page</extracomment>
         <extracomment>Label for video play button</extracomment>
         <translation>Play</translation>
     </message>
+    <message id="ytplayer-label-open-in-browser">
+        <source>Open in browser</source>
+        <extracomment>Label for menu option opening YouTube web page for a video</extracomment>
+        <translation>Open in browser</translation>
+    </message>
 </context>
 </TS>
