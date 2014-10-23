@@ -358,7 +358,9 @@ Button for showing license viewer page</extracomment>
     </message>
     <message id="ytplayer-label-channel">
         <source>Channel</source>
-        <extracomment>Label for menu option indicating YouTube channel content type</extracomment>
+        <extracomment>Label for menu option indicating YouTube channel content type
+----------
+Label for channel name text field</extracomment>
         <translation>Channel</translation>
     </message>
     <message id="ytplayer-label-video">

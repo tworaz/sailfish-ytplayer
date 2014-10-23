@@ -262,7 +262,9 @@ Page {
                             width: parent.width
                             pixelSize: Theme.fontSizeExtraSmall
                             horizontalAlignment: Text.AlignLeft
-                            key: "Channel"
+                            //: Label for channel name text field
+                            //% "Channel"
+                            key: qsTrId("ytplayer-label-channel")
                         }
                     }
 
