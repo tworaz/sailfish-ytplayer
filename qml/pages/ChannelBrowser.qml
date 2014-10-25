@@ -265,12 +265,12 @@ Page {
                 source: priv.currentPosterUrl
             }
 
-            Row {
+            Flow {
                 width: parent.width
 
                 KeyValueLabel {
                     id: creationDate
-                    width: parent.width * 2 / 3
+                    horizontalAlignment: Text.AlignLeft
                     pixelSize: Theme.fontSizeExtraSmall
                     //: Label for youtube channel creation date field
                     //% "Created on"
@@ -279,7 +279,7 @@ Page {
 
                 KeyValueLabel {
                     id: videoCount
-                    width: parent.width / 3
+                    width: parent.width - creationDate.width
                     pixelSize: Theme.fontSizeExtraSmall
                     horizontalAlignment: Text.AlignRight
                     //: Label for channel video count field
