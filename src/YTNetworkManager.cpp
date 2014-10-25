@@ -33,12 +33,12 @@
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
 #include <QSharedPointer>
+#include <QSettings>
 #include <QDebug>
 
+#include "YTPlayer.h"
 
 static QUrl kTryConnectUrl("https://www.youtube.com/index.html");
-
-extern QSharedPointer<QNetworkAccessManager> GetNetworkAccessManager();
 
 YTNetworkManager::YTNetworkManager(QObject *parent)
     : QObject(parent)
@@ -85,6 +85,14 @@ YTNetworkManager::isMobileNetwork() const {
 }
 
 void
+YTNetworkManager::clearCache() {
+    GetAPIResponseDiskCache()->clear();
+    GetImageDiskCache()->clear();
+    emit imageCacheUsageChanged();
+    emit apiResponseCacheUsageChanged();
+}
+
+void
 YTNetworkManager::onOnlineStateChanged(bool isOnline)
 {
     if (isOnline != _online) {
@@ -92,4 +100,36 @@ YTNetworkManager::onOnlineStateChanged(bool isOnline)
         _online = isOnline;
         emit onlineChanged();
     }
+}
+
+qint64
+YTNetworkManager::imageCacheUsage() const {
+    return GetImageDiskCache()->cacheSize() / 1024;
+}
+
+qint64
+YTNetworkManager::apiResponseCacheUsage() const {
+    return GetAPIResponseDiskCache()->cacheSize() / 1024;
+}
+
+qint64
+YTNetworkManager::imageCacheMaxSize() const {
+    return GetImageDiskCache()->maximumCacheSize() / (1024 * 1024);
+}
+
+void
+YTNetworkManager::setImageCacheMaxSize(qint64 size) {
+    QSettings().setValue("Cache/ImageSize", size);
+    GetImageDiskCache()->setMaximumCacheSize(size * 1024 * 1024);
+}
+
+qint64
+YTNetworkManager::apiResponseCacheMaxSize() const {
+    return GetAPIResponseDiskCache()->maximumCacheSize() / (1024 * 1024);
+}
+
+void
+YTNetworkManager::setApiResponseCacheMaxSize(qint64 size) {
+    QSettings().setValue("Cache/YouTubeApiResponseSize", size);
+    GetAPIResponseDiskCache()->setMaximumCacheSize(size * 1024 * 1024);
 }

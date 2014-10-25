@@ -41,10 +41,8 @@
 #include <QDebug>
 
 #include "config.h"
+#include "YTPlayer.h"
 #include "NativeUtil.h"
-
-
-extern QSharedPointer<QNetworkAccessManager> GetNetworkAccessManager();
 
 static QString kYouTubeDataV3Url("https://www.googleapis.com/youtube/v3/");
 static QString kYouTubeGetVideoInfoUrl("http://www.youtube.com/get_video_info");

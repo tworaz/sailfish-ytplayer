@@ -39,6 +39,14 @@ class YTNetworkManager : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool online READ online NOTIFY onlineChanged)
+    Q_PROPERTY(qint64 imageCacheUsage READ imageCacheUsage
+               NOTIFY imageCacheUsageChanged)
+    Q_PROPERTY(qint64 apiResponseCacheUsage READ apiResponseCacheUsage
+               NOTIFY apiResponseCacheUsageChanged)
+    Q_PROPERTY(qint64 imageCacheMaxSize READ imageCacheMaxSize
+               WRITE setImageCacheMaxSize)
+    Q_PROPERTY(qint64 apiResponseCacheMaxSize READ apiResponseCacheMaxSize
+               WRITE setApiResponseCacheMaxSize)
 
 public:
     explicit YTNetworkManager(QObject *parent = 0);
@@ -46,15 +54,28 @@ public:
 
     Q_INVOKABLE void tryConnect() const;
     Q_INVOKABLE bool isMobileNetwork() const;
+    Q_INVOKABLE void clearCache();
 
 signals:
     void onlineChanged();
+    void imageCacheUsageChanged();
+    void apiResponseCacheUsageChanged();
 
 protected slots:
     void onOnlineStateChanged(bool isOnline);
 
 private:
     bool online() const { return _online; }
+
+    // Values returned in kB
+    qint64 imageCacheUsage() const;
+    qint64 apiResponseCacheUsage() const;
+
+    // Sizes are in MB
+    qint64 imageCacheMaxSize() const;
+    void setImageCacheMaxSize(qint64);
+    qint64 apiResponseCacheMaxSize() const;
+    void setApiResponseCacheMaxSize(qint64);
 
     QNetworkConfigurationManager *_manager;
     bool _online;

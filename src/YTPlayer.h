@@ -27,59 +27,15 @@
  * SUCH DAMAGE.
  */
 
-#include "Prefs.h"
+#ifndef YTPLAYER_H
+#define YTPLAYER_H
 
-#include <QSettings>
-#include <QDebug>
+#include <QSharedPointer>
+#include <QNetworkAccessManager>
+#include <QNetworkDiskCache>
 
-Prefs::Prefs(QObject *parent)
-    : QObject(parent)
-{
-}
+QSharedPointer<QNetworkAccessManager> GetNetworkAccessManager();
+QSharedPointer<QNetworkDiskCache> GetImageDiskCache();
+QSharedPointer<QNetworkDiskCache> GetAPIResponseDiskCache();
 
-void
-Prefs::Initialize()
-{
-    QSettings settings;
-    qDebug("Initializing settings");
-    if (!settings.contains("SafeSearch"))
-        settings.setValue("SafeSearch", 1);
-    if (!settings.contains("AccountIntegration"))
-        settings.setValue("AccountIntegration", false);
-    if (!settings.contains("Cache/Image"))
-        settings.setValue("Cache/ImageSize", 10);
-    if (!settings.contains("Cache/YouTubeApiResponse"))
-        settings.setValue("Cache/YouTubeApiResponseSize", 3);
-}
-
-void
-Prefs::set(const QString& key, const QVariant &value)
-{
-    QSettings settings;
-    settings.setValue(key, value);
-}
-
-QVariant
-Prefs::get(const QString& key)
-{
-    QSettings settings;
-    QVariant value = settings.value(key);
-    return value;
-}
-
-bool
-Prefs::isAuthEnabled()
-{
-    QVariant auth = get("AccountIntegration");
-    return auth.isValid() && auth.toBool();
-}
-
-void
-Prefs::disableAuth()
-{
-    QSettings settings;
-    settings.remove("YouTube/AccessToken");
-    settings.remove("YouTube/RefreshToken");
-    settings.remove("YouTube/AccessTokenType");
-    settings.setValue("AccountIntegration", false);
-}
+#endif // YTPLAYER_H

@@ -21,6 +21,7 @@ SOURCES += \
         src/YTNetworkManager.cpp
 
 HEADERS += \
+        src/YTPlayer.h \
         src/NativeUtil.h \
         src/Logger.h \
         src/Prefs.h \

@@ -41,6 +41,7 @@
 // third party code
 #include <notification.h>
 
+#include "YTPlayer.h"
 #include "YTListModel.h"
 #include "YTNetworkManager.h"
 #include "NativeUtil.h"
@@ -48,6 +49,46 @@
 #include "Logger.h"
 #include "Prefs.h"
 
+QSharedPointer<QNetworkAccessManager> GetNetworkAccessManager()
+{
+    static QSharedPointer<QNetworkAccessManager> instance;
+    if (instance.isNull()) {
+        qDebug() << "Creating global QNetworkAccessManager instance";
+        instance.reset(new QNetworkAccessManager);
+        instance->setCache(GetAPIResponseDiskCache().data());
+    }
+    return instance;
+}
+
+QSharedPointer<QNetworkDiskCache> GetImageDiskCache() {
+    static QSharedPointer<QNetworkDiskCache> cache;
+    if (cache.isNull()) {
+        cache.reset(new QNetworkDiskCache());
+        QString datadir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+        datadir += "/ImageCache";
+        cache->setCacheDirectory(datadir);
+        int size = QSettings().value("Cache/ImageSize").toInt();
+        cache->setMaximumCacheSize(size * 1024*1024);
+        qDebug() << "QML/Image network disk cache location: " << datadir;
+        qDebug() << "QML/Image network disk cache size: " << size << "MB";
+    }
+    return cache;
+}
+
+QSharedPointer<QNetworkDiskCache> GetAPIResponseDiskCache() {
+    static QSharedPointer<QNetworkDiskCache> cache;
+    if (cache.isNull()) {
+        cache.reset(new QNetworkDiskCache());
+        QString datadir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
+        datadir += "/APIRequestCache";
+        cache->setCacheDirectory(datadir);
+        int size = QSettings().value("Cache/YouTubeApiResponseSize").toInt();
+        cache->setMaximumCacheSize(size * 1024*1024);
+        qDebug() << "API request disk cache location: " << datadir;
+        qDebug() << "API request disk cache size: " << size << "MB";
+    }
+    return cache;
+}
 
 class YTPNetworkAccessManagerFactory: public QQmlNetworkAccessManagerFactory
 {
@@ -55,26 +96,10 @@ public:
     QNetworkAccessManager *create(QObject *parent)
     {
         QNetworkAccessManager *manager = new QNetworkAccessManager(parent);
-        QNetworkDiskCache *cache = new QNetworkDiskCache(manager);
-        QString datadir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
-        cache->setCacheDirectory(datadir);
-        cache->setMaximumCacheSize(10*1024*1024);
-        manager->setCache(cache);
-        qDebug() << "Disk cache location: " << datadir;
-        qDebug() << "Disk cache size: " << cache->maximumCacheSize() / (1024*1024) << "MB";
+        manager->setCache(GetImageDiskCache().data());
         return manager;
     }
 };
-
-QSharedPointer<QNetworkAccessManager> GetNetworkAccessManager()
-{
-    static QSharedPointer<QNetworkAccessManager> instance;
-    if (instance.isNull()) {
-        qDebug() << "Creating global QNetworkAccessManager instance";
-        instance.reset(new QNetworkAccessManager);
-    }
-    return instance;
-}
 
 int main(int argc, char *argv[])
 {

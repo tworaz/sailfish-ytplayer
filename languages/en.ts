@@ -528,5 +528,30 @@ Label for channel name text field</extracomment>
         <extracomment>Label for menu option allwoing the user to browser YouTube ChannelBrowser</extracomment>
         <translation>Browse channel</translation>
     </message>
+    <message id="ytplayer-label-clear-cache">
+        <source>Clear cache</source>
+        <extracomment>Menu option to clear application caches</extracomment>
+        <translation>Clear cache</translation>
+    </message>
+    <message id="ytplayer-label-cache">
+        <source>Cache</source>
+        <extracomment>&quot;Label for cache section in settings page&quot;</extracomment>
+        <translation>Cache</translation>
+    </message>
+    <message id="ytplayer-label-image-cache-size">
+        <source>Image cache size</source>
+        <extracomment>&quot;Label for image cache size slider&quot;</extracomment>
+        <translation>Image cache size</translation>
+    </message>
+    <message id="ytplayer-label-current-usage">
+        <source>Current usage</source>
+        <extracomment>&quot;Label for current cache usage label&quot;</extracomment>
+        <translation>Current usage</translation>
+    </message>
+    <message id="ytplayer-label-api-req-cache-size">
+        <source>YouTube API response cache size</source>
+        <extracomment>&quot;Label for YouTube API response cache size slider&quot;</extracomment>
+        <translation>YouTube API response cache size</translation>
+    </message>
 </context>
 </TS>
