@@ -98,7 +98,7 @@ Page {
                 //% "Recommended for you"
                 text: qsTrId("ytplayer-action-recommended")
                 visible: priv.showAccount
-                icon: "qrc:///icons/star-m.png"
+                icon: "qrc:///icons/approval-64.png"
                 onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
                                               { "state" : "RECOMMENDED" })
             }
@@ -163,14 +163,14 @@ Page {
                 //: Menu option to show settings page
                 //% "Settings"
                 text: qsTrId("ytplayer-action-settings")
-                icon: "qrc:///icons/settings-m.png"
+                icon: "qrc:///icons/settings-64.png"
                 onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
             }
             MainMenuItem {
                 //: Menu option to show about page
                 //% "About"
                 text: qsTrId("ytplayer-action-about")
-                icon: "qrc:///icons/about.png"
+                icon: "qrc:///icons/info-64.png"
                 onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
             }
         }

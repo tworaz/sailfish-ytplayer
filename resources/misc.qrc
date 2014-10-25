@@ -3,17 +3,17 @@
         <file>logo.png</file>
         <file>mcc-data.json</file>
         <file>icons/search-m.png</file>
-        <file>icons/settings-m.png</file>
         <file>icons/video-multi-m.png</file>
         <file>icons/like-m.png</file>
         <file>icons/rss-m.png</file>
-        <file>icons/star-m.png</file>
         <file>icons/dislike-m.png</file>
         <file>icons/arrow-down-m.png</file>
         <file>icons/arrow-down-s.png</file>
-        <file>icons/about.png</file>
         <file>fonts/youtube-icons.ttf</file>
         <file>icons/advanced-48.png</file>
         <file>icons/play-48.png</file>
+        <file>icons/approval-64.png</file>
+        <file>icons/info-64.png</file>
+        <file>icons/settings-64.png</file>
     </qresource>
 </RCC>
