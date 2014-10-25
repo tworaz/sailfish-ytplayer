@@ -127,6 +127,7 @@ Page {
         id: channelVideoList
         anchors.fill: parent
         visible: !indicator.running
+        indicatorCenterInlistview: true
 
         property string channelPlaylistId: ""
 

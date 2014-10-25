@@ -50,12 +50,6 @@ Page {
         }
     }
 
-    BusyIndicator {
-        anchors.centerIn: parent
-        running: (videoListView.busy && videoListView.count === 0)
-        size: BusyIndicatorSize.Large
-    }
-
     YTVideoList {
         id: videoListView
         anchors.fill: parent

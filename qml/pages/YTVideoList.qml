@@ -39,8 +39,27 @@ SilicaListView {
     property variant videoResourceId: {"kind" : "", "id" : ""}
     property string nextPageToken: ""
     property bool hasNextPage: nextPageToken.length > 0
+    property bool indicatorCenterInlistview: false
 
     signal requestComplete(var response)
+
+    Item {
+        width: parent.width
+        height: {
+            if (indicatorCenterInlistview) {
+                return parent.height - headerItem.height
+            } else {
+                return parent.height
+            }
+        }
+        anchors.bottom: parent.bottom
+        BusyIndicator {
+            anchors.centerIn: parent
+            running: (root.busy && root.count === 0)
+            size: BusyIndicatorSize.Large
+            visible: running
+        }
+    }
 
     model: YTListModel {
         id: videoListModel
