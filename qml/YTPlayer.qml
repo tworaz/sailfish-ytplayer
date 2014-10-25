@@ -36,9 +36,9 @@ import "pages"
 ApplicationWindow
 {
     property string regionCode: NativeUtil.regionCode
-    readonly property string mainIconColor: "#FF980093"
     readonly property double thumbnailAspectRatio: 9 / 16
     readonly property string youtubeIconsFontName: "youtube-icons"
+    readonly property int kMaxCoverThumbnailCount: 12
 
     initialPage: Component { MainMenu { } }
     cover: Qt.resolvedUrl("cover/Default.qml")

@@ -29,69 +29,73 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "../common"
 
 CoverBackground {
-    property alias title: _title.text
-    property alias videoCount: _videoCount.count
-    property variant thumbnails
-
-    Component.onCompleted: {
-        title = coverData.title
-        thumbnails = coverData.thumbnails
-        videoCount = coverData.videoCount
+    QtObject {
+        id: priv
+        property variant thumbnails
     }
 
-    Column {
-        anchors.top: parent.top
-        anchors.bottom: actions.top
-        width: parent.width
-        spacing: Theme.paddingMedium
+    Component.onCompleted: {
+        if (coverData.bannerUrl)
+            banner.source = coverData.bannerUrl
+        priv.thumbnails = coverData.thumbnails
+        title.text = coverData.title
+    }
 
-        AsyncImage {
+    Item {
+        id: background
+        anchors.fill: parent
+
+        Image {
+            id: banner
             width: parent.width
-            height: width * thumbnailAspectRatio
-            fillMode: Image.PreserveAspectCrop
-            source: {
-                if (thumbnails.medium) {
-                    return thumbnails.medium.url
-                } else if (thumbnails.hight) {
-                    return thumbnails.higth.url
-                } else {
-                    return thumbnails.default.url
+            fillMode: Image.PreserveAspectFit
+        }
+        Grid {
+            id: imageGrid
+            anchors.top: banner.bottom
+            width: parent.width
+            columns: 2
+            Repeater {
+                id: thumbRepeater
+                model: kMaxCoverThumbnailCount
+                Image {
+                    source: priv.thumbnails[index].default.url
+                    width: parent.width / 2
+                    fillMode: Image.PreserveAspectCrop
+                    height: width * thumbnailAspectRatio
                 }
             }
         }
+    }
+
+    OpacityRampEffect {
+        sourceItem: background
+        direction: OpacityRamp.TopToBottom
+    }
+
+    Rectangle {
+        id: header
+        x: Theme.paddingMedium
+        anchors.centerIn: parent
+        width: parent.width
+        height: children[0].height + 2 * Theme.paddingMedium
+        z: background.z + 1
+        color: "#AA000000"
 
         Label {
-            id: _title
-            width: parent.width
-            color: Theme.primaryColor
+            id: title
+            anchors.centerIn: parent
+            width: parent.width - 2 * Theme.paddingMedium
+            horizontalAlignment: Text.AlignHCenter
             font.family: Theme.fontFamilyHeading
-            font.pixelSize: Theme.fontSizeMedium
-            maximumLineCount: 2
-            wrapMode: Text.Wrap
-            elide: Text.ElideRight
-            horizontalAlignment: Text.AlignHCenter
-        }
-
-        Separator {
-            color: Theme.highlightColor
-            width: parent.width
-        }
-
-        Label {
-            //% "Video count"
-            property string _label: qsTrId("ytplayer-label-video-count")
-            property color _color: Theme.highlightColor
-            property string count: ""
-
-            id: _videoCount
-            width: parent.width
             font.pixelSize: Theme.fontSizeSmall
-            horizontalAlignment: Text.AlignHCenter
-            textFormat: Text.RichText
-            text: "<font color=\"" + _color + "\">" + _label + "</font> " + count
+            font.bold: true
+            color: Theme.primaryColor
+            maximumLineCount: 2
+            wrapMode: Text.WordWrap
+            elide: Text.ElideRight
         }
     }
 

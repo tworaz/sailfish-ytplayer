@@ -83,7 +83,6 @@ BackgroundItem {
             Log.debug("Selected item is a channel, opening channel browser ")
             pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"), {
                 "channelId"  : youtubeId.channelId,
-                "thumbnails" : ytItem.thumbnails,
                 "title"      : ytItem.title
             })
         } else {

@@ -48,7 +48,7 @@ CoverBackground {
         resource: "search"
         params: {
             "part"       : "snippet",
-            "maxResults" : 12,
+            "maxResults" : kMaxCoverThumbnailCount,
             "order"      : "rating",
         }
 

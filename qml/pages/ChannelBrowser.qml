@@ -39,11 +39,19 @@ Page {
 
     property string channelId
     property string title
-    property variant thumbnails
-    property variant coverData
 
-    property bool channelSubscribed: false
-    property string subscriptionId: ""
+    QtObject {
+        id: priv
+        property bool channelSubscribed: false
+        property string subscriptionId: ""
+        property string mobileBannerUrl
+        property string normalBannerUrl
+        property string currentPosterUrl: ""
+        property bool coverDataReady: false
+        property variant coverData: {
+            "title" : page.title
+        }
+    }
 
     BusyIndicator {
         id: indicator
@@ -52,10 +60,17 @@ Page {
         size: BusyIndicatorSize.Large
     }
 
+    onOrientationChanged: {
+        if (priv.normalBannerUrl && priv.mobileBannerUrl) {
+            priv.currentPosterUrl = page.isLandscape ?
+                priv.mobileBannerUrl : priv.normalBannerUrl
+        }
+    }
+
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            if (coverData) {
-                requestCoverPage("ChannelBrowser.qml", coverData)
+            if (priv.coverDataReady) {
+                requestCoverPage("ChannelBrowser.qml", priv.coverData)
             }
             subscriptionMenu.visible = Prefs.isAuthEnabled()
         }
@@ -81,25 +96,25 @@ Page {
         onSuccess: {
             switch(method) {
             case YTRequest.List:
-                page.channelSubscribed = response.items.length > 0 ? true : false
-                if (page.channelSubscribed) {
+                priv.channelSubscribed = response.items.length > 0 ? true : false
+                if (priv.channelSubscribed) {
                     console.assert(response.items.length === 1)
-                    page.subscriptionId = response.items[0].id
+                    priv.subscriptionId = response.items[0].id
                     Log.info("Channel " + channelId + " is subscribed by the user")
                 } else {
-                    page.subscriptionId = ""
+                    priv.subscriptionId = ""
                     Log.info("Channel " + channelId + " is not subscribed by the user")
                 }
                 break
             case YTRequest.Post:
                 Log.info("Channel subscribed successfully: " + response.id)
-                page.channelSubscribed = true
-                page.subscriptionId = response.id
+                priv.channelSubscribed = true
+                priv.subscriptionId = response.id
                 break
             case YTRequest.Delete:
                 Log.info("Channel unsubscribed successfully")
-                page.channelSubscribed = false
-                page.subscriptionId = ""
+                priv.channelSubscribed = false
+                priv.subscriptionId = ""
                 break
             default:
                 Log.error("Unrecognized method type: " + method)
@@ -119,6 +134,20 @@ Page {
             videoResourceId = { "kind" : "#channelPlaylist", "id" : channelPlaylistId }
         }
 
+        onRequestComplete: {
+            if (priv.coverDataReady)
+                return
+
+            var d = priv.coverData
+            d.thumbnails = []
+            for (var i = 0; i < kMaxCoverThumbnailCount; ++i) {
+                d.thumbnails.push(response.items[i].snippet.thumbnails)
+            }
+            priv.coverData = d
+            priv.coverDataReady = true
+            requestCoverPage("ChannelBrowser.qml", priv.coverData)
+        }
+
         function changeChanelSubscription(subscribe) {
             if (subscribe) {
                 Log.debug("Subscribing channel: " + channelId)
@@ -134,10 +163,10 @@ Page {
                 }
                 subscriptionRequest.run()
             } else {
-                Log.debug("Unsubscribing channel: " + page.subscriptionId)
-                console.assert(page.subscriptionId.length > 0)
+                Log.debug("Unsubscribing channel: " + priv.subscriptionId)
+                console.assert(priv.subscriptionId.length > 0)
                 subscriptionRequest.method = YTRequest.Delete
-                subscriptionRequest.params = { "id" : subscriptionId };
+                subscriptionRequest.params = { "id" : priv.subscriptionId };
                 subscriptionRequest.run()
             }
         }
@@ -146,7 +175,7 @@ Page {
             MenuItem {
                 id: subscriptionMenu
                 visible: false
-                text: channelSubscribed ?
+                text: priv.channelSubscribed ?
                           //: Menu option to unsubscribe from YouTube channel
                           //% "Unsubscribe"
                           qsTrId("ytplayer-channel-unsubscribe") :
@@ -154,7 +183,7 @@ Page {
                           //% "Subscribe"
                           qsTrId("ytplayer-channel-subscribe")
 
-                onClicked: channelVideoList.changeChanelSubscription(!page.channelSubscribed)
+                onClicked: channelVideoList.changeChanelSubscription(!priv.channelSubscribed)
             }
         }
 
@@ -174,7 +203,7 @@ Page {
                 method: YTRequest.List
                 resource: "channels"
                 params: {
-                    "part" : "snippet,statistics,contentDetails",
+                    "part" : "snippet,statistics,contentDetails,brandingSettings",
                     "id"   : channelId,
                 }
 
@@ -191,20 +220,27 @@ Page {
 
                     var stats = response.items[0].statistics
                     videoCount.value = stats.videoCount
-                    subscribersCount.text = stats.subscriberCount
-                    commentCount.text = stats.commentCount
-                    viewCount.text = stats.viewCount
                     indicator.running = false
 
-                    if (!page.thumbnails)
-                        page.thumbnails = response.items[0].snippet.thumbnails
-
-                    coverData = {
-                        "thumbnails" : page.thumbnails,
-                        "videoCount" : stats.videoCount,
-                        "title"      : title
+                    var banner = undefined
+                    var brandingSettings = response.items[0].brandingSettings
+                    if (brandingSettings.image.bannerMobileImageUrl) {
+                        priv.mobileBannerUrl = brandingSettings.image.bannerMobileImageUrl
+                        priv.normalBannerUrl = brandingSettings.image.bannerImageUrl
+                        priv.currentPosterUrl = page.isPortrait ?
+                            priv.mobileBannerUrl : priv.normalBannerUrl
+                    } else {
+                        if (response.items[0].snippet.thumbnails.high) {
+                            poster.source = response.items[0].snippet.thumbnails.high.url
+                        } else {
+                            poster.source = response.items[0].snippet.thumbnails.default.url
+                        }
                     }
-                    requestCoverPage("ChannelBrowser.qml", coverData)
+
+                    var coverData = priv.coverData
+                    if (priv.mobileBannerUrl)
+                        coverData.bannerUrl = priv.mobileBannerUrl
+                    priv.coverData = coverData
 
                     channelVideoList.refresh()
                 }
@@ -222,26 +258,10 @@ Page {
             AsyncImage {
                 id: poster
                 width: parent.width
-                height: width * thumbnailAspectRatio
-                indicatorSize: BusyIndicatorSize.Large
-                function pickThumb() {
-                    if (thumbnails.high) {
-                        source = thumbnails.high.url
-                    } else if (thumbnails.medium) {
-                        source = thumbnails.medium.url
-                    } else {
-                        source = thumbnails.default.url
-                    }
-                }
-                Component.onCompleted: {
-                    if (thumbnails)
-                        pickThumb()
-                }
-
-                Connections {
-                    target: page
-                    onThumbnailsChanged: poster.pickThumb()
-                }
+                fillMode: Image.PreserveAspectFit
+                //height: width * thumbnailAspectRatio
+                indicatorSize: BusyIndicatorSize.Medium
+                source: priv.currentPosterUrl
             }
 
             Row {
@@ -264,26 +284,6 @@ Page {
                     //: Label for channel video count field
                     //% "Video count"
                     key: qsTrId("ytplayer-label-video-count")
-                }
-            }
-
-            Row {
-                width: parent.width
-                spacing: Theme.paddingLarge
-
-                StatItem {
-                    id: subscribersCount
-                    image: "image://theme/icon-s-favorite?" + Theme.highlightColor
-                }
-
-                StatItem {
-                    id: commentCount
-                    image: "image://theme/icon-s-message?" + Theme.highlightColor
-                }
-
-                StatItem {
-                    id: viewCount
-                    image: "image://theme/icon-s-cloud-download?" + Theme.highlightColor
                 }
             }
 

@@ -83,7 +83,7 @@ Page {
                 };
 
                 var start = Math.floor(Math.random() * count)
-                for (var i = 0; i < 12; ++i) {
+                for (var i = 0; i < kMaxCoverThumbnailCount; ++i) {
                     data.images.push(model.get((start + i) % count).snippet.thumbnails)
                 }
                 requestCoverPage("CategoryVideoList.qml", data)

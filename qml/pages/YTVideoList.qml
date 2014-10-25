@@ -40,6 +40,8 @@ SilicaListView {
     property string nextPageToken: ""
     property bool hasNextPage: nextPageToken.length > 0
 
+    signal requestComplete(var response)
+
     model: YTListModel {
         id: videoListModel
     }
@@ -74,6 +76,7 @@ SilicaListView {
             } else {
                 nextPageToken = ""
             }
+            root.requestComplete(response)
         }
     }
 
