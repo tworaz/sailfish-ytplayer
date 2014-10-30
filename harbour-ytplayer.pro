@@ -9,7 +9,7 @@
 TARGET = harbour-ytplayer
 
 CONFIG += sailfishapp
-QT += dbus
+QT += dbus sql
 
 SOURCES += \
         src/YTPlayer.cpp \
@@ -18,7 +18,12 @@ SOURCES += \
         src/Prefs.cpp \
         src/YTRequest.cpp \
         src/YTListModel.cpp \
-        src/YTNetworkManager.cpp
+        src/YTNetworkManager.cpp \
+        src/YTLocalVideo.cpp \
+        src/YTLocalVideoData.cpp \
+        src/YTLocalVideoManager.cpp \
+        src/YTLocalVideoListModel.cpp \
+        src/YTVideoDownloadNotification.cpp
 
 HEADERS += \
         src/YTPlayer.h \
@@ -27,7 +32,12 @@ HEADERS += \
         src/Prefs.h \
         src/YTRequest.h \
         src/YTListModel.h \
-        src/YTNetworkManager.h
+        src/YTNetworkManager.h \
+        src/YTLocalVideo.h \
+        src/YTLocalVideoData.h \
+        src/YTLocalVideoManager.h \
+        src/YTLocalVideoListModel.h \
+        src/YTVideoDownloadNotification.h
 
 OTHER_FILES += \
         harbour-ytplayer.desktop \
@@ -69,7 +79,9 @@ OTHER_FILES += \
         qml/pages/MainMenuItem.qml \
         qml/pages/LicenseViewer.qml \
         qml/pages/ThirdPartySoftware.qml \
-        qml/pages/HeaderButton.qml
+        qml/pages/HeaderButton.qml \
+        qml/pages/DownloadedVideos.qml \
+        qml/pages/DownloadSettings.qml
 
 include(third_party/notifications.pri)
 include(languages/translations.pri)

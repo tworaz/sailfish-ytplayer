@@ -44,7 +44,7 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
-        contentHeight: column.height
+        //contentHeight: topColumn.height + bottomColumn.height
 
         PullDownMenu {
             MenuItem {
@@ -61,7 +61,7 @@ Page {
         }
 
         Column {
-            id: column
+            id: topColumn
             x: Theme.paddingLarge
             width: parent.width - 2 * x
             spacing: Theme.paddingMedium
@@ -164,6 +164,29 @@ Page {
                     value: networkManager.apiResponseCacheUsage + " kB"
                     font.pixelSize: Theme.fontSizeExtraSmall
                     horizontalAlignment: Text.AlignHCenter
+                }
+            }
+        }
+
+        Column {
+            id: bottomColumn
+            width: parent.width
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: Theme.paddingLarge
+
+            BackgroundItem {
+                Label {
+                    height: parent.height
+                    width: parent.width - 2 * Theme.paddingLarge
+                    x: Theme.paddingLarge
+                    verticalAlignment: Text.AlignVCenter
+                    color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
+                    //: Label for menu option showing video download settings page
+                    //% "Video downloads"
+                    text: qsTrId("ytplayer-label-video-settings")
+                }
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("DownloadSettings.qml"))
                 }
             }
         }

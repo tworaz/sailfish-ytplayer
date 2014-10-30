@@ -38,14 +38,42 @@
 
 #include "YTPlayer.h"
 
+namespace {
+
 static QUrl kTryConnectUrl("https://www.youtube.com/index.html");
+
+static bool
+_isCellular(const QNetworkConfiguration& config)
+{
+    switch (config.bearerType()) {
+    case QNetworkConfiguration::Bearer2G:
+    case QNetworkConfiguration::BearerBluetooth:
+    case QNetworkConfiguration::BearerHSPA:
+    case QNetworkConfiguration::BearerCDMA2000:
+    case QNetworkConfiguration::BearerWCDMA:
+    case QNetworkConfiguration::BearerWiMAX:
+        return true;
+    default:
+        return false;
+    }
+}
+
+}
 
 YTNetworkManager::YTNetworkManager(QObject *parent)
     : QObject(parent)
     , _manager(new QNetworkConfigurationManager(parent))
     , _online(_manager->isOnline())
+    , _cellular(true)
 {
-    connect(_manager, SIGNAL(onlineStateChanged(bool)), this, SLOT(onOnlineStateChanged(bool)));
+    connect(_manager, SIGNAL(onlineStateChanged(bool)),
+            this, SLOT(onOnlineStateChanged(bool)));
+    connect(_manager, SIGNAL(configurationChanged(QNetworkConfiguration)),
+            this, SLOT(onConfigurationChanged(QNetworkConfiguration)));
+
+    QList<QNetworkConfiguration> configs =
+        _manager->allConfigurations(QNetworkConfiguration::Active);
+    onConfigurationChanged(configs.first());
 }
 
 YTNetworkManager::~YTNetworkManager()
@@ -59,29 +87,6 @@ YTNetworkManager::tryConnect() const
     qDebug() << "Trying to connect to internet";
     QNetworkRequest request(kTryConnectUrl);
     GetNetworkAccessManager()->get(request);
-}
-
-bool
-YTNetworkManager::isMobileNetwork() const {
-    QList<QNetworkConfiguration> configs = _manager->allConfigurations(QNetworkConfiguration::Active);
-    if (configs.empty()) {
-        return true;
-    }
-
-    qDebug() << "Bearer type: " << configs.first().bearerTypeName();
-
-    Q_ASSERT(configs.size() == 1);
-    switch (configs.first().bearerType()) {
-    case QNetworkConfiguration::Bearer2G:
-    case QNetworkConfiguration::BearerBluetooth:
-    case QNetworkConfiguration::BearerHSPA:
-    case QNetworkConfiguration::BearerCDMA2000:
-    case QNetworkConfiguration::BearerWCDMA:
-    case QNetworkConfiguration::BearerWiMAX:
-        return true;
-    default:
-        return false;
-    }
 }
 
 void
@@ -98,7 +103,28 @@ YTNetworkManager::onOnlineStateChanged(bool isOnline)
     if (isOnline != _online) {
         qDebug() << "Network is " << (isOnline ? "online" : "offline");
         _online = isOnline;
-        emit onlineChanged();
+        emit onlineChanged(_online);
+    }
+}
+
+void
+YTNetworkManager::onConfigurationChanged(const QNetworkConfiguration&)
+{
+    QList<QNetworkConfiguration> configs =
+        _manager->allConfigurations(QNetworkConfiguration::Active);
+
+    bool cellular = true;
+    QList<QNetworkConfiguration>::Iterator it;
+    for (it = configs.begin(); it != configs.end(); ++it) {
+        if (!_isCellular(*it)) {
+            cellular = false;
+            break;
+        }
+    }
+
+    if (_cellular != cellular) {
+        _cellular = cellular;
+        emit cellularChanged(_cellular);
     }
 }
 

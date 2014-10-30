@@ -27,30 +27,35 @@
  * SUCH DAMAGE.
  */
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef YTLOCALVIDEOLISTMODEL_H
+#define YTLOCALVIDEOLISTMODEL_H
 
-#include <QString>
+#include <QSqlQueryModel>
 #include <QVariant>
+#include <QHash>
+#include <QList>
 
-extern const char kWiFiOnly[];
-extern const char kCellularOnly[];
-extern const char kWiFiAndCellular[];
+class YTLocalVideoManager;
 
-class Prefs: public QObject
+class YTLocalVideoListModel : public QSqlQueryModel
 {
     Q_OBJECT
+
 public:
-    explicit Prefs(QObject *parent = 0);
+    explicit YTLocalVideoListModel(QObject *parent = 0);
 
-    void Initialize();
+    QHash<int, QByteArray> roleNames() const { return _roleNames; }
+    QVariant data(const QModelIndex&, int role) const;
 
-    Q_INVOKABLE void set(const QString& key, const QVariant& value);
-    Q_INVOKABLE QVariant get(const QString& key);
-    Q_INVOKABLE bool getBool(const QString& key);
-    Q_INVOKABLE int getInt(const QString& key);
-    Q_INVOKABLE bool isAuthEnabled();
-    Q_INVOKABLE void disableAuth();
+    Q_INVOKABLE void remove(int index);
+
+private slots:
+    void onRemove(int index);
+
+private:
+    QHash<int, QByteArray> _roleNames;
+
+    Q_DISABLE_COPY(YTLocalVideoListModel)
 };
 
-#endif // SETTINGS_H
+#endif // YTLOCALVIDEOLISTMODEL_H

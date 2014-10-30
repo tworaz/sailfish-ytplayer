@@ -32,7 +32,6 @@
 #include <QNetworkAccessManager>
 #include <QScopedPointer>
 #include <QJsonDocument>
-#include <QNetworkReply>
 #include <QJsonObject>
 #include <QStringList>
 #include <QUrlQuery>

@@ -81,6 +81,13 @@ Page {
                 icon: "qrc:///icons/video-multi-m.png"
                 onClicked: pageStack.push(Qt.resolvedUrl("VideoCategories.qml"))
             }
+            MainMenuItem {
+                //: Menu option showing downloaded videos page
+                //% "Downloaded videos"
+                text: qsTrId("ytplayer-action-downloaded-videos")
+                icon: "qrc:///icons/downloaded-videos-64.png"
+                onClicked: pageStack.push(Qt.resolvedUrl("DownloadedVideos.qml"))
+            }
 
             Label {
                 //: Label for YouTube account related options in main menu

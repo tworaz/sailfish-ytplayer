@@ -41,6 +41,7 @@ Page {
     property alias mediaPlayer: videoController.mediaPlayer
     property alias title: header.title
     property alias videoId: videoController.videoId
+    property alias streams: videoController.streams
     property variant thumbnails
     property bool applicationActive: Qt.application.active
 

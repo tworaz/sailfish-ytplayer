@@ -15,5 +15,6 @@
         <file>icons/approval-64.png</file>
         <file>icons/info-64.png</file>
         <file>icons/settings-64.png</file>
+        <file>icons/downloaded-videos-64.png</file>
     </qresource>
 </RCC>

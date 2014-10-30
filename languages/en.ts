@@ -70,7 +70,6 @@
     </message>
     <message id="ytplayer-label-publish-date">
         <source>Published on</source>
-        <oldsource>Published at</oldsource>
         <extracomment>Label for video upload date field</extracomment>
         <translation>Published on</translation>
     </message>
@@ -91,7 +90,6 @@
     </message>
     <message id="ytplayer-status-buffering">
         <source>Buffering: %1%</source>
-        <oldsource>Buffering: %1 \%</oldsource>
         <extracomment>Media player status indicating content is buffering</extracomment>
         <translation>Buffering: %1%</translation>
     </message>
@@ -169,7 +167,6 @@ Account settings section label</extracomment>
     </message>
     <message id="ytplayer-account-integration-description">
         <source>Allow YTPlayer to manage YouTube user account</source>
-        <oldsource>Allow YTPlayer to access YouTube user account</oldsource>
         <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
         <translation>Allow YTPlayer to manage YouTube account</translation>
     </message>
@@ -261,7 +258,6 @@ Label for menu option allowing the user to change video quality</extracomment>
     </message>
     <message id="ytplayer-title-subscription-videos">
         <source>Latest Videos</source>
-        <oldsource>Subscription Videos</oldsource>
         <extracomment>YouTube latest subscribed videos page title</extracomment>
         <translation>Latest Videos</translation>
     </message>
@@ -287,13 +283,11 @@ Label for menu option allowing the user to change video quality</extracomment>
     </message>
     <message id="ytplayer-label-duration-with-value">
         <source>Duration: %1</source>
-        <oldsource>Duration: %1%</oldsource>
         <extracomment>Video duration label with value</extracomment>
         <translation>Duration: %1</translation>
     </message>
     <message id="ytplayer-label-extra-options">
         <source>Player options</source>
-        <oldsource>Extra options</oldsource>
         <extracomment>Label for extra video player options section</extracomment>
         <translation>Player options</translation>
     </message>
@@ -545,13 +539,178 @@ Label for channel name text field</extracomment>
     </message>
     <message id="ytplayer-label-current-usage">
         <source>Current usage</source>
-        <extracomment>&quot;Label for current cache usage label&quot;</extracomment>
+        <extracomment>&quot;Label for current cache usage label&quot;
+----------
+&quot;Label for current cache usage label&quot;</extracomment>
         <translation>Current usage</translation>
     </message>
     <message id="ytplayer-label-api-req-cache-size">
         <source>YouTube API response cache size</source>
         <extracomment>&quot;Label for YouTube API response cache size slider&quot;</extracomment>
         <translation>YouTube API response cache size</translation>
+    </message>
+    <message id="ytplayer-label-video-queued">
+        <source>Download queued</source>
+        <extracomment>&quot;Label indicating video was queued for preload&quot;</extracomment>
+        <translation>Download queued</translation>
+    </message>
+    <message id="ytplayer-action-remove">
+        <source>Remove</source>
+        <extracomment>Menu action to remove the element from the list</extracomment>
+        <translation>Remove</translation>
+    </message>
+    <message id="ytplayer-label-no-videos">
+        <source>No videos</source>
+        <extracomment>&quot;Label informing the user there are no preloaded videos&quot;</extracomment>
+        <translation>No videos</translation>
+    </message>
+    <message id="ytplayer-label-video-downloaded">
+        <source>Downloaded</source>
+        <extracomment>Label indicating the video was downloaded to local device storage</extracomment>
+        <translation>Downloaded</translation>
+    </message>
+    <message id="ytplayer-label-video-download-paused">
+        <source>Download paused</source>
+        <extracomment>&quot;Label indicating video download was paused&quot;</extracomment>
+        <translation>Download paused</translation>
+    </message>
+    <message id="ytplayer-label-video-downloading-percentage">
+        <source>Downloading: %1%</source>
+        <extracomment>&quot;Label indicating video download progress with actual percentage value&quot;</extracomment>
+        <translation>Downloading: %1%</translation>
+    </message>
+    <message id="ytplayer-msg-download-finished">
+        <source>Video download finished</source>
+        <extracomment>Notification summary informing the user video download has been finished</extracomment>
+        <translation>Video download finished</translation>
+    </message>
+    <message id="ytplayer-msg-download-failed">
+        <source>Video download failed</source>
+        <extracomment>Notification summary informing the user video download has failed</extracomment>
+        <translation>Video download failed</translation>
+    </message>
+    <message id="ytplayer-action-downloaded-videos">
+        <source>Downloaded videos</source>
+        <extracomment>Menu option showing downloaded videos page</extracomment>
+        <translation>Downloaded videos</translation>
+    </message>
+    <message id="ytplayer-title-downloaded-videos">
+        <source>Downloaded videos</source>
+        <extracomment>Title of downloaded videos page</extracomment>
+        <translation>Downloaded videos</translation>
+    </message>
+    <message id="ytplayer-label-video-settings">
+        <source>Video downloads</source>
+        <extracomment>Label for menu option showing video download settings page</extracomment>
+        <translation>Video downloads</translation>
+    </message>
+    <message id="ytplayer-title-download-settings">
+        <source>Video download settings</source>
+        <extracomment>Title of video download settings pge</extracomment>
+        <translation>Video download settings</translation>
+    </message>
+    <message id="ytplayer-label-preferred-quality">
+        <source>Preferred video quality</source>
+        <extracomment>Label for preferred video quality selection combobox</extracomment>
+        <translation>Preferred video quality</translation>
+    </message>
+    <message id="ytplayer-label-connection-type">
+        <source>Connection type</source>
+        <extracomment>Label for video download connection type combobox</extracomment>
+        <translation>Connection type</translation>
+    </message>
+    <message id="ytplayer-label-autoresume">
+        <source>Automatically resume downloads</source>
+        <extracomment>Label for video download auto resume switch in settings</extracomment>
+        <translation>Automatically resume downloads</translation>
+    </message>
+    <message id="ytplayer-description-autoresume">
+        <source>On startup, resume all downloads which were either quened or in progress when YTPlayer was closed.</source>
+        <extracomment>Description of video download auto resume switch in settings</extracomment>
+        <translation>On startup, resume all downloads which were either queued or in progress when YTPlayer was closed.</translation>
+    </message>
+    <message id="ytplayer-label-download-paused">
+        <source>Paused</source>
+        <extracomment>Label for video download staus indicator telling the user download is paused</extracomment>
+        <translation>Paused</translation>
+    </message>
+    <message id="ytplayer-label-download-queued">
+        <source>Queued</source>
+        <translation>Queued</translation>
+    </message>
+    <message id="ytplayer-action-resume">
+        <source>Resume</source>
+        <extracomment>Menu action to resume paused video download</extracomment>
+        <translation>Resume</translation>
+    </message>
+    <message id="ytplayer-action-pause">
+        <source>Pause</source>
+        <extracomment>Menu action to pause in progress video download</extracomment>
+        <translation>Pause</translation>
+    </message>
+    <message id="ytplayer-action-wifi-only">
+        <source>WiFi only</source>
+        <extracomment>Menu option indicating downloads are allowed only when using WiFi</extracomment>
+        <translation>WiFi only</translation>
+    </message>
+    <message id="ytplayer-action-wifi-cellular">
+        <source>WiFi + Cellular</source>
+        <extracomment>Menu option indicating downloads are allowed on both WiFi and 3G</extracomment>
+        <translation>WiFi + Cellular</translation>
+    </message>
+    <message id="ytplayer-action-cellular-only">
+        <source>Cellular only</source>
+        <extracomment>Menu option indicating downloads are allowed only when using 3G</extracomment>
+        <translation>Cellular only</translation>
+    </message>
+    <message id="ytplayer-label-max-concurrent-downloads">
+        <source>Max. concurrent downloads</source>
+        <extracomment>Label for slider changing the maximum number of concurrent downloads</extracomment>
+        <translation>Max. concurrent downloads</translation>
+    </message>
+    <message id="ytplayer-action-cancel">
+        <source>Cancel</source>
+        <extracomment>Menu action to cancel paused/queued video download</extracomment>
+        <translation>Cancel</translation>
+    </message>
+    <message id="ytplayer-action-download-video">
+        <source>Download video</source>
+        <extracomment>Label for menu option triggering video preload</extracomment>
+        <translation>Download video</translation>
+    </message>
+    <message id="ytplayer-action-cancel-download">
+        <source>Cancel video download</source>
+        <extracomment>Label for menu option canceling pending/in progress video preload</extracomment>
+        <translation>Cancel video download</translation>
+    </message>
+    <message id="ytplayer-action-pause-download">
+        <source>Pause video download</source>
+        <extracomment>&quot;Label for menu option allowing the user to pause video download&quot;</extracomment>
+        <translation>Pause video download</translation>
+    </message>
+    <message id="ytplayer-action-resume-download">
+        <source>Resume video download</source>
+        <extracomment>&quot;Label for menu option allowing the user to resume video download&quot;</extracomment>
+        <translation>Resume video download</translation>
+    </message>
+    <message id="ytplayer-action-remove-download">
+        <source>Remove video download</source>
+        <extracomment>Label for menu option allowing the user to remove downloaded video</extracomment>
+        <translation>Remove video download</translation>
+    </message>
+    <message id="ytplayer-msg-cancelling-download">
+        <source>Cancelling download</source>
+        <extracomment>Remorse popup message telling the user video download will be cancelled
+----------
+Remorse popup message telling the user video download will be cancelled</extracomment>
+        <translation>Cancelling download</translation>
+    </message>
+    <message id="ytplayer-msg-removing-download">
+        <source>Removing download</source>
+        <extracomment>Remorse popup message telling the user video download will be removed
+----------
+Remorse popup message telling the user video download will be removed</extracomment>
+        <translation>Removing download</translation>
     </message>
 </context>
 </TS>

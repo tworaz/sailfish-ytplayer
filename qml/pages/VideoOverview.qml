@@ -38,9 +38,9 @@ Page {
     allowedOrientations: Orientation.All
     state: page.isPortrait ? "PORTRAIT" : "LANDSCAPE"
 
-    property string videoId
-    property variant thumbnails
+    property alias videoId: localVideo.videoId
     property alias title: titleLabel.text
+    property variant thumbnails
 
     states: [
         State {
@@ -57,9 +57,25 @@ Page {
 
     QtObject {
         id: priv
-        property bool playerPushed: false
         property variant channelBrowserData: ({})
+        property Item playerPage
         readonly property real sideMargin: Theme.paddingMedium
+    }
+
+    function handleStreamChange(streams) {
+        if (!priv.playerPage) {
+            Log.debug("Player page not attached, pushing it")
+            console.assert(page.thumbnails.hasOwnProperty("default"))
+            priv.playerPage = pageStack.pushAttached(Qt.resolvedUrl("VideoPlayer.qml"), {
+                "thumbnails" : thumbnails,
+                "videoId"    : videoId,
+                "title"      : title,
+                "streams"    : streams,
+            })
+        } else {
+            console.assert(priv.playerPage.hasOwnProperty("streams"))
+            priv.playerPage.streams = streams
+        }
     }
 
     Component.onCompleted: {
@@ -67,26 +83,24 @@ Page {
     }
 
     onStatusChanged: {
-        if (status === PageStatus.Active) {
-            if (!request.loaded) {
+        if (status === PageStatus.Activating) {
+            if (!request.loaded)
                 request.run()
-            }
 
             rating.enabled = Prefs.isAuthEnabled()
-            requestCoverPage("VideoOverview.qml", {
-                "thumbnails" : thumbnails,
-                "videoId"    : videoId,
-                "title"      : title
-            })
-            if (!priv.playerPushed) {
-                pageStack.pushAttached(Qt.resolvedUrl("VideoPlayer.qml"), {
-                    "thumbnails" : thumbnails,
-                    "videoId"    : videoId,
-                    "title"      : title,
-                })
-                priv.playerPushed = true
+        } else if (status === PageStatus.Active) {
+            if (!priv.playerPage) {
+                if (localVideo.status === YTLocalVideo.Downloaded) {
+                    if (!page.thumbnails.hasOwnProperty("default"))
+                        page.thumbnails = localVideo.thumbnails
+                    handleStreamChange(localVideo.streams)
+                }
             }
         }
+    }
+
+    RemorsePopup {
+        id: remorse
     }
 
     YTRequest {
@@ -118,6 +132,8 @@ Page {
             publishDate.value = Qt.formatDateTime(pd, "d MMMM yyyy")
             duration.value = (new DJS.Duration(details.contentDetails.duration)).asClock()
 
+            page.thumbnails = details.snippet.thumbnails
+
             titleLabel.text = details.snippet.title
             indicator.running = false
 
@@ -127,6 +143,12 @@ Page {
                 "title"     : details.snippet.channelTitle,
             }
 
+            requestCoverPage("VideoOverview.qml", {
+                "thumbnails" : page.thumbnails,
+                "videoId"    : page.videoId,
+                "title"      : page.title
+            })
+
             var browserPage = pageStack.find(function(page) {
                 if (page.objectName === "ChannelBrowser")
                     return true
@@ -134,6 +156,48 @@ Page {
             })
             if (!browserPage)
                 channelBrowserMenu.visible = true
+
+            if (localVideo.status !== YTLocalVideo.Downloaded && !streamUrlRequest.loaded)
+                streamUrlRequest.run()
+        }
+    }
+
+    YTRequest {
+        id: streamUrlRequest
+        method: YTRequest.List
+        resource: "video/url"
+        params: {
+            "video_id" : videoId,
+        }
+        onSuccess: handleStreamChange(response)
+    }
+
+    YTLocalVideo {
+        id: localVideo
+
+        onStatusChanged: {
+            localVideoStatus.updateLabel(status)
+            switch (status) {
+            case YTLocalVideo.Initial:
+                Log.info("Video is not stored locally")
+                break
+            case YTLocalVideo.Queued:
+                Log.info("Video was queued for download")
+                break
+            case YTLocalVideo.Loading:
+                Log.info("Video is loading")
+                break
+            case YTLocalVideo.Downloaded:
+                Log.info("Video data storred locally and available for playback")
+                page.thumbnails = localVideo.thumbnails
+                if (!pageStack.busy && priv.playerPage)
+                    handleStreamChange(localVideo.streams)
+                break
+            }
+        }
+
+        onDownloadProgressChanged: {
+            localVideoStatus.progressChanged(downloadProgress)
         }
     }
 
@@ -150,6 +214,54 @@ Page {
         contentHeight: header.height + wrapper.height
 
         PullDownMenu {
+            MenuItem {
+                visible: localVideo.canDownload
+                //: Label for menu option triggering video preload
+                //% "Download video"
+                text: qsTrId("ytplayer-action-download-video")
+                onClicked: localVideo.download()
+            }
+            MenuItem {
+                visible: localVideo.status !== YTLocalVideo.Initial &&
+                         localVideo.status !== YTLocalVideo.Downloaded
+                //: Label for menu option canceling pending/in progress video preload
+                //% "Cancel video download"
+                text: qsTrId("ytplayer-action-cancel-download")
+                onClicked: {
+                    //: Remorse popup message telling the user video download will be cancelled
+                    //% "Cancelling download"
+                    remorse.execute(qsTrId("ytplayer-msg-cancelling-download") , function() {
+                        localVideo.remove()
+                    })
+                }
+            }
+            MenuItem {
+                visible: localVideo.status === YTLocalVideo.Loading
+                //: "Label for menu option allowing the user to pause video download"
+                //% "Pause video download"
+                text: qsTrId("ytplayer-action-pause-download")
+                onClicked: localVideo.pause()
+            }
+            MenuItem {
+                visible: localVideo.status === YTLocalVideo.Paused
+                //: "Label for menu option allowing the user to resume video download"
+                //% "Resume video download"
+                text: qsTrId("ytplayer-action-resume-download")
+                onClicked: localVideo.resume()
+            }
+            MenuItem {
+                visible: localVideo.status === YTLocalVideo.Downloaded
+                //: Label for menu option allowing the user to remove downloaded video
+                //% "Remove video download"
+                text: qsTrId("ytplayer-action-remove-download")
+                onClicked: {
+                    //: Remorse popup message telling the user video download will be removed
+                    //% "Removing download"
+                    remorse.execute(qsTrId("ytplayer-msg-removing-download") , function() {
+                        localVideo.remove()
+                    })
+                }
+            }
             MenuItem {
                 //: Label for menu option opening YouTube web page for a video
                 //% "Open in browser"
@@ -210,6 +322,61 @@ Page {
                             return thumbnails.medium.url
                         } else {
                             return thumbnails.default.url
+                        }
+                    }
+
+                    Rectangle {
+                        anchors.top: parent.top
+                        anchors.right: parent.right
+                        width: childrenRect.width + 2 * Theme.paddingMedium
+                        height: childrenRect.height
+                        property bool enabled: localVideo.status !== YTLocalVideo.Initial
+                        opacity: enabled ? 1.0 : 0.0
+                        visible: opacity !== 0.0
+                        color: "#AA000000"
+                        Behavior on opacity {
+                            NumberAnimation {
+                                duration: 400
+                            }
+                        }
+
+                        Label {
+                            id: localVideoStatus
+                            x: Theme.paddingMedium
+                            color: Theme.highlightColor
+                            font.pixelSize: Theme.fontSizeExtraSmall
+
+                            function updateLabel(status) {
+                                switch (status) {
+                                case YTLocalVideo.Downloaded:
+                                    //: Label indicating the video was downloaded to local device storage
+                                    //% "Downloaded"
+                                    text = qsTrId("ytplayer-label-video-downloaded")
+                                    break
+                                case YTLocalVideo.Queued:
+                                    //: "Label indicating video was queued for preload"
+                                    //% "Download queued"
+                                    text = qsTrId("ytplayer-label-video-queued")
+                                    break
+                                case YTLocalVideo.Loading:
+                                    ////: "Label indicating video download is in progress"
+                                    ////% "Downloading"
+                                    //text = qsTrId("ytplayer-label-video-downloading")
+                                    progressChanged(localVideo.downloadProgress)
+                                    break
+                                case YTLocalVideo.Paused:
+                                    //: "Label indicating video download was paused"
+                                    //% "Download paused"
+                                    text = qsTrId("ytplayer-label-video-download-paused")
+                                    break
+                                }
+                            }
+
+                            function progressChanged(progress) {
+                                //: "Label indicating video download progress with actual percentage value"
+                                //% "Downloading: %1%"
+                                text = qsTrId("ytplayer-label-video-downloading-percentage").arg(progress)
+                            }
                         }
                     }
                 }

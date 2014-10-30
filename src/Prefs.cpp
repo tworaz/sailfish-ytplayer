@@ -30,7 +30,13 @@
 #include "Prefs.h"
 
 #include <QSettings>
+#include <QStandardPaths>
+#include <QDir>
 #include <QDebug>
+
+const char kWiFiOnly[] = "WiFi";
+const char kCellularOnly[] = "Cellular";
+const char kWiFiAndCellular[] = "WiFi+Cellular";
 
 Prefs::Prefs(QObject *parent)
     : QObject(parent)
@@ -42,14 +48,29 @@ Prefs::Initialize()
 {
     QSettings settings;
     qDebug("Initializing settings");
-    if (!settings.contains("SafeSearch"))
-        settings.setValue("SafeSearch", 1);
+
     if (!settings.contains("AccountIntegration"))
         settings.setValue("AccountIntegration", false);
+
     if (!settings.contains("Cache/ImageSize"))
         settings.setValue("Cache/ImageSize", 10);
     if (!settings.contains("Cache/YouTubeApiResponseSize"))
         settings.setValue("Cache/YouTubeApiResponseSize", 3);
+
+    if (!settings.contains("Download/Quality"))
+        settings.setValue("Download/Quality", "720p");
+    if (!settings.contains("Download/ConnectionType"))
+        settings.setValue("Download/ConnectionType", kWiFiOnly);
+    if (!settings.contains("Download/ResumeOnStartup"))
+        settings.setValue("Download/ResumeOnStartup", true);
+    if (!settings.contains("Download/MaxConcurrentDownloads"))
+        settings.setValue("Download/MaxConcurrentDownloads", 1);
+    if (!settings.contains("Download/Location")) {
+        QString dir = QStandardPaths::writableLocation(QStandardPaths::MoviesLocation);
+        dir += QDir::separator();
+        dir += "YTPlayer";
+        settings.setValue("Download/Location", dir);
+    }
 }
 
 void
@@ -65,6 +86,22 @@ Prefs::get(const QString& key)
     QSettings settings;
     QVariant value = settings.value(key);
     return value;
+}
+
+bool
+Prefs::getBool(const QString& key)
+{
+    QVariant value = get(key);
+    Q_ASSERT(value.canConvert(QVariant::Bool));
+    return value.toBool();
+}
+
+int
+Prefs::getInt(const QString& key)
+{
+    QVariant value = get(key);
+    Q_ASSERT(value.canConvert(QVariant::Int));
+    return value.toInt();
 }
 
 bool

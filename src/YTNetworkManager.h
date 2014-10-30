@@ -33,12 +33,13 @@
 #include <QObject>
 
 class QNetworkConfigurationManager;
-class QNetworkConfguration;
+class QNetworkConfiguration;
 
 class YTNetworkManager : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(bool online READ online NOTIFY onlineChanged)
+    Q_PROPERTY(bool cellular READ cellular NOTIFY cellularChanged)
     Q_PROPERTY(qint64 imageCacheUsage READ imageCacheUsage
                NOTIFY imageCacheUsageChanged)
     Q_PROPERTY(qint64 apiResponseCacheUsage READ apiResponseCacheUsage
@@ -53,20 +54,22 @@ public:
     ~YTNetworkManager();
 
     Q_INVOKABLE void tryConnect() const;
-    Q_INVOKABLE bool isMobileNetwork() const;
     Q_INVOKABLE void clearCache();
 
+    bool online() const { return _online; }
+    bool cellular() const { return _cellular; }
+
 signals:
-    void onlineChanged();
+    void onlineChanged(bool);
+    void cellularChanged(bool);
     void imageCacheUsageChanged();
     void apiResponseCacheUsageChanged();
 
 protected slots:
     void onOnlineStateChanged(bool isOnline);
+    void onConfigurationChanged(const QNetworkConfiguration&);
 
 private:
-    bool online() const { return _online; }
-
     // Values returned in kB
     qint64 imageCacheUsage() const;
     qint64 apiResponseCacheUsage() const;
@@ -79,6 +82,7 @@ private:
 
     QNetworkConfigurationManager *_manager;
     bool _online;
+    bool _cellular;
 };
 
 #endif // YTNETWORKMANAGER_H

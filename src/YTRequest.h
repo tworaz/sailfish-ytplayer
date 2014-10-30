@@ -34,12 +34,12 @@
 #include <QObject>
 #include <QString>
 #include <QVariantMap>
+#include <QNetworkReply>
 #include <QSharedPointer>
 
 #include "YTListModel.h"
 
 class QNetworkAccessManager;
-class QNetworkReply;
 
 class YTRequest : public QObject
 {
@@ -68,6 +68,12 @@ public:
 
     Q_INVOKABLE void run();
 
+    void setMethod(Method method) { _method = method; }
+    void setResource(QString resource) { _resource = resource; }
+    void setParams(QVariantMap params) { _params = params; }
+    bool isRunning() const { return _reply && _reply->isRunning(); }
+    void abort() { Q_ASSERT(_reply); _reply->abort(); }
+
 signals:
     void success(QVariant response);
     void error(QVariant details);
@@ -87,11 +93,8 @@ private:
     QVariant getYTApiFallbackVideoUrls() const;
 
     QString resource() const { return _resource; }
-    void setResource(QString resource) { _resource = resource; }
     Method method() const { return _method; }
-    void setMethod(Method method) { _method = method; }
     QVariantMap params() const { return _params; }
-    void setParams(QVariantMap params) { _params = params; }
     QVariant content() const { return _content; }
     void setContent(QVariant content) { _content = content; }
     bool busy() const { return _reply != NULL; }

@@ -27,30 +27,17 @@
  * SUCH DAMAGE.
  */
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#include "YTVideoDownloadNotification.h"
 
-#include <QString>
-#include <QVariant>
+#include "YTLocalVideoManager.h"
 
-extern const char kWiFiOnly[];
-extern const char kCellularOnly[];
-extern const char kWiFiAndCellular[];
-
-class Prefs: public QObject
+YTVideoDownloadNotification::YTVideoDownloadNotification(QObject *parent) :
+    QObject(parent)
 {
-    Q_OBJECT
-public:
-    explicit Prefs(QObject *parent = 0);
-
-    void Initialize();
-
-    Q_INVOKABLE void set(const QString& key, const QVariant& value);
-    Q_INVOKABLE QVariant get(const QString& key);
-    Q_INVOKABLE bool getBool(const QString& key);
-    Q_INVOKABLE int getInt(const QString& key);
-    Q_INVOKABLE bool isAuthEnabled();
-    Q_INVOKABLE void disableAuth();
-};
-
-#endif // SETTINGS_H
+    connect(&YTLocalVideoManager::instance(), SIGNAL(downloadFinished(QString)),
+            this, SIGNAL(finished(QString)),
+            Qt::QueuedConnection);
+    connect(&YTLocalVideoManager::instance(), SIGNAL(downloadFailed(QString)),
+            this, SIGNAL(failed(QString)),
+            Qt::QueuedConnection);
+}

@@ -39,6 +39,8 @@ ApplicationWindow
     readonly property double thumbnailAspectRatio: 9 / 16
     readonly property string youtubeIconsFontName: "youtube-icons"
     readonly property int kMaxCoverThumbnailCount: 12
+    readonly property int kThumbnailWidth: 120
+    readonly property color kBlackTransparentBg: "#AA000000"
 
     initialPage: Component { MainMenu { } }
     cover: Qt.resolvedUrl("cover/Default.qml")
@@ -93,6 +95,30 @@ ApplicationWindow
                                undefined, PageStackAction.Immediate)
             }
         }
+    }
+
+    YTVideoDownloadNotification {
+        onFinished: {
+            Log.info("Finished downloading video: " + video)
+            //: Notification summary informing the user video download has been finished
+            //% "Video download finished"
+            downloadNotification.previewSummary = qsTrId("ytplayer-msg-download-finished")
+            downloadNotification.previewBody = video
+            downloadNotification.publish()
+        }
+
+        onFailed: {
+            Log.info("Failed downloading video: " + video)
+            //: Notification summary informing the user video download has failed
+            //% "Video download failed"
+            downloadNotification.previewSummary = qsTrId("ytplayer-msg-download-failed")
+            downloadNotification.previewBody = video
+            downloadNotification.publish()
+        }
+    }
+
+    Notification {
+        id: downloadNotification
     }
 
     Notification {

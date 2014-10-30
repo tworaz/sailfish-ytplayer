@@ -33,9 +33,12 @@
 #include <QStandardPaths>
 #include <QTranslator>
 #include <QQuickView>
+#include <QSqlError>
 #include <QtQml>
 #include <QDebug>
+#include <QThread>
 #include <QFontDatabase>
+#include <QSqlDatabase>
 #include <sailfishapp.h>
 
 // third party code
@@ -44,10 +47,44 @@
 #include "YTPlayer.h"
 #include "YTListModel.h"
 #include "YTNetworkManager.h"
+#include "YTLocalVideoManager.h"
+#include "YTLocalVideoListModel.h"
+#include "YTVideoDownloadNotification.h"
+#include "YTLocalVideo.h"
 #include "NativeUtil.h"
 #include "YTRequest.h"
 #include "Logger.h"
 #include "Prefs.h"
+
+namespace {
+const QString kApplicationDBFileName = "YTPlayer.sqlite";
+
+void
+InitApplicationDatabase()
+{
+    QSqlDatabase db;
+    QString dbdir = QStandardPaths::writableLocation((QStandardPaths::DataLocation));
+    if (!QDir(dbdir).exists())
+        QDir().mkpath(dbdir);
+    db = QSqlDatabase::addDatabase("QSQLITE");
+    Q_ASSERT(db.isValid());
+    db.setDatabaseName(dbdir + QDir::separator() + kApplicationDBFileName);
+    qDebug() << "Application database path: " <<
+                dbdir + QDir::separator() + kApplicationDBFileName;
+}
+
+QThread*
+GetBackgroundTaskThread()
+{
+    static QThread* thread = NULL;
+    if (thread == NULL) {
+        thread = new QThread();
+        thread->start();
+        thread->setPriority(QThread::LowPriority);
+    }
+    return thread;
+}
+} // namespace
 
 QSharedPointer<QNetworkAccessManager>
 GetNetworkAccessManager()
@@ -121,13 +158,14 @@ main(int argc, char *argv[])
     prefs->Initialize();
     Logger::Register();
 
+    InitApplicationDatabase();
+
     if (QFontDatabase::addApplicationFont(":/fonts/youtube-icons.ttf") < 0) {
         qCritical() << "Failed to install youtube-icons font!";
         return -1;
     }
 
     qDebug("System language : %s", qPrintable(lang));
-
     bool ret = translator.load(lang, dir);
     if (!ret) {
         qDebug("No translation for current system language, falling back to en");
@@ -141,6 +179,9 @@ main(int argc, char *argv[])
     qmlRegisterType<YTListModelFilter>("harbour.ytplayer", 1, 0, "YTListModelFilter");
     qmlRegisterType<YTNetworkManager>("harbour.ytplayer", 1, 0, "YTNetworkManager");
     qmlRegisterType<Logger>("harbour.ytplayer", 1, 0, "LogModel");
+    qmlRegisterType<YTLocalVideo>("harbour.ytplayer", 1, 0, "YTLocalVideo");
+    qmlRegisterType<YTLocalVideoListModel>("harbour.ytplayer", 1, 0, "YTLocalVideoListModel");
+    qmlRegisterType<YTVideoDownloadNotification>("harbour.ytplayer", 1, 0, "YTVideoDownloadNotification");
 
     view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
     view->rootContext()->setContextProperty("Log", logger.data());
@@ -151,5 +192,14 @@ main(int argc, char *argv[])
 
     view->showFullScreen();
 
-    return app->exec();
+    YTLocalVideoManager::instance().moveToThread(GetBackgroundTaskThread());
+
+    int result = app->exec();
+
+    qDebug() << "Application terminating";
+
+    GetBackgroundTaskThread()->exit();
+    GetBackgroundTaskThread()->wait();
+
+    return result;
 }

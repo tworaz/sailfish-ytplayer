@@ -48,16 +48,19 @@ DockedPanel {
     property alias keepPlayingAferMinimize: autoPause.checked
     property bool showIndicator: false
     property string videoId
+    property variant streams
 
     QtObject {
         id: priv
-        property bool resumeOnActivate: false
-        property variant streams
+        property bool resumeOnActivate: true
+        property bool active: false
     }
 
-
     function activate() {
-        if (!priv.streams) {
+        Log.debug("Video controller activated")
+        priv.active = true
+
+        if (!root.streams) {
             request.run()
         } else if (priv.resumeOnActivate && Qt.application.active) {
             Log.debug("Video player activated, resuming video playback")
@@ -66,6 +69,8 @@ DockedPanel {
     }
 
     function deactivate() {
+        Log.debug("Video controller deactivated")
+        priv.active = false
         priv.resumeOnActivate = _mediaPlayer.playing
         mediaPlayer.pause()
     }
@@ -73,6 +78,8 @@ DockedPanel {
     function hideBottomMenu() {
         menu.close(true)
     }
+
+    onStreamsChanged: menu.handleNewStreams()
 
     Rectangle {
         anchors.fill: parent
@@ -88,8 +95,7 @@ DockedPanel {
             "video_id" : videoId,
         }
         onSuccess: {
-            priv.streams = response
-            menu.handleNewStreams()
+            root.streams = response
         }
     }
 
@@ -169,41 +175,42 @@ DockedPanel {
             selectedItem = item
             selectedItem.checked = true
             _mediaPlayer.savePosition()
-            _mediaPlayer.source = priv.streams[item.text].url
+            _mediaPlayer.source = root.streams[item.text].url
             menu.close(false)
         }
 
         function handleNewStreams() {
-            var keys = Object.keys(priv.streams)
+            var keys = Object.keys(root.streams)
             Log.debug("Available video stream qualities: " + keys)
 
             if (keys.length === 1) {
                 Log.debug("Only one video quality available")
-                _mediaPlayer.source = priv.streams[keys[0]].url
+                _mediaPlayer.source = root.streams[keys[0]].url
+                q1080p.visible = false
+                q720p.visible = false
+                q360p.visible = false
                 return
             }
             menu.qualitySelectionEnabled = true
 
             var initialItem, visibleItems = 0
             var _h = function (item, makeDefault) {
-                if (priv.streams.hasOwnProperty(item.text)) {
+                if (root.streams.hasOwnProperty(item.text)) {
                     item.visible = true
                     visibleItems++
-                    if (makeDefault) {
+                    if (makeDefault)
                         initialItem = item
-                    }
                 } else {
                     item.visible = false
                 }
             }
             _h(q360p, true)
-            _h(q720p, !networkManager.isMobileNetwork())
+            _h(q720p, !networkManager.cellular)
             _h(q1080p)
 
             // Don't change quality in case it was already selected
-            if (selectedItem) {
+            if (selectedItem)
                 initialItem = selectedItem
-            }
             visibleChildren = visibleItems
             handleClickOn(initialItem)
         }
@@ -211,15 +218,16 @@ DockedPanel {
 
     MediaPlayer {
         id: _mediaPlayer
-        autoPlay: savedPosition === 0
 
         property int savedPosition: 0
         readonly property bool playing: playbackState === MediaPlayer.PlayingState
         readonly property bool finished: status === MediaPlayer.EndOfMedia
 
         function savePosition() {
-            Log.debug("Saving current playback position: " + H.parseDuration(position))
-            savedPosition = position
+            if (position > 0) {
+                Log.debug("Saving current playback position: " + H.parseDuration(position))
+                savedPosition = position
+            }
         }
 
         onStatusChanged: {
@@ -286,7 +294,8 @@ DockedPanel {
             if (seekable && savedPosition) {
                 seek(savedPosition)
                 savedPosition = 0
-                play()
+                if (priv.active)
+                    play()
             }
         }
 

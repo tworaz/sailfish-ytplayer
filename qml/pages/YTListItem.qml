@@ -31,9 +31,8 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import "../common"
 
-BackgroundItem {
+ListItem {
     id: ytItem
-    height: thumbnail.height + 2 * Theme.paddingSmall
 
     property variant youtubeId
     property alias title: itemLabel.text
@@ -41,7 +40,7 @@ BackgroundItem {
 
     AsyncImage {
         id: thumbnail
-        width: 120
+        width: kThumbnailWidth
         height: width * thumbnailAspectRatio
         anchors {
             verticalCenter: parent.verticalCenter

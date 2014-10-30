@@ -27,30 +27,56 @@
  * SUCH DAMAGE.
  */
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#include "YTLocalVideoListModel.h"
 
-#include <QString>
-#include <QVariant>
+#include <QSqlDatabase>
+#include <QTextStream>
+#include <QSqlRecord>
+#include <QSqlError>
+#include <QDebug>
 
-extern const char kWiFiOnly[];
-extern const char kCellularOnly[];
-extern const char kWiFiAndCellular[];
+#include <QSqlQuery>
 
-class Prefs: public QObject
+#include "YTLocalVideoManager.h"
+#include "YTLocalVideo.h"
+
+YTLocalVideoListModel::YTLocalVideoListModel(QObject *parent) :
+    QSqlQueryModel(parent)
 {
-    Q_OBJECT
-public:
-    explicit Prefs(QObject *parent = 0);
+    _roleNames[Qt::UserRole] = "videoId";
+    QString str;
+    QTextStream ts(&str);
+    ts << "SELECT videoId FROM local_videos ORDER BY CASE status"
+       << " WHEN " << YTLocalVideo::Loading << " THEN 1"
+       << " WHEN " << YTLocalVideo::Paused << " THEN 2"
+       << " WHEN " << YTLocalVideo::Queued << " THEN 3"
+       << " ELSE 4 END ASC, title COLLATE NOCASE";
 
-    void Initialize();
+    setQuery(str, QSqlDatabase::database());
+    Q_ASSERT(lastError().type() == QSqlError::NoError);
+}
 
-    Q_INVOKABLE void set(const QString& key, const QVariant& value);
-    Q_INVOKABLE QVariant get(const QString& key);
-    Q_INVOKABLE bool getBool(const QString& key);
-    Q_INVOKABLE int getInt(const QString& key);
-    Q_INVOKABLE bool isAuthEnabled();
-    Q_INVOKABLE void disableAuth();
-};
+QVariant
+YTLocalVideoListModel::data(const QModelIndex &index, int role) const
+{
+    if (role < Qt::UserRole)
+        return QSqlQueryModel::data(index, role);
 
-#endif // SETTINGS_H
+    QSqlRecord r = record(index.row());
+    return r.value(role - Qt::UserRole);
+}
+
+void
+YTLocalVideoListModel::remove(int index)
+{
+    QMetaObject::invokeMethod(this, "onRemove",
+        Qt::QueuedConnection, Q_ARG(int, index));
+}
+
+void
+YTLocalVideoListModel::onRemove(int index)
+{
+    beginRemoveRows(QModelIndex(), index, index);
+    removeRow(index);
+    endRemoveRows();
+}
