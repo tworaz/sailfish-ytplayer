@@ -35,7 +35,7 @@
 #include <QNetworkDiskCache>
 
 QSharedPointer<QNetworkAccessManager> GetNetworkAccessManager();
-QSharedPointer<QNetworkDiskCache> GetImageDiskCache();
-QSharedPointer<QNetworkDiskCache> GetAPIResponseDiskCache();
+QNetworkDiskCache* GetImageDiskCache();
+QNetworkDiskCache* GetAPIResponseDiskCache();
 
 #endif // YTPLAYER_H

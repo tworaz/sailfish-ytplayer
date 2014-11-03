@@ -49,21 +49,24 @@
 #include "Logger.h"
 #include "Prefs.h"
 
-QSharedPointer<QNetworkAccessManager> GetNetworkAccessManager()
+QSharedPointer<QNetworkAccessManager>
+GetNetworkAccessManager()
 {
     static QSharedPointer<QNetworkAccessManager> instance;
     if (instance.isNull()) {
         qDebug() << "Creating global QNetworkAccessManager instance";
         instance.reset(new QNetworkAccessManager);
-        instance->setCache(GetAPIResponseDiskCache().data());
+        instance->setCache(GetAPIResponseDiskCache());
     }
     return instance;
 }
 
-QSharedPointer<QNetworkDiskCache> GetImageDiskCache() {
-    static QSharedPointer<QNetworkDiskCache> cache;
-    if (cache.isNull()) {
-        cache.reset(new QNetworkDiskCache());
+QNetworkDiskCache*
+GetImageDiskCache()
+{
+    static QNetworkDiskCache* cache = NULL;
+    if (cache == NULL) {
+        cache = new QNetworkDiskCache();
         QString datadir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
         datadir += "/ImageCache";
         cache->setCacheDirectory(datadir);
@@ -75,10 +78,12 @@ QSharedPointer<QNetworkDiskCache> GetImageDiskCache() {
     return cache;
 }
 
-QSharedPointer<QNetworkDiskCache> GetAPIResponseDiskCache() {
-    static QSharedPointer<QNetworkDiskCache> cache;
-    if (cache.isNull()) {
-        cache.reset(new QNetworkDiskCache());
+QNetworkDiskCache*
+GetAPIResponseDiskCache()
+{
+    static QNetworkDiskCache* cache = NULL;
+    if (cache == NULL) {
+        cache = new QNetworkDiskCache();
         QString datadir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
         datadir += "/APIRequestCache";
         cache->setCacheDirectory(datadir);
@@ -96,12 +101,13 @@ public:
     QNetworkAccessManager *create(QObject *parent)
     {
         QNetworkAccessManager *manager = new QNetworkAccessManager(parent);
-        manager->setCache(GetImageDiskCache().data());
+        manager->setCache(GetImageDiskCache());
         return manager;
     }
 };
 
-int main(int argc, char *argv[])
+int
+main(int argc, char *argv[])
 {
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> view(SailfishApp::createView());
