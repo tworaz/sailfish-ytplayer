@@ -32,8 +32,9 @@ import Sailfish.Silica 1.0
 import "../common"
 
 Page {
-    Component.onCompleted: {
-        requestCoverPage("Default.qml")
+    onStatusChanged: {
+        if (status === PageStatus.Active)
+            requestCoverPage("Default.qml")
     }
 
     Column {
