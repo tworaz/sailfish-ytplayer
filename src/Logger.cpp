@@ -41,12 +41,13 @@ static QString _log_str_arr[] = {
 };
 
 QtMessageHandler Logger::_original_handler = NULL;
-QContiguousCache<QVariantMap> *Logger::_log_cache =
-        new QContiguousCache<QVariantMap>(LOG_CACHE_SIZE);
+QScopedPointer<QContiguousCache<QVariantMap> > Logger::_log_cache;
 
 Logger::Logger(QObject *parent)
     : QAbstractListModel(parent)
 {
+    if (_log_cache.isNull())
+        _log_cache.reset(new QContiguousCache<QVariantMap>(LOG_CACHE_SIZE));
 }
 
 void
