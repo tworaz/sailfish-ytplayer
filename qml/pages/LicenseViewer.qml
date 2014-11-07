@@ -37,7 +37,11 @@ Page {
 
     Component.onCompleted: {
         Log.debug("LicenseViewer, file: " + licenseFile)
-        requestCoverPage("Default.qml")
+    }
+
+    onStatusChanged: {
+        if (status === PageStatus.Active)
+            requestCoverPage("Default.qml")
     }
 
     SilicaFlickable {
