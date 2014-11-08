@@ -46,9 +46,9 @@ Prefs::Initialize()
         settings.setValue("SafeSearch", 1);
     if (!settings.contains("AccountIntegration"))
         settings.setValue("AccountIntegration", false);
-    if (!settings.contains("Cache/Image"))
+    if (!settings.contains("Cache/ImageSize"))
         settings.setValue("Cache/ImageSize", 10);
-    if (!settings.contains("Cache/YouTubeApiResponse"))
+    if (!settings.contains("Cache/YouTubeApiResponseSize"))
         settings.setValue("Cache/YouTubeApiResponseSize", 3);
 }
 
