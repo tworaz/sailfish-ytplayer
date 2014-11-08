@@ -141,7 +141,7 @@ Page {
                     } else if (thumbnails.medium) {
                         return thumbnails.medium.url
                     } else {
-                        return thymbnails.default.url
+                        return thumbnails.default.url
                     }
                 }
             }
