@@ -84,6 +84,7 @@ private:
     void handleVideoInfoReply(QNetworkReply*);
     void requestToken();
     void refreshToken();
+    QVariant getYTApiFallbackVideoUrls() const;
 
     QString resource() const { return _resource; }
     void setResource(QString resource) { _resource = resource; }

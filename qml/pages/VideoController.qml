@@ -87,19 +87,9 @@ DockedPanel {
         params: {
             "video_id" : videoId,
         }
-
         onSuccess: {
-            priv.streams = response ? response : getFallbackUrls()
+            priv.streams = response
             menu.handleNewStreams()
-        }
-
-        function getFallbackUrls() {
-            var base = "http://ytapi.com/?vid=" + videoId + "&format=direct&itag="
-            return {
-                "240p" : { "url" : base + 36 },
-                "360p" : { "url" : base + 18 },
-                "720p" : { "url" : base + 22 },
-            }
         }
     }
 

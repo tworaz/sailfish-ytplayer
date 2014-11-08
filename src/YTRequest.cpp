@@ -349,14 +349,15 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
     if (streamMap.isEmpty()) {
         qWarning() << "YouTube get_video_info did not return proper stream map!";
         qDebug() << "Reply: " << reply->readAll();
-        emit success(QVariant());
+        emit success(getYTApiFallbackVideoUrls());
         return;
     }
 
     QStringList mapEntries = streamMap.split(",", QString::SkipEmptyParts);
     if (mapEntries.size() == 0) {
         qWarning() << "YouTube stream map empty";
-        emit success(QVariant());
+        emit success(getYTApiFallbackVideoUrls());
+        return;
     }
 
     QVariantMap outMap;
@@ -377,7 +378,7 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
                 itag = it->second.toInt();
             } else if (it->first == "s" ) {
                 qWarning() << "Playback of encrypted content not supported, yet";
-                emit success(QVariant());
+                emit success(getYTApiFallbackVideoUrls());
                 return;
             } else {
                 streamDetailsMap.insert(it->first, it->second);
@@ -456,6 +457,31 @@ YTRequest::refreshToken()
 
     _token_reply =  _network_access_manager->post(request, data);
     connect(_token_reply, SIGNAL(finished()), this, SLOT(onTokenRequestFinished()));
+}
+
+QVariant
+YTRequest::getYTApiFallbackVideoUrls() const
+{
+    Q_ASSERT(!_params.isEmpty() && _params.contains("video_id"));
+
+    QVariantMap fallback;
+    QString videoId = _params["video_id"].toString();
+
+    qWarning() << "Using ytapi.com as fallback to play" << videoId;
+
+    QVariantMap p240;
+    p240["url"] = "http://ytapi.com?vid=" + videoId + "&format=direct&itag=36";
+    QVariantMap p360;
+    p360["url"] = "http://ytapi.com?vid=" + videoId + "&format=direct&itag=18";
+    QVariantMap p720;
+    p720["url"] = "http://ytapi.com?vid=" + videoId + "&format=direct&itag=22";
+
+    fallback["240p"] = p240;
+    fallback["360p"] = p360;
+    fallback["720p"] = p720;
+    fallback["fallback"] = true;
+
+    return fallback;
 }
 
 QUrl
