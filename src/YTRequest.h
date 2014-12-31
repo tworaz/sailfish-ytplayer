@@ -109,6 +109,7 @@ private:
     QVariant _content;
     bool _loaded;
     YTListModel *_model;
+    int _retryCount;
 };
 
 #endif // YTREQUEST_H

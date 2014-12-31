@@ -44,9 +44,10 @@
 #include "YTPlayer.h"
 #include "NativeUtil.h"
 
-static QString kYouTubeDataV3Url("https://www.googleapis.com/youtube/v3/");
-static QString kYouTubeGetVideoInfoUrl("http://www.youtube.com/get_video_info");
-static QString kMaxResults("50"); // Maximum allowed by YouTube
+static const QString kYouTubeDataV3Url("https://www.googleapis.com/youtube/v3/");
+static const QString kYouTubeGetVideoInfoUrl("http://www.youtube.com/get_video_info");
+static const QString kMaxResults("50"); // Maximum allowed by YouTube
+static const int kMaxRetryCount = 3;
 
 static void
 appendParams(QUrlQuery& query, QVariantMap& params)
@@ -137,6 +138,7 @@ YTRequest::YTRequest(QObject *parent)
     , _network_access_manager(GetNetworkAccessManager())
     , _loaded(false)
     , _model(NULL)
+    , _retryCount(0)
 {
 }
 
@@ -247,6 +249,25 @@ YTRequest::onFinished()
         }
         _loaded = true;
         break;
+    case QNetworkReply::OperationCanceledError:
+        // Ignore
+        break;
+    case QNetworkReply::UnknownNetworkError:
+        // Unknown error is often reported when the request is made
+        // just after switching from cellilar to mobile connection or
+        // the other way around. The error string just states
+        // "Connection Timed Out"
+    case QNetworkReply::NetworkSessionFailedError:
+    case QNetworkReply::TimeoutError:
+        if (_retryCount++ < kMaxRetryCount) {
+            qDebug() << "Connection timed out, retrying ("
+                     << _retryCount << "of" << kMaxRetryCount << ")"
+                     << ", error:" << _reply->errorString();
+            QMetaObject::invokeMethod(this, "run", Qt::QueuedConnection);
+        } else {
+            handleError(_reply);
+        }
+        break;
     case QNetworkReply::AuthenticationRequiredError:
         if (authEnabled()) {
             refreshToken();
@@ -295,6 +316,8 @@ YTRequest::handleError(QNetworkReply *reply)
         emit error(QVariant(json.object()));
     } else {
         QVariantMap map;
+        map["ErrorCode"] = reply->error();
+        map["ErrorString"] = reply->errorString();
         map["HttpStatusCode"] = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute);
         map["Content"] = QVariant(reply->readAll());
         qCritical() << "Unknown Error: " << map;
