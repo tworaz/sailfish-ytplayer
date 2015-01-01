@@ -37,6 +37,13 @@ BackgroundItem {
 
     width: _label.width + 2 * Theme.paddingLarge
     height: root.isPortrait ? Theme.itemSizeLarge : Theme.itemSizeSmall
+    opacity: visible ? 1.0 : 0.0
+
+    Behavior on opacity {
+        NumberAnimation {
+            duration: 400
+        }
+    }
 
     Label {
         id: _label
