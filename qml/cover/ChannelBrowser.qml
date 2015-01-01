@@ -59,7 +59,7 @@ CoverBackground {
             columns: 2
             Repeater {
                 id: thumbRepeater
-                model: kMaxCoverThumbnailCount
+                model: priv.thumbnails.length
                 Image {
                     source: priv.thumbnails[index].default.url
                     width: parent.width / 2

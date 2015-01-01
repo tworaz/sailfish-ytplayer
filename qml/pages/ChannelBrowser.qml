@@ -141,9 +141,9 @@ Page {
 
             var d = priv.coverData
             d.thumbnails = []
-            for (var i = 0; i < kMaxCoverThumbnailCount; ++i) {
+            var maxThumbs = Math.min(kMaxCoverThumbnailCount, response.items.length)
+            for (var i = 0; i < maxThumbs; ++i)
                 d.thumbnails.push(response.items[i].snippet.thumbnails)
-            }
             priv.coverData = d
             priv.coverDataReady = true
             requestCoverPage("ChannelBrowser.qml", priv.coverData)
@@ -260,9 +260,12 @@ Page {
                 id: poster
                 width: parent.width
                 fillMode: Image.PreserveAspectFit
-                //height: width * thumbnailAspectRatio
+                height: status === Image.Ready ?
+                            sourceSize.height * width / sourceSize.width :
+                            150
                 indicatorSize: BusyIndicatorSize.Medium
                 source: priv.currentPosterUrl
+                cache: false
             }
 
             Flow {
