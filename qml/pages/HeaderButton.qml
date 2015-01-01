@@ -32,26 +32,20 @@ import Sailfish.Silica 1.0
 
 BackgroundItem {
     id: root
-    property alias icon: _icon.source
     property alias text: _label.text
+    property bool isPortrait: true
 
-    width: _icon.width + _label.width + 3 * Theme.paddingMedium
-    height: Theme.itemSizeLarge
+    width: _label.width + 2 * Theme.paddingLarge
+    height: root.isPortrait ? Theme.itemSizeLarge : Theme.itemSizeSmall
 
-    Image {
-        id: _icon
-        anchors.right: parent.right
-        anchors.rightMargin: Theme.paddingMedium
-        anchors.verticalCenter: parent.verticalCenter
-    }
     Label {
         id: _label
         color: root.highlighted ? Theme.highlightColor : Theme.primaryColor
         truncationMode: TruncationMode.Fade
         font.pixelSize: Theme.fontSizeLarge
         font.family: Theme.fontFamilyHeading
-        anchors.right: _icon.left
-        anchors.rightMargin: Theme.paddingMedium
+        anchors.right: parent.right
+        anchors.rightMargin: Theme.paddingLarge
         anchors.verticalCenter: parent.verticalCenter
     }
 }

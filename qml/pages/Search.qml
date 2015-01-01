@@ -126,7 +126,8 @@ Page {
             HeaderButton {
                 id: options
                 anchors.right: parent.right
-                icon: "qrc:///icons/advanced-48.png"
+                isPortrait: page.isPortrait
+                visible: !!priv.optionsPage
                 //: Generic options menu/button label
                 //% "Advanced"
                 text: qsTrId("ytplayer-label-advanced")

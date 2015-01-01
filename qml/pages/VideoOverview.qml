@@ -286,10 +286,10 @@ Page {
             id: header
             anchors.top: parent.top
             anchors.right: parent.right
+            isPortrait: page.isPortrait
             //: Label for video play button
             //% "Play"
             text: qsTrId("ytplayer-label-play")
-            icon: "qrc:///icons/play-48.png"
             onClicked: {
                 pageStack.navigateForward(PageStackAction.Animated)
             }
