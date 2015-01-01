@@ -58,12 +58,19 @@ Page {
     QtObject {
         id: priv
         property variant channelBrowserData: ({})
+        property variant streamResponse: undefined
         property Item playerPage
         readonly property real sideMargin: Theme.paddingMedium
     }
 
     function handleStreamChange(streams) {
         if (!priv.playerPage) {
+            // Don't push the page during transition it has negative effect on performance
+            if (page.status !== PageStatus.Active) {
+                priv.streamResponse = streams
+                return
+            }
+
             Log.debug("Player page not attached, pushing it")
             console.assert(page.thumbnails.hasOwnProperty("default"))
             priv.playerPage = pageStack.pushAttached(Qt.resolvedUrl("VideoPlayer.qml"), {
@@ -94,6 +101,9 @@ Page {
                     if (!page.thumbnails.hasOwnProperty("default"))
                         page.thumbnails = localVideo.thumbnails
                     handleStreamChange(localVideo.streams)
+                } else if (priv.streamResponse !== undefined) {
+                    handleStreamChange(priv.streamResponse)
+                    priv.streamResponse = undefined
                 }
             }
         }
@@ -286,6 +296,7 @@ Page {
             id: header
             anchors.top: parent.top
             anchors.right: parent.right
+            visible: !!priv.playerPage
             isPortrait: page.isPortrait
             //: Label for video play button
             //% "Play"
