@@ -31,20 +31,26 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 Page {
-    objectName: "DownloadSettings"
+    objectName: "DownloadSettingsPage"
     allowedOrientations: Orientation.All
+
+    onStatusChanged: {
+        if (status === PageStatus.Active)
+            requestCoverPage("Default.qml")
+    }
 
     SilicaFlickable {
         anchors.fill: parent
-        contentHeight: childrenRect.height
+        contentHeight: height > column.height ? height: column.height
 
         Column {
+            id: column
             width: parent.width
             spacing: Theme.paddingMedium
 
             PageHeader {
                 //: Title of video download settings pge
-                //% "Video download settings"
+                //% "Download settings"
                 title: qsTrId("ytplayer-title-download-settings")
             }
 
@@ -147,5 +153,8 @@ Page {
                 }
             }
         } // Column
+
+        VerticalScrollDecorator {}
+
     } // SilicaFlickable
 }

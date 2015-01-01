@@ -49,6 +49,7 @@ OTHER_FILES += \
         qml/YTPlayer.qml \
         qml/common/KeyValueLabel.qml \
         qml/common/AsyncImage.qml \
+        qml/common/SettingsButton.qml \
         qml/common/StatItem.qml \
         qml/common/Helpers.js \
         qml/cover/Default.qml \
@@ -81,7 +82,8 @@ OTHER_FILES += \
         qml/pages/ThirdPartySoftware.qml \
         qml/pages/HeaderButton.qml \
         qml/pages/DownloadedVideos.qml \
-        qml/pages/DownloadSettings.qml
+        qml/pages/DownloadSettings.qml \
+        qml/pages/CacheSettings.qml
 
 include(third_party/notifications.pri)
 include(languages/translations.pri)

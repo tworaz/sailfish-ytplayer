@@ -32,7 +32,7 @@ import Sailfish.Silica 1.0
 import "../common"
 
 Page {
-    id: settingsPage
+    objectName: "SettingsPage"
     allowedOrientations: Orientation.All
 
     onStatusChanged: {
@@ -44,26 +44,14 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
-        //contentHeight: topColumn.height + bottomColumn.height
-
-        PullDownMenu {
-            MenuItem {
-                //% "View Logs"
-                text: qsTrId("ytplayer-title-show-logs")
-                onClicked: pageStack.push(Qt.resolvedUrl("LogViewer.qml"))
-            }
-            MenuItem {
-                //: Menu option to clear application caches
-                //% "Clear cache"
-                text: qsTrId("ytplayer-label-clear-cache")
-                onClicked: networkManager.clearCache()
-            }
-        }
+        readonly property real _h: topColumn.height + bottomColumn.height
+        contentHeight: height > _h ? height : _h
 
         Column {
             id: topColumn
-            x: Theme.paddingLarge
-            width: parent.width - 2 * x
+            //x: Theme.paddingLarge
+            //width: parent.width - 2 * x
+            width: parent.width
             spacing: Theme.paddingMedium
 
             PageHeader {
@@ -72,24 +60,16 @@ Page {
                 title: qsTrId("ytplayer-title-settings")
             }
 
-            Label {
-                //: Account settings section label
-                //% "Account"
-                text: qsTrId("ytplayer-label-account")
-                width: parent.width
-                color: Theme.highlightColor
-                horizontalAlignment: Text.AlignRight
-            }
-
             TextSwitch {
                 id: accountSwitch
                 //: Label of switch activating/deactivating YouTube account integration
                 //% "YouTube account integration"
-                text: qsTrId("ytplayer-account-integration-label")
+                text: qsTrId("ytplayer-label-account-integration")
                 //: Description of switch activating/deactivating YouTube account integration
-                //% "Allow YTPlayer to manage YouTube user account"
-                description: qsTrId("ytplayer-account-integration-description")
+                //% "Allow YTPlayer to manage YouTube user account."
+                description: qsTrId("ytplayer-description-account-integration")
                 automaticCheck: false
+                checked: Prefs.isAuthEnabled()
 
                 onClicked: {
                     if (Prefs.isAuthEnabled()) {
@@ -102,70 +82,6 @@ Page {
                     }
                 }
             }
-
-            Column {
-                width: parent.width
-                spacing: Theme.paddingSmall
-
-                Label {
-                    width: parent.width
-                    color: Theme.highlightColor
-                    horizontalAlignment: Text.AlignRight
-                    //: "Label for cache section in settings page"
-                    //% "Cache"
-                    text: qsTrId("ytplayer-label-cache")
-                }
-                Slider {
-                    //: "Label for image cache size slider"
-                    //% "Image cache size"
-                    label: qsTrId("ytplayer-label-image-cache-size")
-                    width: parent.width
-                    minimumValue: 1
-                    maximumValue: 30
-                    stepSize: 1
-                    valueText: value + " MB"
-                    Component.onCompleted: {
-                        value = networkManager.imageCacheMaxSize
-                    }
-                    onReleased: {
-                        networkManager.imageCacheMaxSize = value
-                    }
-                }
-                KeyValueLabel {
-                    //: "Label for current cache usage label"
-                    //% "Current usage"
-                    key: qsTrId("ytplayer-label-current-usage")
-                    width: parent.width
-                    value: networkManager.imageCacheUsage + " kB"
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                    horizontalAlignment: Text.AlignHCenter
-                }
-                Slider {
-                    //: "Label for YouTube API response cache size slider"
-                    //% "YouTube API response cache size"
-                    label: qsTrId("ytplayer-label-api-req-cache-size")
-                    width: parent.width
-                    minimumValue: 1
-                    maximumValue: 10
-                    stepSize: 1
-                    valueText: value + " MB"
-                    Component.onCompleted: {
-                        value = networkManager.apiResponseCacheMaxSize
-                    }
-                    onReleased: {
-                        networkManager.apiResponseCacheMaxSize = value
-                    }
-                }
-                KeyValueLabel {
-                    //: "Label for current cache usage label"
-                    //% "Current usage"
-                    key: qsTrId("ytplayer-label-current-usage")
-                    width: parent.width
-                    value: networkManager.apiResponseCacheUsage + " kB"
-                    font.pixelSize: Theme.fontSizeExtraSmall
-                    horizontalAlignment: Text.AlignHCenter
-                }
-            }
         }
 
         Column {
@@ -174,21 +90,33 @@ Page {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: Theme.paddingLarge
 
-            BackgroundItem {
-                Label {
-                    height: parent.height
-                    width: parent.width - 2 * Theme.paddingLarge
-                    x: Theme.paddingLarge
-                    verticalAlignment: Text.AlignVCenter
-                    color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
-                    //: Label for menu option showing video download settings page
-                    //% "Video downloads"
-                    text: qsTrId("ytplayer-label-video-settings")
+            SettingsButton {
+                //: Label for menu option showing cache settings page
+                //% "Cache"
+                text: qsTrId("ytplayer-action-cache-settings")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("CacheSettings.qml"))
                 }
+            }
+            SettingsButton {
+                //: Label for menu option showing video download settings page
+                //% "Download"
+                text: qsTrId("ytplayer-action-download-settings")
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("DownloadSettings.qml"))
                 }
             }
-        }
-    }
+            SettingsButton {
+                //: Label for menu option showing application logs
+                //% "Logs"
+                text: qsTrId("ytplayer-action-show-logs")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("LogViewer.qml"))
+                }
+            }
+        } // Column
+
+        VerticalScrollDecorator {}
+
+    } // SilicaFlickable
 }

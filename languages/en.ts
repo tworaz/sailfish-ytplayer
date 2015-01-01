@@ -155,20 +155,8 @@
     </message>
     <message id="ytplayer-label-account">
         <source>Account</source>
-        <extracomment>Label for YouTube account related options in main menu
-----------
-Account settings section label</extracomment>
+        <extracomment>Label for YouTube account related options in main menu</extracomment>
         <translation>Account</translation>
-    </message>
-    <message id="ytplayer-account-integration-label">
-        <source>YouTube account integration</source>
-        <extracomment>Label of switch activating/deactivating YouTube account integration</extracomment>
-        <translation>YouTube account integration</translation>
-    </message>
-    <message id="ytplayer-account-integration-description">
-        <source>Allow YTPlayer to manage YouTube user account</source>
-        <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
-        <translation>Allow YTPlayer to manage YouTube account</translation>
     </message>
     <message id="ytplayer-channel-unsubscribe">
         <source>Unsubscribe</source>
@@ -192,10 +180,6 @@ Account settings section label</extracomment>
     <message id="ytplayer-title-log-viewer">
         <source>Log Viewer</source>
         <translation>YTPlayer Logs</translation>
-    </message>
-    <message id="ytplayer-title-show-logs">
-        <source>View Logs</source>
-        <translation>View Logs</translation>
     </message>
     <message id="ytplayer-label-network-offline">
         <source>Network Offline</source>
@@ -527,11 +511,6 @@ Label for channel name text field</extracomment>
         <extracomment>Menu option to clear application caches</extracomment>
         <translation>Clear cache</translation>
     </message>
-    <message id="ytplayer-label-cache">
-        <source>Cache</source>
-        <extracomment>&quot;Label for cache section in settings page&quot;</extracomment>
-        <translation>Cache</translation>
-    </message>
     <message id="ytplayer-label-image-cache-size">
         <source>Image cache size</source>
         <extracomment>&quot;Label for image cache size slider&quot;</extracomment>
@@ -599,15 +578,10 @@ Label for channel name text field</extracomment>
         <extracomment>Title of downloaded videos page</extracomment>
         <translation>Downloaded videos</translation>
     </message>
-    <message id="ytplayer-label-video-settings">
-        <source>Video downloads</source>
-        <extracomment>Label for menu option showing video download settings page</extracomment>
-        <translation>Video downloads</translation>
-    </message>
     <message id="ytplayer-title-download-settings">
-        <source>Video download settings</source>
+        <source>Download settings</source>
         <extracomment>Title of video download settings pge</extracomment>
-        <translation>Video download settings</translation>
+        <translation>Download settings</translation>
     </message>
     <message id="ytplayer-label-preferred-quality">
         <source>Preferred video quality</source>
@@ -711,6 +685,31 @@ Remorse popup message telling the user video download will be cancelled</extraco
 ----------
 Remorse popup message telling the user video download will be removed</extracomment>
         <translation>Removing download</translation>
+    </message>
+    <message id="ytplayer-action-cache-settings">
+        <source>Cache</source>
+        <extracomment>Label for menu option showing cache settings page</extracomment>
+        <translation>Cache</translation>
+    </message>
+    <message id="ytplayer-action-download-settings">
+        <source>Download</source>
+        <extracomment>Label for menu option showing video download settings page</extracomment>
+        <translation>Download</translation>
+    </message>
+    <message id="ytplayer-action-show-logs">
+        <source>Logs</source>
+        <extracomment>Label for menu option showing application logs</extracomment>
+        <translation>Logs</translation>
+    </message>
+    <message id="ytplayer-label-account-integration">
+        <source>YouTube account integration</source>
+        <extracomment>Label of switch activating/deactivating YouTube account integration</extracomment>
+        <translation>YouTube account integration</translation>
+    </message>
+    <message id="ytplayer-description-account-integration">
+        <source>Allow YTPlayer to manage YouTube user account.</source>
+        <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
+        <translation>Allow YTPlayer to manager YouTube user account.</translation>
     </message>
 </context>
 </TS>
