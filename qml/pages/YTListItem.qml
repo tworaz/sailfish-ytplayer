@@ -29,6 +29,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "duration.js" as DJS
 import "../common"
 
 ListItem {
@@ -37,6 +38,7 @@ ListItem {
     property variant youtubeId
     property alias title: itemLabel.text
     property variant thumbnails
+    property string duration: ""
 
     AsyncImage {
         id: thumbnail
@@ -49,6 +51,26 @@ ListItem {
         }
         source: thumbnails.default.url
         indicatorSize: BusyIndicatorSize.Small
+
+        Rectangle {
+            anchors.bottom: parent.bottom
+            anchors.right: parent.right
+            visible: (ytItem.duration.length > 0) &&
+                     parent.status === Image.Ready
+            color: "black"
+            height: childrenRect.height
+            width: childrenRect.width + 2 * Theme.paddingSmall
+
+            Label {
+                x: Theme.paddingSmall
+                text: ytItem.duration.length > 0 ?
+                          (new DJS.Duration(ytItem.duration)).asClock() :
+                          ""
+                color: Theme.primaryColor
+                font.pixelSize: Theme.fontSizeExtraSmall * 0.8
+                horizontalAlignment: Text.AlignHCenter
+            }
+        }
     }
 
     Label {

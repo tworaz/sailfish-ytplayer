@@ -115,13 +115,13 @@ Page {
         } else if (state === "LIKES") {
             request.resource = "videos"
             params = {
-                "part"     : "snippet",
+                "part"     : "snippet,contentDetails",
                 "myRating" : "like"
             }
         } else if (state === "DISLIKES") {
             request.resource = "videos"
             params = {
-                "part"     : "snippet",
+                "part"     : "snippet,contentDetails",
                 "myRating" : "dislike"
             }
         } else if (state === "RECOMMENDED") {
@@ -218,6 +218,12 @@ Page {
                               JSON.stringify(listModel.get(index), undefined, 2))
                     return undefined
                 }
+            }
+            duration: {
+                if (typeof contentDetails !== 'undefined' &&
+                    contentDetails.hasOwnProperty("duration"))
+                    return contentDetails.duration
+                return ""
             }
         }
 

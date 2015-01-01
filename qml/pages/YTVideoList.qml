@@ -80,6 +80,12 @@ SilicaListView {
             }
             return y;
         }
+        duration: {
+            if (typeof contentDetails !== 'undefined' &&
+                contentDetails.hasOwnProperty("duration"))
+                return contentDetails.duration
+            return ""
+        }
     }
 
     YTRequest {
@@ -88,6 +94,7 @@ SilicaListView {
         model: videoListModel
 
         onSuccess: {
+            //Log.debug("Response: " + JSON.stringify(response, undefined, 2))
             console.assert(response.kind === "youtube#playlistItemListResponse" ||
                            response.kind === "youtube#videoListResponse")
             if (response.nextPageToken !== undefined) {
@@ -110,7 +117,7 @@ SilicaListView {
         if (videoResourceId.kind === "youtube#videoCategory") {
             request.resource = "videos"
             params = {
-                "part"            : "snippet",
+                "part"            : "snippet,contentDetails",
                 "chart"           : "mostPopular",
                 "videoCategoryId" : videoResourceId.id,
             }
@@ -121,7 +128,7 @@ SilicaListView {
                 "playlistId" : videoResourceId.id,
             }
         } else {
-            Log.error("Unrecognized video listing types: " + videoResourceId.kind)
+            Log.error("Unrecognized video listing type: " + videoResourceId.kind)
             return
         }
 
