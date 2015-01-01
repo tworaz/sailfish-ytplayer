@@ -47,6 +47,7 @@ OTHER_FILES += \
         rpm/harbour-ytplayer.yaml \
         rpm/harbour-ytplayer.spec \
         qml/YTPlayer.qml \
+        qml/common/HeaderButton.qml \
         qml/common/KeyValueLabel.qml \
         qml/common/AsyncImage.qml \
         qml/common/SettingsButton.qml \
@@ -80,7 +81,6 @@ OTHER_FILES += \
         qml/pages/MainMenuItem.qml \
         qml/pages/LicenseViewer.qml \
         qml/pages/ThirdPartySoftware.qml \
-        qml/pages/HeaderButton.qml \
         qml/pages/DownloadedVideos.qml \
         qml/pages/DownloadSettings.qml \
         qml/pages/CacheSettings.qml
