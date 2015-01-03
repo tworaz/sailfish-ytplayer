@@ -109,7 +109,7 @@ Page {
         id: topDockPanel
         dock: Dock.Top
         width: parent.width
-        height: Theme.itemSizeMedium + Theme.paddingMedium
+        height: header.height
         z: videoOutput.z + 1
 
         Rectangle {
