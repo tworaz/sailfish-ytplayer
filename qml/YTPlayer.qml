@@ -43,7 +43,9 @@ ApplicationWindow
     readonly property color kBlackTransparentBg: "#AA000000"
 
     initialPage: Component { MainMenu { } }
-    cover: Qt.resolvedUrl("cover/Default.qml")
+    cover: networkManager.online ?
+               Qt.resolvedUrl("cover/Default.qml") :
+               Qt.resolvedUrl("cover/NetworkOffline.qml")
     property variant coverData
     property variant defaultCoverData
 
@@ -52,7 +54,12 @@ ApplicationWindow
     }
 
     function requestCoverPage(coverFile, props) {
-        var coverUrl = Qt.resolvedUrl("cover/" + coverFile)
+        var coverUrl = undefined
+        if (networkManager.online)
+            coverUrl = Qt.resolvedUrl("cover/" + coverFile)
+        else
+            coverUrl = Qt.resolvedUrl("cover/NetworkOffline.qml")
+
         if (coverUrl !== cover) {
             Log.info("Changing cover to: " + coverFile)
             cover = coverUrl

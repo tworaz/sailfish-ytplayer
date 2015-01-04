@@ -29,6 +29,7 @@
 
 #include "YTRequest.h"
 
+#include <QNetworkConfigurationManager>
 #include <QNetworkAccessManager>
 #include <QScopedPointer>
 #include <QJsonDocument>
@@ -146,13 +147,13 @@ YTRequest::~YTRequest()
     if (_reply) {
         if (!_reply->isFinished())
             _reply->abort();
-        delete _reply;
+        _reply->deleteLater();
         _reply = NULL;
     }
     if (_token_reply) {
         if (!_token_reply->isFinished())
             _token_reply->abort();
-        delete _token_reply;
+        _reply->deleteLater();
         _token_reply = NULL;
     }
 }
@@ -253,13 +254,29 @@ YTRequest::onFinished()
         break;
     case QNetworkReply::UnknownNetworkError:
         // Unknown error is often reported when the request is made
-        // just after switching from cellilar to mobile connection or
+        // just after switching from celluar to mobile connection or
         // the other way around. The error string just states
         // "Connection Timed Out"
     case QNetworkReply::NetworkSessionFailedError:
     case QNetworkReply::TimeoutError:
+        if (_network_access_manager->networkAccessible() ==
+                QNetworkAccessManager::NotAccessible) {
+            qDebug() << "Network not accessible, trying to change that";
+            QScopedPointer<QNetworkConfigurationManager> ncm(
+                        new QNetworkConfigurationManager());
+            QNetworkConfiguration config = ncm->defaultConfiguration();
+            if (config.isValid() && config.state() == QNetworkConfiguration::Active) {
+                qDebug() << "Default config" << config.name()
+                         << "is valid and active, using it";
+                _network_access_manager->setConfiguration(config);
+            } else {
+                qDebug() << "No active network config found, offline mode";
+                break;
+            }
+        }
+
         if (_retryCount++ < kMaxRetryCount) {
-            qDebug() << "Connection timed out, retrying ("
+            qDebug() << "Request failed, retrying ("
                      << _retryCount << "of" << kMaxRetryCount << ")"
                      << ", error:" << _reply->errorString();
             QMetaObject::invokeMethod(this, "run", Qt::QueuedConnection);

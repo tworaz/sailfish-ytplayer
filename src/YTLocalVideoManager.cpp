@@ -583,8 +583,10 @@ void
 YTLocalVideoManager::onOnlineChanged(bool online)
 {
     if (online) {
-        qDebug() << "Network online, resuming queued downloads";
-        processQueuedDownloads();
+        if (!_queuedDownloads.isEmpty()) {
+            qDebug() << "Network online, resuming queued downloads";
+            processQueuedDownloads();
+        }
     } else if (!_inProgressDownloads.empty()) {
         qDebug() << "Network offline, stopping in progress downloads";
         stopInProgressDownloads();
@@ -602,7 +604,7 @@ YTLocalVideoManager::onCellularChanged(bool cellular)
 
     if ((cellular && ct == kWiFiOnly) || (!cellular && ct == kCellularOnly)) {
         stopInProgressDownloads();
-    } else {
+    } else if (!_queuedDownloads.isEmpty()){
         processQueuedDownloads();
     }
 }

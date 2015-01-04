@@ -73,7 +73,10 @@ YTNetworkManager::YTNetworkManager(QObject *parent)
 
     QList<QNetworkConfiguration> configs =
         _manager->allConfigurations(QNetworkConfiguration::Active);
-    onConfigurationChanged(configs.first());
+    if (!configs.isEmpty())
+        onConfigurationChanged(configs.first());
+    else
+        _online = false;
 }
 
 YTNetworkManager::~YTNetworkManager()
