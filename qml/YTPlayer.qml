@@ -68,9 +68,8 @@ ApplicationWindow
     }
 
     function showSearchPage() {
-        if (pageStack.depth === 1) {
+        if (pageStack.depth === 1)
             pageStack.push(Qt.resolvedUrl("pages/Search.qml"))
-        }
 
         var menu = pageStack.find(function(page){
             if (page.objectName === "MainMenu")
