@@ -42,7 +42,7 @@ Page {
             PropertyChanges {
                 target: priv
                 //: YouTube subscribed channels page title
-                //% "Subscribed Channels"
+                //% "Subscribed channels"
                 title: qsTrId("ytplayer-title-subscribed-channels")
             }
         },
@@ -51,7 +51,7 @@ Page {
             PropertyChanges {
                 target: priv
                 //: YouTube latest subscribed videos page title
-                //% "Latest Videos"
+                //% "Latest videos"
                 title: qsTrId("ytplayer-title-subscription-videos")
             }
         },

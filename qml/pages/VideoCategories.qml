@@ -70,7 +70,7 @@ Page {
 
         header: PageHeader {
             //: Video categories page title
-            //% "Video Categories"
+            //% "Video categories"
             title: qsTrId("ytplayer-title-video-categories")
         }
 

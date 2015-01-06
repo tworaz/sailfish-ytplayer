@@ -44,7 +44,7 @@ Page {
         anchors.fill: parent
 
         header: PageHeader {
-            //% "Log Viewer"
+            //% "Log viewer"
             title: qsTrId("ytplayer-title-log-viewer")
         }
 

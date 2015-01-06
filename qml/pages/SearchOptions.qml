@@ -94,7 +94,7 @@ Page {
 
             PageHeader {
                 //: Search options page title
-                //% "Search Options"
+                //% "Search options"
                 title: qsTrId("ytplayer-title-search-options")
             }
 

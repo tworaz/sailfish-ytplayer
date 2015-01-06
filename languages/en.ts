@@ -4,9 +4,9 @@
 <context>
     <name></name>
     <message id="ytplayer-title-video-categories">
-        <source>Video Categories</source>
+        <source>Video categories</source>
         <extracomment>Video categories page title</extracomment>
-        <translation>Video Categories</translation>
+        <translation>Video categories</translation>
     </message>
     <message id="ytplayer-label-search">
         <source>Search</source>
@@ -148,9 +148,9 @@
         <translation>Subscribe</translation>
     </message>
     <message id="ytplayer-action-video-categories">
-        <source>Video Categories</source>
+        <source>Video categories</source>
         <extracomment>Menu option to show video categories page</extracomment>
-        <translation>Video Categories</translation>
+        <translation>Video categories</translation>
     </message>
     <message id="ytplayer-search-no-results">
         <source>No results</source>
@@ -158,8 +158,8 @@
         <translation>No results</translation>
     </message>
     <message id="ytplayer-title-log-viewer">
-        <source>Log Viewer</source>
-        <translation>YTPlayer Logs</translation>
+        <source>Log viewer</source>
+        <translation>Log viewer</translation>
     </message>
     <message id="ytplayer-label-network-offline">
         <source>Network Offline</source>
@@ -216,14 +216,14 @@ Label for menu option allowing the user to change video quality</extracomment>
         <translation>Recommended for you</translation>
     </message>
     <message id="ytplayer-title-subscribed-channels">
-        <source>Subscribed Channels</source>
+        <source>Subscribed channels</source>
         <extracomment>YouTube subscribed channels page title</extracomment>
-        <translation>Subscribed Channels</translation>
+        <translation>Subscribed channels</translation>
     </message>
     <message id="ytplayer-title-subscription-videos">
-        <source>Latest Videos</source>
+        <source>Latest videos</source>
         <extracomment>YouTube latest subscribed videos page title</extracomment>
-        <translation>Latest Videos</translation>
+        <translation>Latest videos</translation>
     </message>
     <message id="ytplayer-action-latest-subscribed-videos">
         <source>Latest videos</source>
@@ -295,9 +295,9 @@ Button for showing license viewer page</extracomment>
         <translation>Signing in</translation>
     </message>
     <message id="ytplayer-title-search-options">
-        <source>Search Options</source>
+        <source>Search options</source>
         <extracomment>Search options page title</extracomment>
-        <translation>Search Options</translation>
+        <translation>Search options</translation>
     </message>
     <message id="ytplayer-label-advanced">
         <source>Advanced</source>

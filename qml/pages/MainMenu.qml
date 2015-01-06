@@ -76,7 +76,7 @@ Page {
             MainMenuItem {
                 id: videoCategories
                 //: Menu option to show video categories page
-                //% "Video Categories"
+                //% "Video categories"
                 text: qsTrId("ytplayer-action-video-categories")
                 icon: "qrc:///icons/video-multi-m.png"
                 onClicked: pageStack.push(Qt.resolvedUrl("VideoCategories.qml"))
