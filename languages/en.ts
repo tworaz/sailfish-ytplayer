@@ -691,5 +691,20 @@ Remorse popup message telling the user video download will be removed</extracomm
         <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
         <translation>Allow YTPlayer to manager YouTube user account.</translation>
     </message>
+    <message id="ytplayer-msg-channel-subscribed">
+        <source>Channel subscribed</source>
+        <extracomment>Notification summary telling the user channel was succesfully subscribed</extracomment>
+        <translation>Channel subscribed</translation>
+    </message>
+    <message id="ytplayer-msg-unsubscribing-channel">
+        <source>Unsubscribing channel</source>
+        <extracomment>Remorse popup message telling the user channel is about to be unsubscribed</extracomment>
+        <translation>Unsiscribing channel</translation>
+    </message>
+    <message id="ytplayer-msg-channel-unsubscribed">
+        <source>Channel unsubscribed</source>
+        <extracomment>Notification summary telling the user channel was succesfully unsubscribed</extracomment>
+        <translation>Channel unsubscribed</translation>
+    </message>
 </context>
 </TS>

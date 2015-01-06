@@ -30,6 +30,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer 1.0
+import harbour.ytplayer.notifications 1.0
 import "../common"
 
 Page {
@@ -89,12 +90,21 @@ Page {
         }
     }
 
+    RemorsePopup {
+        id: remorse
+    }
+
+    Notification {
+        id: subscriptionNotification
+        previewBody: page.title
+    }
+
     YTRequest {
         id: subscriptionRequest
         resource: "subscriptions"
 
         onSuccess: {
-            switch(method) {
+            switch (method) {
             case YTRequest.List:
                 priv.channelSubscribed = response.items.length > 0 ? true : false
                 if (priv.channelSubscribed) {
@@ -110,11 +120,19 @@ Page {
                 Log.info("Channel subscribed successfully: " + response.id)
                 priv.channelSubscribed = true
                 priv.subscriptionId = response.id
+                //: Notification summary telling the user channel was succesfully subscribed
+                //% "Channel subscribed"
+                subscriptionNotification.previewSummary = qsTrId("ytplayer-msg-channel-subscribed")
+                subscriptionNotification.publish()
                 break
             case YTRequest.Delete:
                 Log.info("Channel unsubscribed successfully")
                 priv.channelSubscribed = false
                 priv.subscriptionId = ""
+                //: Notification summary telling the user channel was succesfully unsubscribed
+                //% "Channel unsubscribed"
+                subscriptionNotification.previewSummary = qsTrId("ytplayer-msg-channel-unsubscribed")
+                subscriptionNotification.publish()
                 break
             default:
                 Log.error("Unrecognized method type: " + method)
@@ -184,7 +202,17 @@ Page {
                           //% "Subscribe"
                           qsTrId("ytplayer-channel-subscribe")
 
-                onClicked: channelVideoList.changeChanelSubscription(!priv.channelSubscribed)
+                onClicked: {
+                    if (priv.channelSubscribed) {
+                        //: Remorse popup message telling the user channel is about to be unsubscribed
+                        //% "Unsubscribing channel"
+                        remorse.execute(qsTrId("ytplayer-msg-unsubscribing-channel"), function() {
+                            channelVideoList.changeChanelSubscription(false)
+                        })
+                    } else {
+                        channelVideoList.changeChanelSubscription(true)
+                    }
+                }
             }
         }
 
