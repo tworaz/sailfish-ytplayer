@@ -261,8 +261,10 @@ Page {
                 width: parent.width
                 fillMode: Image.PreserveAspectFit
                 height: status === Image.Ready ?
-                            sourceSize.height * width / sourceSize.width :
-                            150
+                            priv.currentPosterUrl ?
+                                sourceSize.height * width / sourceSize.width :
+                                sourceSize.height :
+                            154
                 indicatorSize: BusyIndicatorSize.Medium
                 source: priv.currentPosterUrl
                 cache: false
