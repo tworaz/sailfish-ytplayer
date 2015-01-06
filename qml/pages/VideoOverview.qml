@@ -293,8 +293,7 @@ Page {
                 //% "Browser channel"
                 text: qsTrId("ytplayer-label-browse-channel")
                 onClicked: {
-                    pageStack.replaceAbove(pageStack.previousPage(),
-                        Qt.resolvedUrl("ChannelBrowser.qml"),
+                    pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),
                         priv.channelBrowserData)
                 }
             }
