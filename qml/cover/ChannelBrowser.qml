@@ -56,13 +56,13 @@ CoverBackground {
             id: imageGrid
             anchors.top: banner.bottom
             width: parent.width
-            columns: 2
+            columns: priv.thumbnails.length >= kMaxCoverThumbnailCount ? 2 : 1
             Repeater {
                 id: thumbRepeater
                 model: priv.thumbnails.length
                 Image {
                     source: priv.thumbnails[index].default.url
-                    width: parent.width / 2
+                    width: parent.width / imageGrid.columns
                     fillMode: Image.PreserveAspectCrop
                     height: width * thumbnailAspectRatio
                 }
