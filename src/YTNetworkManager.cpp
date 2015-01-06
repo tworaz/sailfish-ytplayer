@@ -89,7 +89,7 @@ YTNetworkManager::tryConnect() const
 {
     qDebug() << "Trying to connect to internet";
     QNetworkRequest request(kTryConnectUrl);
-    GetNetworkAccessManager()->get(request);
+    GetYTApiNetworkAccessManager()->get(request);
 }
 
 void

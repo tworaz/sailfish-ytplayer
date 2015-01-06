@@ -34,7 +34,7 @@
 #include <QNetworkAccessManager>
 #include <QNetworkDiskCache>
 
-QSharedPointer<QNetworkAccessManager> GetNetworkAccessManager();
+QNetworkAccessManager* GetYTApiNetworkAccessManager();
 QNetworkDiskCache* GetImageDiskCache();
 QNetworkDiskCache* GetAPIResponseDiskCache();
 

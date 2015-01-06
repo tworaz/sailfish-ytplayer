@@ -57,7 +57,7 @@ class YTRequest : public QObject
     Q_PROPERTY(YTListModel* model READ model WRITE setModel)
 
 public:
-    explicit YTRequest(QObject *parent = 0);
+    explicit YTRequest(QObject *parent = 0, QNetworkAccessManager *nam = 0);
     ~YTRequest();
 
     enum Method {
@@ -105,7 +105,7 @@ private:
 
     QNetworkReply *_reply;
     QNetworkReply *_token_reply;
-    QSharedPointer<QNetworkAccessManager> _network_access_manager;
+    QNetworkAccessManager& _network_access_manager;
     QString _resource;
     Method _method;
     QVariantMap _params;

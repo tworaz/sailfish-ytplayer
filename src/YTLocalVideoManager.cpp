@@ -367,7 +367,7 @@ private:
     {
         Q_ASSERT(!_videoUrl.isValid());
 
-        _streamRequest = new YTRequest(this);
+        _streamRequest = new YTRequest(this, &_networkAccessManager);
         _streamRequest->setResource("video/url");
         _streamRequest->setMethod(YTRequest::List);
         QVariantMap params;
@@ -386,7 +386,7 @@ private:
     {
         Q_ASSERT(!_thumbnailUrl.isValid());
 
-        _snippetRequest = new YTRequest(this);
+        _snippetRequest = new YTRequest(this, &_networkAccessManager);
         _snippetRequest->setResource("videos");
         _snippetRequest->setMethod(YTRequest::List);
         QVariantMap params;

@@ -86,8 +86,8 @@ GetBackgroundTaskThread()
 }
 } // namespace
 
-QSharedPointer<QNetworkAccessManager>
-GetNetworkAccessManager()
+QNetworkAccessManager*
+GetYTApiNetworkAccessManager()
 {
     static QSharedPointer<QNetworkAccessManager> instance;
     if (instance.isNull()) {
@@ -95,7 +95,7 @@ GetNetworkAccessManager()
         instance.reset(new QNetworkAccessManager);
         instance->setCache(GetAPIResponseDiskCache());
     }
-    return instance;
+    return instance.data();
 }
 
 QNetworkDiskCache*

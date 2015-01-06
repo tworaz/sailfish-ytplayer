@@ -131,15 +131,16 @@ youtubeVideoInfoUrl(QVariantMap params)
     return url;
 }
 
-YTRequest::YTRequest(QObject *parent)
+YTRequest::YTRequest(QObject *parent, QNetworkAccessManager* nam)
     : QObject(parent)
     , _reply(NULL)
     , _token_reply(NULL)
-    , _network_access_manager(GetNetworkAccessManager())
+    , _network_access_manager(nam ? *nam : *GetYTApiNetworkAccessManager())
     , _loaded(false)
     , _model(NULL)
     , _retryCount(0)
 {
+    Q_ASSERT(thread() == _network_access_manager.thread());
 }
 
 YTRequest::~YTRequest()
@@ -185,7 +186,7 @@ YTRequest::run()
 
     switch (_method) {
     case List:
-        _reply = _network_access_manager->get(request);
+        _reply = _network_access_manager.get(request);
         break;
     case Post:
     {
@@ -199,11 +200,11 @@ YTRequest::run()
             request.setHeader(QNetworkRequest::ContentTypeHeader, "text/plain");
             request.setHeader(QNetworkRequest::ContentLengthHeader, 0);
         }
-        _reply = _network_access_manager->post(request, data);
+        _reply = _network_access_manager.post(request, data);
         break;
     }
     case Delete:
-        _reply = _network_access_manager->deleteResource(request);
+        _reply = _network_access_manager.deleteResource(request);
         break;
     default:
         qCritical() << "Unhandled method type: " << methodToString(_method);
@@ -259,7 +260,7 @@ YTRequest::onFinished()
         // "Connection Timed Out"
     case QNetworkReply::NetworkSessionFailedError:
     case QNetworkReply::TimeoutError:
-        if (_network_access_manager->networkAccessible() ==
+        if (_network_access_manager.networkAccessible() ==
                 QNetworkAccessManager::NotAccessible) {
             qDebug() << "Network not accessible, trying to change that";
             QScopedPointer<QNetworkConfigurationManager> ncm(
@@ -268,7 +269,7 @@ YTRequest::onFinished()
             if (config.isValid() && config.state() == QNetworkConfiguration::Active) {
                 qDebug() << "Default config" << config.name()
                          << "is valid and active, using it";
-                _network_access_manager->setConfiguration(config);
+                _network_access_manager.setConfiguration(config);
             } else {
                 qDebug() << "No active network config found, offline mode";
                 break;
@@ -467,7 +468,7 @@ YTRequest::requestToken()
         delete _token_reply;
     }
 
-    _token_reply = _network_access_manager->post(request, data);
+    _token_reply = _network_access_manager.post(request, data);
     connect(_token_reply, SIGNAL(finished()), this, SLOT(onTokenRequestFinished()));
 }
 
@@ -494,7 +495,7 @@ YTRequest::refreshToken()
         delete _token_reply;
     }
 
-    _token_reply =  _network_access_manager->post(request, data);
+    _token_reply = _network_access_manager.post(request, data);
     connect(_token_reply, SIGNAL(finished()), this, SLOT(onTokenRequestFinished()));
 }
 
