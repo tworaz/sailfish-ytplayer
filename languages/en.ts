@@ -633,24 +633,24 @@ Label for channel name text field</extracomment>
         <translation>Download video</translation>
     </message>
     <message id="ytplayer-action-cancel-download">
-        <source>Cancel video download</source>
+        <source>Cancel download</source>
         <extracomment>Label for menu option canceling pending/in progress video preload</extracomment>
-        <translation>Cancel video download</translation>
+        <translation>Cancel download</translation>
     </message>
     <message id="ytplayer-action-pause-download">
-        <source>Pause video download</source>
+        <source>Pause download</source>
         <extracomment>&quot;Label for menu option allowing the user to pause video download&quot;</extracomment>
-        <translation>Pause video download</translation>
+        <translation>Pause download</translation>
     </message>
     <message id="ytplayer-action-resume-download">
-        <source>Resume video download</source>
+        <source>Resume download</source>
         <extracomment>&quot;Label for menu option allowing the user to resume video download&quot;</extracomment>
-        <translation>Resume video download</translation>
+        <translation>Resume download</translation>
     </message>
     <message id="ytplayer-action-remove-download">
-        <source>Remove video download</source>
+        <source>Remove download</source>
         <extracomment>Label for menu option allowing the user to remove downloaded video</extracomment>
-        <translation>Remove video download</translation>
+        <translation>Remove download</translation>
     </message>
     <message id="ytplayer-msg-cancelling-download">
         <source>Cancelling download</source>

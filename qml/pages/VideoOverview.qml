@@ -243,7 +243,7 @@ Page {
                 visible: localVideo.status !== YTLocalVideo.Initial &&
                          localVideo.status !== YTLocalVideo.Downloaded
                 //: Label for menu option canceling pending/in progress video preload
-                //% "Cancel video download"
+                //% "Cancel download"
                 text: qsTrId("ytplayer-action-cancel-download")
                 onClicked: {
                     //: Remorse popup message telling the user video download will be cancelled
@@ -256,21 +256,21 @@ Page {
             MenuItem {
                 visible: localVideo.status === YTLocalVideo.Loading
                 //: "Label for menu option allowing the user to pause video download"
-                //% "Pause video download"
+                //% "Pause download"
                 text: qsTrId("ytplayer-action-pause-download")
                 onClicked: localVideo.pause()
             }
             MenuItem {
                 visible: localVideo.status === YTLocalVideo.Paused
                 //: "Label for menu option allowing the user to resume video download"
-                //% "Resume video download"
+                //% "Resume download"
                 text: qsTrId("ytplayer-action-resume-download")
                 onClicked: localVideo.resume()
             }
             MenuItem {
                 visible: localVideo.status === YTLocalVideo.Downloaded
                 //: Label for menu option allowing the user to remove downloaded video
-                //% "Remove video download"
+                //% "Remove download"
                 text: qsTrId("ytplayer-action-remove-download")
                 onClicked: {
                     //: Remorse popup message telling the user video download will be removed
@@ -350,7 +350,7 @@ Page {
                         height: childrenRect.height
                         property bool enabled: localVideo.status !== YTLocalVideo.Initial
                         opacity: enabled ? 1.0 : 0.0
-                        visible: opacity !== 0.0
+                        visible: opacity !== 0.0 && parent.visible
                         color: "#AA000000"
                         Behavior on opacity {
                             NumberAnimation {
