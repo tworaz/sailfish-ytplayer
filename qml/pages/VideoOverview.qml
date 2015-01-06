@@ -106,6 +106,14 @@ Page {
                     priv.streamResponse = undefined
                 }
             }
+
+            if (page.thumbnails.hasOwnProperty("default")) {
+                requestCoverPage("VideoOverview.qml", {
+                    "thumbnails" : page.thumbnails,
+                    "videoId"    : page.videoId,
+                    "title"      : page.title
+                })
+            }
         }
     }
 
