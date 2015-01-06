@@ -39,8 +39,6 @@
 #include <QUrl>
 #include <QMap>
 
-#include "YTNetworkManager.h"
-
 class QNetworkAccessManager;
 class YTLocalVideoData;
 class YTDownloadInfo;
@@ -85,8 +83,6 @@ private:
 
     typedef QList<YTDownloadInfo*> YTDownloadInfoList;
     typedef QMap<QString, QWeakPointer<YTLocalVideoData> > YTManagedVideosMap;
-
-    QScopedPointer<YTNetworkManager> _networkManager;
 
     QMutex _managedVideosMutex;
     YTDownloadInfoList _queuedDownloads;

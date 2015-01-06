@@ -177,7 +177,6 @@ main(int argc, char *argv[])
     qmlRegisterType<YTRequest>("harbour.ytplayer", 1, 0, "YTRequest");
     qmlRegisterType<YTListModel>("harbour.ytplayer", 1, 0, "YTListModel");
     qmlRegisterType<YTListModelFilter>("harbour.ytplayer", 1, 0, "YTListModelFilter");
-    qmlRegisterType<YTNetworkManager>("harbour.ytplayer", 1, 0, "YTNetworkManager");
     qmlRegisterType<Logger>("harbour.ytplayer", 1, 0, "LogModel");
     qmlRegisterType<YTLocalVideo>("harbour.ytplayer", 1, 0, "YTLocalVideo");
     qmlRegisterType<YTLocalVideoListModel>("harbour.ytplayer", 1, 0, "YTLocalVideoListModel");
@@ -186,6 +185,7 @@ main(int argc, char *argv[])
     view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
     view->rootContext()->setContextProperty("Log", logger.data());
     view->rootContext()->setContextProperty("Prefs", prefs.data());
+    view->rootContext()->setContextProperty("gNetworkManager", &YTNetworkManager::instance());
 
     view->setSource(SailfishApp::pathTo("qml/YTPlayer.qml"));
     view->engine()->setNetworkAccessManagerFactory(new YTPNetworkAccessManagerFactory());

@@ -50,8 +50,7 @@ class YTNetworkManager : public QObject
                WRITE setApiResponseCacheMaxSize)
 
 public:
-    explicit YTNetworkManager(QObject *parent = 0);
-    ~YTNetworkManager();
+    static YTNetworkManager& instance();
 
     Q_INVOKABLE void tryConnect() const;
     Q_INVOKABLE void clearCache();
@@ -60,8 +59,8 @@ public:
     bool cellular() const { return _cellular; }
 
 signals:
-    void onlineChanged(bool);
-    void cellularChanged(bool);
+    void onlineChanged(bool online);
+    void cellularChanged(bool cellular);
     void imageCacheUsageChanged();
     void apiResponseCacheUsageChanged();
 
@@ -70,6 +69,9 @@ protected slots:
     void onConfigurationChanged(const QNetworkConfiguration&);
 
 private:
+    explicit YTNetworkManager(QObject *parent = 0);
+    ~YTNetworkManager();
+
     // Values returned in kB
     qint64 imageCacheUsage() const;
     qint64 apiResponseCacheUsage() const;

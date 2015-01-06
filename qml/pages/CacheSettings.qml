@@ -51,7 +51,7 @@ Page {
                 text: qsTrId("ytplayer-label-clear-cache")
                 onClicked: {
                     remorse.execute("Clearing cache", function() {
-                        networkManager.clearCache()
+                        gNetworkManager.clearCache()
                     })
                 }
             }
@@ -80,10 +80,10 @@ Page {
                 stepSize: 1
                 valueText: value + " MB"
                 Component.onCompleted: {
-                    value = networkManager.imageCacheMaxSize
+                    value = gNetworkManager.imageCacheMaxSize
                 }
                 onReleased: {
-                    networkManager.imageCacheMaxSize = value
+                    gNetworkManager.imageCacheMaxSize = value
                 }
             }
             KeyValueLabel {
@@ -91,7 +91,7 @@ Page {
                 //% "Current usage"
                 key: qsTrId("ytplayer-label-current-usage")
                 width: parent.width
-                value: networkManager.imageCacheUsage + " kB"
+                value: gNetworkManager.imageCacheUsage + " kB"
                 font.pixelSize: Theme.fontSizeExtraSmall
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -105,10 +105,10 @@ Page {
                 stepSize: 1
                 valueText: value + " MB"
                 Component.onCompleted: {
-                    value = networkManager.apiResponseCacheMaxSize
+                    value = gNetworkManager.apiResponseCacheMaxSize
                 }
                 onReleased: {
-                    networkManager.apiResponseCacheMaxSize = value
+                    gNetworkManager.apiResponseCacheMaxSize = value
                 }
             }
             KeyValueLabel {
@@ -116,7 +116,7 @@ Page {
                 //% "Current usage"
                 key: qsTrId("ytplayer-label-current-usage")
                 width: parent.width
-                value: networkManager.apiResponseCacheUsage + " kB"
+                value: gNetworkManager.apiResponseCacheUsage + " kB"
                 font.pixelSize: Theme.fontSizeExtraSmall
                 horizontalAlignment: Text.AlignHCenter
             }

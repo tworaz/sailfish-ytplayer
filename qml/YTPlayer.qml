@@ -43,7 +43,7 @@ ApplicationWindow
     readonly property color kBlackTransparentBg: "#AA000000"
 
     initialPage: Component { MainMenu { } }
-    cover: networkManager.online ?
+    cover: gNetworkManager.online ?
                Qt.resolvedUrl("cover/Default.qml") :
                Qt.resolvedUrl("cover/NetworkOffline.qml")
     property variant coverData
@@ -55,7 +55,7 @@ ApplicationWindow
 
     function requestCoverPage(coverFile, props) {
         var coverUrl = undefined
-        if (networkManager.online)
+        if (gNetworkManager.online)
             coverUrl = Qt.resolvedUrl("cover/" + coverFile)
         else
             coverUrl = Qt.resolvedUrl("cover/NetworkOffline.qml")
@@ -84,15 +84,14 @@ ApplicationWindow
         repeat: false
         interval: 100
         onTriggered: {
-            if (!networkManager.online) {
-                networkManager.onOnlineChanged(false)
+            if (!gNetworkManager.online) {
+                gNetworkManager.onOnlineChanged(false)
             }
         }
     }
 
-    YTNetworkManager {
-        id: networkManager
-
+    Connections {
+        target: gNetworkManager
         onOnlineChanged: {
             if (online) {
                 pageStack.pop()

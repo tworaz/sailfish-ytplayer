@@ -60,6 +60,13 @@ _isCellular(const QNetworkConfiguration& config)
 
 }
 
+YTNetworkManager&
+YTNetworkManager::instance()
+{
+    static YTNetworkManager instance;
+    return instance;
+}
+
 YTNetworkManager::YTNetworkManager(QObject *parent)
     : QObject(parent)
     , _manager(new QNetworkConfigurationManager(parent))

@@ -94,7 +94,7 @@ Page {
             //: Label of network connection retry button
             //% "Retry"
             text: qsTrId("ytplayer-label-network-connection-retry")
-            onClicked: networkManager.tryConnect()
+            onClicked: gNetworkManager.tryConnect()
         }
     }
 }

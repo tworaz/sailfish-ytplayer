@@ -39,6 +39,7 @@
 #include <QSqlError>
 #include <QDebug>
 
+#include "YTNetworkManager.h"
 #include "YTLocalVideoData.h"
 #include "YTRequest.h"
 #include "YTPlayer.h"
@@ -463,7 +464,6 @@ YTLocalVideoManager::instance()
 
 YTLocalVideoManager::YTLocalVideoManager(QObject *parent)
     : QObject(parent)
-    , _networkManager(new YTNetworkManager(this))
     , _networkAccessManager(new QNetworkAccessManager(this))
     , _queueProcessingScheduled(false)
 {
@@ -478,9 +478,9 @@ YTLocalVideoManager::YTLocalVideoManager(QObject *parent)
             qFatal("Failed to create local_videos database");
     }
 
-    connect(_networkManager.data(), &YTNetworkManager::onlineChanged,
+    connect(&YTNetworkManager::instance(), &YTNetworkManager::onlineChanged,
             this, &YTLocalVideoManager::onOnlineChanged);
-    connect(_networkManager.data(), &YTNetworkManager::cellularChanged,
+    connect(&YTNetworkManager::instance(), &YTNetworkManager::cellularChanged,
             this, &YTLocalVideoManager::onCellularChanged);
 
     qRegisterMetaType<QSharedPointer<YTLocalVideoData> >("QSharedPointer<YTLocalVideoData>");
@@ -625,13 +625,14 @@ YTLocalVideoManager::onProcessQueuedDownloads()
     Q_ASSERT(_queueProcessingScheduled);
     _queueProcessingScheduled = false;
 
-    if (!_networkManager->online())
+    YTNetworkManager& nm = YTNetworkManager::instance();
+
+    if (!nm.online())
         return;
 
     QSettings s;
     QString ct = s.value("Download/ConnectionType").toString();
-    if ((_networkManager->cellular() && ct == kWiFiOnly) ||
-        (!_networkManager->cellular() && ct == kCellularOnly))
+    if ((nm.cellular() && ct == kWiFiOnly) || (!nm.cellular() && ct == kCellularOnly))
         return;
 
     int maxConcurrentDownloads = s.value("Download/MaxConcurrentDownloads").toInt();
