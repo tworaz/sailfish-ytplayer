@@ -456,10 +456,8 @@ findDownloadInfo(QString videoId, QList<YTDownloadInfo*>& list)
 YTLocalVideoManager&
 YTLocalVideoManager::instance()
 {
-    static YTLocalVideoManager* instance = NULL;
-    if (instance == NULL)
-        instance = new YTLocalVideoManager;
-    return *instance;
+    static YTLocalVideoManager instance;
+    return instance;
 }
 
 YTLocalVideoManager::YTLocalVideoManager(QObject *parent)
