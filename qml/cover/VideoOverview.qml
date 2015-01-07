@@ -32,41 +32,41 @@ import Sailfish.Silica 1.0
 import "../common"
 
 CoverBackground {
-    property string videoId
     property alias title: _title.text
     property variant thumbnails
 
     Component.onCompleted: {
-        videoId = coverData.videoId
         title = coverData.title
         thumbnails = coverData.thumbnails
     }
 
-    Column {
+    AsyncImage {
+        id: thumbnail
         anchors.top: parent.top
-        anchors.bottom: actions.top
         width: parent.width
-        spacing: Theme.paddingMedium
-
-        AsyncImage {
-            id: thumbnail
-            width: parent.width
-            height: width * thumbnailAspectRatio
-            fillMode: Image.PreserveAspectCrop
-            source: thumbnails.default.url
+        height: width * thumbnailAspectRatio
+        fillMode: Image.PreserveAspectCrop
+        source: {
+            if (thumbnails.hasOwnProperty("medium"))
+                return thumbnails.medium.url
+            return thumbnails.default.url
         }
+    }
 
-        Label {
-            id: _title
-            width: parent.width
-            color: Theme.primaryColor
-            font.family: Theme.fontFamilyHeading
-            font.pixelSize: Theme.fontSizeMedium
-            maximumLineCount: 3
-            wrapMode: Text.Wrap
-            elide: Text.ElideRight
-            horizontalAlignment: Text.AlignHCenter
-        }
+    Label {
+        id: _title
+        anchors.top: thumbnail.bottom
+        x: Theme.paddingMedium
+        width: parent.width - 2 * Theme.paddingMedium
+        height: parent.height * 2 / 5
+        color: Theme.primaryColor
+        font.family: Theme.fontFamilyHeading
+        font.pixelSize: Theme.fontSizeSmall
+        maximumLineCount: 3
+        wrapMode: Text.Wrap
+        elide: Text.ElideRight
+        horizontalAlignment: Text.AlignHCenter
+        verticalAlignment: Text.AlignVCenter
     }
 
     CoverActionList {
@@ -83,14 +83,10 @@ CoverBackground {
         CoverAction {
             iconSource: "image://theme/icon-cover-play"
             onTriggered: {
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("../pages/VideoPlayer.qml"), {
-                        "thumbnails" : thumbnails,
-                        "videoId"    : videoId,
-                        "title"      : title
-                    })
-                }
                 activate()
+                onClicked: {
+                    pageStack.navigateForward(PageStackAction.Animated)
+                }
             }
         }
     }
