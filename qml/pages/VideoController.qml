@@ -186,9 +186,7 @@ DockedPanel {
             if (keys.length === 1) {
                 Log.debug("Only one video quality available")
                 _mediaPlayer.source = root.streams[keys[0]].url
-                q1080p.visible = false
-                q720p.visible = false
-                q360p.visible = false
+                menu.qualitySelectionEnabled = false
                 return
             }
             menu.qualitySelectionEnabled = true
