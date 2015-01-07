@@ -41,6 +41,7 @@ ApplicationWindow
     readonly property int kMaxCoverThumbnailCount: 12
     readonly property int kThumbnailWidth: 120
     readonly property color kBlackTransparentBg: "#AA000000"
+    readonly property string kYoutubeVideoUrlBase: "https://www.youtube.com/watch?v="
 
     initialPage: Component { MainMenu { } }
     cover: gNetworkManager.online ?

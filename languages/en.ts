@@ -629,27 +629,27 @@ Label for channel name text field</extracomment>
     </message>
     <message id="ytplayer-action-download-video">
         <source>Download video</source>
-        <extracomment>Label for menu option triggering video preload</extracomment>
+        <extracomment>Menu option triggering video preload</extracomment>
         <translation>Download video</translation>
     </message>
     <message id="ytplayer-action-cancel-download">
         <source>Cancel download</source>
-        <extracomment>Label for menu option canceling pending/in progress video preload</extracomment>
+        <extracomment>Menu option canceling pending/in progress video preload</extracomment>
         <translation>Cancel download</translation>
     </message>
     <message id="ytplayer-action-pause-download">
         <source>Pause download</source>
-        <extracomment>&quot;Label for menu option allowing the user to pause video download&quot;</extracomment>
+        <extracomment>Menu option allowing the user to pause video download</extracomment>
         <translation>Pause download</translation>
     </message>
     <message id="ytplayer-action-resume-download">
         <source>Resume download</source>
-        <extracomment>&quot;Label for menu option allowing the user to resume video download&quot;</extracomment>
+        <extracomment>Menu option allowing the user to resume video download</extracomment>
         <translation>Resume download</translation>
     </message>
     <message id="ytplayer-action-remove-download">
         <source>Remove download</source>
-        <extracomment>Label for menu option allowing the user to remove downloaded video</extracomment>
+        <extracomment>Menu option allowing the user to remove downloaded video</extracomment>
         <translation>Remove download</translation>
     </message>
     <message id="ytplayer-msg-cancelling-download">
@@ -705,6 +705,21 @@ Remorse popup message telling the user video download will be removed</extracomm
         <source>Channel unsubscribed</source>
         <extracomment>Notification summary telling the user channel was succesfully unsubscribed</extracomment>
         <translation>Channel unsubscribed</translation>
+    </message>
+    <message id="ytplayer-action-copy-link-to-clipboard">
+        <source>Copy link to clipboard</source>
+        <extracomment>Menu option copying video link to clipboard</extracomment>
+        <translation>Copy link to clipboard</translation>
+    </message>
+    <message id="ytplayer-msg-link-copied">
+        <source>Link copied</source>
+        <extracomment>Notification summary informing the user link was copied to clipboard</extracomment>
+        <translation>Link copied</translation>
+    </message>
+    <message id="ytplayer-action-open-link-from-clipboard">
+        <source>Open link from clipboard</source>
+        <extracomment>Menu opion for opening video links from clipboard</extracomment>
+        <translation>Open link from clipboard</translation>
     </message>
 </context>
 </TS>

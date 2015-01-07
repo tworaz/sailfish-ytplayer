@@ -30,6 +30,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer 1.0
+import harbour.ytplayer.notifications 1.0
 import "duration.js" as DJS
 import "../common"
 
@@ -234,7 +235,7 @@ Page {
         PullDownMenu {
             MenuItem {
                 visible: localVideo.canDownload
-                //: Label for menu option triggering video preload
+                //: Menu option triggering video preload
                 //% "Download video"
                 text: qsTrId("ytplayer-action-download-video")
                 onClicked: localVideo.download()
@@ -242,7 +243,7 @@ Page {
             MenuItem {
                 visible: localVideo.status !== YTLocalVideo.Initial &&
                          localVideo.status !== YTLocalVideo.Downloaded
-                //: Label for menu option canceling pending/in progress video preload
+                //: Menu option canceling pending/in progress video preload
                 //% "Cancel download"
                 text: qsTrId("ytplayer-action-cancel-download")
                 onClicked: {
@@ -255,21 +256,21 @@ Page {
             }
             MenuItem {
                 visible: localVideo.status === YTLocalVideo.Loading
-                //: "Label for menu option allowing the user to pause video download"
+                //: Menu option allowing the user to pause video download
                 //% "Pause download"
                 text: qsTrId("ytplayer-action-pause-download")
                 onClicked: localVideo.pause()
             }
             MenuItem {
                 visible: localVideo.status === YTLocalVideo.Paused
-                //: "Label for menu option allowing the user to resume video download"
+                //: Menu option allowing the user to resume video download
                 //% "Resume download"
                 text: qsTrId("ytplayer-action-resume-download")
                 onClicked: localVideo.resume()
             }
             MenuItem {
                 visible: localVideo.status === YTLocalVideo.Downloaded
-                //: Label for menu option allowing the user to remove downloaded video
+                //: Menu option allowing the user to remove downloaded video
                 //% "Remove download"
                 text: qsTrId("ytplayer-action-remove-download")
                 onClicked: {
@@ -281,11 +282,28 @@ Page {
                 }
             }
             MenuItem {
+                //: Menu option copying video link to clipboard
+                //% "Copy link to clipboard"
+                text: qsTrId("ytplayer-action-copy-link-to-clipboard")
+                onClicked: {
+                    Clipboard.text = kYoutubeVideoUrlBase + videoId
+                    clipboardNotification.publish()
+                }
+                Notification {
+                    id: clipboardNotification
+                    //: Notification summary informing the user link was copied to clipboard
+                    //% "Link copied"
+                    previewSummary: qsTrId("ytplayer-msg-link-copied")
+                    previewBody: Clipboard.text
+                }
+            }
+            MenuItem {
                 //: Label for menu option opening YouTube web page for a video
                 //% "Open in browser"
                 text: qsTrId("ytplayer-label-open-in-browser")
-                onClicked: Qt.openUrlExternally("https://youtube.com/watch?v=" + videoId)
+                onClicked: Qt.openUrlExternally(kYoutubeVideoUrlBase + videoId)
             }
+
             MenuItem {
                 id: channelBrowserMenu
                 visible: false
@@ -333,14 +351,25 @@ Page {
                     width: parent.childWidth
                     height: width * thumbnailAspectRatio
                     indicatorSize: BusyIndicatorSize.Medium
-                    source: {
+
+                    function pickUrl() {
                         if (thumbnails.high) {
-                            return thumbnails.high.url
+                            source = thumbnails.high.url
                         } else if (thumbnails.medium) {
-                            return thumbnails.medium.url
+                            source = thumbnails.medium.url
                         } else {
-                            return thumbnails.default.url
+                            source = thumbnails.default.url
                         }
+                    }
+
+                    Component.onCompleted: {
+                        if (page.thumbnails)
+                            pickUrl();
+                    }
+
+                    Connections {
+                        target: page
+                        onThumbnailsChanged: poster.pickUrl()
                     }
 
                     Rectangle {

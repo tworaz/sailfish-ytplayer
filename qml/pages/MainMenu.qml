@@ -36,6 +36,7 @@ Page {
 
     Component.onCompleted: {
         priv.showAccount = Prefs.isAuthEnabled()
+        checkClipboard()
     }
 
     onStatusChanged: {
@@ -48,12 +49,47 @@ Page {
 
     QtObject {
         id: priv
+        property string clipboardVideoId: ""
         property bool showAccount: false
+    }
+
+    Connections {
+        target: Clipboard
+        onHasTextChanged: checkClipboard()
+    }
+
+    function checkClipboard() {
+        if (!Clipboard.hasText) {
+            priv.clipboardVideoId = ""
+            return
+        }
+        Log.debug("Clipboard has text: " + Clipboard.text)
+        var r = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/ ]{11})/
+        var result = Clipboard.text.match(r);
+        priv.clipboardVideoId = result ? result[1] : ""
+        if (priv.clipboardVideoId.length > 0)
+            Log.info("Clipboard contains a link for video: " + priv.clipboardVideoId)
     }
 
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
+
+        PullDownMenu {
+            visible: priv.clipboardVideoId.length > 0
+            MenuItem {
+                //: Menu opion for opening video links from clipboard
+                //% "Open link from clipboard"
+                text: qsTrId("ytplayer-action-open-link-from-clipboard")
+                onClicked: {
+                    console.assert(priv.clipboardVideoId.length > 0)
+                    Log.info("Opening clipboard link for videoId: " + priv.clipboardVideoId)
+                    pageStack.push(Qt.resolvedUrl("VideoOverview.qml"), {
+                        "videoId" : priv.clipboardVideoId
+                    })
+                }
+            }
+        }
 
         Column {
             id: column
