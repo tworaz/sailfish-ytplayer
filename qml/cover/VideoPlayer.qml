@@ -48,13 +48,17 @@ CoverBackground {
         anchors.top: parent.top
         anchors.bottom: actions.top
         width: parent.width
-        spacing: Theme.paddingSmall
+        spacing: Theme.paddingMedium
 
         AsyncImage {
             width: parent.width
             height: width * thumbnailAspectRatio
             fillMode: Image.PreserveAspectCrop
-            source: thumbnails.default.url
+            source: {
+                if (thumbnails.hasOwnProperty("medium"))
+                    return thumbnails.medium.url
+                return thumbnails.default.url
+            }
         }
 
         Label {
@@ -62,7 +66,7 @@ CoverBackground {
             width: parent.width
             color: Theme.primaryColor
             font.family: Theme.fontFamilyHeading
-            font.pixelSize: Theme.fontSizeMedium
+            font.pixelSize: Theme.fontSizeSmall
             maximumLineCount: 2
             wrapMode: Text.Wrap
             elide: Text.ElideRight
@@ -105,11 +109,9 @@ CoverBackground {
 
         CoverAction {
             iconSource: {
-                if (actions.playing) {
+                if (actions.playing)
                     return "image://theme/icon-cover-pause"
-                } else {
-                    return "image://theme/icon-cover-play"
-                }
+                return "image://theme/icon-cover-play"
             }
             onTriggered: {
                 if (actions.playing) {
