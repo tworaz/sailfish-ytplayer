@@ -47,19 +47,26 @@ OTHER_FILES += \
         rpm/harbour-ytplayer.yaml \
         rpm/harbour-ytplayer.spec \
         qml/YTPlayer.qml \
+        \
+        qml/common/AsyncImage.qml \
         qml/common/HeaderButton.qml \
         qml/common/KeyValueLabel.qml \
-        qml/common/AsyncImage.qml \
+        qml/common/MainMenuItem.qml \
         qml/common/SettingsButton.qml \
         qml/common/StatItem.qml \
+        qml/common/YTLikeButtons.qml \
+        qml/common/YTListItem.qml \
+        qml/common/YTVideoList.qml \
         qml/common/Helpers.js \
+        qml/common/duration.js \
+        \
         qml/cover/Default.qml \
         qml/cover/VideoOverview.qml \
         qml/cover/VideoPlayer.qml \
         qml/cover/ChannelBrowser.qml \
         qml/cover/CategoryVideoList.qml \
         qml/cover/NetworkOffline.qml \
-        qml/pages/duration.js \
+        \
         qml/pages/Account.qml \
         qml/pages/VideoOverview.qml \
         qml/pages/VideoPlayer.qml \
@@ -71,14 +78,10 @@ OTHER_FILES += \
         qml/pages/ChannelBrowser.qml \
         qml/pages/VideoController.qml \
         qml/pages/CategoryVideoList.qml \
-        qml/pages/YTListItem.qml \
-        qml/pages/YTVideoList.qml \
         qml/pages/YTOAuth2.qml \
-        qml/pages/YTLikeButtons.qml \
         qml/pages/LogViewer.qml \
         qml/pages/NetworkOffline.qml \
         qml/pages/MainMenu.qml \
-        qml/pages/MainMenuItem.qml \
         qml/pages/LicenseViewer.qml \
         qml/pages/ThirdPartySoftware.qml \
         qml/pages/DownloadedVideos.qml \

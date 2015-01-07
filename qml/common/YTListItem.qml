@@ -64,8 +64,7 @@ ListItem {
             Label {
                 x: Theme.paddingSmall
                 text: ytItem.duration.length > 0 ?
-                          (new DJS.Duration(ytItem.duration)).asClock() :
-                          ""
+                          (new DJS.Duration(ytItem.duration)).asClock() : ""
                 color: Theme.primaryColor
                 font.pixelSize: Theme.fontSizeExtraSmall * 0.8
                 horizontalAlignment: Text.AlignHCenter
@@ -95,14 +94,14 @@ ListItem {
     onClicked: {
         if (youtubeId.kind === "youtube#video") {
             Log.debug("Selected item is a video, opening video overview page")
-            pageStack.push(Qt.resolvedUrl("VideoOverview.qml"), {
+            pageStack.push(Qt.resolvedUrl("../pages/VideoOverview.qml"), {
                 "videoId"    : youtubeId.videoId,
                 "thumbnails" : ytItem.thumbnails,
                 "title"      : ytItem.title
             })
         } else if (youtubeId.kind === "youtube#channel") {
             Log.debug("Selected item is a channel, opening channel browser ")
-            pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"), {
+            pageStack.push(Qt.resolvedUrl("../pages/ChannelBrowser.qml"), {
                 "channelId"  : youtubeId.channelId,
                 "title"      : ytItem.title
             })

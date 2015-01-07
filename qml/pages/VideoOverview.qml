@@ -31,7 +31,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer 1.0
 import harbour.ytplayer.notifications 1.0
-import "duration.js" as DJS
+import "../common/duration.js" as DJS
 import "../common"
 
 Page {
