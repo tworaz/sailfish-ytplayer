@@ -484,6 +484,8 @@ YTLocalVideoManager::YTLocalVideoManager(QObject *parent)
     qRegisterMetaType<QSharedPointer<YTLocalVideoData> >("QSharedPointer<YTLocalVideoData>");
     qRegisterMetaType<YTLocalVideo::Status>("YTLocalVideo::Status");
 
+    YTNetworkManager::instance().manageSessionFor(_networkAccessManager);
+
     QMetaObject::invokeMethod(this, "onRestoreDownloads", Qt::QueuedConnection);
 }
 

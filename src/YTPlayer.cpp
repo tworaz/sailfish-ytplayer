@@ -93,6 +93,7 @@ GetYTApiNetworkAccessManager()
     if (instance.isNull()) {
         qDebug() << "Creating global QNetworkAccessManager instance";
         instance.reset(new QNetworkAccessManager);
+        YTNetworkManager::instance().manageSessionFor(instance.data());
         instance->setCache(GetAPIResponseDiskCache());
     }
     return instance.data();
@@ -138,6 +139,7 @@ public:
     QNetworkAccessManager *create(QObject *parent)
     {
         QNetworkAccessManager *manager = new QNetworkAccessManager(parent);
+        YTNetworkManager::instance().manageSessionFor(manager);
         manager->setCache(GetImageDiskCache());
         return manager;
     }

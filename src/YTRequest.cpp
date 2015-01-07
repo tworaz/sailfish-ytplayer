@@ -40,9 +40,10 @@
 #include <QLocale>
 #include <QDebug>
 
-#include "config.h"
+#include "YTNetworkManager.h"
 #include "YTPlayer.h"
 #include "NativeUtil.h"
+#include "config.h"
 
 static const QString kYouTubeDataV3Url("https://www.googleapis.com/youtube/v3/");
 static const QString kYouTubeGetVideoInfoUrl("http://www.youtube.com/get_video_info");
@@ -260,22 +261,8 @@ YTRequest::onFinished()
         // "Connection Timed Out"
     case QNetworkReply::NetworkSessionFailedError:
     case QNetworkReply::TimeoutError:
-        if (_network_access_manager.networkAccessible() ==
-                QNetworkAccessManager::NotAccessible) {
-            qDebug() << "Network not accessible, trying to change that";
-            QScopedPointer<QNetworkConfigurationManager> ncm(
-                        new QNetworkConfigurationManager());
-            QNetworkConfiguration config = ncm->defaultConfiguration();
-            if (config.isValid() && config.state() == QNetworkConfiguration::Active) {
-                qDebug() << "Default config" << config.name()
-                         << "is valid and active, using it";
-                _network_access_manager.setConfiguration(config);
-            } else {
-                qDebug() << "No active network config found, offline mode";
-                break;
-            }
-        }
-
+        if (!YTNetworkManager::instance().online())
+            break;
         if (_retryCount++ < kMaxRetryCount) {
             qDebug() << "Request failed, retrying ("
                      << _retryCount << "of" << kMaxRetryCount << ")"

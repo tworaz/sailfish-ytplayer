@@ -31,9 +31,12 @@
 #define YTNETWORKMANAGER_H
 
 #include <QObject>
+#include <QList>
 
 class QNetworkConfigurationManager;
+class QNetworkAccessManager;
 class QNetworkConfiguration;
+class QNetworkSession;
 
 class YTNetworkManager : public QObject
 {
@@ -57,6 +60,7 @@ public:
 
     bool online() const { return _online; }
     bool cellular() const { return _cellular; }
+    void manageSessionFor(QNetworkAccessManager*);
 
 signals:
     void onlineChanged(bool online);
@@ -67,10 +71,16 @@ signals:
 protected slots:
     void onOnlineStateChanged(bool isOnline);
     void onConfigurationChanged(const QNetworkConfiguration&);
+    void onSessionOpened();
+    void onSessionClosed();
+    void onNetworkAccessManagerDestroyed(QObject*);
 
 private:
     explicit YTNetworkManager(QObject *parent = 0);
     ~YTNetworkManager();
+
+    void openNetworkSession(const QNetworkConfiguration&);
+    void closeNetworkSession();
 
     // Values returned in kB
     qint64 imageCacheUsage() const;
@@ -82,7 +92,9 @@ private:
     qint64 apiResponseCacheMaxSize() const;
     void setApiResponseCacheMaxSize(qint64);
 
+    QList<QNetworkAccessManager*> _managed_nam_list;
     QNetworkConfigurationManager *_manager;
+    QNetworkSession *_session;
     bool _online;
     bool _cellular;
 };

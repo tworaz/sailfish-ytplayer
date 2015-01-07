@@ -32,6 +32,7 @@
 #include <QNetworkConfigurationManager>
 #include <QNetworkAccessManager>
 #include <QNetworkRequest>
+#include <QNetworkSession>
 #include <QSharedPointer>
 #include <QSettings>
 #include <QDebug>
@@ -70,7 +71,7 @@ YTNetworkManager::instance()
 YTNetworkManager::YTNetworkManager(QObject *parent)
     : QObject(parent)
     , _manager(new QNetworkConfigurationManager(parent))
-    , _online(_manager->isOnline())
+    , _online(_manager->isOnline() && _manager->defaultConfiguration().isValid())
     , _cellular(true)
 {
     connect(_manager, SIGNAL(onlineStateChanged(bool)),
@@ -80,15 +81,15 @@ YTNetworkManager::YTNetworkManager(QObject *parent)
 
     QList<QNetworkConfiguration> configs =
         _manager->allConfigurations(QNetworkConfiguration::Active);
-    if (!configs.isEmpty())
-        onConfigurationChanged(configs.first());
-    else
-        _online = false;
+    QList<QNetworkConfiguration>::Iterator it;
+    for (it = configs.begin(); it != configs.end(); ++it)
+        onConfigurationChanged(*it);
 }
 
 YTNetworkManager::~YTNetworkManager()
 {
     delete _manager;
+    closeNetworkSession();
 }
 
 void
@@ -96,6 +97,7 @@ YTNetworkManager::tryConnect() const
 {
     qDebug() << "Trying to connect to internet";
     QNetworkRequest request(kTryConnectUrl);
+    GetYTApiNetworkAccessManager()->setNetworkAccessible(QNetworkAccessManager::Accessible);
     GetYTApiNetworkAccessManager()->get(request);
 }
 
@@ -105,6 +107,14 @@ YTNetworkManager::clearCache() {
     GetImageDiskCache()->clear();
     emit imageCacheUsageChanged();
     emit apiResponseCacheUsageChanged();
+}
+
+void
+YTNetworkManager::manageSessionFor(QNetworkAccessManager *nam)
+{
+    connect(nam, &QNetworkAccessManager::destroyed,
+            this, &YTNetworkManager::onNetworkAccessManagerDestroyed);
+    _managed_nam_list.append(nam);
 }
 
 void
@@ -118,24 +128,77 @@ YTNetworkManager::onOnlineStateChanged(bool isOnline)
 }
 
 void
-YTNetworkManager::onConfigurationChanged(const QNetworkConfiguration&)
+YTNetworkManager::onConfigurationChanged(const QNetworkConfiguration& config)
 {
-    QList<QNetworkConfiguration> configs =
-        _manager->allConfigurations(QNetworkConfiguration::Active);
+    if (config.state() == QNetworkConfiguration::Active) {
+        qDebug() << "Network confg active:" << config.name();
+        if (!_session || (_session && (_session->configuration() != config))) {
+            qDebug() << "Active config changed, opening new network session";
+            openNetworkSession(config);
+        }
 
-    bool cellular = true;
-    QList<QNetworkConfiguration>::Iterator it;
-    for (it = configs.begin(); it != configs.end(); ++it) {
-        if (!_isCellular(*it)) {
-            cellular = false;
-            break;
+        bool cellular = _isCellular(config);
+        if (_cellular != cellular) {
+            _cellular = cellular;
+            emit cellularChanged(_cellular);
+        }
+    } else {
+        if (_session && _session->configuration() == config) {
+            qDebug() << "Network config for active session deactivated, closing session";
+            closeNetworkSession();
         }
     }
+}
 
-    if (_cellular != cellular) {
-        _cellular = cellular;
-        emit cellularChanged(_cellular);
+void
+YTNetworkManager::onSessionOpened()
+{
+    qDebug() << "Network session opened";
+    QList<QNetworkAccessManager*>::iterator it = _managed_nam_list.begin();
+    for (; it != _managed_nam_list.end(); ++it) {
+        (*it)->setConfiguration(_session->configuration());
+        (*it)->setNetworkAccessible(QNetworkAccessManager::Accessible);
     }
+}
+
+void
+YTNetworkManager::onSessionClosed()
+{
+    qDebug() << "Network session closed," ;
+    QList<QNetworkAccessManager*>::iterator it = _managed_nam_list.begin();
+    for (; it != _managed_nam_list.end(); ++it)
+        (*it)->setNetworkAccessible(QNetworkAccessManager::NotAccessible);
+}
+
+void
+YTNetworkManager::onNetworkAccessManagerDestroyed(QObject *obj)
+{
+    QNetworkAccessManager *nam = static_cast<QNetworkAccessManager*>(obj);
+    Q_ASSERT(_managed_nam_list.contains(nam));
+    _managed_nam_list.removeOne(nam);
+}
+
+void
+YTNetworkManager::openNetworkSession(const QNetworkConfiguration &cfg)
+{
+    Q_ASSERT(cfg.isValid());
+    closeNetworkSession();
+
+    _session = new QNetworkSession(cfg);
+    connect(_session, &QNetworkSession::opened, this, &YTNetworkManager::onSessionOpened);
+    connect(_session, &QNetworkSession::closed, this, &YTNetworkManager::onSessionClosed);
+    _session->open();
+}
+
+void
+YTNetworkManager::closeNetworkSession()
+{
+    if (!_session)
+        return;
+
+    _session->close();
+    delete _session;
+    _session = NULL;
 }
 
 qint64
