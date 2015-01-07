@@ -60,6 +60,8 @@ public:
     explicit YTRequest(QObject *parent = 0, QNetworkAccessManager *nam = 0);
     ~YTRequest();
 
+    static QNetworkAccessManager& GetNetworkAccessManager();
+
     enum Method {
         List,
         Post,

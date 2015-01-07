@@ -136,7 +136,7 @@ YTRequest::YTRequest(QObject *parent, QNetworkAccessManager* nam)
     : QObject(parent)
     , _reply(NULL)
     , _token_reply(NULL)
-    , _network_access_manager(nam ? *nam : *GetYTApiNetworkAccessManager())
+    , _network_access_manager(nam ? *nam : GetNetworkAccessManager())
     , _loaded(false)
     , _model(NULL)
     , _retryCount(0)
@@ -158,6 +158,19 @@ YTRequest::~YTRequest()
         _reply->deleteLater();
         _token_reply = NULL;
     }
+}
+
+QNetworkAccessManager&
+YTRequest::GetNetworkAccessManager()
+{
+    static QNetworkAccessManager instance;
+    static bool configured = false;
+    if (!configured) {
+        YTNetworkManager::instance().manageSessionFor(&instance);
+        instance.setCache(GetAPIResponseDiskCache());
+        configured = true;
+    }
+    return instance;
 }
 
 void

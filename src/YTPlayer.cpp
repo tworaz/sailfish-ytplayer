@@ -86,19 +86,6 @@ GetBackgroundTaskThread()
 }
 } // namespace
 
-QNetworkAccessManager*
-GetYTApiNetworkAccessManager()
-{
-    static QSharedPointer<QNetworkAccessManager> instance;
-    if (instance.isNull()) {
-        qDebug() << "Creating global QNetworkAccessManager instance";
-        instance.reset(new QNetworkAccessManager);
-        YTNetworkManager::instance().manageSessionFor(instance.data());
-        instance->setCache(GetAPIResponseDiskCache());
-    }
-    return instance.data();
-}
-
 QNetworkDiskCache*
 GetImageDiskCache()
 {

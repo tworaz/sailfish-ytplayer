@@ -30,11 +30,8 @@
 #ifndef YTPLAYER_H
 #define YTPLAYER_H
 
-#include <QSharedPointer>
-#include <QNetworkAccessManager>
 #include <QNetworkDiskCache>
 
-QNetworkAccessManager* GetYTApiNetworkAccessManager();
 QNetworkDiskCache* GetImageDiskCache();
 QNetworkDiskCache* GetAPIResponseDiskCache();
 

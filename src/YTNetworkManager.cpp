@@ -38,6 +38,7 @@
 #include <QDebug>
 
 #include "YTPlayer.h"
+#include "YTRequest.h"
 
 namespace {
 
@@ -97,8 +98,8 @@ YTNetworkManager::tryConnect() const
 {
     qDebug() << "Trying to connect to internet";
     QNetworkRequest request(kTryConnectUrl);
-    GetYTApiNetworkAccessManager()->setNetworkAccessible(QNetworkAccessManager::Accessible);
-    GetYTApiNetworkAccessManager()->get(request);
+    YTRequest::GetNetworkAccessManager().setNetworkAccessible(QNetworkAccessManager::Accessible);
+    YTRequest::GetNetworkAccessManager().get(request);
 }
 
 void
