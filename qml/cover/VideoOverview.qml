@@ -53,7 +53,7 @@ CoverBackground {
             width: parent.width
             height: width * thumbnailAspectRatio
             fillMode: Image.PreserveAspectCrop
-            source: thumbnails.medium.url
+            source: thumbnails.default.url
         }
 
         Label {
