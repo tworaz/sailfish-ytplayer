@@ -138,6 +138,7 @@ YTRequest::YTRequest(QObject *parent, QNetworkAccessManager* nam)
     , _token_reply(NULL)
     , _network_access_manager(nam ? *nam : GetNetworkAccessManager())
     , _loaded(false)
+    , _busy(false)
     , _model(NULL)
     , _retryCount(0)
 {
@@ -225,7 +226,8 @@ YTRequest::run()
     }
 
     connect(_reply, SIGNAL(finished()), this, SLOT(onFinished()));
-    emit busyChanged(true);
+    _busy = true;
+    emit busyChanged(_busy);
 }
 
 void
@@ -254,6 +256,8 @@ void
 YTRequest::onFinished()
 {
     Q_ASSERT(_reply);
+
+    bool busy = false;
 
     switch (_reply->error()) {
     case QNetworkReply::NoError:
@@ -287,6 +291,7 @@ YTRequest::onFinished()
         break;
     case QNetworkReply::AuthenticationRequiredError:
         if (authEnabled()) {
+            busy = true;
             refreshToken();
             break;
         }
@@ -297,7 +302,11 @@ YTRequest::onFinished()
 
     _reply->deleteLater();
     _reply = NULL;
-    emit busyChanged(false);
+
+    if (_busy != busy) {
+        _busy = busy;
+        emit busyChanged(_busy);
+    }
 }
 
 void

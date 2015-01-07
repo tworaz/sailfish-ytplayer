@@ -99,7 +99,7 @@ private:
     QVariantMap params() const { return _params; }
     QVariant content() const { return _content; }
     void setContent(QVariant content) { _content = content; }
-    bool busy() const { return _reply != NULL; }
+    bool busy() const { return _busy; }
     bool loaded() const { return _loaded; }
     void setModel(YTListModel *model) { _model = model; }
     YTListModel *model() const { return _model; }
@@ -113,6 +113,7 @@ private:
     QVariantMap _params;
     QVariant _content;
     bool _loaded;
+    bool _busy;
     YTListModel *_model;
     int _retryCount;
 };
