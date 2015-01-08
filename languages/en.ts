@@ -478,13 +478,7 @@ Label for channel name text field</extracomment>
     </message>
     <message id="ytplayer-label-open-in-browser">
         <source>Open in browser</source>
-        <extracomment>Label for menu option opening YouTube web page for a video</extracomment>
         <translation>Open in browser</translation>
-    </message>
-    <message id="ytplayer-label-browse-channel">
-        <source>Browser channel</source>
-        <extracomment>Label for menu option allwoing the user to browser YouTube ChannelBrowser</extracomment>
-        <translation>Browse channel</translation>
     </message>
     <message id="ytplayer-label-clear-cache">
         <source>Clear cache</source>
@@ -720,6 +714,16 @@ Remorse popup message telling the user video download will be removed</extracomm
         <source>Open link from clipboard</source>
         <extracomment>Menu opion for opening video links from clipboard</extracomment>
         <translation>Open link from clipboard</translation>
+    </message>
+    <message id="ytplayer-action-open-in-browser">
+        <source>Open in browser</source>
+        <extracomment>Menu option opening YouTube video page in a web browser</extracomment>
+        <translation>Open in browser</translation>
+    </message>
+    <message id="ytplayer-action-browse-channel">
+        <source>Browser channel</source>
+        <extracomment>menu option allowing the user to browser YouTube channel</extracomment>
+        <translation>Browse channel</translation>
     </message>
 </context>
 </TS>

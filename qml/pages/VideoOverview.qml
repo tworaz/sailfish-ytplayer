@@ -306,9 +306,9 @@ Page {
                 }
             }
             MenuItem {
-                //: Label for menu option opening YouTube web page for a video
+                //: Menu option opening YouTube video page in a web browser
                 //% "Open in browser"
-                text: qsTrId("ytplayer-label-open-in-browser")
+                text: qsTrId("ytplayer-action-open-in-browser")
                 visible: priv.hasDirectVideoUrl
                 onClicked: Qt.openUrlExternally(kYoutubeVideoUrlBase + videoId)
             }
@@ -316,9 +316,9 @@ Page {
             MenuItem {
                 id: channelBrowserMenu
                 visible: false
-                //: Label for menu option allwoing the user to browser YouTube ChannelBrowser
+                //: menu option allowing the user to browser YouTube channel
                 //% "Browser channel"
-                text: qsTrId("ytplayer-label-browse-channel")
+                text: qsTrId("ytplayer-action-browse-channel")
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),
                         priv.channelBrowserData)
