@@ -32,12 +32,17 @@ import Sailfish.Silica 1.0
 import "../common"
 
 CoverBackground {
-    property alias title: _title.text
-    property variant thumbnails
+    QtObject {
+        id: priv
+        property alias title: _title.text
+        property variant thumbnails
+        property Item parent
+    }
 
     Component.onCompleted: {
-        title = coverData.title
-        thumbnails = coverData.thumbnails
+        priv.title = coverData.title
+        priv.thumbnails = coverData.thumbnails
+        priv.parent = coverData.parent
     }
 
     AsyncImage {
@@ -47,9 +52,9 @@ CoverBackground {
         height: width * thumbnailAspectRatio
         fillMode: Image.PreserveAspectCrop
         source: {
-            if (thumbnails.hasOwnProperty("medium"))
-                return thumbnails.medium.url
-            return thumbnails.default.url
+            if (priv.thumbnails.hasOwnProperty("medium"))
+                return priv.thumbnails.medium.url
+            return priv.thumbnails.default.url
         }
     }
 
@@ -84,9 +89,7 @@ CoverBackground {
             iconSource: "image://theme/icon-cover-play"
             onTriggered: {
                 activate()
-                onClicked: {
-                    pageStack.navigateForward(PageStackAction.Animated)
-                }
+                priv.parent.play()
             }
         }
     }

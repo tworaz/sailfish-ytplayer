@@ -53,7 +53,7 @@ class YTRequest : public QObject
     Q_PROPERTY(QVariantMap params READ params WRITE setParams)
     Q_PROPERTY(QVariant content READ content WRITE setContent)
     Q_PROPERTY(bool busy READ busy NOTIFY busyChanged)
-    Q_PROPERTY(bool loaded READ loaded)
+    Q_PROPERTY(bool loaded READ loaded NOTIFY loadedChanged)
     Q_PROPERTY(YTListModel* model READ model WRITE setModel)
 
 public:
@@ -80,6 +80,7 @@ signals:
     void success(QVariant response);
     void error(QVariant details);
     void busyChanged(bool busy);
+    void loadedChanged(bool loaded);
 
 protected slots:
     void onTokenRequestFinished();
@@ -92,7 +93,6 @@ private:
     void handleVideoInfoReply(QNetworkReply*);
     void requestToken();
     void refreshToken();
-    QVariant getYTApiFallbackVideoUrls() const;
 
     QString resource() const { return _resource; }
     Method method() const { return _method; }

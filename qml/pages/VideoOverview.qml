@@ -61,7 +61,15 @@ Page {
         property variant channelBrowserData: ({})
         property variant streamResponse: undefined
         property Item playerPage
+        property bool hasDirectVideoUrl: priv.playerPage
         readonly property real sideMargin: Theme.paddingMedium
+    }
+
+    function play() {
+        if (priv.playerPage)
+            pageStack.navigateForward(PageStackAction.Animated)
+        else
+            Qt.openUrlExternally(kYoutubeVideoUrlBase + videoId)
     }
 
     function handleStreamChange(streams) {
@@ -111,7 +119,8 @@ Page {
             if (page.thumbnails.hasOwnProperty("default")) {
                 requestCoverPage("VideoOverview.qml", {
                     "thumbnails" : page.thumbnails,
-                    "title"      : page.title
+                    "title"      : page.title,
+                    "parent"     : page
                 })
             }
         }
@@ -163,7 +172,8 @@ Page {
 
             requestCoverPage("VideoOverview.qml", {
                 "thumbnails" : page.thumbnails,
-                "title"      : page.title
+                "title"      : page.title,
+                "parent"     : page
             })
 
             var browserPage = pageStack.find(function(page) {
@@ -232,7 +242,7 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                visible: localVideo.canDownload
+                visible: localVideo.canDownload && priv.hasDirectVideoUrl
                 //: Menu option triggering video preload
                 //% "Download video"
                 text: qsTrId("ytplayer-action-download-video")
@@ -299,6 +309,7 @@ Page {
                 //: Label for menu option opening YouTube web page for a video
                 //% "Open in browser"
                 text: qsTrId("ytplayer-label-open-in-browser")
+                visible: priv.hasDirectVideoUrl
                 onClicked: Qt.openUrlExternally(kYoutubeVideoUrlBase + videoId)
             }
 
@@ -319,14 +330,17 @@ Page {
             id: header
             anchors.top: parent.top
             anchors.right: parent.right
-            visible: !!priv.playerPage
+            visible: (streamUrlRequest.loaded ||
+                      localVideo.status === YTLocalVideo.Downloaded) &&
+                     page.status === PageStatus.Active
             isPortrait: page.isPortrait
-            //: Label for video play button
-            //% "Play"
-            text: qsTrId("ytplayer-label-play")
-            onClicked: {
-                pageStack.navigateForward(PageStackAction.Animated)
-            }
+            text: priv.hasDirectVideoUrl ?
+                    //: Label for video play button
+                    //% "Play"
+                    qsTrId("ytplayer-label-play") :
+                    //% "Open in browser"
+                    qsTrId("ytplayer-label-open-in-browser")
+            onClicked: page.play()
         }
 
         Column {
