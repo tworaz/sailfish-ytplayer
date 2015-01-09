@@ -55,6 +55,7 @@ public:
     void removeDownload(QString videoId);
     void pauseDownload(QString videoId);
     void resumeDownload(QString videoId);
+    void downloadSettingsChanged();
 
 signals:
     // Notifications for the UI
@@ -68,6 +69,7 @@ private slots:
     void onOnlineChanged(bool);
     void onCellularChanged(bool);
     void onProcessQueuedDownloads();
+    void onDownloadSettingsChanged();
 
     void onRestoreDownloads();
     void onDownload(QSharedPointer<YTLocalVideoData> data);

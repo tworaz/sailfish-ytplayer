@@ -34,6 +34,8 @@
 #include <QDir>
 #include <QDebug>
 
+#include "YTLocalVideoManager.h"
+
 const char kWiFiOnly[] = "WiFi";
 const char kCellularOnly[] = "Cellular";
 const char kWiFiAndCellular[] = "WiFi+Cellular";
@@ -119,4 +121,10 @@ Prefs::disableAuth()
     settings.remove("YouTube/RefreshToken");
     settings.remove("YouTube/AccessTokenType");
     settings.setValue("AccountIntegration", false);
+}
+
+void
+Prefs::notifyDownloadSettingsChanged() const
+{
+    YTLocalVideoManager::instance().downloadSettingsChanged();
 }

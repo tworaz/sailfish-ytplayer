@@ -34,9 +34,18 @@ Page {
     objectName: "DownloadSettingsPage"
     allowedOrientations: Orientation.All
 
+    QtObject {
+        id: priv
+        property bool settingsChanged: false
+    }
+
     onStatusChanged: {
-        if (status === PageStatus.Active)
+        if (status === PageStatus.Active) {
             requestCoverPage("Default.qml")
+        } else if (status === PageStatus.Deactivating) {
+            if (priv.settingsChanged)
+                Prefs.notifyDownloadSettingsChanged()
+        }
     }
 
     SilicaFlickable {
@@ -84,6 +93,7 @@ Page {
                 }
                 onReleased: {
                     Prefs.set("Download/MaxConcurrentDownloads", value)
+                    priv.settingsChanged = true
                 }
             }
 
@@ -118,6 +128,7 @@ Page {
             }
 
             ComboBox {
+                id: connectionTypeCombo
                 //: Label for video download connection type combobox
                 //% "Connection type"
                 label: qsTrId("ytplayer-label-connection-type")
@@ -131,24 +142,29 @@ Page {
                     }
                 }
 
+                function changeType(type) {
+                    Prefs.set("Download/ConnectionType", type)
+                    priv.settingsChanged = true
+                }
+
                 menu: ContextMenu {
                     MenuItem {
                         //: Menu option indicating downloads are allowed only when using WiFi
                         //% "WiFi only"
                         text: qsTrId("ytplayer-action-wifi-only")
-                        onClicked: Prefs.set("Download/ConnectionType", "WiFi")
+                        onClicked: connectionTypeCombo.changeType("WiFi")
                     }
                     MenuItem {
                         //: Menu option indicating downloads are allowed on both WiFi and 3G
                         //% "WiFi + Cellular"
                         text: qsTrId("ytplayer-action-wifi-cellular")
-                        onClicked: Prefs.set("Download/ConnectionType", "WiFi+Cellular")
+                        onClicked: connectionTypeCombo.changeType("WiFi+Cellular")
                     }
                     MenuItem {
                         //: Menu option indicating downloads are allowed only when using 3G
                         //% "Cellular only"
                         text: qsTrId("ytplayer-action-cellular-only")
-                        onClicked: Prefs.set("Download/ConnectionType", "Cellular")
+                        onClicked: connectionTypeCombo.changeType("Cellular")
                     }
                 }
             }

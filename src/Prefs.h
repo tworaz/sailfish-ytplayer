@@ -51,6 +51,7 @@ public:
     Q_INVOKABLE int getInt(const QString& key);
     Q_INVOKABLE bool isAuthEnabled();
     Q_INVOKABLE void disableAuth();
+    Q_INVOKABLE void notifyDownloadSettingsChanged() const;
 };
 
 #endif // SETTINGS_H

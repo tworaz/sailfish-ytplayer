@@ -546,6 +546,12 @@ YTLocalVideoManager::resumeDownload(QString videoId)
 }
 
 void
+YTLocalVideoManager::downloadSettingsChanged()
+{
+    QMetaObject::invokeMethod(this, "onDownloadSettingsChanged", Qt::QueuedConnection);
+}
+
+void
 YTLocalVideoManager::onDownloadFinished(YTDownloadInfo *di)
 {
     Q_ASSERT(_inProgressDownloads.contains(di));
@@ -663,6 +669,15 @@ YTLocalVideoManager::onProcessQueuedDownloads()
              << ", in progress:" << _inProgressDownloads.size()
              << ", paused:" << _pausedDownloads.size()
              << ", max concurrent downloads:" << maxConcurrentDownloads;
+}
+
+void
+YTLocalVideoManager::onDownloadSettingsChanged()
+{
+    QSettings().sync();
+    onCellularChanged(YTNetworkManager::instance().cellular());
+    if (!_queueProcessingScheduled)
+        processQueuedDownloads();
 }
 
 void
