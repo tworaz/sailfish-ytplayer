@@ -45,18 +45,17 @@ CoverBackground {
     YTRequest {
         id: request
         method: YTRequest.List
-        resource: "search"
+        resource: "videos"
         params: {
             "part"       : "snippet",
+            "chart"      : "mostPopular",
             "maxResults" : kMaxCoverThumbnailCount,
-            "order"      : "rating",
         }
 
         onSuccess: {
             var thumbs = [];
-            for (var i = 0; i < response.items.length; i++) {
+            for (var i = 0; i < response.items.length; i++)
                 thumbs.push(response.items[i].snippet.thumbnails)
-            }
             defaultCoverData = thumbs
             displayThumbnails()
         }
