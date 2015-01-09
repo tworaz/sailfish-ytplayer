@@ -46,6 +46,7 @@ class YTLocalVideo: public QObject
 
     Q_PROPERTY(QString videoId READ videoId WRITE setVideoId)
     Q_PROPERTY(QString title READ title NOTIFY titleChanged)
+    Q_PROPERTY(QString duration READ duration NOTIFY durationChanged)
     Q_PROPERTY(QVariantMap thumbnails READ thumbnails NOTIFY thumbnailsChanged)
     Q_PROPERTY(bool canDownload READ canDownload NOTIFY canDownloadChanged)
     Q_PROPERTY(Status status READ status NOTIFY statusChanged)
@@ -65,13 +66,14 @@ public:
         Downloaded
     } Status;
 
-    Q_INVOKABLE void download();
+    Q_INVOKABLE void download(QString title);
     Q_INVOKABLE void remove() const;
     Q_INVOKABLE void pause() const;
     Q_INVOKABLE void resume() const;
 
 signals:
     void titleChanged(QString);
+    void durationChanged(QString);
     void thumbnailsChanged(QVariantMap);
     void canDownloadChanged(bool);
     void statusChanged(Status status);
@@ -87,6 +89,7 @@ private:
     QString videoId() const { return _videoId; }
     void setVideoId(QString id);
     QString title() const;
+    QString duration() const;
     QVariantMap thumbnails();
     bool canDownload() const;
     Status status() const;

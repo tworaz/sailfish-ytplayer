@@ -67,13 +67,12 @@ YTLocalVideoData::YTLocalVideoData(QString& videoId, QObject* parent)
     if (q.first()) {
         _inDatabase = true;
         _title = q.value("title").toString();
+        _duration = q.value("duration").toString();
         _thumbnailPath = q.value("thumbnail").toString();
         _videoPath = q.value("video").toByteArray();
         _quality = q.value("quality").toString();
         _status = static_cast<YTLocalVideo::Status>(q.value("status").toInt());
         Q_ASSERT(!q.next());
-    } else {
-        _title = "https://www.youtube.com/watch?v=" + videoId;
     }
 }
 
@@ -96,6 +95,14 @@ YTLocalVideoData::title() const
 {
     QMutexLocker lock(&_mutex);
     return _title;
+}
+
+void
+YTLocalVideoData::setTitle(QString title)
+{
+    QMutexLocker lock(&_mutex);
+    _title = title;
+    emit titleChanged(_title);
 }
 
 unsigned
@@ -149,12 +156,11 @@ YTLocalVideoData::hasThumbnail() const
     return QFile(_thumbnailPath).exists();
 }
 
-void
-YTLocalVideoData::setTitle(QString title)
+QString
+YTLocalVideoData::duration() const
 {
     QMutexLocker lock(&_mutex);
-    _title = title;
-    emit titleChanged(_title);
+    return _duration;
 }
 
 void
@@ -169,6 +175,13 @@ YTLocalVideoData::setQuality(QString q)
 {
     QMutexLocker lock(&_mutex);
     _quality = q;
+}
+
+void
+YTLocalVideoData::setDuration(QString d)
+{
+    QMutexLocker lock(&_mutex);
+    _duration = d;
 }
 
 bool
@@ -326,6 +339,11 @@ YTLocalVideoData::downloadQueued()
 void
 YTLocalVideoData::downloadStarted()
 {
+    Q_ASSERT(!_quality.isEmpty());
+    Q_ASSERT(!_title.isEmpty());
+    Q_ASSERT(!_thumbnailExt.isEmpty());
+    Q_ASSERT(!_duration.isEmpty());
+
     QMutexLocker lock(&_mutex);
 
     QSettings settings;
@@ -340,7 +358,6 @@ YTLocalVideoData::downloadStarted()
     _videoPath.append(QDir::separator());
     _videoPath.append(videoName.toLocal8Bit());
 
-    Q_ASSERT(!_thumbnailExt.isEmpty());
     QString thumbsDir = QStandardPaths::writableLocation((QStandardPaths::DataLocation));
     thumbsDir += QDir::separator();
     thumbsDir += "VideoThumbnails";
@@ -349,15 +366,14 @@ YTLocalVideoData::downloadStarted()
     QString thumbName = _videoId + "." + _thumbnailExt;
     _thumbnailPath = thumbsDir + QDir::separator() + thumbName;
 
-    Q_ASSERT(!_quality.isEmpty());
-    Q_ASSERT(!_title.isEmpty());
-
     QSqlQuery q;
-    q.prepare("UPDATE local_videos SET video=?, thumbnail=?, quality=?, title=? WHERE videoId=?");
+    q.prepare("UPDATE local_videos SET video=?, thumbnail=?,"
+              "quality=?, title=?, duration=? WHERE videoId=?");
     q.addBindValue(_videoPath);
     q.addBindValue(_thumbnailPath);
     q.addBindValue(_quality);
     q.addBindValue(_title);
+    q.addBindValue(_duration);
     q.addBindValue(_videoId);
     executeSqlQuery(q);
 

@@ -42,10 +42,11 @@ YTLocalVideo::YTLocalVideo(QObject *parent)
 }
 
 void
-YTLocalVideo::download()
+YTLocalVideo::download(QString title)
 {
     Q_ASSERT(_data);
     Q_ASSERT(status() == Initial);
+    _data->setTitle(title);
     _manager.download(_data);
 }
 
@@ -107,6 +108,8 @@ YTLocalVideo::setVideoId(QString id)
             this, &YTLocalVideo::downloadProgressChanged);
     connect(_data.data(), &YTLocalVideoData::titleChanged,
             this, &YTLocalVideo::titleChanged);
+    connect(_data.data(), &YTLocalVideoData::durationChanged,
+            this, &YTLocalVideo::durationChanged);
     connect(_data.data(), &YTLocalVideoData::thumbnailUrlChanged,
             this, &YTLocalVideo::onThumbnailUrlChanged);
     connect(_data.data(), &YTLocalVideoData::videoUrlChanged,
@@ -115,6 +118,9 @@ YTLocalVideo::setVideoId(QString id)
     if (_data->inDatabase()) {
         if (!_data->title().isEmpty())
             emit titleChanged(_data->title());
+
+        if (!_data->duration().isEmpty())
+            emit durationChanged(_data->duration());
 
         if (_data->hasThumbnail())
             emit thumbnailsChanged(thumbnails());
@@ -129,6 +135,14 @@ YTLocalVideo::title() const
 {
     if (_data)
         return _data->title();
+    return QString();
+}
+
+QString
+YTLocalVideo::duration() const
+{
+    if (_data)
+        return _data->duration();
     return QString();
 }
 

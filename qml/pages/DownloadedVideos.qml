@@ -30,6 +30,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer 1.0
+import "../common/duration.js" as DJS
 import "../common"
 
 Page {
@@ -99,6 +100,26 @@ Page {
                         verticalAlignment: Text.AlignVCenter
                         horizontalAlignment: Text.AlignHCenter
                         font.pixelSize: Theme.fontSizeExtraSmall
+                    }
+                }
+
+                Rectangle {
+                    anchors.bottom: parent.bottom
+                    anchors.right: parent.right
+                    visible: (videoDownload.duration.length > 0) &&
+                             parent.status === Image.Ready &&
+                             videoDownload.status === YTLocalVideo.Downloaded
+                    color: "black"
+                    height: childrenRect.height
+                    width: childrenRect.width + 2 * Theme.paddingSmall
+
+                    Label {
+                        x: Theme.paddingSmall
+                        text: videoDownload.duration.length > 0 ?
+                                  (new DJS.Duration(videoDownload.duration)).asClock() : ""
+                        color: Theme.primaryColor
+                        font.pixelSize: Theme.fontSizeExtraSmall * 0.8
+                        horizontalAlignment: Text.AlignHCenter
                     }
                 }
 

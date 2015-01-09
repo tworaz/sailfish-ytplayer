@@ -246,7 +246,7 @@ Page {
                 //: Menu option triggering video preload
                 //% "Download video"
                 text: qsTrId("ytplayer-action-download-video")
-                onClicked: localVideo.download()
+                onClicked: localVideo.download(page.title)
             }
             MenuItem {
                 visible: localVideo.status !== YTLocalVideo.Initial &&

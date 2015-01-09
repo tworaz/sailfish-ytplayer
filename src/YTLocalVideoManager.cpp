@@ -237,7 +237,8 @@ private slots:
         Q_ASSERT(!lst.empty() && lst.size() == 1);
 
         QVariantMap map = lst.at(0).toMap();
-        Q_ASSERT(!map.isEmpty() && map.contains("snippet"));
+        Q_ASSERT(!map.isEmpty() && map.contains("snippet") &&
+                 map.contains("contentDetails"));
 
         QVariantMap snippet = map["snippet"].toMap();
         Q_ASSERT(!snippet.isEmpty() && snippet.contains("thumbnails") &&
@@ -245,6 +246,9 @@ private slots:
 
         QVariantMap thumbnails = snippet["thumbnails"].toMap();
         Q_ASSERT(!thumbnails.isEmpty() && thumbnails.contains("default"));
+
+        QVariantMap contentDetails = map["contentDetails"].toMap();
+        Q_ASSERT(!contentDetails.isEmpty() && contentDetails.contains("duration"));
 
         QVariantMap quality;
         if (thumbnails.contains("high"))
@@ -258,6 +262,7 @@ private slots:
 
         setThumbnailUrl(QUrl(url));
         _downloadData->setTitle(snippet["title"].toString());
+        _downloadData->setDuration(contentDetails["duration"].toString());
 
         _snippetRequest->deleteLater();
         _snippetRequest = NULL;
@@ -391,7 +396,7 @@ private:
         _snippetRequest->setResource("videos");
         _snippetRequest->setMethod(YTRequest::List);
         QVariantMap params;
-        params["part"] = QVariant("snippet");
+        params["part"] = QVariant("snippet,contentDetails");
         params["id"] = QVariant(_downloadData->videoId());
         _snippetRequest->setParams(params);
 
@@ -472,7 +477,7 @@ YTLocalVideoManager::YTLocalVideoManager(QObject *parent)
     if (!tables.contains("local_videos", Qt::CaseInsensitive)) {
         if (!QSqlQuery().exec("CREATE TABLE local_videos (videoId string primary key,"
                               "title varchar, status int, thumbnail blob, video blob,"
-                              "quality text)"))
+                              "quality text, duration text)"))
             qFatal("Failed to create local_videos database");
     }
 

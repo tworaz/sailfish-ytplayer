@@ -48,6 +48,7 @@ public:
 
     bool inDatabase() const;
     QString title() const;
+    void setTitle(QString title);
     unsigned videoDownloadProgress() const;
     QString videoId() const;
     YTLocalVideo::Status status() const;
@@ -55,12 +56,14 @@ public:
     QUrl videoUrl() const;
     QUrl thumbnailUrl() const;
     bool hasThumbnail() const;
+    QString duration() const;
 
 signals:
     void inDatabaseChanged(bool);
     void videoDownloadProgressChanged(unsigned);
     void statusChanged(YTLocalVideo::Status);
     void titleChanged(QString);
+    void durationChanged(QString);
     void destroyed(QString);
     void thumbnailUrlChanged(QUrl);
     void videoUrlChanged(QUrl);
@@ -72,9 +75,9 @@ protected:
 
     // Called only from YTLocalVideoManager, but modifies data
     // shared with YTLocalVideo. Need to lock _mutex;
-    void setTitle(QString title);
     void setThumbnailExtension(QString ext);
     void setQuality(QString q);
+    void setDuration(QString d);
 
     // Called only from YTLocalVideoManager, does not touch any
     // data shared between threads.
@@ -110,6 +113,7 @@ private:
     QString _videoId;
     QString _title;
     QString _quality;
+    QString _duration;
     QByteArray _videoPath;
     QSharedPointer<QFile> _videoFile;
     QString _thumbnailPath;
