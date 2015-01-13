@@ -73,9 +73,8 @@ Page {
         priv.optionsPage.changed = false
         Log.debug("Search params updated: " + JSON.stringify(params, undefined, 2))
 
-        if (searchHandler.queryStr.length > 0) {
+        if (searchHandler.queryStr.length > 0)
             searchHandler.onTriggered()
-        }
     }
 
     function performSearch(queryStr, pageToken) {
@@ -207,30 +206,20 @@ Page {
             title: snippet.title
             thumbnails: snippet.thumbnails
             youtubeId: id
-        }
-
-        onMovementStarted: {
-            if (count > 0) {
-                currentIndex = 0
-                if (currentItem) {
-                    currentItem.forceActiveFocus()
-                }
-            }
+            onPressed: forceActiveFocus()
         }
 
         onAtYBeginningChanged: {
             if (atYBeginning && !pageStack.busy) {
                 currentIndex = -1
-                if (searchView.headerItem) {
+                if (searchView.headerItem)
                     searchView.headerItem.focusSearchField()
-                }
             }
         }
 
         onAtYEndChanged: {
-            if (atYEnd && priv.nextPageToken.length > 0 && !request.busy) {
+            if (atYEnd && priv.nextPageToken.length > 0 && !request.busy)
                 loadNextResultsPage()
-            }
         }
 
         function loadNextResultsPage() {
