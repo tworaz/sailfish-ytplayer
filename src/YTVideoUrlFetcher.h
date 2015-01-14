@@ -30,6 +30,7 @@
 #ifndef YTVIDEOURLFETCHER_H
 #define YTVIDEOURLFETCHER_H
 
+#include <QCache>
 #include <QObject>
 #include <QProcess>
 #include <QVariantMap>
@@ -57,6 +58,8 @@ private:
     QVariantMap parseResponse(QJsonDocument);
 
     QProcess* _process;
+
+    static QCache<QString, QVariantMap> _response_cache;
 
     Q_DISABLE_COPY(YTVideoUrlFetcher)
 };
