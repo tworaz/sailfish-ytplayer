@@ -42,6 +42,10 @@ class YTVideoUrlFetcher: public QObject
 public:
     YTVideoUrlFetcher();
 
+    static void runInitialCheck();
+    static bool available() { return _works; }
+    static QString version() { return _version_str; }
+
     void fetchUrlsFor(QString videoId);
 
 signals:
@@ -60,6 +64,8 @@ private:
     QProcess* _process;
 
     static QCache<QString, QVariantMap> _response_cache;
+    static QString _version_str;
+    static bool _works;
 
     Q_DISABLE_COPY(YTVideoUrlFetcher)
 };

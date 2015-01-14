@@ -49,6 +49,7 @@
 #include "YTLocalVideoManager.h"
 #include "YTLocalVideoListModel.h"
 #include "YTVideoDownloadNotification.h"
+#include "YTVideoUrlFetcher.h"
 #include "YTLocalVideo.h"
 #include "NativeUtil.h"
 #include "YTRequest.h"
@@ -181,6 +182,8 @@ main(int argc, char *argv[])
     view->showFullScreen();
 
     YTLocalVideoManager::instance().moveToThread(GetBackgroundTaskThread());
+
+    YTVideoUrlFetcher::runInitialCheck();
 
     int result = app->exec();
 

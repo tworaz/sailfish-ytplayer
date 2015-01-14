@@ -38,6 +38,7 @@ class NativeUtil : public QObject
 
     Q_PROPERTY(QString version READ getVersion CONSTANT)
     Q_PROPERTY(QString regionCode READ getRegionCode CONSTANT)
+    Q_PROPERTY(QString youTubeDLVersion READ youTubeDLVersion CONSTANT)
 
 public:
     explicit NativeUtil(QObject *parent = 0);
@@ -46,7 +47,10 @@ public:
     Q_INVOKABLE QString getLicense(QString file);
 
     static QString getRegionCode();
+
+private:
     static QString getVersion();
+    static QString youTubeDLVersion();
 };
 
 #endif // NATIVEUTIL_H

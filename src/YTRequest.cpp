@@ -458,6 +458,11 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
             } else if (it->first == "itag") {
                 itag = it->second.toInt();
             } else if (it->first == "s" ) {
+                if (!YTVideoUrlFetcher::available()) {
+                    qWarning() << "youtube-dl stream fetcher not available or broken!";
+                    emit error(QVariant());
+                    return true;
+                }
                 // Encrypted content, use youtube-dl to find video streams
                 if (!_url_fetcher) {
                     _url_fetcher = new YTVideoUrlFetcher;
