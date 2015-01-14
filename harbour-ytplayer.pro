@@ -23,7 +23,8 @@ SOURCES += \
         src/YTLocalVideoData.cpp \
         src/YTLocalVideoManager.cpp \
         src/YTLocalVideoListModel.cpp \
-        src/YTVideoDownloadNotification.cpp
+        src/YTVideoDownloadNotification.cpp \
+        src/YTVIdeoUrlFetcher.cpp
 
 HEADERS += \
         src/YTPlayer.h \
@@ -37,7 +38,8 @@ HEADERS += \
         src/YTLocalVideoData.h \
         src/YTLocalVideoManager.h \
         src/YTLocalVideoListModel.h \
-        src/YTVideoDownloadNotification.h
+        src/YTVideoDownloadNotification.h \
+        src/YTVideoUrlFetcher.h
 
 OTHER_FILES += \
         harbour-ytplayer.desktop \
@@ -89,6 +91,7 @@ OTHER_FILES += \
         qml/pages/CacheSettings.qml
 
 include(third_party/notifications.pri)
+include(third_party/youtube_dl.pri)
 include(languages/translations.pri)
 include(resources/resources.pri)
 

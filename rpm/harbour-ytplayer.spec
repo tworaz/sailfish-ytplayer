@@ -27,6 +27,7 @@ BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(sailfishapp) >= 0.0.10
 BuildRequires:  desktop-file-utils
+BuildRequires:  zip
 
 %description
 YTPlayer is an unofficial YouTube client for SailfishOS
@@ -65,6 +66,7 @@ desktop-file-install --delete-original       \
 %files
 %defattr(0644,root,root,-)
 %attr(0755,root,root) %{_bindir}/%{name}
+%attr(0755,root,root) %{_datadir}/%{name}/bin/youtube-dl
 %{_datadir}/%{name}
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/86x86/apps/%{name}.png
