@@ -111,8 +111,16 @@ YTNetworkManager::clearCache() {
 }
 
 void
+YTNetworkManager::shutdown()
+{
+    QMutexLocker lock(&_nam_list_mutex);
+    _managed_nam_list.clear();
+}
+
+void
 YTNetworkManager::manageSessionFor(QNetworkAccessManager *nam)
 {
+    QMutexLocker lock(&_nam_list_mutex);
     connect(nam, &QNetworkAccessManager::destroyed,
             this, &YTNetworkManager::onNetworkAccessManagerDestroyed);
     _managed_nam_list.append(nam);
@@ -155,6 +163,7 @@ void
 YTNetworkManager::onSessionOpened()
 {
     qDebug() << "Network session opened";
+    QMutexLocker lock(&_nam_list_mutex);
     QList<QNetworkAccessManager*>::iterator it = _managed_nam_list.begin();
     for (; it != _managed_nam_list.end(); ++it) {
         (*it)->setConfiguration(_session->configuration());
@@ -166,6 +175,7 @@ void
 YTNetworkManager::onSessionClosed()
 {
     qDebug() << "Network session closed," ;
+    QMutexLocker lock(&_nam_list_mutex);
     QList<QNetworkAccessManager*>::iterator it = _managed_nam_list.begin();
     for (; it != _managed_nam_list.end(); ++it)
         (*it)->setNetworkAccessible(QNetworkAccessManager::NotAccessible);
@@ -174,9 +184,10 @@ YTNetworkManager::onSessionClosed()
 void
 YTNetworkManager::onNetworkAccessManagerDestroyed(QObject *obj)
 {
+    QMutexLocker lock(&_nam_list_mutex);
     QNetworkAccessManager *nam = static_cast<QNetworkAccessManager*>(obj);
-    Q_ASSERT(_managed_nam_list.contains(nam));
-    _managed_nam_list.removeOne(nam);
+    if (_managed_nam_list.contains(nam))
+        _managed_nam_list.removeOne(nam);
 }
 
 void

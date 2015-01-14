@@ -181,7 +181,8 @@ main(int argc, char *argv[])
 
     view->showFullScreen();
 
-    YTLocalVideoManager::instance().moveToThread(GetBackgroundTaskThread());
+    // Make sure old downloads are restored
+    YTLocalVideoManager::instance();
 
     YTVideoUrlFetcher::runInitialCheck();
 
@@ -189,6 +190,7 @@ main(int argc, char *argv[])
 
     qDebug() << "Application terminating";
 
+    YTNetworkManager::instance().shutdown();
     GetBackgroundTaskThread()->exit();
     GetBackgroundTaskThread()->wait();
 
