@@ -40,6 +40,7 @@
 #include <QLocale>
 #include <QDebug>
 
+#include "YTVideoUrlFetcher.h"
 #include "YTNetworkManager.h"
 #include "YTPlayer.h"
 #include "NativeUtil.h"
@@ -136,6 +137,7 @@ YTRequest::YTRequest(QObject *parent, QNetworkAccessManager* nam)
     : QObject(parent)
     , _reply(NULL)
     , _token_reply(NULL)
+    , _url_fetcher(NULL)
     , _network_access_manager(nam ? *nam : GetNetworkAccessManager())
     , _loaded(false)
     , _busy(false)
@@ -158,6 +160,11 @@ YTRequest::~YTRequest()
             _token_reply->abort();
         _reply->deleteLater();
         _token_reply = NULL;
+    }
+    if (_url_fetcher) {
+        _url_fetcher->disconnect();
+        _url_fetcher->deleteLater();
+        _url_fetcher = NULL;
     }
 }
 
@@ -265,7 +272,10 @@ YTRequest::onFinished()
     switch (_reply->error()) {
     case QNetworkReply::NoError:
         if (_reply->request().url().toString().startsWith(kYouTubeGetVideoInfoUrl)) {
-            handleVideoInfoReply(_reply);
+            if (!handleVideoInfoReply(_reply)) {
+                busy = true;
+                break;
+            }
         } else {
             handleSuccess(_reply);
         }
@@ -311,6 +321,26 @@ YTRequest::onFinished()
         _busy = busy;
         emit busyChanged(_busy);
     }
+}
+
+void
+YTRequest::onURLFetcherFailed()
+{
+    _busy = false;
+    emit busyChanged(_busy);
+    _loaded = true;
+    emit loadedChanged(true);
+    emit error(QVariant());
+}
+
+void
+YTRequest::onURLFetcherSucceeded(QVariantMap response)
+{
+    _busy = false;
+    emit busyChanged(_busy);
+    _loaded = true;
+    emit loadedChanged(true);
+    emit success(response);
 }
 
 void
@@ -390,7 +420,7 @@ YTRequest::handleTokenReply(QNetworkReply *reply)
     }
 }
 
-void
+bool
 YTRequest::handleVideoInfoReply(QNetworkReply *reply)
 {
     QUrlQuery query(reply->readAll());
@@ -401,14 +431,14 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
         qWarning() << "YouTube get_video_info did not return proper stream map!";
         qDebug() << "Reply: " << reply->readAll();
         emit error(QVariant());
-        return;
+        return true;
     }
 
     QStringList mapEntries = streamMap.split(",", QString::SkipEmptyParts);
     if (mapEntries.size() == 0) {
         qWarning() << "YouTube stream map empty";
         emit error(QVariant());
-        return;
+        return true;
     }
 
     QVariantMap outMap;
@@ -428,9 +458,18 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
             } else if (it->first == "itag") {
                 itag = it->second.toInt();
             } else if (it->first == "s" ) {
-                qWarning() << "Playback of encrypted content not supported, yet";
-                emit error(QVariant());
-                return;
+                // Encrypted content, use youtube-dl to find video streams
+                if (!_url_fetcher) {
+                    _url_fetcher = new YTVideoUrlFetcher;
+                    connect(_url_fetcher, &YTVideoUrlFetcher::success,
+                            this, &YTRequest::onURLFetcherSucceeded);
+                    connect(_url_fetcher, &YTVideoUrlFetcher::failure,
+                            this, &YTRequest::onURLFetcherFailed);
+                }
+                Q_ASSERT(_params.contains("video_id") &&
+                         _params["video_id"].canConvert(QVariant::String));
+                _url_fetcher->fetchUrlsFor(_params["video_id"].toString());
+                return false;
             } else {
                 streamDetailsMap.insert(it->first, it->second);
             }
@@ -455,6 +494,7 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
     }
 
     emit success(outMap);
+    return true;
 }
 
 void

@@ -40,6 +40,7 @@
 #include "YTListModel.h"
 
 class QNetworkAccessManager;
+class YTVideoUrlFetcher;
 
 class YTRequest : public QObject
 {
@@ -85,12 +86,14 @@ signals:
 protected slots:
     void onTokenRequestFinished();
     void onFinished();
+    void onURLFetcherFailed();
+    void onURLFetcherSucceeded(QVariantMap);
 
 private:
     void handleSuccess(QNetworkReply*);
     void handleError(QNetworkReply*);
     void handleTokenReply(QNetworkReply*);
-    void handleVideoInfoReply(QNetworkReply*);
+    bool handleVideoInfoReply(QNetworkReply*);
     void requestToken();
     void refreshToken();
 
@@ -107,6 +110,7 @@ private:
 
     QNetworkReply *_reply;
     QNetworkReply *_token_reply;
+    YTVideoUrlFetcher *_url_fetcher;
     QNetworkAccessManager& _network_access_manager;
     QString _resource;
     Method _method;

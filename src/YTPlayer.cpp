@@ -36,7 +36,6 @@
 #include <QSqlError>
 #include <QtQml>
 #include <QDebug>
-#include <QThread>
 #include <QFontDatabase>
 #include <QSqlDatabase>
 #include <sailfishapp.h>
@@ -72,6 +71,7 @@ InitApplicationDatabase()
     qDebug() << "Application database path: " <<
                 dbdir + QDir::separator() + kApplicationDBFileName;
 }
+} // namespace
 
 QThread*
 GetBackgroundTaskThread()
@@ -84,7 +84,6 @@ GetBackgroundTaskThread()
     }
     return thread;
 }
-} // namespace
 
 QNetworkDiskCache*
 GetImageDiskCache()

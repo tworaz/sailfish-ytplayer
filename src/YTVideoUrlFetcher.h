@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014 Peter Tworek
+ * Copyright (c) 2015 Peter Tworek
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,14 +27,38 @@
  * SUCH DAMAGE.
  */
 
-#ifndef YTPLAYER_H
-#define YTPLAYER_H
+#ifndef YTVIDEOURLFETCHER_H
+#define YTVIDEOURLFETCHER_H
 
-#include <QThread>
-#include <QNetworkDiskCache>
+#include <QObject>
+#include <QProcess>
+#include <QVariantMap>
+#include <QJsonDocument>
 
-QThread* GetBackgroundTaskThread();
-QNetworkDiskCache* GetImageDiskCache();
-QNetworkDiskCache* GetAPIResponseDiskCache();
+class YTVideoUrlFetcher: public QObject
+{
+    Q_OBJECT
+public:
+    YTVideoUrlFetcher();
 
-#endif // YTPLAYER_H
+    void fetchUrlsFor(QString videoId);
+
+signals:
+    void success(QVariantMap streamsMap);
+    void failure();
+
+private slots:
+    void onFetchUrlsFor(QString videoId);
+    void onProcessFinished(int, QProcess::ExitStatus);
+    void onProcessError(QProcess::ProcessError);
+
+private:
+    ~YTVideoUrlFetcher();
+    QVariantMap parseResponse(QJsonDocument);
+
+    QProcess* _process;
+
+    Q_DISABLE_COPY(YTVideoUrlFetcher)
+};
+
+#endif // YTVIDEOURLFETCHER_H

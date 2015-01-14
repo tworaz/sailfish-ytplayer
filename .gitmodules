@@ -1,3 +1,6 @@
 [submodule "third_party/nemo-qml-plugin-notifications"]
 	path = third_party/nemo-qml-plugin-notifications
 	url = https://github.com/nemomobile/nemo-qml-plugin-notifications.git
+[submodule "third_party/youtube-dl"]
+	path = third_party/youtube-dl
+	url = https://github.com/rg3/youtube-dl.git
