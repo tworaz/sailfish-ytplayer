@@ -470,6 +470,8 @@ YTLocalVideoManager::YTLocalVideoManager(QObject *parent)
     , _networkAccessManager(new QNetworkAccessManager(this))
     , _queueProcessingScheduled(false)
 {
+    moveToThread(GetBackgroundTaskThread());
+
     QSqlDatabase db = QSqlDatabase::database();
     if (!db.isValid())
         qFatal("Failed to open application database!");

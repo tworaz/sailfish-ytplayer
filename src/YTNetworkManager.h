@@ -31,6 +31,7 @@
 #define YTNETWORKMANAGER_H
 
 #include <QObject>
+#include <QMutex>
 #include <QList>
 
 class QNetworkConfigurationManager;
@@ -58,6 +59,7 @@ public:
     Q_INVOKABLE void tryConnect() const;
     Q_INVOKABLE void clearCache();
 
+    void shutdown();
     bool online() const { return _online; }
     bool cellular() const { return _cellular; }
     void manageSessionFor(QNetworkAccessManager*);
@@ -92,6 +94,7 @@ private:
     qint64 apiResponseCacheMaxSize() const;
     void setApiResponseCacheMaxSize(qint64);
 
+    QMutex _nam_list_mutex;
     QList<QNetworkAccessManager*> _managed_nam_list;
     QNetworkConfigurationManager *_manager;
     QNetworkSession *_session;
