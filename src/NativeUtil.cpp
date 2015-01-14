@@ -40,6 +40,7 @@
 
 #include "config.h"
 #include "NativeUtil.h"
+#include "YTVideoUrlFetcher.h"
 
 static QString FALLBACK_COUNTRY_CODE = QString("US"); // Worldwide (All)
 
@@ -216,4 +217,10 @@ NativeUtil::getLicense(QString license)
     file.close();
 
     return content;
+}
+
+QString
+NativeUtil::youTubeDLVersion()
+{
+    return YTVideoUrlFetcher::version();
 }

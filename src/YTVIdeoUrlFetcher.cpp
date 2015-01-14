@@ -39,9 +39,24 @@
 namespace {
 const char kYouTubeDLBinaryName[] = "youtube-dl";
 const int kMaxResponseCacheSize = 20;
+
+QString getYouTubeDLPath()
+{
+    static QString program;
+    if (program.isEmpty()) {
+        program = SailfishApp::pathTo("bin").toLocalFile();
+        program.append(QDir::separator());
+        program.append(kYouTubeDLBinaryName);
+        Q_ASSERT(QFile(program).exists());
+    }
+    return program;
+}
+
 }
 
 QCache<QString, QVariantMap> YTVideoUrlFetcher::_response_cache;
+QString YTVideoUrlFetcher::_version_str;
+bool YTVideoUrlFetcher::_works = false;
 
 YTVideoUrlFetcher::YTVideoUrlFetcher()
     : QObject(0)
@@ -58,8 +73,30 @@ YTVideoUrlFetcher::YTVideoUrlFetcher()
 }
 
 void
+YTVideoUrlFetcher::runInitialCheck()
+{
+    QStringList arguments;
+    arguments << "--version";
+
+    QProcess process;
+    process.start(getYouTubeDLPath(), arguments, QIODevice::ReadOnly);
+    process.waitForFinished();
+
+    if (process.exitStatus() == QProcess::NormalExit &&
+        process.exitCode() == 0) {
+        _version_str = process.readAllStandardOutput();
+        _version_str = _version_str.simplified();
+        _works = true;
+        qDebug() << "youtube-dl works, current version:" << _version_str;
+    } else {
+        qWarning() << "youtune-dl is non functional:" << process.readAllStandardError();
+    }
+}
+
+void
 YTVideoUrlFetcher::fetchUrlsFor(QString videoId)
 {
+    Q_ASSERT(_works);
     QMetaObject::invokeMethod(this, "onFetchUrlsFor",
         Qt::QueuedConnection, Q_ARG(QString, videoId));
 }
@@ -78,10 +115,6 @@ YTVideoUrlFetcher::onFetchUrlsFor(QString videoId)
         return;
     }
 
-    QString program = SailfishApp::pathTo("bin").toLocalFile();
-    program.append(QDir::separator());
-    program.append(kYouTubeDLBinaryName);
-
     QStringList arguments;
     arguments << "--dump-json"
               << "--youtube-skip-dash-manifest"
@@ -89,14 +122,14 @@ YTVideoUrlFetcher::onFetchUrlsFor(QString videoId)
               << "--no-call-home"
               << "https://www.youtube.com/watch?v=" + videoId;
 
-    qDebug() << "YouTubeDL subprocess:" << program << arguments;
+    qDebug() << "YouTubeDL subprocess:" << getYouTubeDLPath() << arguments;
 
     _process = new QProcess(0);
     connect(_process, SIGNAL(finished(int, QProcess::ExitStatus)),
             this, SLOT(onProcessFinished(int, QProcess::ExitStatus)));
     connect(_process, SIGNAL(error(QProcess::ProcessError)),
             this, SLOT(onProcessError(QProcess::ProcessError)));
-    _process->start(program, arguments, QIODevice::ReadOnly);
+    _process->start(getYouTubeDLPath(), arguments, QIODevice::ReadOnly);
 }
 
 void
@@ -104,33 +137,28 @@ YTVideoUrlFetcher::onProcessFinished(int code, QProcess::ExitStatus status)
 {
     qDebug() << "youtube-dl process finished, status:" << status
              << ", exit code:" << code;
-    if (status == QProcess::NormalExit) {
-        if (code == 0) {
-            QByteArray rawJson = _process->readAllStandardOutput();
-            QJsonParseError error;
-            QJsonDocument doc = QJsonDocument::fromJson(rawJson, &error);
-            if (error.error != QJsonParseError::NoError) {
-                qCritical() << "JSON parse error:" << error.errorString();
-                emit failure();
-            } else {
-                Q_ASSERT(!doc.isNull());
-                QVariantMap response = parseResponse(doc);
-                if (!response.isEmpty()) {
-                    QVariantMap map = doc.toVariant().toMap();
-                    Q_ASSERT(!map.isEmpty() && map.contains("id"));
-                    _response_cache.insert(map["id"].toString(), new QVariantMap(response));
-                    emit success(response);
-                } else {
-                    emit failure();
-                }
-            }
-        } else {
-            qCritical() << "YouTubeDL process did not finish cleanly:" << code;
-            qCritical() << _process->readAllStandardError();
+    if (status == QProcess::NormalExit && code == 0) {
+        QByteArray rawJson = _process->readAllStandardOutput();
+        QJsonParseError error;
+        QJsonDocument doc = QJsonDocument::fromJson(rawJson, &error);
+        if (error.error != QJsonParseError::NoError) {
+            qCritical() << "JSON parse error:" << error.errorString();
             emit failure();
+        } else {
+            Q_ASSERT(!doc.isNull());
+            QVariantMap response = parseResponse(doc);
+            if (!response.isEmpty()) {
+                QVariantMap map = doc.toVariant().toMap();
+                Q_ASSERT(!map.isEmpty() && map.contains("id"));
+                _response_cache.insert(map["id"].toString(), new QVariantMap(response));
+                emit success(response);
+            } else {
+                emit failure();
+            }
         }
     } else {
-        qCritical() << "youtube-dl process has crashed!";
+        qCritical() << "YouTubeDL process did not finish cleanly:"
+                    << _process->readAllStandardError();
         emit failure();
     }
     delete _process;
