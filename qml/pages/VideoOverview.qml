@@ -181,8 +181,6 @@ Page {
                     return true
                 return false
             })
-            if (!browserPage)
-                channelBrowserMenu.visible = true
 
             if (localVideo.status !== YTLocalVideo.Downloaded && !streamUrlRequest.loaded)
                 streamUrlRequest.run()
@@ -309,13 +307,10 @@ Page {
                 //: Menu option opening YouTube video page in a web browser
                 //% "Open in browser"
                 text: qsTrId("ytplayer-action-open-in-browser")
-                visible: priv.hasDirectVideoUrl
                 onClicked: Qt.openUrlExternally(kYoutubeVideoUrlBase + videoId)
             }
 
             MenuItem {
-                id: channelBrowserMenu
-                visible: false
                 //: menu option allowing the user to browser YouTube channel
                 //% "Browser channel"
                 text: qsTrId("ytplayer-action-browse-channel")
@@ -330,16 +325,12 @@ Page {
             id: header
             anchors.top: parent.top
             anchors.right: parent.right
-            visible: (streamUrlRequest.loaded ||
-                      localVideo.status === YTLocalVideo.Downloaded) &&
-                     page.status === PageStatus.Active
+            labelOpacity: streamUrlRequest.busy ? 0.5 : 1.0
+            indicatorRunning: streamUrlRequest.busy
             isPortrait: page.isPortrait
-            text: priv.hasDirectVideoUrl ?
-                    //: Label for video play button
-                    //% "Play"
-                    qsTrId("ytplayer-label-play") :
-                    //% "Open in browser"
-                    qsTrId("ytplayer-label-open-in-browser")
+            //: Label for video play button
+            //% "Play"
+            text: qsTrId("ytplayer-label-play")
             onClicked: page.play()
         }
 
