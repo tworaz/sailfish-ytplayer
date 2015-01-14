@@ -46,6 +46,8 @@ Page {
             //% "Third party software"
             title: qsTrId("ytplayer-title-third-party-software")
         }
+
+        // nemo-qml-plugin-notifications
         Item {
             width: parent.width
             height: Theme.paddingLarge
@@ -71,6 +73,8 @@ Page {
                 "licenseFile": "LICENSE.nemo-notifications"
             })
         }
+
+        // duration.js
         Item {
             width: parent.width
             height: Theme.paddingLarge
@@ -94,6 +98,33 @@ Page {
             text: qsTrId("ytplayer-action-view-license")
             onClicked: pageStack.push(Qt.resolvedUrl("LicenseViewer.qml"), {
                 "licenseFile": "LICENSE.durationjs"
+            })
+        }
+
+        // youtube-dl
+        Item {
+            width: parent.width
+            height: Theme.paddingLarge
+        }
+        Label {
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: Theme.fontSizeExtraSmall
+            color: Theme.secondaryColor
+            text: "youtube-dl"
+        }
+        Label {
+            anchors.horizontalCenter: parent.horizontalCenter
+            font.pixelSize: Theme.fontSizeExtraSmall
+            color: Theme.secondaryColor
+            text: "Public Domain License"
+        }
+        Button {
+            anchors.horizontalCenter: parent.horizontalCenter
+            //: Button for showing license viewer page
+            //% "View license"
+            text: qsTrId("ytplayer-action-view-license")
+            onClicked: pageStack.push(Qt.resolvedUrl("LicenseViewer.qml"), {
+                "licenseFile": "LICENSE.youtube-dl"
             })
         }
     }
