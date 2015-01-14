@@ -38,7 +38,10 @@
 
 namespace {
 const char kYouTubeDLBinaryName[] = "youtube-dl";
+const int kMaxResponseCacheSize = 20;
 }
+
+QCache<QString, QVariantMap> YTVideoUrlFetcher::_response_cache;
 
 YTVideoUrlFetcher::YTVideoUrlFetcher()
     : QObject(0)
@@ -48,6 +51,7 @@ YTVideoUrlFetcher::YTVideoUrlFetcher()
     if (!registered) {
         qRegisterMetaType<QProcess::ExitStatus>("QProcess::ExitStatus");
         qRegisterMetaType<QProcess::ProcessError>("QProcess::ProcessError");
+        _response_cache.setMaxCost(kMaxResponseCacheSize);
         registered = true;
     }
     moveToThread(GetBackgroundTaskThread());
@@ -66,6 +70,13 @@ YTVideoUrlFetcher::onFetchUrlsFor(QString videoId)
     Q_ASSERT(!_process);
 
     qDebug() << "Trying to obtain video urls for:" << videoId;
+
+    if (_response_cache.contains(videoId)) {
+        qDebug() << "Response for" << videoId << "available in cache, using it";
+        QVariantMap response = *_response_cache[videoId];
+        emit success(response);
+        return;
+    }
 
     QString program = SailfishApp::pathTo("bin").toLocalFile();
     program.append(QDir::separator());
@@ -104,10 +115,14 @@ YTVideoUrlFetcher::onProcessFinished(int code, QProcess::ExitStatus status)
             } else {
                 Q_ASSERT(!doc.isNull());
                 QVariantMap response = parseResponse(doc);
-                if (response.isEmpty())
-                    emit failure();
-                else
+                if (!response.isEmpty()) {
+                    QVariantMap map = doc.toVariant().toMap();
+                    Q_ASSERT(!map.isEmpty() && map.contains("id"));
+                    _response_cache.insert(map["id"].toString(), new QVariantMap(response));
                     emit success(response);
+                } else {
+                    emit failure();
+                }
             }
         } else {
             qCritical() << "YouTubeDL process did not finish cleanly:" << code;
