@@ -46,7 +46,6 @@ OTHER_FILES += \
         scripts/mcc-data-util.py \
         scripts/generate-config-h.py \
         scripts/get_version_str.sh \
-        rpm/harbour-ytplayer.yaml \
         rpm/harbour-ytplayer.spec
 
 include(third_party/notifications.pri)
