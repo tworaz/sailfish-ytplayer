@@ -266,6 +266,8 @@ Label for menu option allowing the user to change video quality</extracomment>
 ----------
 Button for showing license viewer page
 ----------
+Button for showing license viewer page
+----------
 Button for showing license viewer page</extracomment>
         <translation>View license</translation>
     </message>
@@ -475,10 +477,6 @@ Label for channel name text field</extracomment>
         <source>Play</source>
         <extracomment>Label for video play button</extracomment>
         <translation>Play</translation>
-    </message>
-    <message id="ytplayer-label-open-in-browser">
-        <source>Open in browser</source>
-        <translation>Open in browser</translation>
     </message>
     <message id="ytplayer-label-clear-cache">
         <source>Clear cache</source>
@@ -724,6 +722,16 @@ Remorse popup message telling the user video download will be removed</extracomm
         <source>Browser channel</source>
         <extracomment>menu option allowing the user to browser YouTube channel</extracomment>
         <translation>Browse channel</translation>
+    </message>
+    <message id="ytplayer-msg-direct-playback-impossible">
+        <source>Direct video playback not possible</source>
+        <extracomment>Notification summary informing the user direct video playback is not possible</extracomment>
+        <translation>Direct video playback not possible</translation>
+    </message>
+    <message id="ytplayer-msg-direct-playback-impossible-desc">
+        <source>YTPLayer failed to find usable video streams</source>
+        <extracomment>Notification body explaining why direct video playback is not possible</extracomment>
+        <translation>YTPlayer failed to find usable video streams</translation>
     </message>
 </context>
 </TS>
