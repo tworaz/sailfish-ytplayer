@@ -189,6 +189,17 @@ Page {
         }
     }
 
+    Notification {
+        id: noStreamsNotification
+        category: "network.error"
+        //: Notification summary informing the user direct video playback is not possible
+        //% "Direct video playback not possible"
+        previewSummary: qsTrId("ytplayer-msg-direct-playback-impossible")
+        //: Notification body explaining why direct video playback is not possible
+        //% "YTPLayer failed to find usable video streams"
+        previewBody: qsTrId("ytplayer-msg-direct-playback-impossible-desc")
+    }
+
     YTRequest {
         id: streamUrlRequest
         method: YTRequest.List
@@ -197,6 +208,7 @@ Page {
             "video_id" : videoId,
         }
         onSuccess: handleStreamChange(response)
+        onError: noStreamsNotification.publish()
     }
 
     YTLocalVideo {
@@ -327,7 +339,7 @@ Page {
             id: header
             anchors.top: parent.top
             anchors.right: parent.right
-            labelOpacity: streamUrlRequest.busy ? 0.5 : 1.0
+            labelOpacity: priv.hasDirectVideoUrl ? 1.0 : 0.5
             indicatorRunning: streamUrlRequest.busy
             isPortrait: page.isPortrait
             //: Label for video play button
