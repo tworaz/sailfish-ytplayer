@@ -98,7 +98,7 @@ function plainToStyledText(txt)
             tldRegex.source,
             '(?:',
                 urlSuffixRegex.source,
-            ')',
+            ')?',
         ')'].join(""), "gi")
 
     result = txt.replace(r, '\<a href="$1"\>$1\</\a\>')
