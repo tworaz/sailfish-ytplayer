@@ -1,9 +1,9 @@
-Name:       harbour-ytplayer
-
 %{!?qtc_qmake:%define qtc_qmake %qmake}
 %{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
+
+Name:       harbour-ytplayer
 Summary:    Native YouTube client for SailfishOS
 Version:    0.4.99
 Release:    1
@@ -11,7 +11,6 @@ Group:      Qt/Qt
 License:    BSD-3-Clause
 URL:        https://github.com/tworaz/sailfish-ytplayer
 Source0:    %{name}-%{version}.tar.bz2
-Source100:  harbour-ytplayer.yaml
 Requires:   sailfishsilica-qt5 >= 0.10.9
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Qml)
