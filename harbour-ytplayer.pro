@@ -8,7 +8,7 @@
 #         - icon definition filename in desktop file must be changed
 TARGET = harbour-ytplayer
 
-CONFIG += sailfishapp
+CONFIG += sailfishapp sailfishapp_no_deploy_qml
 QT += dbus sql
 
 SOURCES += \
@@ -47,53 +47,11 @@ OTHER_FILES += \
         scripts/generate-config-h.py \
         scripts/get_version_str.sh \
         rpm/harbour-ytplayer.yaml \
-        rpm/harbour-ytplayer.spec \
-        qml/YTPlayer.qml \
-        \
-        qml/common/AsyncImage.qml \
-        qml/common/HeaderButton.qml \
-        qml/common/KeyValueLabel.qml \
-        qml/common/MainMenuItem.qml \
-        qml/common/SettingsButton.qml \
-        qml/common/StatItem.qml \
-        qml/common/YTLikeButtons.qml \
-        qml/common/YTListItem.qml \
-        qml/common/YTVideoList.qml \
-        qml/common/Helpers.js \
-        qml/common/duration.js \
-        \
-        qml/cover/Default.qml \
-        qml/cover/VideoOverview.qml \
-        qml/cover/VideoPlayer.qml \
-        qml/cover/ChannelBrowser.qml \
-        qml/cover/CategoryVideoList.qml \
-        qml/cover/NetworkOffline.qml \
-        \
-        qml/pages/Account.qml \
-        qml/pages/VideoOverview.qml \
-        qml/pages/VideoPlayer.qml \
-        qml/pages/Search.qml \
-        qml/pages/SearchOptions.qml \
-        qml/pages/VideoCategories.qml \
-        qml/pages/Settings.qml \
-        qml/pages/About.qml \
-        qml/pages/ChannelBrowser.qml \
-        qml/pages/VideoController.qml \
-        qml/pages/CategoryVideoList.qml \
-        qml/pages/YTOAuth2.qml \
-        qml/pages/LogViewer.qml \
-        qml/pages/NetworkOffline.qml \
-        qml/pages/MainMenu.qml \
-        qml/pages/LicenseViewer.qml \
-        qml/pages/ThirdPartySoftware.qml \
-        qml/pages/DownloadedVideos.qml \
-        qml/pages/DownloadSettings.qml \
-        qml/pages/CacheSettings.qml
+        rpm/harbour-ytplayer.spec
 
 include(third_party/notifications.pri)
 include(third_party/youtube_dl.pri)
 include(languages/translations.pri)
-include(resources/resources.pri)
 
 !exists($${top_srcdir}/youtube-data-api-v3.key) {
     error("YouTube data api key file not found: youtube-data-api-v3.key")
@@ -129,3 +87,17 @@ SOURCES += \
         qml/pages/*.qml \
         qml/pages/*.js
 }
+
+RESOURCES += \
+    YTPlayer.qrc
+
+mcc_data.target = mcc-data
+mcc_data.commands = \
+    $$top_srcdir/scripts/mcc-data-util.py \
+        --keyfile=$$top_srcdir/youtube-data-api-v3.key \
+        --mccfile=$$top_srcdir/resources/mcc-data.json \
+        --verbose --mode check
+
+QMAKE_EXTRA_TARGETS += mcc-data
+PRE_TARGETDEPS += mcc-data
+

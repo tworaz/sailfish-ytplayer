@@ -176,7 +176,8 @@ main(int argc, char *argv[])
     view->rootContext()->setContextProperty("Prefs", prefs.data());
     view->rootContext()->setContextProperty("gNetworkManager", &YTNetworkManager::instance());
 
-    view->setSource(SailfishApp::pathTo("qml/YTPlayer.qml"));
+    view->engine()->addImportPath("qrc:/ui/qml/");
+    view->setSource(QUrl("qrc:/ui/qml/YTPlayer.qml"));
     view->engine()->setNetworkAccessManagerFactory(new YTPNetworkAccessManagerFactory());
 
     view->showFullScreen();
