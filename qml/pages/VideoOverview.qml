@@ -31,6 +31,7 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer 1.0
 import harbour.ytplayer.notifications 1.0
+import "../common/Helpers.js" as Helpers
 import "../common/duration.js" as DJS
 import "../common"
 
@@ -145,8 +146,9 @@ Page {
             console.assert(response.items[0].kind === "youtube#video")
             var details = response.items[0]
             //Log.debug("Have video details: " + JSON.stringify(details, undefined, 2))
+
             if (details.snippet.description) {
-                description.text = details.snippet.description
+                description.text = Helpers.plainToStyledText(details.snippet.description)
             } else {
                 description.visible = false
             }
@@ -380,9 +382,10 @@ Page {
                         anchors.right: parent.right
                         width: childrenRect.width + 2 * Theme.paddingMedium
                         height: childrenRect.height
-                        property bool enabled: localVideo.status !== YTLocalVideo.Initial
+                        property bool enabled: localVideo.status !== YTLocalVideo.Initial &&
+                                               parent.visible
                         opacity: enabled ? 1.0 : 0.0
-                        visible: opacity !== 0.0 && parent.visible
+                        visible: opacity !== 0.0
                         color: "#AA000000"
                         Behavior on opacity {
                             NumberAnimation {
@@ -502,9 +505,14 @@ Page {
             Label {
                 id: description
                 width: parent.width
-                textFormat: Text.PlainText
+                textFormat: Text.StyledText
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeExtraSmall
+                linkColor: Theme.highlightColor
+                onLinkActivated: {
+                    Log.debug("Link clicked: " + link)
+                    Qt.openUrlExternally(link)
+                }
             }
         }
 
