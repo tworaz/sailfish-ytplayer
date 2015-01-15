@@ -85,7 +85,8 @@ SOURCES += \
         qml/*.qml \
         qml/cover/*.qml \
         qml/pages/*.qml \
-        qml/pages/*.js
+        qml/common/*.qml \
+        qml/common/*.js
 }
 
 RESOURCES += \
