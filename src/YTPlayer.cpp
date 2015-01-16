@@ -38,6 +38,7 @@
 #include <QDebug>
 #include <QFontDatabase>
 #include <QSqlDatabase>
+#include <qtconcurrentrun.h>
 #include <sailfishapp.h>
 
 // third party code
@@ -72,6 +73,7 @@ InitApplicationDatabase()
     qDebug() << "Application database path: " <<
                 dbdir + QDir::separator() + kApplicationDBFileName;
 }
+
 } // namespace
 
 QThread*
@@ -184,7 +186,7 @@ main(int argc, char *argv[])
     // Make sure old downloads are restored
     YTLocalVideoManager::instance();
 
-    YTVideoUrlFetcher::runInitialCheck();
+    QtConcurrent::run(YTVideoUrlFetcher::runInitialCheck);
 
     int result = app->exec();
 
