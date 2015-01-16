@@ -88,7 +88,8 @@ OTHER_FILES += \
         qml/pages/ThirdPartySoftware.qml \
         qml/pages/DownloadedVideos.qml \
         qml/pages/DownloadSettings.qml \
-        qml/pages/CacheSettings.qml
+        qml/pages/CacheSettings.qml \
+        qml/pages/BrowserLauncher.qml
 
 include(third_party/notifications.pri)
 include(third_party/youtube_dl.pri)

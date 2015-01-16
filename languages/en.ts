@@ -733,5 +733,10 @@ Remorse popup message telling the user video download will be removed</extracomm
         <extracomment>Notification body explaining why direct video playback is not possible</extracomment>
         <translation>YTPlayer failed to find usable video streams</translation>
     </message>
+    <message id="ytplayer-msg-launching-browser">
+        <source>Launching browser</source>
+        <extracomment>Message informing the user web browser is being launched</extracomment>
+        <translation>Launching browser</translation>
+    </message>
 </context>
 </TS>
