@@ -9,7 +9,7 @@
 TARGET = harbour-ytplayer
 
 CONFIG += sailfishapp sailfishapp_no_deploy_qml
-QT += dbus sql
+QT += dbus sql concurrent
 
 SOURCES += \
         src/YTPlayer.cpp \
