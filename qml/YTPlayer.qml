@@ -80,6 +80,13 @@ ApplicationWindow
         pageStack.replaceAbove(menu, Qt.resolvedUrl("pages/Search.qml"))
     }
 
+    function openLinkInBrowser(url) {
+        Log.debug("Opening link in browser: " + url)
+        pageStack.push(Qt.resolvedUrl("pages/BrowserLauncher.qml"), {
+            "url" : url,
+        })
+    }
+
     Timer {
         id: initialConnectivityCheck
         repeat: false

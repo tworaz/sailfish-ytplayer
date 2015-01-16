@@ -321,7 +321,7 @@ Page {
                 //: Menu option opening YouTube video page in a web browser
                 //% "Open in browser"
                 text: qsTrId("ytplayer-action-open-in-browser")
-                onClicked: Qt.openUrlExternally(kYoutubeVideoUrlBase + videoId)
+                onClicked: openLinkInBrowser(kYoutubeVideoUrlBase + videoId)
             }
 
             MenuItem {
@@ -521,10 +521,7 @@ Page {
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeExtraSmall
                 linkColor: Theme.highlightColor
-                onLinkActivated: {
-                    Log.debug("Link clicked: " + link)
-                    Qt.openUrlExternally(link)
-                }
+                onLinkActivated: openLinkInBrowser(link)
             }
         }
 

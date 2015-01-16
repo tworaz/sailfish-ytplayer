@@ -58,5 +58,6 @@
         <file>qml/pages/VideoOverview.qml</file>
         <file>qml/pages/VideoPlayer.qml</file>
         <file>qml/pages/YTOAuth2.qml</file>
+        <file>qml/pages/BrowserLauncher.qml</file>
     </qresource>
 </RCC>
