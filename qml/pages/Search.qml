@@ -120,7 +120,8 @@ Page {
             height: options.height + searchField.height
 
             function focusSearchField() {
-                searchField.forceActiveFocus()
+                if (page.status === PageStatus.Active)
+                    searchField.forceActiveFocus()
             }
 
             HeaderButton {
