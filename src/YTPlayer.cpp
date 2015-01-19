@@ -38,6 +38,7 @@
 #include <QDebug>
 #include <QFontDatabase>
 #include <QSqlDatabase>
+#include <qtconcurrentrun.h>
 #include <sailfishapp.h>
 
 // third party code
@@ -72,6 +73,7 @@ InitApplicationDatabase()
     qDebug() << "Application database path: " <<
                 dbdir + QDir::separator() + kApplicationDBFileName;
 }
+
 } // namespace
 
 QThread*
@@ -176,7 +178,8 @@ main(int argc, char *argv[])
     view->rootContext()->setContextProperty("Prefs", prefs.data());
     view->rootContext()->setContextProperty("gNetworkManager", &YTNetworkManager::instance());
 
-    view->setSource(SailfishApp::pathTo("qml/YTPlayer.qml"));
+    view->engine()->addImportPath("qrc:/ui/qml/");
+    view->setSource(QUrl("qrc:/ui/qml/YTPlayer.qml"));
     view->engine()->setNetworkAccessManagerFactory(new YTPNetworkAccessManagerFactory());
 
     view->showFullScreen();
@@ -184,7 +187,7 @@ main(int argc, char *argv[])
     // Make sure old downloads are restored
     YTLocalVideoManager::instance();
 
-    YTVideoUrlFetcher::runInitialCheck();
+    QtConcurrent::run(YTVideoUrlFetcher::runInitialCheck);
 
     int result = app->exec();
 

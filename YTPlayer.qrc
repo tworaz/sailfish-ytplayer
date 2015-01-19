@@ -1,0 +1,63 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="mcc-data.json">resources/mcc-data.json</file>
+        <file alias="logo.png">resources/logo.png</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file alias="approval-64.png">resources/icons/approval-64.png</file>
+        <file alias="arrow-down-m.png">resources/icons/arrow-down-m.png</file>
+        <file alias="arrow-down-s.png">resources/icons/arrow-down-s.png</file>
+        <file alias="dislike-m.png">resources/icons/dislike-m.png</file>
+        <file alias="downloaded-videos-64.png">resources/icons/downloaded-videos-64.png</file>
+        <file alias="info-64.png">resources/icons/info-64.png</file>
+        <file alias="like-m.png">resources/icons/like-m.png</file>
+        <file alias="rss-m.png">resources/icons/rss-m.png</file>
+        <file alias="search-m.png">resources/icons/search-m.png</file>
+        <file alias="settings-64.png">resources/icons/settings-64.png</file>
+        <file alias="video-multi-m.png">resources/icons/video-multi-m.png</file>
+    </qresource>
+    <qresource prefix="/fonts">
+        <file alias="youtube-icons.ttf">resources/fonts/youtube-icons.ttf</file>
+    </qresource>
+    <qresource prefix="/ui">
+        <file>qml/YTPlayer.qml</file>
+        <file>qml/common/AsyncImage.qml</file>
+        <file>qml/common/duration.js</file>
+        <file>qml/common/HeaderButton.qml</file>
+        <file>qml/common/Helpers.js</file>
+        <file>qml/common/KeyValueLabel.qml</file>
+        <file>qml/common/MainMenuItem.qml</file>
+        <file>qml/common/SettingsButton.qml</file>
+        <file>qml/common/StatItem.qml</file>
+        <file>qml/common/YTLikeButtons.qml</file>
+        <file>qml/common/YTListItem.qml</file>
+        <file>qml/common/YTVideoList.qml</file>
+        <file>qml/cover/CategoryVideoList.qml</file>
+        <file>qml/cover/ChannelBrowser.qml</file>
+        <file>qml/cover/Default.qml</file>
+        <file>qml/cover/NetworkOffline.qml</file>
+        <file>qml/cover/VideoOverview.qml</file>
+        <file>qml/cover/VideoPlayer.qml</file>
+        <file>qml/pages/About.qml</file>
+        <file>qml/pages/Account.qml</file>
+        <file>qml/pages/CacheSettings.qml</file>
+        <file>qml/pages/CategoryVideoList.qml</file>
+        <file>qml/pages/ChannelBrowser.qml</file>
+        <file>qml/pages/DownloadedVideos.qml</file>
+        <file>qml/pages/DownloadSettings.qml</file>
+        <file>qml/pages/LicenseViewer.qml</file>
+        <file>qml/pages/LogViewer.qml</file>
+        <file>qml/pages/MainMenu.qml</file>
+        <file>qml/pages/NetworkOffline.qml</file>
+        <file>qml/pages/Search.qml</file>
+        <file>qml/pages/SearchOptions.qml</file>
+        <file>qml/pages/Settings.qml</file>
+        <file>qml/pages/ThirdPartySoftware.qml</file>
+        <file>qml/pages/VideoCategories.qml</file>
+        <file>qml/pages/VideoController.qml</file>
+        <file>qml/pages/VideoOverview.qml</file>
+        <file>qml/pages/VideoPlayer.qml</file>
+        <file>qml/pages/YTOAuth2.qml</file>
+        <file>qml/pages/BrowserLauncher.qml</file>
+    </qresource>
+</RCC>
