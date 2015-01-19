@@ -41,7 +41,15 @@ HEADERS += \
         src/YTVideoDownloadNotification.h \
         src/YTVideoUrlFetcher.h
 
+QML_SOURCES = \
+        qml/*.qml \
+        qml/pages/*.qml \
+        qml/cover/*.qml \
+        qml/common/*.qml \
+        qml/common/*.js
+
 OTHER_FILES += \
+        $$QML_SOURCES \
         harbour-ytplayer.desktop \
         scripts/mcc-data-util.py \
         scripts/generate-config-h.py \
@@ -59,19 +67,20 @@ include(languages/translations.pri)
     warning("YouTube client ID file not found, client authotization won't work!")
 }
 
-# config.h target
-config_h.target = config.h
-config_h.commands = \
-    $$top_srcdir/scripts/generate-config-h.py \
-            --keyfile=$$top_srcdir/youtube-data-api-v3.key \
-            --idfile=$$top_srcdir/youtube-client-id.json \
-            --outfile=$$top_builddir/config.h
-config_h.depends = \
-    $$top_srcdir/youtube-data-api-v3.key \
-    $$top_srcdir/youtube-client-id.json
+KEY_FILE = $$top_srcdir/youtube-data-api-v3.key
+CLIENT_ID_FILE = $$top_srcdir/youtube-client-id.json
 
-QMAKE_EXTRA_TARGETS += config_h
-PRE_TARGETDEPS += config.h
+configh.input = KEY_FILE
+configh.output = $$top_builddir/config.h
+configh.commands = \
+    $$top_srcdir/scripts/generate-config-h.py \
+            --keyfile=$$KEY_FILE \
+            --idfile=$$CLIENT_ID_FILE \
+            --outfile=$$top_builddir/config.h
+configh.CONFIG += no_link
+
+QMAKE_EXTRA_COMPILERS += configh
+PRE_TARGETDEPS += compiler_configh_make_all
 
 DEFINES += VERSION_STR=\\\"$$system($${top_srcdir}/scripts/get_version_str.sh)\\\"
 
@@ -80,12 +89,7 @@ licenses.path = /usr/share/$${TARGET}/licenses
 INSTALLS += licenses
 
 lupdate_only {
-SOURCES += \
-        qml/*.qml \
-        qml/cover/*.qml \
-        qml/pages/*.qml \
-        qml/common/*.qml \
-        qml/common/*.js
+SOURCES += $$QML_SOURCES
 }
 
 RESOURCES += \
