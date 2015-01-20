@@ -46,11 +46,13 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                //: Menu option to clear application caches
+                //: "Menu option to clear application caches"
                 //% "Clear cache"
                 text: qsTrId("ytplayer-label-clear-cache")
                 onClicked: {
-                    remorse.execute("Clearing cache", function() {
+                    //: "Remorse popup message telling the user the cache will be cleaned"
+                    //% "Clear cache"
+                    remorse.execute(qsTrId("ytplayer-msg-clearing-cache"), function() {
                         gNetworkManager.clearCache()
                     })
                 }
@@ -67,7 +69,9 @@ Page {
             spacing: Theme.paddingMedium
 
             PageHeader {
-                title: "Cache settings"
+                //: "Title of cache settings page"
+                //% "Cache settings"
+                title: qsTrId("ytplayer-title-cache-settings")
             }
 
             Slider {

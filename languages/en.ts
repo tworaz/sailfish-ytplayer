@@ -520,6 +520,11 @@ Label for channel name text field</extracomment>
         <extracomment>Label indicating the video was downloaded to local device storage</extracomment>
         <translation>Downloaded</translation>
     </message>
+    <message id="ytplayer-title-cache-settings">
+        <source>Cache</source>
+        <extracomment>Title of cache settings page</extracomment>
+        <translation>Cache</translation>
+    </message>
     <message id="ytplayer-label-video-download-paused">
         <source>Download paused</source>
         <extracomment>&quot;Label indicating video download was paused&quot;</extracomment>
@@ -657,6 +662,11 @@ Remorse popup message telling the user video download will be cancelled</extraco
 ----------
 Remorse popup message telling the user video download will be removed</extracomment>
         <translation>Removing download</translation>
+    </message>
+    <message id="ytplayer-msg-clearing-cache">
+        <source>Clearing cache</source>
+        <extracomment>Remorse popup message telling the user the cache will be cleaned</extracomment>
+        <translation>Clearing cache</translation>
     </message>
     <message id="ytplayer-action-cache-settings">
         <source>Cache</source>
