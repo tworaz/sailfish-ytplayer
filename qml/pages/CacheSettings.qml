@@ -46,12 +46,12 @@ Page {
 
         PullDownMenu {
             MenuItem {
-                //: "Menu option to clear application caches"
+                //: Menu option to clear application caches
                 //% "Clear cache"
                 text: qsTrId("ytplayer-label-clear-cache")
                 onClicked: {
-                    //: "Remorse popup message telling the user the cache will be cleaned"
-                    //% "Clear cache"
+                    //: Remorse popup message telling the user the cache will be cleaned
+                    //% "Clearing cache"
                     remorse.execute(qsTrId("ytplayer-msg-clearing-cache"), function() {
                         gNetworkManager.clearCache()
                     })
@@ -69,13 +69,13 @@ Page {
             spacing: Theme.paddingMedium
 
             PageHeader {
-                //: "Title of cache settings page"
+                //: Title of cache settings page
                 //% "Cache settings"
                 title: qsTrId("ytplayer-title-cache-settings")
             }
 
             Slider {
-                //: "Label for image cache size slider"
+                //: Label for image cache size slider
                 //% "Image cache size"
                 label: qsTrId("ytplayer-label-image-cache-size")
                 width: parent.width
@@ -91,7 +91,7 @@ Page {
                 }
             }
             KeyValueLabel {
-                //: "Label for current cache usage label"
+                //: Label for current cache usage label
                 //% "Current usage"
                 key: qsTrId("ytplayer-label-current-usage")
                 width: parent.width
@@ -100,7 +100,7 @@ Page {
                 horizontalAlignment: Text.AlignHCenter
             }
             Slider {
-                //: "Label for YouTube API response cache size slider"
+                //: Label for YouTube API response cache size slider
                 //% "YouTube API response cache size"
                 label: qsTrId("ytplayer-label-api-req-cache-size")
                 width: parent.width
@@ -116,7 +116,7 @@ Page {
                 }
             }
             KeyValueLabel {
-                //: "Label for current cache usage label"
+                //: Label for current cache usage label
                 //% "Current usage"
                 key: qsTrId("ytplayer-label-current-usage")
                 width: parent.width

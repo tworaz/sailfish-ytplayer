@@ -485,19 +485,19 @@ Label for channel name text field</extracomment>
     </message>
     <message id="ytplayer-label-image-cache-size">
         <source>Image cache size</source>
-        <extracomment>&quot;Label for image cache size slider&quot;</extracomment>
+        <extracomment>Label for image cache size slider</extracomment>
         <translation>Image cache size</translation>
     </message>
     <message id="ytplayer-label-current-usage">
         <source>Current usage</source>
-        <extracomment>&quot;Label for current cache usage label&quot;
+        <extracomment>Label for current cache usage label
 ----------
-&quot;Label for current cache usage label&quot;</extracomment>
+Label for current cache usage label</extracomment>
         <translation>Current usage</translation>
     </message>
     <message id="ytplayer-label-api-req-cache-size">
         <source>YouTube API response cache size</source>
-        <extracomment>&quot;Label for YouTube API response cache size slider&quot;</extracomment>
+        <extracomment>Label for YouTube API response cache size slider</extracomment>
         <translation>YouTube API response cache size</translation>
     </message>
     <message id="ytplayer-label-video-queued">
@@ -521,9 +521,9 @@ Label for channel name text field</extracomment>
         <translation>Downloaded</translation>
     </message>
     <message id="ytplayer-title-cache-settings">
-        <source>Cache</source>
+        <source>Cache settings</source>
         <extracomment>Title of cache settings page</extracomment>
-        <translation>Cache</translation>
+        <translation type="unfinished">Cache</translation>
     </message>
     <message id="ytplayer-label-video-download-paused">
         <source>Download paused</source>
@@ -749,39 +749,39 @@ Remorse popup message telling the user video download will be removed</extracomm
         <translation>Launching browser</translation>
     </message>
     <message id="ytplayer-action-clear-history">
-	    <source>Clear history</source>
-	    <extracomment>Menu option allowing the user to clear search history</extracomment>
-	    <translation>Clear history</translation>
+        <source>Clear history</source>
+        <extracomment>Menu option allowing the user to clear search history</extracomment>
+        <translation>Clear history</translation>
     </message>
     <message id="ytplayer-msg-clearing-history">
-	    <source>Clearing history</source>
-	    <extracomment>&quot;Remorse popup message telling the user search history is about to be cleared&quot;</extracomment>
-	    <translation>Clearing history</translation>
+        <source>Clearing history</source>
+        <extracomment>&quot;Remorse popup message telling the user search history is about to be cleared&quot;</extracomment>
+        <translation>Clearing history</translation>
     </message>
     <message id="ytplayer-title-search-settings">
-	    <source>Search settings</source>
-	    <extracomment>Search settings page title</extracomment>
-	    <translation>Search settings</translation>
+        <source>Search settings</source>
+        <extracomment>Search settings page title</extracomment>
+        <translation>Search settings</translation>
     </message>
     <message id="ytplayer-label-suggestion-engine">
-	    <source>Suggestion engine</source>
-	    <extracomment>Label for the search suggestion engine combo box</extracomment>
-	    <translation>Suggestion engine</translation>
+        <source>Suggestion engine</source>
+        <extracomment>Label for the search suggestion engine combo box</extracomment>
+        <translation>Suggestion engine</translation>
     </message>
     <message id="ytplayer-label-google-suggestion-engine">
-	    <source>Google</source>
-	    <extracomment>Label for Google based search suggestion engine</extracomment>
-	    <translation>Google</translation>
+        <source>Google</source>
+        <extracomment>Label for Google based search suggestion engine</extracomment>
+        <translation>Google</translation>
     </message>
     <message id="ytplayer-label-history-suggestion-engine">
-	    <source>History</source>
-	    <extracomment>Label for history based search suggestion engine</extracomment>
-	    <translation>History</translation>
+        <source>History</source>
+        <extracomment>Label for history based search suggestion engine</extracomment>
+        <translation>History</translation>
     </message>
     <message id="ytplayer-action-search-settings">
-	    <source>Search</source>
-	    <extracomment>Label for menu option showing search settings page</extracomment>
-	    <translation>Search</translation>
+        <source>Search</source>
+        <extracomment>Label for menu option showing search settings page</extracomment>
+        <translation>Search</translation>
     </message>
 </context>
 </TS>
