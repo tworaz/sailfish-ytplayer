@@ -748,5 +748,40 @@ Remorse popup message telling the user video download will be removed</extracomm
         <extracomment>Message informing the user web browser is being launched</extracomment>
         <translation>Launching browser</translation>
     </message>
+    <message id="ytplayer-action-clear-history">
+	    <source>Clear history</source>
+	    <extracomment>Menu option allowing the user to clear search history</extracomment>
+	    <translation>Clear history</translation>
+    </message>
+    <message id="ytplayer-msg-clearing-history">
+	    <source>Clearing history</source>
+	    <extracomment>&quot;Remorse popup message telling the user search history is about to be cleared&quot;</extracomment>
+	    <translation>Clearing history</translation>
+    </message>
+    <message id="ytplayer-title-search-settings">
+	    <source>Search settings</source>
+	    <extracomment>Search settings page title</extracomment>
+	    <translation>Search settings</translation>
+    </message>
+    <message id="ytplayer-label-suggestion-engine">
+	    <source>Suggestion engine</source>
+	    <extracomment>Label for the search suggestion engine combo box</extracomment>
+	    <translation>Suggestion engine</translation>
+    </message>
+    <message id="ytplayer-label-google-suggestion-engine">
+	    <source>Google</source>
+	    <extracomment>Label for Google based search suggestion engine</extracomment>
+	    <translation>Google</translation>
+    </message>
+    <message id="ytplayer-label-history-suggestion-engine">
+	    <source>History</source>
+	    <extracomment>Label for history based search suggestion engine</extracomment>
+	    <translation>History</translation>
+    </message>
+    <message id="ytplayer-action-search-settings">
+	    <source>Search</source>
+	    <extracomment>Label for menu option showing search settings page</extracomment>
+	    <translation>Search</translation>
+    </message>
 </context>
 </TS>

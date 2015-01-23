@@ -40,6 +40,10 @@ const char kWiFiOnly[] = "WiFi";
 const char kCellularOnly[] = "Cellular";
 const char kWiFiAndCellular[] = "WiFi+Cellular";
 
+const char kSearchSuggestionEngineKey[] = "Search/SuggestionEngine";
+const char kHistorySuggestionEngine[] = "History";
+const char kGoogleSuggestionEngine[] = "Google";
+
 Prefs::Prefs(QObject *parent)
     : QObject(parent)
 {
@@ -73,6 +77,10 @@ Prefs::Initialize()
         dir += "YTPlayer";
         settings.setValue("Download/Location", dir);
     }
+
+    if (!settings.contains(kSearchSuggestionEngineKey))
+        settings.setValue(kSearchSuggestionEngineKey,
+                          kHistorySuggestionEngine);
 }
 
 void

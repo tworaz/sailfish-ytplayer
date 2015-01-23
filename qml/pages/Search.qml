@@ -41,6 +41,8 @@ Page {
         property Item optionsPage
         property string nextPageToken: ""
         property variant searchParams: ({})
+        property bool ignoreNextAtYBeginning: false
+        property real autoLoadThreshold: 0.8
     }
 
     onStatusChanged: {
@@ -51,7 +53,14 @@ Page {
                     Qt.resolvedUrl("SearchOptions.qml"))
             }
             updateSearchParams()
+            // Only auto focus search field if the list is not scrolled
+            if (searchView.headerItem.height + searchView.contentY === 0)
+                focusSearchField()
         }
+    }
+
+    Component.onCompleted: {
+        Log.info("YouTube search page created")
     }
 
     function updateSearchParams() {
@@ -66,15 +75,14 @@ Page {
         var params = {
             "part" : "snippet",
         }
-        for (var prop in s) {
+        for (var prop in s)
             params[prop] = s[prop]
-        }
         priv.searchParams = params
         priv.optionsPage.changed = false
         Log.debug("Search params updated: " + JSON.stringify(params, undefined, 2))
 
-        if (searchHandler.queryStr.length > 0)
-            searchHandler.onTriggered()
+        if (searchView.headerItem.queryText.length > 0)
+            performSearch(searchView.headerItem.queryText)
     }
 
     function performSearch(queryStr, pageToken) {
@@ -82,9 +90,27 @@ Page {
         params.q = queryStr
         if (pageToken) {
             params.pageToken = pageToken
+        } else {
+            clearSearch()
         }
+
         request.params = params
+
+        suggestions.clear()
+
         request.run()
+        suggestions.addToSearchHistory(queryStr)
+    }
+
+    function clearSearch() {
+        priv.nextPageToken = ""
+        resultsListModel.clear()
+    }
+
+    function focusSearchField() {
+        if (page.status === PageStatus.Active &&
+            searchView.headerItem)
+            searchView.headerItem.focusSearchField();
     }
 
     YTRequest {
@@ -97,7 +123,30 @@ Page {
             console.assert(response.kind === "youtube#searchListResponse")
             if (response.hasOwnProperty("nextPageToken")) {
                 priv.nextPageToken = response.nextPageToken
+            } else {
+                priv.nextPageToken = ""
             }
+
+            // Make sure keyboard is not shown
+            priv.ignoreNextAtYBeginning = true
+            priv.autoLoadThreshold =
+                1.0 - (kListAutoLoadItemThreshold / resultsListModel.count)
+        }
+    }
+
+    SearchSuggestions {
+        id: suggestions
+        anchors.bottom: parent.bottom
+        width: parent.width
+        height: page.height - searchView.headerItem.height
+        visible: hasResults && resultsListModel.count === 0 &&
+                 !request.busy
+        z: searchView.z + 10
+        isPortrait: page.isPortrait
+
+        onSelected: {
+            searchView.headerItem.changeSearchText(suggestion)
+            performSearch(suggestion)
         }
     }
 
@@ -105,23 +154,21 @@ Page {
         id: searchView
         anchors.fill: parent
 
-        PullDownMenu {
-            visible: request.busy
-            busy: true
-        }
-
-        PushUpMenu {
-            visible: request.busy
-            busy: true
-        }
-
         header: Item {
             width: page.width
             height: options.height + searchField.height
 
+            property alias queryText: searchField.text
+            property alias searchFieldHeight: searchField.height
+
             function focusSearchField() {
-                if (page.status === PageStatus.Active)
-                    searchField.forceActiveFocus()
+                searchField.forceActiveFocus()
+            }
+
+            function changeSearchText(txt) {
+                searchField._ignoreTextChange = true
+                searchField.text = txt
+                searchField._ignoreTextChange = false
             }
 
             HeaderButton {
@@ -138,27 +185,42 @@ Page {
             }
             SearchField {
                 id: searchField
+                property bool _ignoreTextChange: false
                 anchors.top: options.bottom
                 width: parent.width
                 //: Label of video search text field
                 //% "Search"
                 placeholderText: qsTrId("ytplayer-label-search")
                 onTextChanged: {
-                    searchView.currentIndex = -1
-                    searchHandler.search(text)
+                    if (_ignoreTextChange)
+                        return;
+
+                    clearSearch()
+                    if (text.length > 0) {
+                        suggestions.query = text
+                    } else {
+                        suggestions.clear()
+                    }
                 }
+                EnterKey.enabled: text.length > 0
+                EnterKey.onClicked: performSearch(text)
             }
         }
 
         Item {
             anchors.bottom: parent.bottom
             width: parent.width
-            height: parent.height - parent.headerItem.height / 2
+            height: parent.height - parent.headerItem.searchFieldHeight
 
             Label {
                 anchors.centerIn: parent
                 color: Theme.secondaryHighlightColor
-                visible: resultsListModel.count === 0 && !indicator.running
+                font.pixelSize: Theme.fontSizeExtraLarge
+                visible: resultsListModel.count === 0 &&
+                         !suggestions.hasResults &&
+                         !indicator.running &&
+                         (searchView.height - searchView.headerItem.height > height)
+
                 //: Background label informing the user there are no search results
                 //% "No results"
                 text: qsTrId("ytplayer-search-no-results")
@@ -169,32 +231,6 @@ Page {
                 anchors.centerIn: parent
                 running: request.busy && resultsListModel.count === 0
                 size: BusyIndicatorSize.Large
-            }
-        }
-
-        Timer {
-            id: searchHandler
-            interval: 1000
-            repeat: false
-
-            property string queryStr
-
-            function search(str) {
-                queryStr = str
-                if (str.length) {
-                    restart()
-                } else {
-                    stop()
-                    resultsListModel.clear()
-                    priv.nextPageToken = ""
-                }
-            }
-
-            onTriggered: {
-                Log.debug("Searching for: " + queryStr)
-                resultsListModel.clear()
-                priv.nextPageToken = ""
-                performSearch(queryStr)
             }
         }
 
@@ -211,28 +247,33 @@ Page {
         }
 
         onAtYBeginningChanged: {
+            if (priv.ignoreNextAtYBeginning) {
+                priv.ignoreNextAtYBeginning = false
+                return
+            }
+
             if (atYBeginning && !pageStack.busy) {
                 currentIndex = -1
-                if (searchView.headerItem)
-                    searchView.headerItem.focusSearchField()
+                focusSearchField()
+            } else if (!atYBeginning && resultsListModel.count > 0 &&
+                       page.isPortrait) {
+                // XXX: In landscape mode when scrolling the view atYBeginning
+                //      often changes first to true than to false. If SW keyboard
+                //      is shown focusing 1st item on the list will scroll the view.
+                currentIndex = 1
+                currentItem.forceActiveFocus()
             }
         }
 
-        onAtYEndChanged: {
-            if (atYEnd && priv.nextPageToken.length > 0 && !request.busy)
-                loadNextResultsPage()
-        }
-
-        function loadNextResultsPage() {
-            Log.debug("Loading next page of results, token: " + priv.nextPageToken)
-            performSearch(searchHandler.queryStr, priv.nextPageToken)
-        }
-
-        Component.onCompleted: {
-            Log.debug("YouTube search page created")
-            searchView.headerItem.focusSearchField()
+        onContentYChanged: {
+            var curY = searchView.height + contentY + headerItem.height
+            if ((curY >= priv.autoLoadThreshold * contentHeight) &&
+                 !request.busy && priv.nextPageToken.length > 0) {
+                Log.debug("Loading next page of results, token: " + priv.nextPageToken)
+                performSearch(searchView.headerItem.queryText, priv.nextPageToken)
+            }
         }
 
         VerticalScrollDecorator {}
-    }
+    } // SilicaListView
 }

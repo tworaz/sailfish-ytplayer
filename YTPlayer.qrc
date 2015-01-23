@@ -59,5 +59,7 @@
         <file>qml/pages/VideoPlayer.qml</file>
         <file>qml/pages/YTOAuth2.qml</file>
         <file>qml/pages/BrowserLauncher.qml</file>
+        <file>qml/common/SearchSuggestions.qml</file>
+        <file>qml/pages/SearchSettings.qml</file>
     </qresource>
 </RCC>

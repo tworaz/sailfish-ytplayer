@@ -77,13 +77,11 @@ QHash<int, QByteArray> YTListModel::roleNames() const
 void
 YTListModel::append(QList<QVariant> list)
 {
-    if (list.isEmpty()) {
+    if (list.isEmpty())
         return;
-    }
 
-    if (_roles.isEmpty()) {
+    if (_roles.isEmpty())
         initializeRoles(list);
-    }
 
     filter(list);
 
@@ -97,9 +95,8 @@ YTListModel::append(QList<QVariant> list)
 void
 YTListModel::clear()
 {
-    if (_list.isEmpty()) {
+    if (_list.isEmpty())
         return;
-    }
 
     _roles.clear();
 

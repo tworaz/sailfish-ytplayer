@@ -50,6 +50,7 @@
 #include "YTLocalVideoManager.h"
 #include "YTLocalVideoListModel.h"
 #include "YTVideoDownloadNotification.h"
+#include "YTSuggestionEngine.h"
 #include "YTVideoUrlFetcher.h"
 #include "YTLocalVideo.h"
 #include "NativeUtil.h"
@@ -172,6 +173,7 @@ main(int argc, char *argv[])
     qmlRegisterType<YTLocalVideo>("harbour.ytplayer", 1, 0, "YTLocalVideo");
     qmlRegisterType<YTLocalVideoListModel>("harbour.ytplayer", 1, 0, "YTLocalVideoListModel");
     qmlRegisterType<YTVideoDownloadNotification>("harbour.ytplayer", 1, 0, "YTVideoDownloadNotification");
+    qmlRegisterType<YTSuggestionEngine>("harbour.ytplayer", 1, 0, "YTSuggestionEngine");
 
     view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
     view->rootContext()->setContextProperty("Log", logger.data());

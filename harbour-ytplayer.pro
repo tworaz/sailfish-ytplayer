@@ -24,7 +24,8 @@ SOURCES += \
         src/YTLocalVideoManager.cpp \
         src/YTLocalVideoListModel.cpp \
         src/YTVideoDownloadNotification.cpp \
-        src/YTVIdeoUrlFetcher.cpp
+        src/YTVIdeoUrlFetcher.cpp \
+        src/YTSuggestionEngine.cpp
 
 HEADERS += \
         src/YTPlayer.h \
@@ -39,7 +40,8 @@ HEADERS += \
         src/YTLocalVideoManager.h \
         src/YTLocalVideoListModel.h \
         src/YTVideoDownloadNotification.h \
-        src/YTVideoUrlFetcher.h
+        src/YTVideoUrlFetcher.h \
+        src/YTSuggestionEngine.h
 
 QML_SOURCES = \
         qml/*.qml \
@@ -60,15 +62,15 @@ include(third_party/notifications.pri)
 include(third_party/youtube_dl.pri)
 include(languages/translations.pri)
 
-!exists($${top_srcdir}/youtube-data-api-v3.key) {
-    error("YouTube data api key file not found: youtube-data-api-v3.key")
-}
-!exists($${top_srcdir}/youtube-client-id.json) {
-    warning("YouTube client ID file not found, client authotization won't work!")
-}
-
 KEY_FILE = $$top_srcdir/youtube-data-api-v3.key
 CLIENT_ID_FILE = $$top_srcdir/youtube-client-id.json
+
+!exists($$KEY_FILE) {
+    error("YouTube data api key file not found: youtube-data-api-v3.key")
+}
+!exists($$CLIENT_ID_FILE) {
+    warning("YouTube client ID file not found, client authotization won't work!")
+}
 
 configh.input = KEY_FILE
 configh.output = $$top_builddir/config.h

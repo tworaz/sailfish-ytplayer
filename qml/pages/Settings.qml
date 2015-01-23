@@ -107,6 +107,15 @@ Page {
                 }
             }
             SettingsButton {
+                //: Label for menu option showing search settings page
+                //% "Search"
+                text: qsTrId("ytplayer-action-search-settings")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("SearchSettings.qml"))
+                }
+            }
+
+            SettingsButton {
                 //: Label for menu option showing application logs
                 //% "Logs"
                 text: qsTrId("ytplayer-action-show-logs")

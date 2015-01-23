@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014 Peter Tworek
+ * Copyright (c) 2015 Peter Tworek
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,35 +27,52 @@
  * SUCH DAMAGE.
  */
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef YTSUGGESTIONENGINE_H
+#define YTSUGGESTIONENGINE_H
 
-#include <QString>
+#include <QNetworkAccessManager>
 #include <QVariant>
+#include <QObject>
+#include <QString>
+#include <QList>
 
-extern const char kWiFiOnly[];
-extern const char kCellularOnly[];
-extern const char kWiFiAndCellular[];
+class QNetworkReply;
 
-extern const char kSearchSuggestionEngineKey[];
-extern const char kHistorySuggestionEngine[];
-extern const char kGoogleSuggestionEngine[];
-
-class Prefs: public QObject
+class YTSuggestionEngine: public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(int historySize READ historySize NOTIFY historySizeChanged)
 public:
-    explicit Prefs(QObject *parent = 0);
+    explicit YTSuggestionEngine(QObject *parent = 0);
+    ~YTSuggestionEngine();
 
-    void Initialize();
+    Q_INVOKABLE void find(QString);
+    Q_INVOKABLE void addToHistory(QString);
+    Q_INVOKABLE void clearHistory();
 
-    Q_INVOKABLE void set(const QString& key, const QVariant& value);
-    Q_INVOKABLE QVariant get(const QString& key);
-    Q_INVOKABLE bool getBool(const QString& key);
-    Q_INVOKABLE int getInt(const QString& key);
-    Q_INVOKABLE bool isAuthEnabled();
-    Q_INVOKABLE void disableAuth();
-    Q_INVOKABLE void notifyDownloadSettingsChanged() const;
+signals:
+    void suggestionListChanged(QList<QVariant> suggestionList);
+    void historySizeChanged(int size);
+
+private slots:
+    void onClearHistory();
+    void onFinished();
+
+private:
+    typedef enum {
+        GoogleEngine,
+        HistoryEngine,
+    } SuggestionEngineType;
+
+    int historySize() const;
+    void findGoogleSuggestion(QString query);
+    void findLocalSearchHistory(QString query);
+
+    SuggestionEngineType _type;
+    QNetworkAccessManager& _network_access_manager;
+    QNetworkReply* _reply;
+
+    Q_DISABLE_COPY(YTSuggestionEngine)
 };
 
-#endif // SETTINGS_H
+#endif // YTSUGGESTIONENGINE_H
