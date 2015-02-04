@@ -523,7 +523,7 @@ Label for current cache usage label</extracomment>
     <message id="ytplayer-title-cache-settings">
         <source>Cache settings</source>
         <extracomment>Title of cache settings page</extracomment>
-        <translation type="unfinished">Cache</translation>
+        <translation>Cache settings</translation>
     </message>
     <message id="ytplayer-label-video-download-paused">
         <source>Download paused</source>
