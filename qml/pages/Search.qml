@@ -51,6 +51,10 @@ Page {
                     Qt.resolvedUrl("SearchOptions.qml"))
             }
             updateSearchParams()
+            // Only auto focus search field if the list is not scrolled
+            if (searchView.headerItem &&
+                    searchView.headerItem.height + searchView.contentY === 0)
+                searchView.headerItem.focusSearchField()
         }
     }
 
@@ -230,7 +234,6 @@ Page {
 
         Component.onCompleted: {
             Log.debug("YouTube search page created")
-            searchView.headerItem.focusSearchField()
         }
 
         VerticalScrollDecorator {}
