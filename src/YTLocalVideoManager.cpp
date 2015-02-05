@@ -693,7 +693,7 @@ YTLocalVideoManager::onRestoreDownloads()
     q.prepare("SELECT videoId,status FROM local_videos WHERE status!=?");
     q.addBindValue(YTLocalVideo::Downloaded);
     if (!q.exec())
-        qFatal("Failed to execute SQL query: %s", q.lastError().text().toLocal8Bit().data());
+        qFatal("Failed to execute SQL query: %s", qPrintable(q.lastError().text()));
     while (q.next()) {
         QString videoId = q.value(0).toString();
         YTLocalVideo::Status status =

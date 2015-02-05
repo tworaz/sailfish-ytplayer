@@ -70,7 +70,7 @@ executeSqlQuery(QSqlQuery q)
 {
     if (!q.exec())
         qWarning("Failed to execute SQL query: %s",
-               q.lastError().text().toLocal8Bit().data());
+               qPrintable(q.lastError().text()));
 }
 
 void

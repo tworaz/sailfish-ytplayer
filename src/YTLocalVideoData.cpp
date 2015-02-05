@@ -48,7 +48,7 @@ void
 executeSqlQuery(QSqlQuery q)
 {
     if (!q.exec())
-        qFatal("Failed to execute SQL query: %s", q.lastError().text().toLocal8Bit().data());
+        qFatal("Failed to execute SQL query: %s", qPrintable(q.lastError().text()));
 }
 }
 
