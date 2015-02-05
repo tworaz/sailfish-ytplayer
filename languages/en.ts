@@ -783,5 +783,20 @@ Remorse popup message telling the user video download will be removed</extracomm
         <extracomment>Label for menu option showing search settings page</extracomment>
         <translation>Search</translation>
     </message>
+    <message id="ytplayer-action-save-log">
+        <source>Save log</source>
+        <extracomment>Menu action allowing the user to save application log</extracomment>
+        <translation>Save log</translation>
+    </message>
+    <message id="ytplayer-msg-saving-log">
+        <source>Saving log</source>
+        <extracomment>Remorse popup message telling the user log file will be saved</extracomment>
+        <translation>Saving log</translation>
+    </message>
+    <message id="ytplayer-msg-log-saved">
+        <source>Log saved</source>
+        <extracomment>Body of notification informing the user application log was saved</extracomment>
+        <translation>Log saved</translation>
+    </message>
 </context>
 </TS>

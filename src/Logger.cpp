@@ -30,8 +30,13 @@
 #include "Logger.h"
 
 #include <QDebug>
+#include <QDir>
+#include <qtconcurrentrun.h>
 
-#define LOG_CACHE_SIZE 200
+namespace {
+int kLogCacheSize = 200;
+const char kLogFileName[] = "YTPlayer.log";
+}
 
 static QString _log_str_arr[] = {
     QString("[DEBUG] "),
@@ -46,14 +51,23 @@ QScopedPointer<QContiguousCache<QVariantMap> > Logger::_log_cache;
 Logger::Logger(QObject *parent)
     : QAbstractListModel(parent)
 {
+}
+
+Logger&
+Logger::instance()
+{
+    static Logger instance;
     if (_log_cache.isNull())
-        _log_cache.reset(new QContiguousCache<QVariantMap>(LOG_CACHE_SIZE));
+        _log_cache.reset(new QContiguousCache<QVariantMap>(kLogCacheSize));
+    if (!_original_handler)
+        _original_handler = qInstallMessageHandler(Logger::_messageHandler);
+    return instance;
 }
 
 void
-Logger::Register()
+Logger::save()
 {
-    _original_handler = qInstallMessageHandler(Logger::_messageHandler);
+    QtConcurrent::run(Logger::saveLogToFile);
 }
 
 int
@@ -117,6 +131,30 @@ Logger::_log(LogType type, QString message)
         _original_handler(QtWarningMsg, QMessageLogContext(), fullMessage);
         return;
     }
+}
+
+void
+Logger::saveLogToFile()
+{
+    QString path = QDir::home().filePath(kLogFileName);
+    QFile log_file(path);
+
+    Q_ASSERT(!_log_cache->isEmpty());
+
+    if (!log_file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
+        qCritical() << "Failed to open log file for writing: " << path;
+        return;
+    }
+
+    QTextStream stream(&log_file);
+
+    int i = _log_cache->firstIndex();
+    for (;i != _log_cache->lastIndex(); i++)
+        stream <<  _log_cache->at(i).value("message").toString() << "\n";
+
+    log_file.close();
+
+    instance().logSaved(path);
 }
 
 void

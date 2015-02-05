@@ -30,6 +30,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer 1.0
+import harbour.ytplayer.notifications 1.0
 
 Page {
     allowedOrientations: Orientation.All
@@ -48,7 +49,42 @@ Page {
             title: qsTrId("ytplayer-title-log-viewer")
         }
 
-        model: LogModel { }
+        PullDownMenu {
+            MenuItem {
+                //: Menu action allowing the user to save application log
+                //% "Save log"
+                text: qsTrId("ytplayer-action-save-log")
+                onClicked: {
+                    //: Remorse popup message telling the user log file will be saved
+                    //% "Saving log"
+                    remorse.execute(qsTrId("ytplayer-msg-saving-log"), function() {
+                        Log.save();
+                    })
+                }
+            }
+        }
+
+        RemorsePopup {
+            id: remorse
+        }
+
+        model: Log
+
+        Connections {
+            target: Log
+            onLogSaved: {
+                Log.debug("Log saved to: " + path)
+                notification.previewBody = path
+                notification.publish()
+            }
+        }
+
+        Notification {
+            id: notification
+            //: Body of notification informing the user application log was saved
+            //% "Log saved"
+            previewSummary: qsTrId("ytplayer-msg-log-saved")
+        }
 
         delegate: Component {
             Rectangle {
@@ -57,13 +93,13 @@ Page {
 
                 color: {
                     switch (type) {
-                    case LogModel.LOG_DEBUG:
+                    case YTLogger.LOG_DEBUG:
                         return "#662219B2"
-                    case LogModel.LOG_ERROR:
+                    case YTLogger.LOG_ERROR:
                         return "#66FF0000"
-                    case LogModel.LOG_WARN:
+                    case YTLogger.LOG_WARN:
                         return "#66FFFD00"
-                    case LogModel.LOG_INFO:
+                    case YTLogger.LOG_INFO:
                         return "#6641DB00"
                     }
                 }

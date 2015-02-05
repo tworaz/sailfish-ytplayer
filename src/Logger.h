@@ -52,9 +52,9 @@ public:
         LOG_INFO
     };
 
-    explicit Logger(QObject *parent = 0);
+    static Logger& instance();
 
-    static void Register();
+    Q_INVOKABLE void save();
 
     Q_INVOKABLE void debug(QString msg) { _log(LOG_DEBUG, msg); }
     Q_INVOKABLE void error(QString msg) { _log(LOG_ERROR, msg); }
@@ -66,12 +66,19 @@ public:
     QVariant data(const QModelIndex &index, int role) const;
     QHash<int, QByteArray> roleNames() const;
 
+signals:
+    void logSaved(QString path);
+
 private:
+    explicit Logger(QObject *parent = 0);
     void _log(LogType, QString);
+    static void saveLogToFile();
     static void _messageHandler(QtMsgType, const QMessageLogContext&, const QString&);
 
     static QtMessageHandler _original_handler;
     static QScopedPointer<QContiguousCache<QVariantMap> > _log_cache;
+
+    Q_DISABLE_COPY(Logger)
 };
 
 #endif // _LOGGER_H_

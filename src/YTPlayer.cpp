@@ -142,13 +142,11 @@ main(int argc, char *argv[])
     QScopedPointer<QQuickView> view(SailfishApp::createView());
     QScopedPointer<Prefs> prefs(new Prefs(app.data()));
     QScopedPointer<NativeUtil> nativeUtil(new NativeUtil(app.data()));
-    QScopedPointer<Logger> logger(new Logger(app.data()));
     QTranslator translator;
     QString lang = QLocale::system().name();
     QString dir = SailfishApp::pathTo(QString("languages")).toLocalFile();
 
     prefs->Initialize();
-    Logger::Register();
 
     InitApplicationDatabase();
 
@@ -169,14 +167,16 @@ main(int argc, char *argv[])
     qmlRegisterType<YTRequest>("harbour.ytplayer", 1, 0, "YTRequest");
     qmlRegisterType<YTListModel>("harbour.ytplayer", 1, 0, "YTListModel");
     qmlRegisterType<YTListModelFilter>("harbour.ytplayer", 1, 0, "YTListModelFilter");
-    qmlRegisterType<Logger>("harbour.ytplayer", 1, 0, "LogModel");
     qmlRegisterType<YTLocalVideo>("harbour.ytplayer", 1, 0, "YTLocalVideo");
     qmlRegisterType<YTLocalVideoListModel>("harbour.ytplayer", 1, 0, "YTLocalVideoListModel");
     qmlRegisterType<YTVideoDownloadNotification>("harbour.ytplayer", 1, 0, "YTVideoDownloadNotification");
     qmlRegisterType<YTSuggestionEngine>("harbour.ytplayer", 1, 0, "YTSuggestionEngine");
 
+    qmlRegisterUncreatableType<Logger>("harbour.ytplayer", 1, 0, "YTLogger",
+                                       "Please use global Log instance");
+
     view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
-    view->rootContext()->setContextProperty("Log", logger.data());
+    view->rootContext()->setContextProperty("Log", &Logger::instance());
     view->rootContext()->setContextProperty("Prefs", prefs.data());
     view->rootContext()->setContextProperty("gNetworkManager", &YTNetworkManager::instance());
 
