@@ -678,11 +678,6 @@ Remorse popup message telling the user video download will be removed</extracomm
         <extracomment>Label for menu option showing video download settings page</extracomment>
         <translation>Download</translation>
     </message>
-    <message id="ytplayer-action-show-logs">
-        <source>Logs</source>
-        <extracomment>Label for menu option showing application logs</extracomment>
-        <translation>Logs</translation>
-    </message>
     <message id="ytplayer-label-account-integration">
         <source>YouTube account integration</source>
         <extracomment>Label of switch activating/deactivating YouTube account integration</extracomment>
@@ -764,9 +759,10 @@ Remorse popup message telling the user video download will be removed</extracomm
         <translation>Search settings</translation>
     </message>
     <message id="ytplayer-label-suggestion-engine">
-        <source>Suggestion engine</source>
+        <source>Suggestion source</source>
+        <oldsource>Suggestion engine</oldsource>
         <extracomment>Label for the search suggestion engine combo box</extracomment>
-        <translation>Suggestion engine</translation>
+        <translation>Suggestion source</translation>
     </message>
     <message id="ytplayer-label-google-suggestion-engine">
         <source>Google</source>
@@ -774,9 +770,10 @@ Remorse popup message telling the user video download will be removed</extracomm
         <translation>Google</translation>
     </message>
     <message id="ytplayer-label-history-suggestion-engine">
-        <source>History</source>
+        <source>Search history</source>
+        <oldsource>Search History</oldsource>
         <extracomment>Label for history based search suggestion engine</extracomment>
-        <translation>History</translation>
+        <translation>Search history</translation>
     </message>
     <message id="ytplayer-action-search-settings">
         <source>Search</source>
@@ -797,6 +794,11 @@ Remorse popup message telling the user video download will be removed</extracomm
         <source>Log saved</source>
         <extracomment>Body of notification informing the user application log was saved</extracomment>
         <translation>Log saved</translation>
+    </message>
+    <message id="ytplayer-action-view-logs">
+        <source>View logs</source>
+        <extracomment>Label for menu option showing application log viewer</extracomment>
+        <translation>View logs</translation>
     </message>
 </context>
 </TS>

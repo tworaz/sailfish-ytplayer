@@ -82,7 +82,7 @@ Page {
             ComboBox {
                 id: engineChooser
                 //: Label for the search suggestion engine combo box
-                //% "Suggestion engine"
+                //% "Suggestion source"
                 label: qsTrId("ytplayer-label-suggestion-engine")
 
                 Component.onCompleted: {
@@ -104,7 +104,7 @@ Page {
                     }
                     MenuItem {
                         //: Label for history based search suggestion engine
-                        //% "History"
+                        //% "Search history"
                         text: qsTrId("ytplayer-label-history-suggestion-engine")
                         onClicked: {
                             Prefs.set("Search/SuggestionEngine", "History")

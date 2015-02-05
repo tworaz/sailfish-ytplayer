@@ -47,6 +47,17 @@ Page {
         readonly property real _h: topColumn.height + bottomColumn.height
         contentHeight: height > _h ? height : _h
 
+        PullDownMenu {
+            MenuItem {
+                //: Label for menu option showing application log viewer
+                //% "View logs"
+                text: qsTrId("ytplayer-action-view-logs")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("LogViewer.qml"))
+                }
+            }
+        }
+
         Column {
             id: topColumn
             //x: Theme.paddingLarge
@@ -112,15 +123,6 @@ Page {
                 text: qsTrId("ytplayer-action-search-settings")
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("SearchSettings.qml"))
-                }
-            }
-
-            SettingsButton {
-                //: Label for menu option showing application logs
-                //% "Logs"
-                text: qsTrId("ytplayer-action-show-logs")
-                onClicked: {
-                    pageStack.push(Qt.resolvedUrl("LogViewer.qml"))
                 }
             }
         } // Column
