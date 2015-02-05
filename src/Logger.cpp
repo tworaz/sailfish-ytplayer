@@ -46,7 +46,8 @@ static QString _log_str_arr[] = {
 };
 
 QtMessageHandler Logger::_original_handler = NULL;
-QScopedPointer<QContiguousCache<QVariantMap> > Logger::_log_cache;
+QContiguousCache<QVariantMap> Logger::_log_cache =
+    QContiguousCache<QVariantMap>(kLogCacheSize);
 
 Logger::Logger(QObject *parent)
     : QAbstractListModel(parent)
@@ -57,8 +58,6 @@ Logger&
 Logger::instance()
 {
     static Logger instance;
-    if (_log_cache.isNull())
-        _log_cache.reset(new QContiguousCache<QVariantMap>(kLogCacheSize));
     if (!_original_handler)
         _original_handler = qInstallMessageHandler(Logger::_messageHandler);
     return instance;
@@ -73,21 +72,19 @@ Logger::save()
 int
 Logger::rowCount(const QModelIndex&) const
 {
-    return _log_cache->size();
+    return _log_cache.size();
 }
 
 QVariant
 Logger::data(const QModelIndex &index, int role) const
 {
-    if (index.row() < 0 || index.row() >= _log_cache->size()) {
+    if (index.row() < 0 || index.row() >= _log_cache.size())
         return QVariant();
-    }
 
-    if (!_log_cache->areIndexesValid()) {
-        _log_cache->normalizeIndexes();
-    }
+    if (!_log_cache.areIndexesValid())
+        _log_cache.normalizeIndexes();
 
-    QVariantMap map = _log_cache->at(_log_cache->firstIndex() + index.row());
+    QVariantMap map = _log_cache.at(_log_cache.firstIndex() + index.row());
 
     if (role == Qt::UserRole + 1) {
         return map.value("type").toInt();
@@ -117,7 +114,7 @@ Logger::_log(LogType type, QString message)
     QVariantMap entry;
     entry.insert("type", type);
     entry.insert("message", message);
-    _log_cache->append(entry);
+    _log_cache.append(entry);
 
     switch (type) {
     case LOG_DEBUG:
@@ -139,7 +136,7 @@ Logger::saveLogToFile()
     QString path = QDir::home().filePath(kLogFileName);
     QFile log_file(path);
 
-    Q_ASSERT(!_log_cache->isEmpty());
+    Q_ASSERT(!_log_cache.isEmpty());
 
     if (!log_file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
         qCritical() << "Failed to open log file for writing: " << path;
@@ -148,9 +145,9 @@ Logger::saveLogToFile()
 
     QTextStream stream(&log_file);
 
-    int i = _log_cache->firstIndex();
-    for (;i != _log_cache->lastIndex(); i++)
-        stream <<  _log_cache->at(i).value("message").toString() << "\n";
+    int i = _log_cache.firstIndex();
+    for (;i != _log_cache.lastIndex(); i++)
+        stream <<  _log_cache.at(i).value("message").toString() << "\n";
 
     log_file.close();
 
@@ -180,7 +177,7 @@ Logger::_messageHandler(QtMsgType type, const QMessageLogContext& context, const
     }
     entry.insert("type", type_);
     entry.insert("message", msg);
-    _log_cache->append(entry);
+    _log_cache.append(entry);
 
     _original_handler(type, context, msg);
 }

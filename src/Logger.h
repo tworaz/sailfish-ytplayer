@@ -36,7 +36,6 @@
 #include <QMessageLogContext>
 #include <QVariantMap>
 #include <QContiguousCache>
-#include <QScopedPointer>
 #include <QAbstractListModel>
 
 class Logger : public QAbstractListModel
@@ -76,7 +75,7 @@ private:
     static void _messageHandler(QtMsgType, const QMessageLogContext&, const QString&);
 
     static QtMessageHandler _original_handler;
-    static QScopedPointer<QContiguousCache<QVariantMap> > _log_cache;
+    static QContiguousCache<QVariantMap> _log_cache;
 
     Q_DISABLE_COPY(Logger)
 };
