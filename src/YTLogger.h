@@ -38,7 +38,7 @@
 #include <QContiguousCache>
 #include <QAbstractListModel>
 
-class Logger : public QAbstractListModel
+class YTLogger : public QAbstractListModel
 {
     Q_OBJECT
     Q_ENUMS(LogType)
@@ -51,7 +51,7 @@ public:
         LOG_INFO
     };
 
-    static Logger& instance();
+    static YTLogger& instance();
 
     Q_INVOKABLE void save();
 
@@ -69,7 +69,7 @@ signals:
     void logSaved(QString path);
 
 private:
-    explicit Logger(QObject *parent = 0);
+    explicit YTLogger(QObject *parent = 0);
     void _log(LogType, QString);
     static void saveLogToFile();
     static void _messageHandler(QtMsgType, const QMessageLogContext&, const QString&);
@@ -77,7 +77,7 @@ private:
     static QtMessageHandler _original_handler;
     static QContiguousCache<QVariantMap> _log_cache;
 
-    Q_DISABLE_COPY(Logger)
+    Q_DISABLE_COPY(YTLogger)
 };
 
 #endif // _LOGGER_H_

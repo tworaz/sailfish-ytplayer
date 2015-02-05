@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 
-#include "Logger.h"
+#include "YTLogger.h"
 
 #include <QDebug>
 #include <QDir>
@@ -45,38 +45,38 @@ static QString _log_str_arr[] = {
     QString("[INFO]  ")
 };
 
-QtMessageHandler Logger::_original_handler = NULL;
-QContiguousCache<QVariantMap> Logger::_log_cache =
+QtMessageHandler YTLogger::_original_handler = NULL;
+QContiguousCache<QVariantMap> YTLogger::_log_cache =
     QContiguousCache<QVariantMap>(kLogCacheSize);
 
-Logger::Logger(QObject *parent)
+YTLogger::YTLogger(QObject *parent)
     : QAbstractListModel(parent)
 {
 }
 
-Logger&
-Logger::instance()
+YTLogger&
+YTLogger::instance()
 {
-    static Logger instance;
+    static YTLogger instance;
     if (!_original_handler)
-        _original_handler = qInstallMessageHandler(Logger::_messageHandler);
+        _original_handler = qInstallMessageHandler(YTLogger::_messageHandler);
     return instance;
 }
 
 void
-Logger::save()
+YTLogger::save()
 {
-    QtConcurrent::run(Logger::saveLogToFile);
+    QtConcurrent::run(YTLogger::saveLogToFile);
 }
 
 int
-Logger::rowCount(const QModelIndex&) const
+YTLogger::rowCount(const QModelIndex&) const
 {
     return _log_cache.size();
 }
 
 QVariant
-Logger::data(const QModelIndex &index, int role) const
+YTLogger::data(const QModelIndex &index, int role) const
 {
     if (index.row() < 0 || index.row() >= _log_cache.size())
         return QVariant();
@@ -97,7 +97,7 @@ Logger::data(const QModelIndex &index, int role) const
 }
 
 QHash<int, QByteArray>
-Logger::roleNames() const
+YTLogger::roleNames() const
 {
     QHash<int, QByteArray> roles;
     roles[Qt::UserRole + 1] = "type";
@@ -106,7 +106,7 @@ Logger::roleNames() const
 }
 
 void
-Logger::_log(LogType type, QString message)
+YTLogger::_log(LogType type, QString message)
 {
     const QString& prefix = _log_str_arr[type];
     QString fullMessage = prefix + message;
@@ -131,7 +131,7 @@ Logger::_log(LogType type, QString message)
 }
 
 void
-Logger::saveLogToFile()
+YTLogger::saveLogToFile()
 {
     QString path = QDir::home().filePath(kLogFileName);
     QFile log_file(path);
@@ -155,7 +155,7 @@ Logger::saveLogToFile()
 }
 
 void
-Logger::_messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
+YTLogger::_messageHandler(QtMsgType type, const QMessageLogContext& context, const QString& msg)
 {
     QVariantMap entry;
     LogType type_;

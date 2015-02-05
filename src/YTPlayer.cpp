@@ -55,7 +55,7 @@
 #include "YTLocalVideo.h"
 #include "NativeUtil.h"
 #include "YTRequest.h"
-#include "Logger.h"
+#include "YTLogger.h"
 #include "Prefs.h"
 
 namespace {
@@ -172,11 +172,11 @@ main(int argc, char *argv[])
     qmlRegisterType<YTVideoDownloadNotification>("harbour.ytplayer", 1, 0, "YTVideoDownloadNotification");
     qmlRegisterType<YTSuggestionEngine>("harbour.ytplayer", 1, 0, "YTSuggestionEngine");
 
-    qmlRegisterUncreatableType<Logger>("harbour.ytplayer", 1, 0, "YTLogger",
-                                       "Please use global Log instance");
+    qmlRegisterUncreatableType<YTLogger>("harbour.ytplayer", 1, 0, "YTLogger",
+                                         "Please use global Log instance");
 
     view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
-    view->rootContext()->setContextProperty("Log", &Logger::instance());
+    view->rootContext()->setContextProperty("Log", &YTLogger::instance());
     view->rootContext()->setContextProperty("Prefs", prefs.data());
     view->rootContext()->setContextProperty("gNetworkManager", &YTNetworkManager::instance());
 
