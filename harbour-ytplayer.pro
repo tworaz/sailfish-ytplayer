@@ -25,7 +25,8 @@ SOURCES += \
         src/YTLocalVideoListModel.cpp \
         src/YTVideoDownloadNotification.cpp \
         src/YTVIdeoUrlFetcher.cpp \
-        src/YTSuggestionEngine.cpp
+        src/YTSuggestionEngine.cpp \
+        src/YTTranslations.cpp
 
 HEADERS += \
         src/YTPlayer.h \
@@ -41,7 +42,8 @@ HEADERS += \
         src/YTLocalVideoListModel.h \
         src/YTVideoDownloadNotification.h \
         src/YTVideoUrlFetcher.h \
-        src/YTSuggestionEngine.h
+        src/YTSuggestionEngine.h \
+        src/YTTranslations.h
 
 QML_SOURCES = \
         qml/*.qml \

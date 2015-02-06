@@ -118,6 +118,14 @@ Page {
                 }
             }
             SettingsButton {
+                //: Label for menu option showing application language settings page
+                //% "Language"
+                text: qsTrId("ytplayer-action-language-settings")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("LanguageSettings.qml"))
+                }
+            }
+            SettingsButton {
                 //: Label for menu option showing search settings page
                 //% "Search"
                 text: qsTrId("ytplayer-action-search-settings")

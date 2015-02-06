@@ -41,6 +41,8 @@ extern const char kSearchSuggestionEngineKey[];
 extern const char kHistorySuggestionEngine[];
 extern const char kGoogleSuggestionEngine[];
 
+extern const char kLanguageKey[];
+
 class Prefs: public QObject
 {
     Q_OBJECT

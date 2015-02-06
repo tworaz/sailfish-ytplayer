@@ -1,0 +1,21 @@
+{
+  "default" : "en_GB",
+  "items" : [
+    {
+      "name" : "Deutsch",
+      "code" : "de_DE"
+    },
+    {
+      "name" : "English (UK)",
+      "code" : "en_GB"
+    },
+    {
+      "name" : "Nederlands",
+      "code" : "nl_NL"
+    },
+    {
+      "name" : "Русский",
+      "code" : "ru_RU"
+    }
+  ]
+}

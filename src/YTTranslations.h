@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014 Peter Tworek
+ * Copyright (c) 2015 Peter Tworek
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -27,22 +27,36 @@
  * SUCH DAMAGE.
  */
 
-import QtQuick 2.0
-import Sailfish.Silica 1.0
+#ifndef YTTRANSLATIONS_H
+#define YTTRANSLATIONS_H
 
-BackgroundItem {
-    id: root
+#include <QObject>
+#include <QTranslator>
+#include <QVariantList>
 
-    property alias text: label.text
-    property bool selected: false
+class YTTranslations : public QObject
+{
+    Q_OBJECT
 
-    Label {
-        id: label
-        height: parent.height
-        width: parent.width - 2 * Theme.paddingLarge
-        x: Theme.paddingLarge
-        verticalAlignment: Text.AlignVCenter
-        color: (root.highlighted | root.selected) ?
-                   Theme.highlightColor : Theme.primaryColor
-    }
-}
+    Q_PROPERTY(QVariantList items READ items CONSTANT FINAL)
+    Q_PROPERTY(QString language READ language WRITE setLanguage
+               NOTIFY languageChanged)
+
+public:
+    explicit YTTranslations(QObject *parent = 0);
+
+    static bool initialize();
+
+signals:
+    void languageChanged(QString language);
+
+private:
+    QVariantList items() const;
+    QString language() const;
+    void setLanguage(QString lang);
+
+    static QTranslator _translator;
+    static QString _language;
+};
+
+#endif // YTTRANSLATIONS_H
