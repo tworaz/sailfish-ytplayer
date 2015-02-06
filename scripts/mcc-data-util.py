@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 
 import httplib, urllib, json
 import sys, os, getopt, re
