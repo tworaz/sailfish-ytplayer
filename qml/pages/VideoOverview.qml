@@ -97,6 +97,11 @@ Page {
 
     Component.onCompleted: {
         Log.debug("Video overview page for video ID: " + videoId + " created")
+        channelBrowserMenuOption.visible = !pageStack.find(function(page) {
+            if (page.objectName === "ChannelBrowser")
+                return true
+            return false
+        })
     }
 
     onStatusChanged: {
@@ -176,12 +181,6 @@ Page {
                 "thumbnails" : page.thumbnails,
                 "title"      : page.title,
                 "parent"     : page
-            })
-
-            var browserPage = pageStack.find(function(page) {
-                if (page.objectName === "ChannelBrowser")
-                    return true
-                return false
             })
 
             if (localVideo.status !== YTLocalVideo.Downloaded && !streamUrlRequest.loaded)
@@ -325,6 +324,7 @@ Page {
             }
 
             MenuItem {
+                id: channelBrowserMenuOption
                 //: menu option allowing the user to browser YouTube channel
                 //% "Browser channel"
                 text: qsTrId("ytplayer-action-browse-channel")
