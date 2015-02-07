@@ -131,12 +131,20 @@ YTTranslations::language()
 void
 YTTranslations::setLanguage(QString lang)
 {
-    QSettings().setValue(kLanguageKey, lang);
+    QString locale = QLocale::system().name();
+
+    qDebug() << "Language changed to:" << lang << ", system locale:" << locale;
     _language = lang;
+
+    if (locale == lang) {
+        qDebug() << "Selected language matches current system one";
+        QSettings().remove(kLanguageKey);
+    } else {
+        QSettings().setValue(kLanguageKey, lang);
+    }
 
     QString dir = SailfishApp::pathTo(QString("languages")).toLocalFile();
     _translator.load(lang, dir);
 
-    qDebug() << "Language changed to:" << lang;
     emit languageChanged(lang);
 }
