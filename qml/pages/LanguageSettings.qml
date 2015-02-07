@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014 Peter Tworek
+ * Copyright (c) 2015 Peter Tworek
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -29,20 +29,47 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer 1.0
+import "../common"
 
-BackgroundItem {
-    id: root
+Page {
+    allowedOrientations: Orientation.All
 
-    property alias text: label.text
-    property bool selected: false
+    onStatusChanged: {
+        if (status === PageStatus.Active)
+            requestCoverPage("Default.qml")
+    }
 
-    Label {
-        id: label
-        height: parent.height
-        width: parent.width - 2 * Theme.paddingLarge
-        x: Theme.paddingLarge
-        verticalAlignment: Text.AlignVCenter
-        color: (root.highlighted | root.selected) ?
-                   Theme.highlightColor : Theme.primaryColor
+    SilicaListView {
+        id: listview
+        anchors.fill: parent
+
+        header: PageHeader {
+            //: Title of language settings page
+            //% "Language settings"
+            title: qsTrId("ytplayer-title-language-settings")
+        }
+
+        model: YTTranslations.items
+
+        delegate: SettingsButton {
+            text: listview.model[index].name
+            selected: listview.model[index].code === YTTranslations.language
+
+            onClicked: {
+                if (YTTranslations.language === listview.model[index].code) {
+                    pageStack.navigateBack(PageStackAction.Animated)
+                    return;
+                }
+
+                var dialog = pageStack.push("LanguageChangeDialog.qml", {
+                    "language" : listview.model[index].name,
+                })
+                dialog.accepted.connect(function() {
+                    YTTranslations.language = listview.model[index].code
+                    pageStack.replaceAbove(null, "MainMenu.qml")
+                })
+            }
+        }
     }
 }

@@ -1,5 +1,5 @@
 /*-
- * Copyright (c) 2014 Peter Tworek
+ * Copyright (c) 2015 Peter Tworek
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,19 +30,25 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-BackgroundItem {
+Dialog {
     id: root
+    property string language: ""
 
-    property alias text: label.text
-    property bool selected: false
+    Column {
+        width: parent.width
+        spacing: 4 * Theme.paddingLarge
 
-    Label {
-        id: label
-        height: parent.height
-        width: parent.width - 2 * Theme.paddingLarge
-        x: Theme.paddingLarge
-        verticalAlignment: Text.AlignVCenter
-        color: (root.highlighted | root.selected) ?
-                   Theme.highlightColor : Theme.primaryColor
+        DialogHeader {}
+
+        Label{
+            x: Theme.paddingLarge
+            width: parent.width - 2 * Theme.paddingLarge
+            font.pixelSize: Theme.fontSizeLarge
+            maximumLineCount: 2
+            wrapMode: Text.WordWrap
+            //: Dialog text asking the user if UI language change should be performed
+            //% "Change language to %1?"
+            text: qsTrId("ytplayer-msg-change-language").arg(root.language)
+        }
     }
 }

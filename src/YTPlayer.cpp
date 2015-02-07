@@ -31,7 +31,6 @@
 #include <QNetworkDiskCache>
 #include <QGuiApplication>
 #include <QStandardPaths>
-#include <QTranslator>
 #include <QQuickView>
 #include <QSqlError>
 #include <QtQml>
@@ -52,6 +51,7 @@
 #include "YTVideoDownloadNotification.h"
 #include "YTSuggestionEngine.h"
 #include "YTVideoUrlFetcher.h"
+#include "YTTranslations.h"
 #include "YTLocalVideo.h"
 #include "NativeUtil.h"
 #include "YTRequest.h"
@@ -142,26 +142,23 @@ main(int argc, char *argv[])
     QScopedPointer<QQuickView> view(SailfishApp::createView());
     QScopedPointer<Prefs> prefs(new Prefs(app.data()));
     QScopedPointer<NativeUtil> nativeUtil(new NativeUtil(app.data()));
-    QTranslator translator;
-    QString lang = QLocale::system().name();
-    QString dir = SailfishApp::pathTo(QString("languages")).toLocalFile();
+    YTTranslations translations;
+
+    // Make sure the logger is initialized
+    YTLogger::instance();
 
     prefs->Initialize();
-
     InitApplicationDatabase();
+
+    if (!YTTranslations::initialize()) {
+        qCritical() << "Failed to initialize YTTranslations!";
+        return -1;
+    }
 
     if (QFontDatabase::addApplicationFont(":/fonts/youtube-icons.ttf") < 0) {
         qCritical() << "Failed to install youtube-icons font!";
         return -1;
     }
-
-    qDebug("System language : %s", qPrintable(lang));
-    bool ret = translator.load(lang, dir);
-    if (!ret) {
-        qDebug("No translation for current system language, falling back to en");
-        translator.load("en", dir);
-    }
-    app->installTranslator(&translator);
 
     qmlRegisterType<Notification>("harbour.ytplayer.notifications", 1, 0, "Notification");
     qmlRegisterType<YTRequest>("harbour.ytplayer", 1, 0, "YTRequest");
@@ -179,6 +176,7 @@ main(int argc, char *argv[])
     view->rootContext()->setContextProperty("Log", &YTLogger::instance());
     view->rootContext()->setContextProperty("Prefs", prefs.data());
     view->rootContext()->setContextProperty("gNetworkManager", &YTNetworkManager::instance());
+    view->rootContext()->setContextProperty("YTTranslations", &translations);
 
     view->engine()->addImportPath("qrc:/ui/qml/");
     view->setSource(QUrl("qrc:/ui/qml/YTPlayer.qml"));

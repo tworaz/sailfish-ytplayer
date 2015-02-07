@@ -44,6 +44,8 @@ const char kSearchSuggestionEngineKey[] = "Search/SuggestionEngine";
 const char kHistorySuggestionEngine[] = "History";
 const char kGoogleSuggestionEngine[] = "Google";
 
+const char kLanguageKey[] = "Language";
+
 Prefs::Prefs(QObject *parent)
     : QObject(parent)
 {

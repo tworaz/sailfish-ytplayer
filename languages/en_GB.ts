@@ -800,5 +800,21 @@ Remorse popup message telling the user video download will be removed</extracomm
         <extracomment>Label for menu option showing application log viewer</extracomment>
         <translation>View logs</translation>
     </message>
+    <message id="ytplayer-title-language-settings">
+        <source>Language settings</source>
+        <oldsource>Cache settings</oldsource>
+        <extracomment>Title of language settings page</extracomment>
+        <translation>Language settings</translation>
+    </message>
+    <message id="ytplayer-action-language-settings">
+        <source>Language</source>
+        <extracomment>Label for menu option showing application language settings page</extracomment>
+        <translation>Language</translation>
+    </message>
+    <message id="ytplayer-msg-change-language">
+        <source>Change language to %1?</source>
+        <extracomment>Dialog text asking the user if UI language change should be performed</extracomment>
+        <translation>Change language to %1?</translation>
+    </message>
 </context>
 </TS>

@@ -2,6 +2,7 @@
     <qresource prefix="/">
         <file alias="mcc-data.json">resources/mcc-data.json</file>
         <file alias="logo.png">resources/logo.png</file>
+        <file alias="translations.json">languages/translations.json</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="approval-64.png">resources/icons/approval-64.png</file>
@@ -61,5 +62,7 @@
         <file>qml/pages/BrowserLauncher.qml</file>
         <file>qml/common/SearchSuggestions.qml</file>
         <file>qml/pages/SearchSettings.qml</file>
+        <file>qml/pages/LanguageSettings.qml</file>
+        <file>qml/pages/LanguageChangeDialog.qml</file>
     </qresource>
 </RCC>

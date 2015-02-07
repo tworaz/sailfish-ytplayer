@@ -1,8 +1,10 @@
 TRANSLATIONS += \
-        languages/de.ts \
-        languages/en.ts \
-        languages/nl.ts \
-        languages/ru.ts
+        languages/de_DE.ts \
+        languages/en_GB.ts \
+        languages/nl_NL.ts \
+        languages/ru_RU.ts
+
+OTHER_FILES += languages/translations.json
 
 updateqm.input = TRANSLATIONS
 updateqm.output = $$top_builddir/languages/${QMAKE_FILE_BASE}.qm
