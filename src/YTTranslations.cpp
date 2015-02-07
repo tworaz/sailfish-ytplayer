@@ -122,7 +122,7 @@ YTTranslations::items() const
 }
 
 QString
-YTTranslations::language() const
+YTTranslations::language()
 {
     Q_ASSERT(!_language.isEmpty());
     return _language;

@@ -42,21 +42,23 @@
 
 #include "YTVideoUrlFetcher.h"
 #include "YTNetworkManager.h"
+#include "YTTranslations.h"
 #include "YTPlayer.h"
 #include "NativeUtil.h"
 #include "config.h"
 
+namespace {
 static const QString kYouTubeDataV3Url("https://www.googleapis.com/youtube/v3/");
 static const QString kYouTubeGetVideoInfoUrl("http://www.youtube.com/get_video_info");
 static const QString kMaxResults("50"); // Maximum allowed by YouTube
 static const int kMaxRetryCount = 3;
+}
 
 static void
 appendParams(QUrlQuery& query, QVariantMap& params)
 {
-    for (QVariantMap::const_iterator i = params.begin(); i != params.end(); ++i) {
+    for (QVariantMap::const_iterator i = params.begin(); i != params.end(); ++i)
         query.addQueryItem(i.key(), i.value().toString());
-    }
 }
 
 static void
@@ -66,11 +68,7 @@ appendCommonParams(QUrlQuery& query)
     query.addQueryItem("key", YOUTUBE_DATA_API_V3_KEY);
     query.addQueryItem("regionCode", NativeUtil::getRegionCode());
     query.addQueryItem("maxResults", kMaxResults);
-    if (QLocale::system().name() != "C") {
-        query.addQueryItem("hl", QLocale::system().name());
-    } else {
-        query.addQueryItem("hl", "en");
-    }
+    query.addQueryItem("hl", YTTranslations::language());
 }
 
 static bool

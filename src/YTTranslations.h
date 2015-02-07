@@ -44,6 +44,7 @@ class YTTranslations : public QObject
 
 public:
     explicit YTTranslations(QObject *parent = 0);
+    static QString language();
 
     static bool initialize();
 
@@ -52,7 +53,6 @@ signals:
 
 private:
     QVariantList items() const;
-    QString language() const;
     void setLanguage(QString lang);
 
     static QTranslator _translator;
