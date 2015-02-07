@@ -61,8 +61,12 @@ Page {
             height: 2 * Theme.paddingLarge
         }
         Label {
+            width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeSmall
+            wrapMode: Text.WordWrap
+            maximumLineCount: 2
+            horizontalAlignment: Text.AlignHCenter
             //: YTPlayer application description in about page
             //% "Unofficial YouTube client for Sailfish OS"
             text: qsTrId("ytplayer-label-application-description")
@@ -98,9 +102,13 @@ Page {
             text: "Copyright \u00A9 2014 Piotr Tworek"
         }
         Label {
+            width: parent.width
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
+            wrapMode: Text.WordWrap
+            maximumLineCount: 2
+            horizontalAlignment: Text.AlignHCenter
             //: Label displaying YTPlayer licensing information
             //% "YTPlayer is licensed under 3-clause BSD License"
             text: qsTrId("ytplayer-label-application-license")

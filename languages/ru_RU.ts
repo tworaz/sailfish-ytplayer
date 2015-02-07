@@ -32,7 +32,7 @@
         <location filename="../qml/pages/About.qml" line="68"/>
         <source>Unofficial YouTube client for Sailfish OS</source>
         <extracomment>YTPlayer application description in about page</extracomment>
-        <translation>Неофициальный клиент YouTube&lt;br&gt;для Sailfish OS</translation>
+        <translation>Неофициальный клиент YouTube для Sailfish OS</translation>
     </message>
     <message id="ytplayer-label-region-code">
         <location filename="../qml/pages/About.qml" line="80"/>
@@ -50,7 +50,7 @@
         <location filename="../qml/pages/About.qml" line="106"/>
         <source>YTPlayer is licensed under 3-clause BSD License</source>
         <extracomment>Label displaying YTPlayer licensing information</extracomment>
-        <translation>YTPlayer распространяется под лицензией&lt;br&gt;3-clause BSD</translation>
+        <translation>YTPlayer распространяется под лицензией 3-clause BSD</translation>
     </message>
     <message id="ytplayer-action-view-license">
         <location filename="../qml/pages/About.qml" line="112"/>
