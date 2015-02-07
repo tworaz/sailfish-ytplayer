@@ -255,14 +255,14 @@
     </message>
     <message id="ytplayer-msg-cancelling-download">
         <location filename="../qml/pages/DownloadedVideos.qml" line="158"/>
-        <location filename="../qml/pages/VideoOverview.qml" line="272"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="271"/>
         <source>Cancelling download</source>
         <extracomment>Remorse popup message telling the user video download will be cancelled</extracomment>
         <translation>Отмена загрузки</translation>
     </message>
     <message id="ytplayer-msg-removing-download">
         <location filename="../qml/pages/DownloadedVideos.qml" line="162"/>
-        <location filename="../qml/pages/VideoOverview.qml" line="299"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="298"/>
         <source>Removing download</source>
         <extracomment>Remorse popup message telling the user video download will be removed</extracomment>
         <translation>Удаление загрузки</translation>
@@ -734,8 +734,14 @@ Label for menu option allowing the user to change video quality</extracomment>
         <extracomment>Label for menu option showing video download settings page</extracomment>
         <translation>Загрузки</translation>
     </message>
-    <message id="ytplayer-action-search-settings">
+    <message id="ytplayer-action-language-settings">
         <location filename="../qml/pages/Settings.qml" line="123"/>
+        <source>Language</source>
+        <extracomment>Label for menu option showing application language settings page</extracomment>
+        <translation>Язык</translation>
+    </message>
+    <message id="ytplayer-action-search-settings">
+        <location filename="../qml/pages/Settings.qml" line="131"/>
         <source>Search</source>
         <extracomment>Label for menu option showing search settings page</extracomment>
         <translation>Поиск</translation>
@@ -826,61 +832,61 @@ Label for menu option allowing the user to change video quality</extracomment>
         <translation>Невозможно воспроизвести</translation>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible">
-        <location filename="../qml/pages/VideoOverview.qml" line="197"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="196"/>
         <source>Direct video playback not possible</source>
         <extracomment>Notification summary informing the user direct video playback is not possible</extracomment>
         <translation>Прямое воспроизведение видео не доступно</translation>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible-desc">
-        <location filename="../qml/pages/VideoOverview.qml" line="200"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="199"/>
         <source>YTPLayer failed to find usable video streams</source>
         <extracomment>Notification body explaining why direct video playback is not possible</extracomment>
         <translation>YTPLayer не удалось найти подходящие видео потоки</translation>
     </message>
     <message id="ytplayer-action-download-video">
-        <location filename="../qml/pages/VideoOverview.qml" line="260"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="259"/>
         <source>Download video</source>
         <extracomment>Menu option triggering video preload</extracomment>
         <translation>Загрузить видео</translation>
     </message>
     <message id="ytplayer-action-cancel-download">
-        <location filename="../qml/pages/VideoOverview.qml" line="268"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="267"/>
         <source>Cancel download</source>
         <extracomment>Menu option canceling pending/in progress video preload</extracomment>
         <translation>Отменить загрузку</translation>
     </message>
     <message id="ytplayer-action-pause-download">
-        <location filename="../qml/pages/VideoOverview.qml" line="281"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="280"/>
         <source>Pause download</source>
         <extracomment>Menu option allowing the user to pause video download</extracomment>
         <translation>Приостановить загрузку</translation>
     </message>
     <message id="ytplayer-action-resume-download">
-        <location filename="../qml/pages/VideoOverview.qml" line="288"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="287"/>
         <source>Resume download</source>
         <extracomment>Menu option allowing the user to resume video download</extracomment>
         <translation>Продолжить загрузку</translation>
     </message>
     <message id="ytplayer-action-remove-download">
-        <location filename="../qml/pages/VideoOverview.qml" line="295"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="294"/>
         <source>Remove download</source>
         <extracomment>Menu option allowing the user to remove downloaded video</extracomment>
         <translation>Удалить загрузку</translation>
     </message>
     <message id="ytplayer-action-copy-link-to-clipboard">
-        <location filename="../qml/pages/VideoOverview.qml" line="307"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="306"/>
         <source>Copy link to clipboard</source>
         <extracomment>Menu option copying video link to clipboard</extracomment>
         <translation>Ссылку в буфер обмена</translation>
     </message>
     <message id="ytplayer-msg-link-copied">
-        <location filename="../qml/pages/VideoOverview.qml" line="316"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="315"/>
         <source>Link copied</source>
         <extracomment>Notification summary informing the user link was copied to clipboard</extracomment>
         <translation>Ссылка скопирована</translation>
     </message>
     <message id="ytplayer-action-open-in-browser">
-        <location filename="../qml/pages/VideoOverview.qml" line="323"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="322"/>
         <source>Open in browser</source>
         <extracomment>Menu option opening YouTube video page in a web browser</extracomment>
         <translation>Открыть в браузере</translation>
@@ -962,6 +968,18 @@ Label for menu option allowing the user to change video quality</extracomment>
         <source>YouTube OAuth access denined!</source>
         <extracomment>Message informing the user about YouTube OAuth autorization denial</extracomment>
         <translation>Доступ запрещен!</translation>
+    </message>
+    <message id="ytplayer-msg-change-language">
+        <location filename="../qml/pages/LanguageChangeDialog.qml" line="51"/>
+        <source>Change language to %1?</source>
+        <extracomment>Dialog text asking the user if UI language change should be performed</extracomment>
+        <translation>Изменить язык на %1?</translation>
+    </message>
+    <message id="ytplayer-title-language-settings">
+        <location filename="../qml/pages/LanguageSettings.qml" line="50"/>
+        <source>Language settings</source>
+        <extracomment>Title of language settings page</extracomment>
+        <translation>Язык</translation>
     </message>
 </context>
 </TS>
