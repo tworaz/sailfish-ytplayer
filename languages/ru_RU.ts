@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ru_RU">
+<TS version="2.1" language="ru_RU">
 <context>
     <name></name>
     <message id="ytplayer-msg-download-finished">
@@ -19,9 +19,7 @@
         <location filename="../qml/cover/NetworkOffline.qml" line="65"/>
         <location filename="../qml/pages/NetworkOffline.qml" line="83"/>
         <source>Network Offline</source>
-        <extracomment>Network offline screen label
-----------
-Network offline screen label</extracomment>
+        <extracomment>Network offline screen label</extracomment>
         <translation>Нет сети</translation>
     </message>
     <message id="ytplayer-title-about">
@@ -34,7 +32,7 @@ Network offline screen label</extracomment>
         <location filename="../qml/pages/About.qml" line="68"/>
         <source>Unofficial YouTube client for Sailfish OS</source>
         <extracomment>YTPlayer application description in about page</extracomment>
-        <translation>Неофициальный клиент YouTube для Sailfish OS</translation>
+        <translation>Неофициальный клиент YouTube&lt;br&gt;для Sailfish OS</translation>
     </message>
     <message id="ytplayer-label-region-code">
         <location filename="../qml/pages/About.qml" line="80"/>
@@ -52,7 +50,7 @@ Network offline screen label</extracomment>
         <location filename="../qml/pages/About.qml" line="106"/>
         <source>YTPlayer is licensed under 3-clause BSD License</source>
         <extracomment>Label displaying YTPlayer licensing information</extracomment>
-        <translation>YTPlayer распространяется под лицензией 3-clause BSD</translation>
+        <translation>YTPlayer распространяется под лицензией&lt;br&gt;3-clause BSD</translation>
     </message>
     <message id="ytplayer-action-view-license">
         <location filename="../qml/pages/About.qml" line="112"/>
@@ -60,13 +58,7 @@ Network offline screen label</extracomment>
         <location filename="../qml/pages/ThirdPartySoftware.qml" line="98"/>
         <location filename="../qml/pages/ThirdPartySoftware.qml" line="125"/>
         <source>View license</source>
-        <extracomment>Button for showing license viewer page
-----------
-Button for showing license viewer page
-----------
-Button for showing license viewer page
-----------
-Button for showing license viewer page</extracomment>
+        <extracomment>Button for showing license viewer page</extracomment>
         <translation>Лицензия</translation>
     </message>
     <message id="ytplayer-action-third-party-software">
@@ -97,7 +89,7 @@ Button for showing license viewer page</extracomment>
         <location filename="../qml/pages/Account.qml" line="74"/>
         <source>Dislikes</source>
         <extracomment>YouTube dislikes page title</extracomment>
-        <translation>Непонравившийся</translation>
+        <translation>Непонравившиеся</translation>
     </message>
     <message id="ytplayer-title-recommended">
         <location filename="../qml/pages/Account.qml" line="83"/>
@@ -139,9 +131,7 @@ Button for showing license viewer page</extracomment>
         <location filename="../qml/pages/CacheSettings.qml" line="96"/>
         <location filename="../qml/pages/CacheSettings.qml" line="121"/>
         <source>Current usage</source>
-        <extracomment>Label for current cache usage label
-----------
-Label for current cache usage label</extracomment>
+        <extracomment>Label for current cache usage label</extracomment>
         <translation>Сейчас используется</translation>
     </message>
     <message id="ytplayer-label-api-req-cache-size">
@@ -255,7 +245,7 @@ Label for current cache usage label</extracomment>
         <location filename="../qml/pages/DownloadedVideos.qml" line="52"/>
         <source>Downloaded videos</source>
         <extracomment>Title of downloaded videos page</extracomment>
-        <translation>Загруженное видео</translation>
+        <translation>Загрузки</translation>
     </message>
     <message id="ytplayer-label-no-videos">
         <location filename="../qml/pages/DownloadedVideos.qml" line="65"/>
@@ -265,27 +255,23 @@ Label for current cache usage label</extracomment>
     </message>
     <message id="ytplayer-msg-cancelling-download">
         <location filename="../qml/pages/DownloadedVideos.qml" line="158"/>
-        <location filename="../qml/pages/VideoOverview.qml" line="272"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="271"/>
         <source>Cancelling download</source>
-        <extracomment>Remorse popup message telling the user video download will be cancelled
-----------
-Remorse popup message telling the user video download will be cancelled</extracomment>
+        <extracomment>Remorse popup message telling the user video download will be cancelled</extracomment>
         <translation>Отмена загрузки</translation>
     </message>
     <message id="ytplayer-msg-removing-download">
         <location filename="../qml/pages/DownloadedVideos.qml" line="162"/>
-        <location filename="../qml/pages/VideoOverview.qml" line="299"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="298"/>
         <source>Removing download</source>
-        <extracomment>Remorse popup message telling the user video download will be removed
-----------
-Remorse popup message telling the user video download will be removed</extracomment>
+        <extracomment>Remorse popup message telling the user video download will be removed</extracomment>
         <translation>Удаление загрузки</translation>
     </message>
     <message id="ytplayer-label-download-paused">
         <location filename="../qml/pages/DownloadedVideos.qml" line="179"/>
         <source>Paused</source>
         <extracomment>Label for video download staus indicator telling the user download is paused</extracomment>
-        <translation>Приостановлено</translation>
+        <translation>Пауза</translation>
     </message>
     <message id="ytplayer-label-download-queued">
         <location filename="../qml/pages/DownloadedVideos.qml" line="187"/>
@@ -323,9 +309,27 @@ Remorse popup message telling the user video download will be removed</extracomm
         <translation>Лицензия</translation>
     </message>
     <message id="ytplayer-title-log-viewer">
-        <location filename="../qml/pages/LogViewer.qml" line="48"/>
+        <location filename="../qml/pages/LogViewer.qml" line="49"/>
         <source>Log viewer</source>
         <translation>Просмотр логов</translation>
+    </message>
+    <message id="ytplayer-action-save-log">
+        <location filename="../qml/pages/LogViewer.qml" line="56"/>
+        <source>Save log</source>
+        <extracomment>Menu action allowing the user to save application log</extracomment>
+        <translation>Сохранить лог</translation>
+    </message>
+    <message id="ytplayer-msg-saving-log">
+        <location filename="../qml/pages/LogViewer.qml" line="60"/>
+        <source>Saving log</source>
+        <extracomment>Remorse popup message telling the user log file will be saved</extracomment>
+        <translation>Сохранение лога</translation>
+    </message>
+    <message id="ytplayer-msg-log-saved">
+        <location filename="../qml/pages/LogViewer.qml" line="86"/>
+        <source>Log saved</source>
+        <extracomment>Body of notification informing the user application log was saved</extracomment>
+        <translation>Лог сохранен</translation>
     </message>
     <message id="ytplayer-action-open-link-from-clipboard">
         <location filename="../qml/pages/MainMenu.qml" line="84"/>
@@ -391,7 +395,7 @@ Remorse popup message telling the user video download will be removed</extracomm
         <location filename="../qml/pages/MainMenu.qml" line="190"/>
         <source>Dislikes</source>
         <extracomment>Menu option responsible for showing user dislikes page</extracomment>
-        <translation>Непонравившийся</translation>
+        <translation>Непонравившиеся</translation>
     </message>
     <message id="ytplayer-action-other">
         <location filename="../qml/pages/MainMenu.qml" line="200"/>
@@ -546,13 +550,13 @@ Label for menu option allowing the user to change video quality</extracomment>
         <location filename="../qml/pages/SearchOptions.qml" line="254"/>
         <source>Creative Commons</source>
         <extracomment>Label for Creative Commons license type</extracomment>
-        <translation></translation>
+        <translation>Creative Commons</translation>
     </message>
     <message id="ytplayer-label-youtube-license">
         <location filename="../qml/pages/SearchOptions.qml" line="260"/>
         <source>YouTube</source>
         <extracomment>Label for YouTube license type</extracomment>
-        <translation></translation>
+        <translation>YouTube</translation>
     </message>
     <message id="ytplayer-label-video-event-type">
         <location filename="../qml/pages/SearchOptions.qml" line="277"/>
@@ -676,63 +680,76 @@ Label for menu option allowing the user to change video quality</extracomment>
     </message>
     <message id="ytplayer-label-suggestion-engine">
         <location filename="../qml/pages/SearchSettings.qml" line="86"/>
-        <source>Suggestion engine</source>
+        <source>Suggestion source</source>
+        <oldsource>Suggestion engine</oldsource>
         <extracomment>Label for the search suggestion engine combo box</extracomment>
-        <translation>Способ рекомендаций</translation>
+        <translation>Источник рекомендаций</translation>
     </message>
     <message id="ytplayer-label-google-suggestion-engine">
         <location filename="../qml/pages/SearchSettings.qml" line="100"/>
         <source>Google</source>
         <extracomment>Label for Google based search suggestion engine</extracomment>
-        <translation></translation>
+        <translation>Google</translation>
     </message>
     <message id="ytplayer-label-history-suggestion-engine">
         <location filename="../qml/pages/SearchSettings.qml" line="108"/>
-        <source>History</source>
+        <source>Search history</source>
+        <oldsource>History</oldsource>
         <extracomment>Label for history based search suggestion engine</extracomment>
-        <translation>История</translation>
+        <translation>История поиска</translation>
+    </message>
+    <message id="ytplayer-action-view-logs">
+        <location filename="../qml/pages/Settings.qml" line="54"/>
+        <source>View logs</source>
+        <extracomment>Label for menu option showing application log viewer</extracomment>
+        <translation>Просмотр логов</translation>
     </message>
     <message id="ytplayer-title-settings">
-        <location filename="../qml/pages/Settings.qml" line="60"/>
+        <location filename="../qml/pages/Settings.qml" line="71"/>
         <source>Settings</source>
         <extracomment>Settings page title</extracomment>
         <translation>Настройки</translation>
     </message>
     <message id="ytplayer-label-account-integration">
-        <location filename="../qml/pages/Settings.qml" line="67"/>
+        <location filename="../qml/pages/Settings.qml" line="78"/>
         <source>YouTube account integration</source>
         <extracomment>Label of switch activating/deactivating YouTube account integration</extracomment>
         <translation>Интеграция с аккаунтом YouTube</translation>
     </message>
     <message id="ytplayer-description-account-integration">
-        <location filename="../qml/pages/Settings.qml" line="70"/>
+        <location filename="../qml/pages/Settings.qml" line="81"/>
         <source>Allow YTPlayer to manage YouTube user account.</source>
         <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
         <translation>Разрешить YTPlayer управлять аккаунтом YouTube.</translation>
     </message>
     <message id="ytplayer-action-cache-settings">
-        <location filename="../qml/pages/Settings.qml" line="96"/>
+        <location filename="../qml/pages/Settings.qml" line="107"/>
         <source>Cache</source>
         <extracomment>Label for menu option showing cache settings page</extracomment>
         <translation>Кеш</translation>
     </message>
     <message id="ytplayer-action-download-settings">
-        <location filename="../qml/pages/Settings.qml" line="104"/>
+        <location filename="../qml/pages/Settings.qml" line="115"/>
         <source>Download</source>
         <extracomment>Label for menu option showing video download settings page</extracomment>
         <translation>Загрузки</translation>
     </message>
+    <message id="ytplayer-action-language-settings">
+        <location filename="../qml/pages/Settings.qml" line="123"/>
+        <source>Language</source>
+        <extracomment>Label for menu option showing application language settings page</extracomment>
+        <translation>Язык</translation>
+    </message>
     <message id="ytplayer-action-search-settings">
-        <location filename="../qml/pages/Settings.qml" line="112"/>
+        <location filename="../qml/pages/Settings.qml" line="131"/>
         <source>Search</source>
         <extracomment>Label for menu option showing search settings page</extracomment>
         <translation>Поиск</translation>
     </message>
     <message id="ytplayer-action-show-logs">
-        <location filename="../qml/pages/Settings.qml" line="121"/>
         <source>Logs</source>
         <extracomment>Label for menu option showing application logs</extracomment>
-        <translation>Лог</translation>
+        <translation type="obsolete">Лог</translation>
     </message>
     <message id="ytplayer-title-third-party-software">
         <location filename="../qml/pages/ThirdPartySoftware.qml" line="47"/>
@@ -791,10 +808,10 @@ Label for menu option allowing the user to change video quality</extracomment>
     </message>
     <message id="ytplayer-label-duration-with-value">
         <location filename="../qml/pages/VideoController.qml" line="343"/>
-        <source>Duration: %1</source>
-        <oldsource>BufferedDuration: %1</oldsource>
-        <extracomment>Video duration label with value</extracomment>
-        <translation type="unfinished">Буфер: %1</translation>
+        <source>BufferedDuration: %1</source>
+        <oldsource>Duration: %1</oldsource>
+        <extracomment>Media player status indicating content has been buffered Video duration label with value</extracomment>
+        <translation>Длительность: %1</translation>
     </message>
     <message id="ytplayer-status-buffered">
         <location filename="../qml/pages/VideoController.qml" line="348"/>
@@ -815,61 +832,61 @@ Label for menu option allowing the user to change video quality</extracomment>
         <translation>Невозможно воспроизвести</translation>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible">
-        <location filename="../qml/pages/VideoOverview.qml" line="197"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="196"/>
         <source>Direct video playback not possible</source>
         <extracomment>Notification summary informing the user direct video playback is not possible</extracomment>
         <translation>Прямое воспроизведение видео не доступно</translation>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible-desc">
-        <location filename="../qml/pages/VideoOverview.qml" line="200"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="199"/>
         <source>YTPLayer failed to find usable video streams</source>
         <extracomment>Notification body explaining why direct video playback is not possible</extracomment>
         <translation>YTPLayer не удалось найти подходящие видео потоки</translation>
     </message>
     <message id="ytplayer-action-download-video">
-        <location filename="../qml/pages/VideoOverview.qml" line="260"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="259"/>
         <source>Download video</source>
         <extracomment>Menu option triggering video preload</extracomment>
         <translation>Загрузить видео</translation>
     </message>
     <message id="ytplayer-action-cancel-download">
-        <location filename="../qml/pages/VideoOverview.qml" line="268"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="267"/>
         <source>Cancel download</source>
         <extracomment>Menu option canceling pending/in progress video preload</extracomment>
         <translation>Отменить загрузку</translation>
     </message>
     <message id="ytplayer-action-pause-download">
-        <location filename="../qml/pages/VideoOverview.qml" line="281"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="280"/>
         <source>Pause download</source>
         <extracomment>Menu option allowing the user to pause video download</extracomment>
         <translation>Приостановить загрузку</translation>
     </message>
     <message id="ytplayer-action-resume-download">
-        <location filename="../qml/pages/VideoOverview.qml" line="288"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="287"/>
         <source>Resume download</source>
         <extracomment>Menu option allowing the user to resume video download</extracomment>
         <translation>Продолжить загрузку</translation>
     </message>
     <message id="ytplayer-action-remove-download">
-        <location filename="../qml/pages/VideoOverview.qml" line="295"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="294"/>
         <source>Remove download</source>
         <extracomment>Menu option allowing the user to remove downloaded video</extracomment>
         <translation>Удалить загрузку</translation>
     </message>
     <message id="ytplayer-action-copy-link-to-clipboard">
-        <location filename="../qml/pages/VideoOverview.qml" line="307"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="306"/>
         <source>Copy link to clipboard</source>
         <extracomment>Menu option copying video link to clipboard</extracomment>
         <translation>Ссылку в буфер обмена</translation>
     </message>
     <message id="ytplayer-msg-link-copied">
-        <location filename="../qml/pages/VideoOverview.qml" line="316"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="315"/>
         <source>Link copied</source>
         <extracomment>Notification summary informing the user link was copied to clipboard</extracomment>
         <translation>Ссылка скопирована</translation>
     </message>
     <message id="ytplayer-action-open-in-browser">
-        <location filename="../qml/pages/VideoOverview.qml" line="323"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="322"/>
         <source>Open in browser</source>
         <extracomment>Menu option opening YouTube video page in a web browser</extracomment>
         <translation>Открыть в браузере</translation>
@@ -920,7 +937,7 @@ Label for menu option allowing the user to change video quality</extracomment>
         <location filename="../qml/pages/VideoOverview.qml" line="489"/>
         <source>Duration</source>
         <extracomment>Label for video duration field</extracomment>
-        <translation>Продолжительность</translation>
+        <translation>Длительность</translation>
     </message>
     <message id="ytplayer-label-signing-in">
         <location filename="../qml/pages/YTOAuth2.qml" line="54"/>
@@ -951,6 +968,18 @@ Label for menu option allowing the user to change video quality</extracomment>
         <source>YouTube OAuth access denined!</source>
         <extracomment>Message informing the user about YouTube OAuth autorization denial</extracomment>
         <translation>Доступ запрещен!</translation>
+    </message>
+    <message id="ytplayer-msg-change-language">
+        <location filename="../qml/pages/LanguageChangeDialog.qml" line="51"/>
+        <source>Change language to %1?</source>
+        <extracomment>Dialog text asking the user if UI language change should be performed</extracomment>
+        <translation>Изменить язык на %1?</translation>
+    </message>
+    <message id="ytplayer-title-language-settings">
+        <location filename="../qml/pages/LanguageSettings.qml" line="50"/>
+        <source>Language settings</source>
+        <extracomment>Title of language settings page</extracomment>
+        <translation>Язык</translation>
     </message>
 </context>
 </TS>
