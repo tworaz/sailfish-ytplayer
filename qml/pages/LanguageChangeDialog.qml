@@ -45,6 +45,7 @@ Dialog {
     }
 
     onOpened: {
+        priv.originalLanguage = YTTranslations.language
         YTTranslations.language = root.code
     }
 
