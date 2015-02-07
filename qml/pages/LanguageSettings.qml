@@ -29,7 +29,6 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import harbour.ytplayer 1.0
 import "../common"
 
 Page {
@@ -62,12 +61,9 @@ Page {
                     return;
                 }
 
-                var dialog = pageStack.push("LanguageChangeDialog.qml", {
+                pageStack.push("LanguageChangeDialog.qml", {
                     "language" : listview.model[index].name,
-                })
-                dialog.accepted.connect(function() {
-                    YTTranslations.language = listview.model[index].code
-                    pageStack.replaceAbove(null, "MainMenu.qml")
+                    "code" : listview.model[index].code,
                 })
             }
         }

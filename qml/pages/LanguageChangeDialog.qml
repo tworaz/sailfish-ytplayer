@@ -33,6 +33,24 @@ import Sailfish.Silica 1.0
 Dialog {
     id: root
     property string language: ""
+    property string code: ""
+
+    acceptDestination: Qt.resolvedUrl("MainMenu.qml")
+    acceptDestinationAction: PageStackAction.Replace
+    acceptDestinationReplaceTarget: null
+
+    QtObject {
+        id: priv
+        property string originalLanguage: YTTranslations.language
+    }
+
+    onOpened: {
+        YTTranslations.language = root.code
+    }
+
+    onRejected: {
+        YTTranslations.language = priv.originalLanguage
+    }
 
     Column {
         width: parent.width
