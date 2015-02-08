@@ -58,8 +58,7 @@ OTHER_FILES += \
         scripts/mcc-data-util.py \
         scripts/generate-config-h.py \
         scripts/get_version_str.sh \
-        rpm/harbour-ytplayer.spec \
-    qml/pages/TranslationCredits.qml
+        rpm/harbour-ytplayer.spec
 
 include(third_party/notifications.pri)
 include(third_party/youtube_dl.pri)

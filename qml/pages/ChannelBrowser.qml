@@ -40,6 +40,7 @@ Page {
 
     property string channelId
     property string title
+    property bool isUserChannel: false
 
     QtObject {
         id: priv
@@ -73,7 +74,7 @@ Page {
             if (priv.coverDataReady) {
                 requestCoverPage("ChannelBrowser.qml", priv.coverData)
             }
-            subscriptionMenu.visible = Prefs.isAuthEnabled()
+            subscriptionMenu.visible = Prefs.isAuthEnabled() && !page.isUserChannel
         }
     }
 
@@ -191,6 +192,7 @@ Page {
         }
 
         PullDownMenu {
+            visible: subscriptionMenu.visible
             MenuItem {
                 id: subscriptionMenu
                 visible: false

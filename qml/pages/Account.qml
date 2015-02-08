@@ -57,6 +57,15 @@ Page {
             }
         },
         State {
+            name: "MY_CHANNELS"
+            PropertyChanges {
+                target: priv
+                //: YouTube user channels page title
+                //% "My channels"
+                title: qsTrId("ytplayer-title-my-channels")
+            }
+        },
+        State {
             name: "LIKES"
             PropertyChanges {
                 target: priv
@@ -143,6 +152,14 @@ Page {
             }
             listModel.filter.key = "snippet.type"
             listModel.filter.value = "upload"
+        } else if (state === "MY_CHANNELS") {
+            request.resource = "channels"
+            params = {
+                "part" : "id,snippet,contentDetails",
+                "mine" : true,
+            }
+        } else {
+            console.assert(false)
         }
 
         if (token) {
@@ -198,6 +215,7 @@ Page {
         delegate: YTListItem {
             title: snippet.title
             thumbnails: snippet.thumbnails
+            isUserChannel: page.state === "MY_CHANNELS"
             youtubeId: {
                 if (snippet.hasOwnProperty("resourceId")) {
                     return snippet.resourceId
@@ -214,6 +232,8 @@ Page {
                         Log.error(JSON.stringify(contentDetails, undefined, 2))
                         return undefined;
                     }
+                } else if (kind && kind === "youtube#channel") {
+                    return { "kind": kind, "channelId": id }
                 } else {
                     Log.error("Unknown item type in the list: " +
                               JSON.stringify(listModel.get(index), undefined, 2))

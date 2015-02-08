@@ -144,6 +144,15 @@ Page {
                 color: Theme.highlightColor
             }
             MainMenuItem {
+                //: Menu option fo show YouTube user channels page
+                //% "My channels"
+                text: qsTrId("ytplayer-action-my-channels")
+                visible: priv.showAccount
+                icon: "qrc:///icons/home-64.png"
+                onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
+                                              { "state" : "MY_CHANNELS" })
+            }
+            MainMenuItem {
                 id: recommended
                 //: Menu option fo show YouTube recommendations page
                 //% "Recommended for you"

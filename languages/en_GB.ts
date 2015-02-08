@@ -823,5 +823,15 @@ Remorse popup message telling the user video download will be removed</extracomm
         <extracomment>Title of translation credits page</extracomment>
         <translation>Translations</translation>
     </message>
+    <message id="ytplayer-title-my-channels">
+        <source>My channels</source>
+        <extracomment>YouTube user channels page title</extracomment>
+        <translation>My channels</translation>
+    </message>
+    <message id="ytplayer-action-my-channels">
+        <source>My channels</source>
+        <extracomment>Menu option fo show YouTube user channels page</extracomment>
+        <translation>My channels</translation>
+    </message>
 </context>
 </TS>

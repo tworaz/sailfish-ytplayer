@@ -39,6 +39,7 @@ ListItem {
     property alias title: itemLabel.text
     property variant thumbnails
     property string duration: ""
+    property bool isUserChannel: false
 
     AsyncImage {
         id: thumbnail
@@ -102,8 +103,9 @@ ListItem {
         } else if (youtubeId.kind === "youtube#channel") {
             Log.debug("Selected item is a channel, opening channel browser ")
             pageStack.push(Qt.resolvedUrl("../pages/ChannelBrowser.qml"), {
-                "channelId"  : youtubeId.channelId,
-                "title"      : ytItem.title
+                "channelId"     : youtubeId.channelId,
+                "title"         : ytItem.title,
+                "isUserChannel" : ytItem.isUserChannel
             })
         } else {
             Log.error("Unrecogized id kind: " + youtubeId.kind);
