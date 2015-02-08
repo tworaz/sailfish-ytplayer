@@ -60,9 +60,7 @@ DockedPanel {
         Log.debug("Video controller activated")
         priv.active = true
 
-        if (!root.streams) {
-            request.run()
-        } else if (priv.resumeOnActivate && Qt.application.active) {
+        if (priv.resumeOnActivate && Qt.application.active) {
             Log.debug("Video player activated, resuming video playback")
             _mediaPlayer.play()
         }
@@ -87,21 +85,8 @@ DockedPanel {
         opacity: 0.5
     }
 
-    YTRequest {
-        id: request
-        method: YTRequest.List
-        resource: "video/url"
-        params: {
-            "video_id" : videoId,
-        }
-        onSuccess: {
-            root.streams = response
-        }
-    }
-
     Connections {
         target: root
-
         // Make sure video quality menu is closed together with the panel
         onOpenChanged: {
             if (!root.open) {
@@ -241,14 +226,7 @@ DockedPanel {
                 showIndicator = false
                 break
             case MediaPlayer.EndOfMedia:
-                if (Math.round(position / 1000) < Math.round(duration / 1000)) {
-                    Log.debug("End of media received, but positon < duration")
-                    savePosition()
-                    request.run()
-                } else {
-                    Log.debug("End of media")
-                    savedPosition = 0
-                }
+                savedPosition = 0
                 break
             }
 
