@@ -3,19 +3,31 @@
   "items" : [
     {
       "name" : "Deutsch",
-      "code" : "de_DE"
+      "code" : "de_DE",
+      "authors" : [
+        "Björn Bidar <theodorstormgrade@gmail.com>"
+      ]
     },
     {
       "name" : "English (UK)",
-      "code" : "en_GB"
+      "code" : "en_GB",
+      "authors" : [
+        "Piotr Tworek <tworaz666@gmail.com>"
+      ]
     },
     {
       "name" : "Nederlands",
-      "code" : "nl_NL"
+      "code" : "nl_NL",
+      "authors" : [
+        "Heimen Stoffels"
+      ]
     },
     {
       "name" : "Русский",
-      "code" : "ru_RU"
+      "code" : "ru_RU",
+      "authors" : [
+        "Petr Tsymbarovich <petr@tsymbarovich.ru>"
+      ]
     }
   ]
 }

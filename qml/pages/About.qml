@@ -58,7 +58,7 @@ Page {
         }
         Item {
             width: parent.width
-            height: 2 * Theme.paddingLarge
+            height: Theme.paddingLarge
         }
         Label {
             width: parent.width
@@ -124,7 +124,7 @@ Page {
         }
         Item {
             width: parent.width
-            height: 2 * Theme.paddingLarge
+            height: Theme.paddingLarge
         }
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
@@ -132,6 +132,17 @@ Page {
             //% "Third party software"
             text: qsTrId("ytplayer-action-third-party-software")
             onClicked: pageStack.push(Qt.resolvedUrl("ThirdPartySoftware.qml"))
+        }
+        Item {
+            width: parent.width
+            height: Theme.paddingLarge
+        }
+        Button {
+            anchors.horizontalCenter: parent.horizontalCenter
+            //: Label for button showing application translation credits page
+            //% "Translations"
+            text: qsTrId("ytplayer-action-translation-credits")
+            onClicked: pageStack.push(Qt.resolvedUrl("TranslationCredits.qml"))
         }
     }
 

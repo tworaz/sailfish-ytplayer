@@ -64,5 +64,6 @@
         <file>qml/pages/SearchSettings.qml</file>
         <file>qml/pages/LanguageSettings.qml</file>
         <file>qml/pages/LanguageChangeDialog.qml</file>
+        <file>qml/pages/TranslationCredits.qml</file>
     </qresource>
 </RCC>

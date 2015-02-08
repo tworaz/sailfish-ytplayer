@@ -760,7 +760,6 @@ Remorse popup message telling the user video download will be removed</extracomm
     </message>
     <message id="ytplayer-label-suggestion-engine">
         <source>Suggestion source</source>
-        <oldsource>Suggestion engine</oldsource>
         <extracomment>Label for the search suggestion engine combo box</extracomment>
         <translation>Suggestion source</translation>
     </message>
@@ -771,7 +770,6 @@ Remorse popup message telling the user video download will be removed</extracomm
     </message>
     <message id="ytplayer-label-history-suggestion-engine">
         <source>Search history</source>
-        <oldsource>Search History</oldsource>
         <extracomment>Label for history based search suggestion engine</extracomment>
         <translation>Search history</translation>
     </message>
@@ -802,7 +800,6 @@ Remorse popup message telling the user video download will be removed</extracomm
     </message>
     <message id="ytplayer-title-language-settings">
         <source>Language settings</source>
-        <oldsource>Cache settings</oldsource>
         <extracomment>Title of language settings page</extracomment>
         <translation>Language settings</translation>
     </message>
@@ -815,6 +812,16 @@ Remorse popup message telling the user video download will be removed</extracomm
         <source>Change language to %1?</source>
         <extracomment>Dialog text asking the user if UI language change should be performed</extracomment>
         <translation>Change language to %1?</translation>
+    </message>
+    <message id="ytplayer-action-translation-credits">
+        <source>Translations</source>
+        <extracomment>Label for button showing application translation credits page</extracomment>
+        <translation>Translations</translation>
+    </message>
+    <message id="ytplayer-title-translation-credits">
+        <source>Translations</source>
+        <extracomment>Title of translation credits page</extracomment>
+        <translation>Translations</translation>
     </message>
 </context>
 </TS>
