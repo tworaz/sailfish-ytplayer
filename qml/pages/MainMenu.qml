@@ -77,8 +77,15 @@ Page {
         contentHeight: column.height
 
         PullDownMenu {
-            visible: priv.clipboardVideoId.length > 0
             MenuItem {
+                //: Menu option to show about page
+                //% "About"
+                text: qsTrId("ytplayer-action-about")
+                //icon: "qrc:///icons/info-64.png"
+                onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
+            }
+            MenuItem {
+                visible: priv.clipboardVideoId.length > 0
                 //: Menu opion for opening video links from clipboard
                 //% "Open link from clipboard"
                 text: qsTrId("ytplayer-action-open-link-from-clipboard")
@@ -209,13 +216,6 @@ Page {
                 text: qsTrId("ytplayer-action-settings")
                 icon: "qrc:///icons/settings-64.png"
                 onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
-            }
-            MainMenuItem {
-                //: Menu option to show about page
-                //% "About"
-                text: qsTrId("ytplayer-action-about")
-                icon: "qrc:///icons/info-64.png"
-                onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
             }
         }
         VerticalScrollDecorator {}
