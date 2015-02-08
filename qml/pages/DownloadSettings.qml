@@ -44,7 +44,7 @@ Page {
             requestCoverPage("Default.qml")
         } else if (status === PageStatus.Deactivating) {
             if (priv.settingsChanged)
-                Prefs.notifyDownloadSettingsChanged()
+                YTPrefs.notifyDownloadSettingsChanged()
         }
     }
 
@@ -71,11 +71,11 @@ Page {
                 //% "On startup, resume all downloads which were either quened or "
                 //% "in progress when YTPlayer was closed."
                 description: qsTrId("ytplayer-description-autoresume")
-                checked: Prefs.getBool("Download/ResumeOnStartup")
+                checked: YTPrefs.getBool("Download/ResumeOnStartup")
                 automaticCheck: false
                 onClicked: {
                     checked = !checked
-                    Prefs.set("Download/ResumeOnStartup", checked)
+                    YTPrefs.set("Download/ResumeOnStartup", checked)
                 }
             }
 
@@ -89,10 +89,10 @@ Page {
                 stepSize: 1
                 valueText: value
                 Component.onCompleted: {
-                    value = Prefs.getInt("Download/MaxConcurrentDownloads")
+                    value = YTPrefs.getInt("Download/MaxConcurrentDownloads")
                 }
                 onReleased: {
-                    Prefs.set("Download/MaxConcurrentDownloads", value)
+                    YTPrefs.set("Download/MaxConcurrentDownloads", value)
                     priv.settingsChanged = true
                 }
             }
@@ -103,7 +103,7 @@ Page {
                 label: qsTrId("ytplayer-label-preferred-quality")
 
                 Component.onCompleted: {
-                    switch (Prefs.get("Download/Quality")) {
+                    switch (YTPrefs.get("Download/Quality")) {
                     case "1080p": currentIndex = 0; break;
                     case "720p" : currentIndex = 1; break;
                     case "360p" : currentIndex = 2; break;
@@ -114,15 +114,15 @@ Page {
                 menu: ContextMenu {
                     MenuItem {
                         text: "1080p"
-                        onClicked: Prefs.set("Download/Quality", text)
+                        onClicked: YTPrefs.set("Download/Quality", text)
                     }
                     MenuItem {
                         text: "720p"
-                        onClicked: Prefs.set("Download/Quality", text)
+                        onClicked: YTPrefs.set("Download/Quality", text)
                     }
                     MenuItem {
                         text: "360p"
-                        onClicked: Prefs.set("Download/Quality", text)
+                        onClicked: YTPrefs.set("Download/Quality", text)
                     }
                 }
             }
@@ -134,7 +134,7 @@ Page {
                 label: qsTrId("ytplayer-label-connection-type")
 
                 Component.onCompleted: {
-                    switch (Prefs.get("Download/ConnectionType"))  {
+                    switch (YTPrefs.get("Download/ConnectionType"))  {
                     case "WiFi"          : currentIndex = 0; break;
                     case "WiFi+Cellular" : currentIndex = 1; break;
                     case "Cellular"      : currentIndex = 2; break;
@@ -143,7 +143,7 @@ Page {
                 }
 
                 function changeType(type) {
-                    Prefs.set("Download/ConnectionType", type)
+                    YTPrefs.set("Download/ConnectionType", type)
                     priv.settingsChanged = true
                 }
 

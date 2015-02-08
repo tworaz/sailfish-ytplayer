@@ -27,7 +27,7 @@
  * SUCH DAMAGE.
  */
 
-#include "Prefs.h"
+#include "YTPrefs.h"
 
 #include <QSettings>
 #include <QStandardPaths>
@@ -46,13 +46,13 @@ const char kGoogleSuggestionEngine[] = "Google";
 
 const char kLanguageKey[] = "Language";
 
-Prefs::Prefs(QObject *parent)
+YTPrefs::YTPrefs(QObject *parent)
     : QObject(parent)
 {
 }
 
 void
-Prefs::initialize()
+YTPrefs::initialize()
 {
     QSettings settings;
     qDebug("Initializing settings");
@@ -86,14 +86,14 @@ Prefs::initialize()
 }
 
 void
-Prefs::set(const QString& key, const QVariant &value)
+YTPrefs::set(const QString& key, const QVariant &value)
 {
     QSettings settings;
     settings.setValue(key, value);
 }
 
 QVariant
-Prefs::get(const QString& key)
+YTPrefs::get(const QString& key)
 {
     QSettings settings;
     QVariant value = settings.value(key);
@@ -101,7 +101,7 @@ Prefs::get(const QString& key)
 }
 
 bool
-Prefs::getBool(const QString& key)
+YTPrefs::getBool(const QString& key)
 {
     QVariant value = get(key);
     Q_ASSERT(value.canConvert(QVariant::Bool));
@@ -109,7 +109,7 @@ Prefs::getBool(const QString& key)
 }
 
 int
-Prefs::getInt(const QString& key)
+YTPrefs::getInt(const QString& key)
 {
     QVariant value = get(key);
     Q_ASSERT(value.canConvert(QVariant::Int));
@@ -117,14 +117,14 @@ Prefs::getInt(const QString& key)
 }
 
 bool
-Prefs::isAuthEnabled()
+YTPrefs::isAuthEnabled()
 {
     QVariant auth = get("AccountIntegration");
     return auth.isValid() && auth.toBool();
 }
 
 void
-Prefs::disableAuth()
+YTPrefs::disableAuth()
 {
     QSettings settings;
     settings.remove("YouTube/AccessToken");
@@ -134,7 +134,7 @@ Prefs::disableAuth()
 }
 
 void
-Prefs::notifyDownloadSettingsChanged() const
+YTPrefs::notifyDownloadSettingsChanged() const
 {
     YTLocalVideoManager::instance().downloadSettingsChanged();
 }

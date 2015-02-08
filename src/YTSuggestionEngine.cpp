@@ -39,7 +39,7 @@
 #include <QUrl>
 
 #include "YTRequest.h"
-#include "Prefs.h"
+#include "YTPrefs.h"
 
 namespace  {
 const char kGoogleSuggestionUrlBase[] =

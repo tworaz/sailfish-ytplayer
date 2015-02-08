@@ -43,7 +43,7 @@
 #include "YTLocalVideoData.h"
 #include "YTRequest.h"
 #include "YTPlayer.h"
-#include "Prefs.h"
+#include "YTPrefs.h"
 
 class YTDownloadInfo : public QObject {
     Q_OBJECT

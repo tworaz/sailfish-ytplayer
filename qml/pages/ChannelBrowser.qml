@@ -74,12 +74,12 @@ Page {
             if (priv.coverDataReady) {
                 requestCoverPage("ChannelBrowser.qml", priv.coverData)
             }
-            subscriptionMenu.visible = Prefs.isAuthEnabled() && !page.isUserChannel
+            subscriptionMenu.visible = YTPrefs.isAuthEnabled() && !page.isUserChannel
         }
     }
 
     onChannelIdChanged: {
-        if (Prefs.isAuthEnabled()) {
+        if (YTPrefs.isAuthEnabled()) {
             Log.info("YouTube account integration enabled, checking channel subscription status")
             subscriptionRequest.params = {
                 "part"         : "snippet",

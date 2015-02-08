@@ -37,7 +37,7 @@
 #include <QFile>
 #include <sailfishapp.h>
 
-#include "Prefs.h"
+#include "YTPrefs.h"
 
 namespace {
 QVariantMap

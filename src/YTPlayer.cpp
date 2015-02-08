@@ -56,7 +56,7 @@
 #include "NativeUtil.h"
 #include "YTRequest.h"
 #include "YTLogger.h"
-#include "Prefs.h"
+#include "YTPrefs.h"
 
 namespace {
 const QString kApplicationDBFileName = "YTPlayer.sqlite";
@@ -142,9 +142,9 @@ main(int argc, char *argv[])
     QScopedPointer<QQuickView> view(SailfishApp::createView());
     QScopedPointer<NativeUtil> nativeUtil(new NativeUtil(app.data()));
     YTTranslations translations;
-    Prefs prefs;
+    YTPrefs prefs;
 
-    Prefs::initialize();
+    YTPrefs::initialize();
 
     // Make sure the logger is initialized
     YTLogger::instance();
@@ -175,7 +175,7 @@ main(int argc, char *argv[])
 
     view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
     view->rootContext()->setContextProperty("Log", &YTLogger::instance());
-    view->rootContext()->setContextProperty("Prefs", &prefs);
+    view->rootContext()->setContextProperty("YTPrefs", &prefs);
     view->rootContext()->setContextProperty("gNetworkManager", &YTNetworkManager::instance());
     view->rootContext()->setContextProperty("YTTranslations", &translations);
 

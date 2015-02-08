@@ -27,8 +27,8 @@
  * SUCH DAMAGE.
  */
 
-#ifndef SETTINGS_H
-#define SETTINGS_H
+#ifndef YTPREFS_H
+#define YTPREFS_H
 
 #include <QString>
 #include <QVariant>
@@ -43,11 +43,11 @@ extern const char kGoogleSuggestionEngine[];
 
 extern const char kLanguageKey[];
 
-class Prefs: public QObject
+class YTPrefs: public QObject
 {
     Q_OBJECT
 public:
-    explicit Prefs(QObject *parent = 0);
+    explicit YTPrefs(QObject *parent = 0);
 
     static void initialize();
 
@@ -60,4 +60,4 @@ public:
     Q_INVOKABLE void notifyDownloadSettingsChanged() const;
 };
 
-#endif // SETTINGS_H
+#endif // YTPREFS_H

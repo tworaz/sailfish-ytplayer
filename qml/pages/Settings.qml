@@ -37,7 +37,7 @@ Page {
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            accountSwitch.checked = Prefs.isAuthEnabled()
+            accountSwitch.checked = YTPrefs.isAuthEnabled()
             requestCoverPage("Default.qml")
         }
     }
@@ -80,12 +80,12 @@ Page {
                 //% "Allow YTPlayer to manage YouTube user account."
                 description: qsTrId("ytplayer-description-account-integration")
                 automaticCheck: false
-                checked: Prefs.isAuthEnabled()
+                checked: YTPrefs.isAuthEnabled()
 
                 onClicked: {
-                    if (Prefs.isAuthEnabled()) {
+                    if (YTPrefs.isAuthEnabled()) {
                         Log.info("Disabling account integration")
-                        Prefs.disableAuth();
+                        YTPrefs.disableAuth();
                         checked = false
                     } else {
                         Log.info("Enabling account integration")

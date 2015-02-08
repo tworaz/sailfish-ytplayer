@@ -109,7 +109,7 @@ Page {
             if (!request.loaded)
                 request.run()
 
-            rating.enabled = Prefs.isAuthEnabled()
+            rating.enabled = YTPrefs.isAuthEnabled()
         } else if (status === PageStatus.Active) {
             if (!priv.playerPage) {
                 if (localVideo.status === YTLocalVideo.Downloaded) {

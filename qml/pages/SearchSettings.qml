@@ -86,7 +86,7 @@ Page {
                 label: qsTrId("ytplayer-label-suggestion-engine")
 
                 Component.onCompleted: {
-                    switch (Prefs.get("Search/SuggestionEngine")) {
+                    switch (YTPrefs.get("Search/SuggestionEngine")) {
                     case "Google" : currentIndex = 0; break
                     case "History": currentIndex = 1; break
                     default: console.assert(false)
@@ -99,7 +99,7 @@ Page {
                         //% "Google"
                         text: qsTrId("ytplayer-label-google-suggestion-engine")
                         onClicked: {
-                            Prefs.set("Search/SuggestionEngine", "Google")
+                            YTPrefs.set("Search/SuggestionEngine", "Google")
                         }
                     }
                     MenuItem {
@@ -107,7 +107,7 @@ Page {
                         //% "Search history"
                         text: qsTrId("ytplayer-label-history-suggestion-engine")
                         onClicked: {
-                            Prefs.set("Search/SuggestionEngine", "History")
+                            YTPrefs.set("Search/SuggestionEngine", "History")
                         }
                     }
                 }

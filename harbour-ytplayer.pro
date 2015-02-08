@@ -15,7 +15,7 @@ SOURCES += \
         src/YTPlayer.cpp \
         src/NativeUtil.cpp \
         src/YTLogger.cpp \
-        src/Prefs.cpp \
+        src/YTPrefs.cpp  \
         src/YTRequest.cpp \
         src/YTListModel.cpp \
         src/YTNetworkManager.cpp \
@@ -32,7 +32,7 @@ HEADERS += \
         src/YTPlayer.h \
         src/NativeUtil.h \
         src/YTLogger.h \
-        src/Prefs.h \
+        src/YTPrefs.h \
         src/YTRequest.h \
         src/YTListModel.h \
         src/YTNetworkManager.h \

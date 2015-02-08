@@ -36,7 +36,7 @@ Page {
     allowedOrientations: Orientation.All
 
     Component.onCompleted: {
-        priv.showAccount = Prefs.isAuthEnabled()
+        priv.showAccount = YTPrefs.isAuthEnabled()
         checkClipboard()
     }
 
@@ -44,7 +44,7 @@ Page {
         if (status === PageStatus.Active) {
             requestCoverPage("Default.qml")
         } else if (status === PageStatus.Activating) {
-            priv.showAccount = Prefs.isAuthEnabled()
+            priv.showAccount = YTPrefs.isAuthEnabled()
         }
     }
 
