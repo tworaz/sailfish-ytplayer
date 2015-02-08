@@ -64,7 +64,6 @@ appendParams(QUrlQuery& query, QVariantMap& params)
 static void
 appendCommonParams(QUrlQuery& query)
 {
-    QSettings settings;
     query.addQueryItem("key", YOUTUBE_DATA_API_V3_KEY);
     query.addQueryItem("regionCode", NativeUtil::getRegionCode());
     query.addQueryItem("maxResults", kMaxResults);
