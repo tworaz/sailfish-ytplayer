@@ -139,7 +139,6 @@ Page {
             params = {
                 "part"       : "id,snippet,contentDetails",
                 "home"       : true,
-                "maxResults" : 50
             }
             listModel.filter.key = "snippet.type"
             listModel.filter.value = "recommendation"
@@ -148,7 +147,6 @@ Page {
             params = {
                 "part"       : "id,snippet,contentDetails",
                 "home"       : true,
-                "maxResults" : 50
             }
             listModel.filter.key = "snippet.type"
             listModel.filter.value = "upload"
