@@ -52,7 +52,7 @@ Prefs::Prefs(QObject *parent)
 }
 
 void
-Prefs::Initialize()
+Prefs::initialize()
 {
     QSettings settings;
     qDebug("Initializing settings");

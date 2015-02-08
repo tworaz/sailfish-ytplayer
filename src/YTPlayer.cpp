@@ -140,14 +140,15 @@ main(int argc, char *argv[])
 {
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> view(SailfishApp::createView());
-    QScopedPointer<Prefs> prefs(new Prefs(app.data()));
     QScopedPointer<NativeUtil> nativeUtil(new NativeUtil(app.data()));
     YTTranslations translations;
+    Prefs prefs;
+
+    Prefs::initialize();
 
     // Make sure the logger is initialized
     YTLogger::instance();
 
-    prefs->Initialize();
     InitApplicationDatabase();
 
     if (!YTTranslations::initialize()) {
@@ -174,7 +175,7 @@ main(int argc, char *argv[])
 
     view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
     view->rootContext()->setContextProperty("Log", &YTLogger::instance());
-    view->rootContext()->setContextProperty("Prefs", prefs.data());
+    view->rootContext()->setContextProperty("Prefs", &prefs);
     view->rootContext()->setContextProperty("gNetworkManager", &YTNetworkManager::instance());
     view->rootContext()->setContextProperty("YTTranslations", &translations);
 

@@ -49,7 +49,7 @@ class Prefs: public QObject
 public:
     explicit Prefs(QObject *parent = 0);
 
-    void Initialize();
+    static void initialize();
 
     Q_INVOKABLE void set(const QString& key, const QVariant& value);
     Q_INVOKABLE QVariant get(const QString& key);
