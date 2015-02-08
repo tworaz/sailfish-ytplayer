@@ -110,7 +110,7 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
-            text: "youtube-dl " + NativeUtil.youTubeDLVersion
+            text: "youtube-dl " + YTUtils.youTubeDLVersion
         }
         Label {
             anchors.horizontalCenter: parent.horizontalCenter

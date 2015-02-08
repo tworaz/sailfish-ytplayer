@@ -44,7 +44,7 @@
 #include "YTNetworkManager.h"
 #include "YTTranslations.h"
 #include "YTPlayer.h"
-#include "NativeUtil.h"
+#include "YTUtils.h"
 #include "config.h"
 
 namespace {
@@ -65,7 +65,7 @@ static void
 appendCommonParams(QUrlQuery& query)
 {
     query.addQueryItem("key", YOUTUBE_DATA_API_V3_KEY);
-    query.addQueryItem("regionCode", NativeUtil::getRegionCode());
+    query.addQueryItem("regionCode", YTUtils::getRegionCode());
     query.addQueryItem("maxResults", kMaxResults);
     query.addQueryItem("hl", YTTranslations::language());
 }
@@ -118,7 +118,7 @@ youtubeVideoInfoUrl(QVariantMap params)
     QUrlQuery query;
     appendParams(query, params);
     query.addQueryItem("el", "player_embedded");
-    query.addQueryItem("gl", NativeUtil::getRegionCode());
+    query.addQueryItem("gl", YTUtils::getRegionCode());
     if (QLocale::system().name() != "C") {
         query.addQueryItem("hl", QLocale::system().name());
     } else {

@@ -39,7 +39,7 @@
 #include <sailfishapp.h>
 
 #include "config.h"
-#include "NativeUtil.h"
+#include "YTUtils.h"
 #include "YTVideoUrlFetcher.h"
 
 static QString FALLBACK_COUNTRY_CODE = QString("US"); // Worldwide (All)
@@ -127,13 +127,13 @@ getMobileCountryCodeMap()
     return QJsonObject();
 }
 
-NativeUtil::NativeUtil(QObject *parent) :
+YTUtils::YTUtils(QObject *parent) :
     QObject(parent)
 {
 }
 
 QString
-NativeUtil::getRegionCode()
+YTUtils::getRegionCode()
 {
     static QString regionCode;
 
@@ -171,7 +171,7 @@ NativeUtil::getRegionCode()
 }
 
 QString
-NativeUtil::getVersion()
+YTUtils::getVersion()
 {
 #ifdef VERSION_STR
     return QString(VERSION_STR);
@@ -181,7 +181,7 @@ NativeUtil::getVersion()
 }
 
 void
-NativeUtil::preventScreenBlanking(bool prevent)
+YTUtils::preventScreenBlanking(bool prevent)
 {
     QDBusConnection systemBus = QDBusConnection::connectToBus(QDBusConnection::SystemBus, "system");
     Q_ASSERT(systemBus.isConnected());
@@ -199,7 +199,7 @@ NativeUtil::preventScreenBlanking(bool prevent)
 }
 
 QString
-NativeUtil::getLicense(QString license)
+YTUtils::getLicense(QString license)
 {
     QString dir = SailfishApp::pathTo(QString("licenses")).toLocalFile();
     QString licenseFile = dir + QDir::separator() + license;
@@ -220,7 +220,7 @@ NativeUtil::getLicense(QString license)
 }
 
 QString
-NativeUtil::youTubeDLVersion()
+YTUtils::youTubeDLVersion()
 {
     return YTVideoUrlFetcher::version();
 }

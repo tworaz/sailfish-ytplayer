@@ -35,7 +35,7 @@ import "pages"
 
 ApplicationWindow
 {
-    property string regionCode: NativeUtil.regionCode
+    property string regionCode: YTUtils.regionCode
     readonly property double thumbnailAspectRatio: 9 / 16
     readonly property string youtubeIconsFontName: "youtube-icons"
     readonly property int kMaxCoverThumbnailCount: 12

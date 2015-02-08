@@ -89,7 +89,7 @@ Page {
             color: Theme.secondaryColor
             //: Version label value
             //% "Version: %1"
-            text: qsTrId("ytplayer-label-version").arg(NativeUtil.version)
+            text: qsTrId("ytplayer-label-version").arg(YTUtils.version)
         }
         Item {
             width: parent.width

@@ -64,7 +64,7 @@ Page {
                 width: parent.width
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.secondaryColor
-                text: NativeUtil.getLicense(licenseFile)
+                text: YTUtils.getLicense(licenseFile)
                 wrapMode: Text.Wrap
             }
         }

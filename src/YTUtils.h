@@ -32,7 +32,7 @@
 
 #include <QObject>
 
-class NativeUtil : public QObject
+class YTUtils : public QObject
 {
     Q_OBJECT
 
@@ -41,7 +41,7 @@ class NativeUtil : public QObject
     Q_PROPERTY(QString youTubeDLVersion READ youTubeDLVersion CONSTANT)
 
 public:
-    explicit NativeUtil(QObject *parent = 0);
+    explicit YTUtils(QObject *parent = 0);
 
     Q_INVOKABLE void preventScreenBlanking(bool prevent);
     Q_INVOKABLE QString getLicense(QString file);

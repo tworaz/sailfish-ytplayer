@@ -53,7 +53,7 @@
 #include "YTVideoUrlFetcher.h"
 #include "YTTranslations.h"
 #include "YTLocalVideo.h"
-#include "NativeUtil.h"
+#include "YTUtils.h"
 #include "YTRequest.h"
 #include "YTLogger.h"
 #include "YTPrefs.h"
@@ -140,8 +140,8 @@ main(int argc, char *argv[])
 {
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> view(SailfishApp::createView());
-    QScopedPointer<NativeUtil> nativeUtil(new NativeUtil(app.data()));
     YTTranslations translations;
+    YTUtils utils;
     YTPrefs prefs;
 
     YTPrefs::initialize();
@@ -173,7 +173,7 @@ main(int argc, char *argv[])
     qmlRegisterUncreatableType<YTLogger>("harbour.ytplayer", 1, 0, "YTLogger",
                                          "Please use global Log instance");
 
-    view->rootContext()->setContextProperty("NativeUtil", nativeUtil.data());
+    view->rootContext()->setContextProperty("YTUtils", &utils);
     view->rootContext()->setContextProperty("Log", &YTLogger::instance());
     view->rootContext()->setContextProperty("YTPrefs", &prefs);
     view->rootContext()->setContextProperty("gNetworkManager", &YTNetworkManager::instance());

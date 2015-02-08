@@ -13,7 +13,7 @@ QT += dbus sql concurrent
 
 SOURCES += \
         src/YTPlayer.cpp \
-        src/NativeUtil.cpp \
+        src/YTUtils.cpp \
         src/YTLogger.cpp \
         src/YTPrefs.cpp  \
         src/YTRequest.cpp \
@@ -30,7 +30,7 @@ SOURCES += \
 
 HEADERS += \
         src/YTPlayer.h \
-        src/NativeUtil.h \
+        src/YTUtils.h  \
         src/YTLogger.h \
         src/YTPrefs.h \
         src/YTRequest.h \
