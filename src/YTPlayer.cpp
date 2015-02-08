@@ -173,10 +173,10 @@ main(int argc, char *argv[])
     qmlRegisterUncreatableType<YTLogger>("harbour.ytplayer", 1, 0, "YTLogger",
                                          "Please use global Log instance");
 
-    view->rootContext()->setContextProperty("YTUtils", &utils);
     view->rootContext()->setContextProperty("Log", &YTLogger::instance());
+    view->rootContext()->setContextProperty("YTUtils", &utils);
     view->rootContext()->setContextProperty("YTPrefs", &prefs);
-    view->rootContext()->setContextProperty("gNetworkManager", &YTNetworkManager::instance());
+    view->rootContext()->setContextProperty("YTNetworkManager", &YTNetworkManager::instance());
     view->rootContext()->setContextProperty("YTTranslations", &translations);
 
     view->engine()->addImportPath("qrc:/ui/qml/");

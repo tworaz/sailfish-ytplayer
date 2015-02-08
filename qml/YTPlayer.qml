@@ -45,7 +45,7 @@ ApplicationWindow
     readonly property int kListAutoLoadItemThreshold: 10
 
     initialPage: Component { MainMenu { } }
-    cover: gNetworkManager.online ?
+    cover: YTNetworkManager.online ?
                Qt.resolvedUrl("cover/Default.qml") :
                Qt.resolvedUrl("cover/NetworkOffline.qml")
     property variant coverData
@@ -57,7 +57,7 @@ ApplicationWindow
 
     function requestCoverPage(coverFile, props) {
         var coverUrl = undefined
-        if (gNetworkManager.online)
+        if (YTNetworkManager.online)
             coverUrl = Qt.resolvedUrl("cover/" + coverFile)
         else
             coverUrl = Qt.resolvedUrl("cover/NetworkOffline.qml")
@@ -93,14 +93,14 @@ ApplicationWindow
         repeat: false
         interval: 100
         onTriggered: {
-            if (!gNetworkManager.online) {
-                gNetworkManager.onOnlineChanged(false)
+            if (!YTNetworkManager.online) {
+                YTNetworkManager.onOnlineChanged(false)
             }
         }
     }
 
     Connections {
-        target: gNetworkManager
+        target: YTNetworkManager
         onOnlineChanged: {
             if (online) {
                 pageStack.pop()

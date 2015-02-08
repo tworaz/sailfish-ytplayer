@@ -188,7 +188,7 @@ DockedPanel {
                 }
             }
             _h(q360p, true)
-            _h(q720p, !gNetworkManager.cellular)
+            _h(q720p, !YTNetworkManager.cellular)
             _h(q1080p)
 
             // Don't change quality in case it was already selected

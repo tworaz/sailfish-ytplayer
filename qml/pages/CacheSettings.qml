@@ -53,7 +53,7 @@ Page {
                     //: Remorse popup message telling the user the cache will be cleaned
                     //% "Clearing cache"
                     remorse.execute(qsTrId("ytplayer-msg-clearing-cache"), function() {
-                        gNetworkManager.clearCache()
+                        YTNetworkManager.clearCache()
                     })
                 }
             }
@@ -84,10 +84,10 @@ Page {
                 stepSize: 1
                 valueText: value + " MB"
                 Component.onCompleted: {
-                    value = gNetworkManager.imageCacheMaxSize
+                    value = YTNetworkManager.imageCacheMaxSize
                 }
                 onReleased: {
-                    gNetworkManager.imageCacheMaxSize = value
+                    YTNetworkManager.imageCacheMaxSize = value
                 }
             }
             KeyValueLabel {
@@ -95,7 +95,7 @@ Page {
                 //% "Current usage"
                 key: qsTrId("ytplayer-label-current-usage")
                 width: parent.width
-                value: gNetworkManager.imageCacheUsage + " kB"
+                value: YTNetworkManager.imageCacheUsage + " kB"
                 font.pixelSize: Theme.fontSizeExtraSmall
                 horizontalAlignment: Text.AlignHCenter
             }
@@ -109,10 +109,10 @@ Page {
                 stepSize: 1
                 valueText: value + " MB"
                 Component.onCompleted: {
-                    value = gNetworkManager.apiResponseCacheMaxSize
+                    value = YTNetworkManager.apiResponseCacheMaxSize
                 }
                 onReleased: {
-                    gNetworkManager.apiResponseCacheMaxSize = value
+                    YTNetworkManager.apiResponseCacheMaxSize = value
                 }
             }
             KeyValueLabel {
@@ -120,7 +120,7 @@ Page {
                 //% "Current usage"
                 key: qsTrId("ytplayer-label-current-usage")
                 width: parent.width
-                value: gNetworkManager.apiResponseCacheUsage + " kB"
+                value: YTNetworkManager.apiResponseCacheUsage + " kB"
                 font.pixelSize: Theme.fontSizeExtraSmall
                 horizontalAlignment: Text.AlignHCenter
             }
