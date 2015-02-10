@@ -205,11 +205,6 @@ Label for menu option allowing the user to change video quality</extracomment>
         <extracomment>Menu option responsible for showing user dislikes page</extracomment>
         <translation>Dislikes</translation>
     </message>
-    <message id="ytplayer-action-other">
-        <source>Other</source>
-        <extracomment>Label for misc items in main application menu</extracomment>
-        <translation>Other</translation>
-    </message>
     <message id="ytplayer-title-recommended">
         <source>Recommended for you</source>
         <extracomment>YouTube recommendations page title</extracomment>

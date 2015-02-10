@@ -13,7 +13,6 @@
         <file alias="like-m.png">resources/icons/like-m.png</file>
         <file alias="rss-m.png">resources/icons/rss-m.png</file>
         <file alias="search-m.png">resources/icons/search-m.png</file>
-        <file alias="settings-64.png">resources/icons/settings-64.png</file>
         <file alias="video-multi-m.png">resources/icons/video-multi-m.png</file>
         <file alias="home-64.png">resources/icons/home-64.png</file>
     </qresource>

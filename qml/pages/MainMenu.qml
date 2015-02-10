@@ -85,6 +85,12 @@ Page {
                 onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
             }
             MenuItem {
+                //: Menu option to show settings page
+                //% "Settings"
+                text: qsTrId("ytplayer-action-settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
+            }
+            MenuItem {
                 visible: priv.clipboardVideoId.length > 0
                 //: Menu opion for opening video links from clipboard
                 //% "Open link from clipboard"
@@ -208,23 +214,6 @@ Page {
                 icon: "qrc:///icons/dislike-m.png"
                 onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
                                               { "state" : "DISLIKES" })
-            }
-
-            Label {
-                //: Label for misc items in main application menu
-                //% "Other"
-                text: qsTrId("ytplayer-action-other")
-                x: Theme.paddingLarge
-                width: parent.width - 2 * Theme.paddingLarge
-                horizontalAlignment: Text.AlignRight
-                color: Theme.highlightColor
-            }
-            MainMenuItem {
-                //: Menu option to show settings page
-                //% "Settings"
-                text: qsTrId("ytplayer-action-settings")
-                icon: "qrc:///icons/settings-64.png"
-                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
             }
         }
         VerticalScrollDecorator {}
