@@ -39,7 +39,6 @@ ListItem {
     property alias title: itemLabel.text
     property variant thumbnails
     property string duration: ""
-    property bool isUserChannel: false
 
     AsyncImage {
         id: thumbnail

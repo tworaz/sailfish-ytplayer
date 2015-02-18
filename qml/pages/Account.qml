@@ -58,16 +58,6 @@ Page {
             }
         },
         State {
-            name: "MY_CHANNELS"
-            PropertyChanges {
-                target: priv
-                //: YouTube user channels page title
-                //% "My channels"
-                title: qsTrId("ytplayer-title-my-channels")
-                topPulleyVisible: false
-            }
-        },
-        State {
             name: "LIKES"
             PropertyChanges {
                 target: priv
@@ -156,12 +146,6 @@ Page {
             }
             listModel.filter.key = "snippet.type"
             listModel.filter.value = "upload"
-        } else if (state === "MY_CHANNELS") {
-            request.resource = "channels"
-            params = {
-                "part" : "id,snippet,contentDetails",
-                "mine" : true,
-            }
         } else {
             console.assert(false)
         }
@@ -223,7 +207,6 @@ Page {
         delegate: YTListItem {
             title: snippet.title
             thumbnails: snippet.thumbnails
-            isUserChannel: page.state === "MY_CHANNELS"
             youtubeId: {
                 if (snippet.hasOwnProperty("resourceId")) {
                     return snippet.resourceId
