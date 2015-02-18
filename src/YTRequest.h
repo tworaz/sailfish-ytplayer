@@ -70,6 +70,7 @@ public:
     };
 
     Q_INVOKABLE void run();
+    Q_INVOKABLE void reset() { setLoaded(false); }
 
     void setMethod(Method method) { _method = method; }
     void setResource(QString resource) { _resource = resource; }
@@ -107,6 +108,8 @@ private:
     void setModel(YTListModel *model) { _model = model; }
     YTListModel *model() const { return _model; }
     QUrl oAuth2Url() const;
+    void setLoaded(bool);
+    void setBusy(bool);
 
     QNetworkReply *_reply;
     QNetworkReply *_token_reply;

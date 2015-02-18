@@ -30,35 +30,17 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-BackgroundItem {
-    id: root
-
+Row {
     property alias text: label.text
-    property alias icon: image.source
-    property int sidePadding: Theme.paddingMedium
-    property bool active: false
 
-    Row {
-        id: wrapper
-        x: root.sidePadding
-        width: parent.width - 2 * root.sidePadding
-        height: label.height + 2 * Theme.paddingMedium
-        spacing: Theme.paddingLarge
+    height: label.height + 2 * Theme.paddingLarge
 
-        AsyncImage {
-            id: image
-            anchors.verticalCenter: parent.verticalCenter
-            height: 64
-            width: 64
-            fillMode: Image.PreserveAspectFit
-        }
-        Label {
-            id: label
-            anchors.verticalCenter: parent.verticalCenter
-            color: root.highlighted ? Theme.highlightColor : Theme.primaryColor
-            font.family: Theme.fontFamilyHeading
-            font.pixelSize: Theme.fontSizeLarge
-            width: parent.width - image.width - 2 * parent.spacing
-        }
+    Label {
+        id: label
+        anchors.verticalCenter: parent.verticalCenter
+        color: Theme.highlightColor
+        font.family: Theme.fontFamilyHeading
+        font.pixelSize: Theme.fontSizeLarge
+        horizontalAlignment: Text.AlignRight
     }
 }

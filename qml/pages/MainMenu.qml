@@ -29,6 +29,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import harbour.ytplayer 1.0
 import "../common"
 
 Page {
@@ -38,6 +39,8 @@ Page {
     Component.onCompleted: {
         priv.showAccount = YTPrefs.isAuthEnabled()
         checkClipboard()
+        if (priv.showAccount)
+            request.run()
     }
 
     onStatusChanged: {
@@ -45,6 +48,13 @@ Page {
             requestCoverPage("Default.qml")
         } else if (status === PageStatus.Activating) {
             priv.showAccount = YTPrefs.isAuthEnabled()
+            if (priv.showAccount && !request.loaded && !request.busy) {
+                request.run()
+            } else if (!priv.showAccount && channelsModel.count > 0) {
+                channelsModel.clear();
+                request.reset();
+            }
+
         }
     }
 
@@ -103,65 +113,95 @@ Page {
                     })
                 }
             }
+            MenuItem {
+                //: Menu option to show search page
+                //% "Search"
+                text: qsTrId("ytplayer-action-search")
+                onClicked: pageStack.push(Qt.resolvedUrl("Search.qml"))
+            }
         }
 
         Column {
             id: column
             width: parent.width
-            spacing: Theme.paddingMedium
 
-            PageHeader {
-                id: header
-                title: "YTPlayer"
+            MainMenuSectionHeader {
+                visible: priv.showAccount
+                anchors.rightMargin: Theme.paddingLarge
+                anchors.right: parent.right
+                //: Label for channels section indicator in main menu
+                //% "Channels"
+                text: qsTrId("ytplayer-label-channels")
             }
 
             MainMenuItem {
-                id: search
-                //: Menu option to show search page
-                //% "Search"
-                text: qsTrId("ytplayer-action-search")
-                icon: "qrc:///icons/search-m.png"
-                onClicked: pageStack.push(Qt.resolvedUrl("Search.qml"))
+                visible: priv.showAccount
+                //: Menu option responsible for showing user subscriptions page
+                //% "Subscriptions"
+                text: qsTrId("ytplayer-action-subscriptions")
+                icon: "qrc:///icons/rss-m.png"
+                onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
+                    { "state" : "SUBSCRIPTION_CHANNELS" })
+            }
+
+            YTRequest {
+                id: request
+                method: YTRequest.List
+                resource: "channels"
+                model: channelsModel
+                params: {
+                    "part" : "id,snippet",
+                    "mine" : true,
+                }
+            }
+
+            Repeater {
+                model: YTListModel {
+                    id: channelsModel
+                }
+                MainMenuItem {
+                    visible: priv.showAccount
+                    text: snippet.title
+                    icon: snippet.thumbnails.default.url
+                    onClicked: {
+                        onClicked: pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),
+                            { "channelId" : id, "title" : text, "isUserChannel" : true })
+                    }
+                }
+            }
+
+            MainMenuSectionHeader {
+                anchors.rightMargin: Theme.paddingLarge
+                anchors.right: parent.right
+                //: Main menu label indicating videos section of the page
+                //% "Videos"
+                text: qsTrId("ytplayer-label-videos")
+            }
+
+            MainMenuItem {
+                //: Menu option showing video bookmarks page
+                //% "Bookmarks"
+                text: qsTrId("ytplayer-acton-bookmarks")
+                icon: "qrc:///icons/bookmark-2-64.png"
+                onClicked: Log.error("TODO: Implement bookmarks support")
             }
             MainMenuItem {
-                id: videoCategories
                 //: Menu option to show video categories page
-                //% "Video categories"
+                //% "Categories"
                 text: qsTrId("ytplayer-action-video-categories")
-                icon: "qrc:///icons/video-multi-m.png"
+                icon: "qrc:///icons/categorize-64.png"
                 onClicked: pageStack.push(Qt.resolvedUrl("VideoCategories.qml"))
             }
             MainMenuItem {
                 //: Menu option showing downloaded videos page
-                //% "Downloaded videos"
+                //% "Downloads"
                 text: qsTrId("ytplayer-action-downloaded-videos")
                 icon: "qrc:///icons/downloaded-videos-64.png"
                 onClicked: pageStack.push(Qt.resolvedUrl("DownloadedVideos.qml"))
             }
-
-            Label {
-                //: Label for YouTube account related options in main menu
-                //% "Account"
-                text: qsTrId("ytplayer-label-account")
-                visible: priv.showAccount
-                x: Theme.paddingLarge
-                width: parent.width - 2 * Theme.paddingLarge
-                horizontalAlignment: Text.AlignRight
-                color: Theme.highlightColor
-            }
             MainMenuItem {
-                //: Menu option fo show YouTube user channels page
-                //% "My channels"
-                text: qsTrId("ytplayer-action-my-channels")
-                visible: priv.showAccount
-                icon: "qrc:///icons/home-64.png"
-                onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
-                                              { "state" : "MY_CHANNELS" })
-            }
-            MainMenuItem {
-                id: recommended
                 //: Menu option fo show YouTube recommendations page
-                //% "Recommended for you"
+                //% "Recommendations"
                 text: qsTrId("ytplayer-action-recommended")
                 visible: priv.showAccount
                 icon: "qrc:///icons/approval-64.png"
@@ -169,34 +209,13 @@ Page {
                                               { "state" : "RECOMMENDED" })
             }
             MainMenuItem {
-                id: subscriptions
-                //: Menu option responsible for showing user subscriptions page
-                //% "Subscriptions"
-                text: qsTrId("ytplayer-action-subscriptions")
-                visible: priv.showAccount
-                icon: "qrc:///icons/rss-m.png"
-                submenu: Component {
-                    ContextMenu {
-                        MenuItem {
-                            //: Sub-Menu option responsible for showing latest subsribed videos page
-                            //% "Latest videos"
-                            text: qsTrId("ytplayer-action-latest-subscribed-videos")
-                            onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
-                                { "state" : "SUBSCRIPTION_VIDEOS" })
-                        }
-                        MenuItem {
-                            //: Sub-Menu option responsible for showing user subscribed channels
-                            //% "Channels"
-                            text: qsTrId("ytplayer-action-subscribed-channels")
-                            onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
-                                { "state" : "SUBSCRIPTION_CHANNELS" })
-
-                        }
-                    }
-                }
+                //: Menu opion showing recently watched videos page
+                //% "Watched recently"
+                text: qsTrId("ytplayer-action-watched-recently")
+                icon: "qrc:///icons/video-multi-m.png"
+                onClicked: Log.error("TODO: Implement support for viewing recently viewed videos")
             }
             MainMenuItem {
-                id: likes
                 //: Menu option responsible for showing user likes page
                 //% "Likes"
                 text: qsTrId("ytplayer-action-likes")
@@ -206,7 +225,6 @@ Page {
                                               { "state" : "LIKES" })
             }
             MainMenuItem {
-                id: dislikes
                 //: Menu option responsible for showing user dislikes page
                 //% "Dislikes"
                 text: qsTrId("ytplayer-action-dislikes")
@@ -216,6 +234,7 @@ Page {
                                               { "state" : "DISLIKES" })
             }
         }
+
         VerticalScrollDecorator {}
     }
 }

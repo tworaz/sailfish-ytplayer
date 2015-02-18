@@ -230,11 +230,9 @@ YTRequest::run()
     }
 
     connect(_reply, SIGNAL(finished()), this, SLOT(onFinished()));
-    _busy = true;
-    emit busyChanged(_busy);
 
-    _loaded = false;
-    emit loadedChanged(false);
+    setBusy(true);
+    setLoaded(false);
 }
 
 void
@@ -276,8 +274,7 @@ YTRequest::onFinished()
         } else {
             handleSuccess(_reply);
         }
-        _loaded = true;
-        emit loadedChanged(true);
+        setLoaded(true);
         break;
     case QNetworkReply::OperationCanceledError:
         // Ignore
@@ -314,29 +311,22 @@ YTRequest::onFinished()
     _reply->deleteLater();
     _reply = NULL;
 
-    if (_busy != busy) {
-        _busy = busy;
-        emit busyChanged(_busy);
-    }
+    setBusy(busy);
 }
 
 void
 YTRequest::onURLFetcherFailed()
 {
-    _busy = false;
-    emit busyChanged(_busy);
-    _loaded = true;
-    emit loadedChanged(true);
+    setBusy(false);
+    setLoaded(true);
     emit error(QVariant());
 }
 
 void
 YTRequest::onURLFetcherSucceeded(QVariantMap response)
 {
-    _busy = false;
-    emit busyChanged(_busy);
-    _loaded = true;
-    emit loadedChanged(true);
+    setBusy(false);
+    setLoaded(true);
     emit success(response);
 }
 
@@ -565,4 +555,22 @@ YTRequest::oAuth2Url() const
     QUrl url(YOUTUBE_AUTH_URI);
     url.setQuery(query);
     return url;
+}
+
+void
+YTRequest::setLoaded(bool loaded)
+{
+    if (_loaded == loaded)
+        return;
+    _loaded = loaded;
+    emit loadedChanged(_loaded);
+}
+
+void
+YTRequest::setBusy(bool busy)
+{
+    if (_busy == busy)
+        return;
+    _busy = busy;
+    emit busyChanged(_busy);
 }

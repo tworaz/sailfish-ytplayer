@@ -6,15 +6,14 @@
     </qresource>
     <qresource prefix="/icons">
         <file alias="approval-64.png">resources/icons/approval-64.png</file>
-        <file alias="arrow-down-m.png">resources/icons/arrow-down-m.png</file>
-        <file alias="arrow-down-s.png">resources/icons/arrow-down-s.png</file>
         <file alias="dislike-m.png">resources/icons/dislike-m.png</file>
         <file alias="downloaded-videos-64.png">resources/icons/downloaded-videos-64.png</file>
         <file alias="like-m.png">resources/icons/like-m.png</file>
         <file alias="rss-m.png">resources/icons/rss-m.png</file>
         <file alias="search-m.png">resources/icons/search-m.png</file>
         <file alias="video-multi-m.png">resources/icons/video-multi-m.png</file>
-        <file alias="home-64.png">resources/icons/home-64.png</file>
+        <file alias="categorize-64.png">resources/icons/categorize-64.png</file>
+        <file alias="bookmark-2-64.png">resources/icons/bookmark-2-64.png</file>
     </qresource>
     <qresource prefix="/fonts">
         <file alias="youtube-icons.ttf">resources/fonts/youtube-icons.ttf</file>
@@ -64,5 +63,6 @@
         <file>qml/pages/LanguageSettings.qml</file>
         <file>qml/pages/LanguageChangeDialog.qml</file>
         <file>qml/pages/TranslationCredits.qml</file>
+        <file>qml/common/MainMenuSectionHeader.qml</file>
     </qresource>
 </RCC>

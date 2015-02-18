@@ -133,11 +133,6 @@
         <extracomment>Error message informing the user about OAuth authorization failure</extracomment>
         <translation>OAuth authorization failed!</translation>
     </message>
-    <message id="ytplayer-label-account">
-        <source>Account</source>
-        <extracomment>Label for YouTube account related options in main menu</extracomment>
-        <translation>Account</translation>
-    </message>
     <message id="ytplayer-channel-unsubscribe">
         <source>Unsubscribe</source>
         <extracomment>Menu option to unsubscribe from YouTube channel</extracomment>
@@ -148,9 +143,9 @@
         <translation>Subscribe</translation>
     </message>
     <message id="ytplayer-action-video-categories">
-        <source>Video categories</source>
+        <source>Categories</source>
         <extracomment>Menu option to show video categories page</extracomment>
-        <translation>Video categories</translation>
+        <translation>Categories</translation>
     </message>
     <message id="ytplayer-search-no-results">
         <source>No results</source>
@@ -186,9 +181,9 @@ Label for menu option allowing the user to change video quality</extracomment>
         <translation>Dislikes</translation>
     </message>
     <message id="ytplayer-action-recommended">
-        <source>Recommended for you</source>
+        <source>Recommendations</source>
         <extracomment>Menu option fo show YouTube recommendations page</extracomment>
-        <translation>Recommended for you</translation>
+        <translation>Redommendations</translation>
     </message>
     <message id="ytplayer-action-subscriptions">
         <source>Subscriptions</source>
@@ -224,11 +219,6 @@ Label for menu option allowing the user to change video quality</extracomment>
         <source>Latest videos</source>
         <extracomment>Sub-Menu option responsible for showing latest subsribed videos page</extracomment>
         <translation>Latest videos</translation>
-    </message>
-    <message id="ytplayer-action-subscribed-channels">
-        <source>Channels</source>
-        <extracomment>Sub-Menu option responsible for showing user subscribed channels</extracomment>
-        <translation>Channels</translation>
     </message>
     <message id="ytplayer-label-network-connection-retry">
         <source>Retry</source>
@@ -541,9 +531,9 @@ Label for current cache usage label</extracomment>
         <translation>Video download failed</translation>
     </message>
     <message id="ytplayer-action-downloaded-videos">
-        <source>Downloaded videos</source>
+        <source>Downloads</source>
         <extracomment>Menu option showing downloaded videos page</extracomment>
-        <translation>Downloaded videos</translation>
+        <translation>Downloads</translation>
     </message>
     <message id="ytplayer-title-downloaded-videos">
         <source>Downloaded videos</source>
@@ -823,10 +813,25 @@ Remorse popup message telling the user video download will be removed</extracomm
         <extracomment>YouTube user channels page title</extracomment>
         <translation>My channels</translation>
     </message>
-    <message id="ytplayer-action-my-channels">
-        <source>My channels</source>
-        <extracomment>Menu option fo show YouTube user channels page</extracomment>
-        <translation>My channels</translation>
+    <message id="ytplayer-label-channels">
+        <source>Channels</source>
+        <extracomment>Label for channels section indicator in main menu</extracomment>
+        <translation>Channels</translation>
+    </message>
+    <message id="ytplayer-label-videos">
+        <source>Videos</source>
+        <extracomment>Main menu label indicating videos section of the page</extracomment>
+        <translation>Videos</translation>
+    </message>
+    <message id="ytplayer-acton-bookmarks">
+        <source>Bookmarks</source>
+        <extracomment>Menu option showing video bookmarks page</extracomment>
+        <translation>Bookmarks</translation>
+    </message>
+    <message id="ytplayer-action-watched-recently">
+        <source>Watched recently</source>
+        <extracomment>Menu opion showing recently watched videos page</extracomment>
+        <translation>Watched recently</translation>
     </message>
 </context>
 </TS>

@@ -35,7 +35,6 @@ import "../common"
 Page {
     id: page
     allowedOrientations: Orientation.All
-    state: ""
 
     states: [
         State {
@@ -45,6 +44,7 @@ Page {
                 //: YouTube subscribed channels page title
                 //% "Subscribed channels"
                 title: qsTrId("ytplayer-title-subscribed-channels")
+                topPulleyVisible: true
             }
         },
         State {
@@ -54,6 +54,7 @@ Page {
                 //: YouTube latest subscribed videos page title
                 //% "Latest videos"
                 title: qsTrId("ytplayer-title-subscription-videos")
+                topPulleyVisible: false
             }
         },
         State {
@@ -63,6 +64,7 @@ Page {
                 //: YouTube user channels page title
                 //% "My channels"
                 title: qsTrId("ytplayer-title-my-channels")
+                topPulleyVisible: false
             }
         },
         State {
@@ -72,6 +74,7 @@ Page {
                 //: YouTube likes page title
                 //% "Likes"
                 title: qsTrId("ytplayer-title-likes")
+                topPulleyVisible: false
             }
         },
         State {
@@ -81,6 +84,7 @@ Page {
                 //: YouTube dislikes page title
                 //% "Dislikes"
                 title: qsTrId("ytplayer-title-dislikes")
+                topPulleyVisible: false
             }
         },
         State {
@@ -90,6 +94,7 @@ Page {
                 //: YouTube recommendations page title
                 //% "Recommended for you"
                 title: qsTrId("ytplayer-title-recommended")
+                topPulleyVisible: false
             }
         }
     ]
@@ -97,6 +102,7 @@ Page {
     QtObject {
         id: priv
         property string title: ""
+        property alias topPulleyVisible: topPulley.visible
     }
 
     onStatusChanged: {
@@ -194,12 +200,16 @@ Page {
         property string nextPageToken: ""
 
         PullDownMenu {
-            visible: request.busy
-            busy: true
-        }
-        PushUpMenu {
-            visible: request.busy
-            busy: true
+            id: topPulley
+            busy: request.busy
+            MenuItem {
+                //: Sub-Menu option responsible for showing latest subsribed videos page
+                //% "Latest videos"
+                text: qsTrId("ytplayer-action-latest-subscribed-videos")
+                visible: parent.visible
+                onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
+                    { "state" : "SUBSCRIPTION_VIDEOS"  })
+            }
         }
 
         header: PageHeader {
