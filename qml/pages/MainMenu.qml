@@ -165,7 +165,7 @@ Page {
                     text: snippet.title
                     icon: snippet.thumbnails.default.url
                     onClicked: {
-                        onClicked: pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),
+                        pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),
                             { "channelId" : id, "title" : text })
                     }
                     Component.onCompleted: kUserChannelIds.push(id)
