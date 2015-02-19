@@ -104,7 +104,6 @@ ListItem {
             pageStack.push(Qt.resolvedUrl("../pages/ChannelBrowser.qml"), {
                 "channelId"     : youtubeId.channelId,
                 "title"         : ytItem.title,
-                "isUserChannel" : ytItem.isUserChannel
             })
         } else {
             Log.error("Unrecogized id kind: " + youtubeId.kind);

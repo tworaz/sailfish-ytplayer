@@ -40,7 +40,6 @@ Page {
 
     property string channelId
     property string title
-    property bool isUserChannel: false
 
     QtObject {
         id: priv
@@ -50,6 +49,7 @@ Page {
         property string normalBannerUrl
         property string currentPosterUrl: ""
         property bool coverDataReady: false
+        property bool isUserChannel: kUserChannelIds.indexOf(channelId) > -1
         property variant coverData: {
             "title" : page.title
         }
@@ -74,12 +74,13 @@ Page {
             if (priv.coverDataReady) {
                 requestCoverPage("ChannelBrowser.qml", priv.coverData)
             }
-            subscriptionMenu.visible = YTPrefs.isAuthEnabled() && !page.isUserChannel
+            Log.debug("User channel: " + priv.isUserChannel)
+            subscriptionMenu.visible = YTPrefs.isAuthEnabled() && !priv.isUserChannel
         }
     }
 
     onChannelIdChanged: {
-        if (YTPrefs.isAuthEnabled()) {
+        if (YTPrefs.isAuthEnabled() && !priv.isUserChannel) {
             Log.info("YouTube account integration enabled, checking channel subscription status")
             subscriptionRequest.params = {
                 "part"         : "snippet",
@@ -192,10 +193,10 @@ Page {
         }
 
         PullDownMenu {
-            visible: subscriptionMenu.visible
+            id: subscriptionMenu
+            visible: false
             MenuItem {
-                id: subscriptionMenu
-                visible: false
+                visible: subscriptionMenu.visible
                 text: priv.channelSubscribed ?
                           //: Menu option to unsubscribe from YouTube channel
                           //% "Unsubscribe"

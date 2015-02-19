@@ -52,6 +52,7 @@ Page {
                 request.run()
             } else if (!priv.showAccount && channelsModel.count > 0) {
                 channelsModel.clear();
+                kUserChannelIds = []
                 request.reset();
             }
 
@@ -165,8 +166,9 @@ Page {
                     icon: snippet.thumbnails.default.url
                     onClicked: {
                         onClicked: pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),
-                            { "channelId" : id, "title" : text, "isUserChannel" : true })
+                            { "channelId" : id, "title" : text })
                     }
+                    Component.onCompleted: kUserChannelIds.push(id)
                 }
             }
 
