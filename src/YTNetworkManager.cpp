@@ -31,9 +31,12 @@
 
 #include <QNetworkConfigurationManager>
 #include <QNetworkAccessManager>
+#include <QDBusPendingCall>
 #include <QNetworkRequest>
 #include <QNetworkSession>
+#include <QDBusConnection>
 #include <QSharedPointer>
+#include <QDBusMessage>
 #include <QSettings>
 #include <QDebug>
 
@@ -41,8 +44,6 @@
 #include "YTRequest.h"
 
 namespace {
-
-static QUrl kTryConnectUrl("https://www.youtube.com/index.html");
 
 static bool
 _isCellular(const QNetworkConfiguration& config)
@@ -96,10 +97,16 @@ YTNetworkManager::~YTNetworkManager()
 void
 YTNetworkManager::tryConnect() const
 {
-    qDebug() << "Trying to connect to internet";
-    QNetworkRequest request(kTryConnectUrl);
-    YTRequest::GetNetworkAccessManager().setNetworkAccessible(QNetworkAccessManager::Accessible);
-    YTRequest::GetNetworkAccessManager().get(request);
+    qDebug() << "Requesting network connection popup from lipstick";
+    QDBusConnection conn = QDBusConnection::connectToBus(
+        QDBusConnection::SessionBus, "session");
+    QDBusMessage msg = QDBusMessage::createMethodCall(
+        "com.jolla.lipstick.ConnectionSelector", "/",
+        "com.jolla.lipstick.ConnectionSelectorIf", "openConnection");
+    QList<QVariant> args;
+    args.append(QString("wlan"));
+    msg.setArguments(args);
+    conn.asyncCall(msg);
 }
 
 void
