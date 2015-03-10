@@ -808,11 +808,6 @@ Remorse popup message telling the user video download will be removed</extracomm
         <extracomment>Title of translation credits page</extracomment>
         <translation>Translations</translation>
     </message>
-    <message id="ytplayer-title-my-channels">
-        <source>My channels</source>
-        <extracomment>YouTube user channels page title</extracomment>
-        <translation>My channels</translation>
-    </message>
     <message id="ytplayer-label-channels">
         <source>Channels</source>
         <extracomment>Label for channels section indicator in main menu</extracomment>
@@ -831,6 +826,11 @@ Remorse popup message telling the user video download will be removed</extracomm
     <message id="ytplayer-action-watched-recently">
         <source>Watched recently</source>
         <extracomment>Menu opion showing recently watched videos page</extracomment>
+        <translation>Watched recently</translation>
+    </message>
+    <message id="ytplayer-title-watched-recently">
+        <source>Watched recently</source>
+        <extracomment>Title for recently watched videos page</extracomment>
         <translation>Watched recently</translation>
     </message>
 </context>

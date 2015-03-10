@@ -64,5 +64,6 @@
         <file>qml/pages/LanguageChangeDialog.qml</file>
         <file>qml/pages/TranslationCredits.qml</file>
         <file>qml/common/MainMenuSectionHeader.qml</file>
+        <file>qml/pages/WatchedRecently.qml</file>
     </qresource>
 </RCC>

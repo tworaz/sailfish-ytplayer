@@ -43,6 +43,7 @@ Page {
     property alias videoId: videoController.videoId
     property alias streams: videoController.streams
     property variant thumbnails
+    property variant iso_duration: ""
     property bool applicationActive: Qt.application.active
 
     Component.onCompleted: {
@@ -58,6 +59,8 @@ Page {
                 "mediaPlayer" : mediaPlayer
             })
             videoController.activate()
+            YTWatchedRecently.addVideo(videoId, title,
+                thumbnails.default.url, page.iso_duration)
         } else if (status === PageStatus.Deactivating) {
             Log.debug("VidePlayer page deactivating");
             videoController.deactivate()

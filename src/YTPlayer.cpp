@@ -53,6 +53,7 @@
 #include "YTVideoUrlFetcher.h"
 #include "YTTranslations.h"
 #include "YTLocalVideo.h"
+#include "YTWatchedRecently.h"
 #include "YTUtils.h"
 #include "YTRequest.h"
 #include "YTLogger.h"
@@ -144,12 +145,14 @@ main(int argc, char *argv[])
     YTUtils utils;
     YTPrefs prefs;
 
+    InitApplicationDatabase();
+
+    YTWatchedRecently watched_recently;
+
     YTPrefs::initialize();
 
     // Make sure the logger is initialized
     YTLogger::instance();
-
-    InitApplicationDatabase();
 
     if (!YTTranslations::initialize()) {
         qCritical() << "Failed to initialize YTTranslations!";
@@ -178,6 +181,7 @@ main(int argc, char *argv[])
     view->rootContext()->setContextProperty("YTPrefs", &prefs);
     view->rootContext()->setContextProperty("YTNetworkManager", &YTNetworkManager::instance());
     view->rootContext()->setContextProperty("YTTranslations", &translations);
+    view->rootContext()->setContextProperty("YTWatchedRecently", &watched_recently);
 
     view->engine()->addImportPath("qrc:/ui/qml/");
     view->setSource(QUrl("qrc:/ui/qml/YTPlayer.qml"));

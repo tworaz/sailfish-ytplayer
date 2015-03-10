@@ -215,7 +215,7 @@ Page {
                 //% "Watched recently"
                 text: qsTrId("ytplayer-action-watched-recently")
                 icon: "qrc:///icons/video-multi-m.png"
-                onClicked: Log.error("TODO: Implement support for viewing recently viewed videos")
+                onClicked: pageStack.push(Qt.resolvedUrl("WatchedRecently.qml"))
             }
             MainMenuItem {
                 //: Menu option responsible for showing user likes page

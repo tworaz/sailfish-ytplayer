@@ -61,6 +61,7 @@ Page {
         id: priv
         property variant channelBrowserData: ({})
         property variant streamResponse: undefined
+        property string iso_duration: ""
         property Item playerPage
         property bool hasDirectVideoUrl: priv.playerPage
         readonly property real sideMargin: Theme.paddingMedium
@@ -84,10 +85,11 @@ Page {
             Log.debug("Player page not attached, pushing it")
             console.assert(page.thumbnails.hasOwnProperty("default"))
             priv.playerPage = pageStack.pushAttached(Qt.resolvedUrl("VideoPlayer.qml"), {
-                "thumbnails" : thumbnails,
-                "videoId"    : videoId,
-                "title"      : title,
-                "streams"    : streams,
+                "thumbnails"   : thumbnails,
+                "videoId"      : videoId,
+                "title"        : title,
+                "streams"      : streams,
+                "iso_duration" : priv.iso_duration,
             })
         } else {
             console.assert(priv.playerPage.hasOwnProperty("streams"))
@@ -164,7 +166,8 @@ Page {
 
             var pd = new Date(details.snippet.publishedAt)
             publishDate.value = Qt.formatDateTime(pd, "d MMMM yyyy")
-            duration.value = (new DJS.Duration(details.contentDetails.duration)).asClock()
+            priv.iso_duration = details.contentDetails.duration
+            duration.value = (new DJS.Duration(priv.iso_duration)).asClock()
 
             page.thumbnails = details.snippet.thumbnails
 
