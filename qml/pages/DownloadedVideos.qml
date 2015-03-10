@@ -52,14 +52,8 @@ Page {
             title: qsTrId("ytplayer-title-downloaded-videos")
         }
 
-        Label {
-            anchors.bottom: parent.bottom
-            width: parent.width
-            height: parent.height - parent.headerItem.height
-            color: Theme.secondaryHighlightColor
-            verticalAlignment: Text.AlignVCenter
-            horizontalAlignment: Text.AlignHCenter
-            visible: listView.count === 0
+        ViewPlaceholder {
+            enabled: listView.count === 0
             //: "Label informing the user there are no preloaded videos"
             //% "No videos"
             text: qsTrId("ytplayer-label-no-videos")
