@@ -65,5 +65,12 @@ CoverBackground {
             text: qsTrId("ytplayer-label-network-offline")
         }
     }
+
+    CoverActionList {
+        CoverAction {
+            iconSource: "image://theme/icon-cover-refresh"
+            onTriggered: YTNetworkManager.tryConnect()
+        }
+    }
 }
 
