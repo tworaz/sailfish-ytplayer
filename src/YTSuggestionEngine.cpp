@@ -143,7 +143,7 @@ YTSuggestionEngine::addToHistory(QString query)
         return;
     }
 
-    Q_ASSERT(q.first());
+    q.first();
     if (q.value(0).toInt() == 0) {
         q.prepare("INSERT INTO search_history (query) VALUES (?);");
         q.addBindValue(query);
