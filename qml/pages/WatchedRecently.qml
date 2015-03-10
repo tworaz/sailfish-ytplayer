@@ -74,5 +74,7 @@ Page {
                 }
             }
         }
+
+        VerticalScrollDecorator {}
     }
 }
