@@ -160,17 +160,42 @@ Page {
                 model: YTListModel {
                     id: channelsModel
                 }
-                MainMenuItem {
+                delegate: MainMenuItem {
+                    id: userChannelItem
                     visible: priv.showAccount
                     text: snippet.title
                     icon: snippet.thumbnails.default.url
+                    //scale: 0
+                    height: 0
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),
                             { "channelId" : id, "title" : text })
                     }
                     Component.onCompleted: kUserChannelIds.push(id)
-                }
-            }
+
+                    transform: Scale {
+                        id: userChannelScale
+                        xScale: 1.0
+                        yScale: 0.0
+                    }
+
+                    ParallelAnimation {
+                        running: true
+                        NumberAnimation {
+                            target: userChannelScale
+                            property: "yScale"
+                            to: 1.0
+                            duration: 500
+                        }
+                        NumberAnimation {
+                            target: userChannelItem
+                            property: "height"
+                            to: userChannelItem.implicitHeight
+                            duration: 500
+                        }
+                    }
+                } // MainMenuItem
+            } // Repeater
 
             MainMenuSectionHeader {
                 anchors.rightMargin: Theme.paddingLarge
