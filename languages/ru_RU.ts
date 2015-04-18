@@ -256,56 +256,62 @@
         <translation>Загрузки</translation>
     </message>
     <message id="ytplayer-label-no-videos">
-        <location filename="../qml/pages/DownloadedVideos.qml" line="65"/>
+        <location filename="../qml/pages/DownloadedVideos.qml" line="59"/>
+        <location filename="../qml/pages/Favorites.qml" line="101"/>
+        <location filename="../qml/pages/WatchedRecently.qml" line="59"/>
         <source>No videos</source>
-        <extracomment>&quot;Label informing the user there are no preloaded videos&quot;</extracomment>
+        <extracomment>&quot;Label informing the user there are no preloaded videos&quot;
+----------
+Label informing the user there are not favorite videos
+----------
+Label informing the user there are no watched recently videos</extracomment>
         <translation>Нет видео</translation>
     </message>
     <message id="ytplayer-msg-cancelling-download">
-        <location filename="../qml/pages/DownloadedVideos.qml" line="158"/>
-        <location filename="../qml/pages/VideoOverview.qml" line="271"/>
+        <location filename="../qml/pages/DownloadedVideos.qml" line="152"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="272"/>
         <source>Cancelling download</source>
         <extracomment>Remorse popup message telling the user video download will be cancelled</extracomment>
         <translation>Отмена загрузки</translation>
     </message>
     <message id="ytplayer-msg-removing-download">
-        <location filename="../qml/pages/DownloadedVideos.qml" line="162"/>
-        <location filename="../qml/pages/VideoOverview.qml" line="298"/>
+        <location filename="../qml/pages/DownloadedVideos.qml" line="156"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="299"/>
         <source>Removing download</source>
         <extracomment>Remorse popup message telling the user video download will be removed</extracomment>
         <translation>Удаление загрузки</translation>
     </message>
     <message id="ytplayer-label-download-paused">
-        <location filename="../qml/pages/DownloadedVideos.qml" line="179"/>
+        <location filename="../qml/pages/DownloadedVideos.qml" line="173"/>
         <source>Paused</source>
         <extracomment>Label for video download staus indicator telling the user download is paused</extracomment>
         <translation>Пауза</translation>
     </message>
     <message id="ytplayer-label-download-queued">
-        <location filename="../qml/pages/DownloadedVideos.qml" line="187"/>
+        <location filename="../qml/pages/DownloadedVideos.qml" line="181"/>
         <source>Queued</source>
         <translation>В очереди</translation>
     </message>
     <message id="ytplayer-action-resume">
-        <location filename="../qml/pages/DownloadedVideos.qml" line="212"/>
+        <location filename="../qml/pages/DownloadedVideos.qml" line="206"/>
         <source>Resume</source>
         <extracomment>Menu action to resume paused video download</extracomment>
         <translation>Продолжить</translation>
     </message>
     <message id="ytplayer-action-pause">
-        <location filename="../qml/pages/DownloadedVideos.qml" line="219"/>
+        <location filename="../qml/pages/DownloadedVideos.qml" line="213"/>
         <source>Pause</source>
         <extracomment>Menu action to pause in progress video download</extracomment>
         <translation>Пауза</translation>
     </message>
     <message id="ytplayer-action-remove">
-        <location filename="../qml/pages/DownloadedVideos.qml" line="226"/>
+        <location filename="../qml/pages/DownloadedVideos.qml" line="220"/>
         <source>Remove</source>
         <extracomment>Menu action to remove the element from the list</extracomment>
         <translation>Удалить</translation>
     </message>
     <message id="ytplayer-action-cancel">
-        <location filename="../qml/pages/DownloadedVideos.qml" line="233"/>
+        <location filename="../qml/pages/DownloadedVideos.qml" line="227"/>
         <source>Cancel</source>
         <extracomment>Menu action to cancel paused/queued video download</extracomment>
         <translation>Отменить</translation>
@@ -358,39 +364,39 @@
         <translation>Каналы</translation>
     </message>
     <message id="ytplayer-label-videos">
-        <location filename="../qml/pages/MainMenu.qml" line="180"/>
+        <location filename="../qml/pages/MainMenu.qml" line="205"/>
         <source>Videos</source>
         <extracomment>Main menu label indicating videos section of the page</extracomment>
         <translation>Видео</translation>
     </message>
-    <message id="ytplayer-acton-bookmarks">
-        <location filename="../qml/pages/MainMenu.qml" line="186"/>
-        <source>Bookmarks</source>
-        <extracomment>Menu option showing video bookmarks page</extracomment>
-        <translation>Закладки</translation>
+    <message id="ytplayer-acton-favorites">
+        <location filename="../qml/pages/MainMenu.qml" line="211"/>
+        <source>Favorites</source>
+        <extracomment>Menu option showing video favorites page</extracomment>
+        <translation>Избранное</translation>
     </message>
     <message id="ytplayer-action-video-categories">
-        <location filename="../qml/pages/MainMenu.qml" line="193"/>
+        <location filename="../qml/pages/MainMenu.qml" line="218"/>
         <source>Categories</source>
         <oldsource>Video categories</oldsource>
         <extracomment>Menu option to show video categories page</extracomment>
         <translation>Категории</translation>
     </message>
     <message id="ytplayer-action-downloaded-videos">
-        <location filename="../qml/pages/MainMenu.qml" line="200"/>
+        <location filename="../qml/pages/MainMenu.qml" line="225"/>
         <source>Downloads</source>
         <oldsource>Downloaded videos</oldsource>
         <extracomment>Menu option showing downloaded videos page</extracomment>
         <translation>Загрузки</translation>
     </message>
     <message id="ytplayer-action-watched-recently">
-        <location filename="../qml/pages/MainMenu.qml" line="216"/>
+        <location filename="../qml/pages/MainMenu.qml" line="241"/>
         <source>Watched recently</source>
         <extracomment>Menu opion showing recently watched videos page</extracomment>
         <translation>Просмотренные</translation>
     </message>
     <message id="ytplayer-action-recommended">
-        <location filename="../qml/pages/MainMenu.qml" line="207"/>
+        <location filename="../qml/pages/MainMenu.qml" line="232"/>
         <source>Recommendations</source>
         <oldsource>Recommended for you</oldsource>
         <extracomment>Menu option fo show YouTube recommendations page</extracomment>
@@ -409,13 +415,13 @@
         <translation>Последние видео</translation>
     </message>
     <message id="ytplayer-action-likes">
-        <location filename="../qml/pages/MainMenu.qml" line="223"/>
+        <location filename="../qml/pages/MainMenu.qml" line="248"/>
         <source>Likes</source>
         <extracomment>Menu option responsible for showing user likes page</extracomment>
         <translation>Понравившиеся</translation>
     </message>
     <message id="ytplayer-action-dislikes">
-        <location filename="../qml/pages/MainMenu.qml" line="232"/>
+        <location filename="../qml/pages/MainMenu.qml" line="257"/>
         <source>Dislikes</source>
         <extracomment>Menu option responsible for showing user dislikes page</extracomment>
         <translation>Непонравившиеся</translation>
@@ -481,7 +487,7 @@
     </message>
     <message id="ytplayer-label-channel">
         <location filename="../qml/pages/SearchOptions.qml" line="116"/>
-        <location filename="../qml/pages/VideoOverview.qml" line="499"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="494"/>
         <source>Channel</source>
         <extracomment>Label for menu option indicating YouTube channel content type
 ----------
@@ -844,97 +850,97 @@ Label for menu option allowing the user to change video quality</extracomment>
         <translation>Невозможно воспроизвести</translation>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible">
-        <location filename="../qml/pages/VideoOverview.qml" line="196"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="197"/>
         <source>Direct video playback not possible</source>
         <extracomment>Notification summary informing the user direct video playback is not possible</extracomment>
         <translation>Прямое воспроизведение видео не доступно</translation>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible-desc">
-        <location filename="../qml/pages/VideoOverview.qml" line="199"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="200"/>
         <source>YTPLayer failed to find usable video streams</source>
         <extracomment>Notification body explaining why direct video playback is not possible</extracomment>
         <translation>YTPLayer не удалось найти подходящие видео потоки</translation>
     </message>
     <message id="ytplayer-action-download-video">
-        <location filename="../qml/pages/VideoOverview.qml" line="259"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="260"/>
         <source>Download video</source>
         <extracomment>Menu option triggering video preload</extracomment>
         <translation>Загрузить видео</translation>
     </message>
     <message id="ytplayer-action-cancel-download">
-        <location filename="../qml/pages/VideoOverview.qml" line="267"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="268"/>
         <source>Cancel download</source>
         <extracomment>Menu option canceling pending/in progress video preload</extracomment>
         <translation>Отменить загрузку</translation>
     </message>
     <message id="ytplayer-action-pause-download">
-        <location filename="../qml/pages/VideoOverview.qml" line="280"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="281"/>
         <source>Pause download</source>
         <extracomment>Menu option allowing the user to pause video download</extracomment>
         <translation>Приостановить загрузку</translation>
     </message>
     <message id="ytplayer-action-resume-download">
-        <location filename="../qml/pages/VideoOverview.qml" line="287"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="288"/>
         <source>Resume download</source>
         <extracomment>Menu option allowing the user to resume video download</extracomment>
         <translation>Продолжить загрузку</translation>
     </message>
     <message id="ytplayer-action-remove-download">
-        <location filename="../qml/pages/VideoOverview.qml" line="294"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="295"/>
         <source>Remove download</source>
         <extracomment>Menu option allowing the user to remove downloaded video</extracomment>
         <translation>Удалить загрузку</translation>
     </message>
     <message id="ytplayer-action-copy-link-to-clipboard">
-        <location filename="../qml/pages/VideoOverview.qml" line="306"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="307"/>
         <source>Copy link to clipboard</source>
         <extracomment>Menu option copying video link to clipboard</extracomment>
         <translation>Ссылку в буфер обмена</translation>
     </message>
     <message id="ytplayer-msg-link-copied">
-        <location filename="../qml/pages/VideoOverview.qml" line="315"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="316"/>
         <source>Link copied</source>
         <extracomment>Notification summary informing the user link was copied to clipboard</extracomment>
         <translation>Ссылка скопирована</translation>
     </message>
     <message id="ytplayer-action-open-in-browser">
-        <location filename="../qml/pages/VideoOverview.qml" line="322"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="323"/>
         <source>Open in browser</source>
         <extracomment>Menu option opening YouTube video page in a web browser</extracomment>
         <translation>Открыть в браузере</translation>
     </message>
     <message id="ytplayer-action-browse-channel">
-        <location filename="../qml/pages/VideoOverview.qml" line="330"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="331"/>
         <source>Browser channel</source>
         <extracomment>menu option allowing the user to browser YouTube channel</extracomment>
         <translation>Просмотр канала</translation>
     </message>
     <message id="ytplayer-label-play">
-        <location filename="../qml/pages/VideoOverview.qml" line="347"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="348"/>
         <source>Play</source>
         <extracomment>Label for video play button</extracomment>
         <translation>Воспроизвести</translation>
     </message>
     <message id="ytplayer-label-video-downloaded">
-        <location filename="../qml/pages/VideoOverview.qml" line="419"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="420"/>
         <source>Downloaded</source>
         <extracomment>Label indicating the video was downloaded to local device storage</extracomment>
         <translation>Загружено</translation>
     </message>
     <message id="ytplayer-label-video-queued">
-        <location filename="../qml/pages/VideoOverview.qml" line="424"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="425"/>
         <source>Download queued</source>
         <extracomment>&quot;Label indicating video was queued for preload&quot;</extracomment>
         <translation>В очереди на загрузку</translation>
     </message>
     <message id="ytplayer-label-video-download-paused">
-        <location filename="../qml/pages/VideoOverview.qml" line="435"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="436"/>
         <source>Download paused</source>
         <extracomment>&quot;Label indicating video download was paused&quot;</extracomment>
         <translation>Загрузка приостановлена</translation>
     </message>
     <message id="ytplayer-label-video-downloading-percentage">
-        <location filename="../qml/pages/VideoOverview.qml" line="443"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="444"/>
         <source>Downloading: %1%</source>
         <extracomment>&quot;Label indicating video download progress with actual percentage value&quot;</extracomment>
         <translation>Загрузка: %1%</translation>
@@ -946,7 +952,7 @@ Label for menu option allowing the user to change video quality</extracomment>
         <translation>Опубликовано</translation>
     </message>
     <message id="ytplayer-label-duration">
-        <location filename="../qml/pages/VideoOverview.qml" line="489"/>
+        <location filename="../qml/pages/VideoOverview.qml" line="487"/>
         <source>Duration</source>
         <extracomment>Label for video duration field</extracomment>
         <translation>Длительность</translation>
@@ -998,6 +1004,18 @@ Label for menu option allowing the user to change video quality</extracomment>
         <source>Translations</source>
         <extracomment>Title of translation credits page</extracomment>
         <translation>Перевод</translation>
+    </message>
+    <message id="ytplayer-title-watched-recently">
+        <location filename="../qml/pages/WatchedRecently.qml" line="52"/>
+        <source>Watched recently</source>
+        <extracomment>Title for recently watched videos page</extracomment>
+        <translation>Просмотренные</translation>
+    </message>
+    <message id="ytplayer-title-favorites">
+        <location filename="../qml/pages/Favorites.qml" line="84"/>
+        <source>Favorites</source>
+        <extracomment>Title for favorite videos page</extracomment>
+        <translation>Избранное</translation>
     </message>
 </context>
 </TS>
