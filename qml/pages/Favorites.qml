@@ -35,38 +35,80 @@ Page {
     allowedOrientations: Orientation.All
 
     onStatusChanged: {
-        if (status === PageStatus.Active)
+        if (status === PageStatus.Active) {
             requestCoverPage("Default.qml")
+        } else if (status === PageStatus.Activating) {
+            YTFavorites.refresh()
+        }
     }
 
-    Component.onCompleted: YTWatchedRecently.refresh()
-    Component.onDestruction: YTWatchedRecently.reset()
+    Component.onDestruction: YTFavorites.reset()
 
     SilicaListView {
         id: listView
         anchors.fill: parent
 
-        header: PageHeader {
-            //: Title for recently watched videos page
-            //% "Watched recently"
-            title: qsTrId("ytplayer-title-watched-recently")
+        //PullDownMenu {
+        //    MenuItem {
+        //        text: listView.headerItem.searchVisible ?
+        //            //: Menu option allowing the user to hide search field
+        //            //% "Hide search"
+        //            qsTrId("ytplayer-action-hide-search") :
+        //            // Menu option allowing the user to show search field
+        //            //% "Search"
+        //            qsTrId("ytplayer-action-search")
+        //        onClicked: {
+        //            listView.headerItem.searchVisible =
+        //                !listView.headerItem.searchVisible
+        //        }
+        //    }
+        //}
+
+        header: Column {
+            width: parent.width
+            property bool searchVisible: false
+
+            onSearchVisibleChanged: {
+                if (searchVisible) {
+                    search.forceActiveFocus()
+                } else {
+                    header.forceActiveFocus()
+                }
+            }
+
+            PageHeader {
+                id: header
+                width: parent.width
+                //: Title for favorite videos page
+                //% "Favorites"
+                title: qsTrId("ytplayer-title-favorites")
+            }
+            SearchField {
+                id: search
+                visible: searchVisible
+                width: parent.width
+                EnterKey.enabled: false
+                onTextChanged: {
+                    //YTFavorites.search(text)
+                }
+            }
         }
 
         ViewPlaceholder {
             enabled: listView.count == 0
-            //: Label informing the user there are no watched recently videos
+            //:  Label informing the user there are not favorite videos
             //% "No videos"
             text: qsTrId("ytplayer-label-no-videos")
         }
 
-        model: YTWatchedRecently
+        model: YTFavorites
 
         delegate: YTListItem {
             title: video_title
             duration: video_duration
             youtubeId: {
-                "kind"     : "youtube#video",
-                 "videoId" : video_id,
+                "kind"    : "youtube#video",
+                "videoId" : video_id,
             }
             thumbnails: {
                 "default": {

@@ -43,20 +43,21 @@
 // third party code
 #include <notification.h>
 
+#include "YTVideoDownloadNotification.h"
 #include "YTPlayer.h"
 #include "YTListModel.h"
 #include "YTNetworkManager.h"
 #include "YTLocalVideoManager.h"
 #include "YTLocalVideoListModel.h"
-#include "YTVideoDownloadNotification.h"
 #include "YTSuggestionEngine.h"
 #include "YTVideoUrlFetcher.h"
 #include "YTTranslations.h"
 #include "YTLocalVideo.h"
 #include "YTWatchedRecently.h"
-#include "YTUtils.h"
+#include "YTFavorites.h"
 #include "YTRequest.h"
 #include "YTLogger.h"
+#include "YTUtils.h"
 #include "YTPrefs.h"
 
 namespace {
@@ -148,6 +149,7 @@ main(int argc, char *argv[])
     InitApplicationDatabase();
 
     YTWatchedRecently watched_recently;
+    YTFavorites favorites;
 
     YTPrefs::initialize();
 
@@ -182,6 +184,7 @@ main(int argc, char *argv[])
     view->rootContext()->setContextProperty("YTNetworkManager", &YTNetworkManager::instance());
     view->rootContext()->setContextProperty("YTTranslations", &translations);
     view->rootContext()->setContextProperty("YTWatchedRecently", &watched_recently);
+    view->rootContext()->setContextProperty("YTFavorites", &favorites);
 
     view->engine()->addImportPath("qrc:/ui/qml/");
     view->setSource(QUrl("qrc:/ui/qml/YTPlayer.qml"));

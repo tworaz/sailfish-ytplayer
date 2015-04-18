@@ -28,53 +28,33 @@
  */
 
 import QtQuick 2.0
-import Sailfish.Silica 1.0
-import "../common"
 
-Page {
-    allowedOrientations: Orientation.All
+Image {
+    property string videoId: ""
+    property string title: ""
+    property string duration: ""
+    property variant thumbnails
 
-    onStatusChanged: {
-        if (status === PageStatus.Active)
-            requestCoverPage("Default.qml")
+    QtObject {
+        id: priv
+        property bool isFavourite: YTFavorites.isFavorite(videoId)
     }
 
-    Component.onCompleted: YTWatchedRecently.refresh()
-    Component.onDestruction: YTWatchedRecently.reset()
+    source: priv.isFavourite ?
+        "image://theme/icon-m-favorite-selected" :
+        "image://theme/icon-m-favorite"
 
-    SilicaListView {
-        id: listView
+    MouseArea {
         anchors.fill: parent
-
-        header: PageHeader {
-            //: Title for recently watched videos page
-            //% "Watched recently"
-            title: qsTrId("ytplayer-title-watched-recently")
-        }
-
-        ViewPlaceholder {
-            enabled: listView.count == 0
-            //: Label informing the user there are no watched recently videos
-            //% "No videos"
-            text: qsTrId("ytplayer-label-no-videos")
-        }
-
-        model: YTWatchedRecently
-
-        delegate: YTListItem {
-            title: video_title
-            duration: video_duration
-            youtubeId: {
-                "kind"     : "youtube#video",
-                 "videoId" : video_id,
-            }
-            thumbnails: {
-                "default": {
-                    "url" : thumbnail_url,
-                }
+        onClicked: {
+            priv.isFavourite = !priv.isFavourite
+            if (priv.isFavourite) {
+                console.assert(thumbnails.hasOwnProperty("default") &&
+                               thumbnails.default.hasOwnProperty("url"))
+                YTFavorites.add(videoId, title, thumbnails.default.url, duration)
+            } else {
+                YTFavorites.remove(videoId)
             }
         }
-
-        VerticalScrollDecorator {}
     }
 }

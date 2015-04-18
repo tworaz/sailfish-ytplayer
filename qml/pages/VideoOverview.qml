@@ -48,12 +48,10 @@ Page {
         State {
             name: "PORTRAIT"
             PropertyChanges { target: content; columns: 1; spacing: 0}
-            PropertyChanges { target: videoDetails; columns: 2}
         },
         State {
             name: "LANDSCAPE"
             PropertyChanges { target: content; columns: 2; spacing: Theme.paddingMedium }
-            PropertyChanges { target: videoDetails; columns: 1}
         }
     ]
 
@@ -469,37 +467,42 @@ Page {
                         width: parent.width
                     }
 
-                    Flow {
-                        id: videoDetails
+                    Row {
                         width: parent.width
-                        property int columns: 2
 
-                        KeyValueLabel {
-                            id: publishDate
-                            width: parent.columns === 2 ? parent.width * 2 / 3 : parent.width
-                            pixelSize: Theme.fontSizeExtraSmall
-                            //: Label for video upload date field
-                            //% "Published on"
-                            key: qsTrId("ytplayer-label-publish-date")
+                        Column {
+                            width: parent.width - favButton.width
+                            KeyValueLabel {
+                                id: publishDate
+                                pixelSize: Theme.fontSizeExtraSmall
+                                //: Label for video upload date field
+                                //% "Published on"
+                                key: qsTrId("ytplayer-label-publish-date")
+                            }
+                            KeyValueLabel {
+                                id: duration
+                                pixelSize: Theme.fontSizeExtraSmall
+                                //: Label for video duration field
+                                //% "Duration"
+                                key: qsTrId("ytplayer-label-duration")
+                            }
+                            KeyValueLabel {
+                                id: channelName
+                                pixelSize: Theme.fontSizeExtraSmall
+                                //: Label for channel name text field
+                                //% "Channel"
+                                key: qsTrId("ytplayer-label-channel")
+                            }
                         }
-                        KeyValueLabel {
-                            id: duration
-                            width: parent.columns === 2 ? parent.width * 1 / 3 : parent.width
-                            pixelSize: Theme.fontSizeExtraSmall
-                            horizontalAlignment: parent.columns === 2 ? Text.AlignRight : Text.AlignLeft
-                            //: Label for video duration field
-                            //% "Duration"
-                            key: qsTrId("ytplayer-label-duration")
-                        }
-                        KeyValueLabel {
-                            id: channelName
-                            visible: value.length > 0
-                            width: parent.width
-                            pixelSize: Theme.fontSizeExtraSmall
-                            horizontalAlignment: Text.AlignLeft
-                            //: Label for channel name text field
-                            //% "Channel"
-                            key: qsTrId("ytplayer-label-channel")
+
+                        FavoriteVideoButton {
+                            id: favButton
+                            height: parent.height
+                            width: height
+                            videoId: page.videoId
+                            title: page.title
+                            thumbnails: page.thumbnails
+                            duration: priv.iso_duration
                         }
                     }
 

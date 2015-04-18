@@ -14,6 +14,7 @@
         <file alias="video-multi-m.png">resources/icons/video-multi-m.png</file>
         <file alias="categorize-64.png">resources/icons/categorize-64.png</file>
         <file alias="bookmark-2-64.png">resources/icons/bookmark-2-64.png</file>
+        <file alias="star-8-64.png">resources/icons/star-8-64.png</file>
     </qresource>
     <qresource prefix="/fonts">
         <file alias="youtube-icons.ttf">resources/fonts/youtube-icons.ttf</file>
@@ -65,5 +66,7 @@
         <file>qml/pages/TranslationCredits.qml</file>
         <file>qml/common/MainMenuSectionHeader.qml</file>
         <file>qml/pages/WatchedRecently.qml</file>
+        <file>qml/common/FavoriteVideoButton.qml</file>
+        <file>qml/pages/Favorites.qml</file>
     </qresource>
 </RCC>

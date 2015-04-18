@@ -27,54 +27,40 @@
  * SUCH DAMAGE.
  */
 
-import QtQuick 2.0
-import Sailfish.Silica 1.0
-import "../common"
+#ifndef YTFAVORITES_H
+#define YTFAVORITES_H
 
-Page {
-    allowedOrientations: Orientation.All
+#include <QSqlQueryModel>
+#include <QHash>
 
-    onStatusChanged: {
-        if (status === PageStatus.Active)
-            requestCoverPage("Default.qml")
-    }
+class YTFavorites : public QSqlQueryModel
+{
+    Q_OBJECT
+public:
+    explicit YTFavorites(QObject *parent = 0);
 
-    Component.onCompleted: YTWatchedRecently.refresh()
-    Component.onDestruction: YTWatchedRecently.reset()
+    Q_INVOKABLE bool isFavorite(QString videoId);
+    Q_INVOKABLE void add(QString videoId, QString title,
+                         QString thumbUrl, QString duration);
+    Q_INVOKABLE void remove(QString videoId);
 
-    SilicaListView {
-        id: listView
-        anchors.fill: parent
+    Q_INVOKABLE void refresh();
+    Q_INVOKABLE void reset() { clear(); }
 
-        header: PageHeader {
-            //: Title for recently watched videos page
-            //% "Watched recently"
-            title: qsTrId("ytplayer-title-watched-recently")
-        }
+    QHash<int, QByteArray> roleNames() const { return _roleNames; }
+    QVariant data(const QModelIndex &item, int role) const;
 
-        ViewPlaceholder {
-            enabled: listView.count == 0
-            //: Label informing the user there are no watched recently videos
-            //% "No videos"
-            text: qsTrId("ytplayer-label-no-videos")
-        }
+private:
+    enum {
+        VideoIdRole = Qt::UserRole,
+        TitleRole,
+        ThumbnailUrlRole,
+        VideoDurationRole,
+    };
 
-        model: YTWatchedRecently
+    QHash<int, QByteArray> _roleNames;
 
-        delegate: YTListItem {
-            title: video_title
-            duration: video_duration
-            youtubeId: {
-                "kind"     : "youtube#video",
-                 "videoId" : video_id,
-            }
-            thumbnails: {
-                "default": {
-                    "url" : thumbnail_url,
-                }
-            }
-        }
+    Q_DISABLE_COPY(YTFavorites)
+};
 
-        VerticalScrollDecorator {}
-    }
-}
+#endif // YTFAVORITES_H

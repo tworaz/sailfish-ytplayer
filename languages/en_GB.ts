@@ -497,7 +497,11 @@ Label for current cache usage label</extracomment>
     </message>
     <message id="ytplayer-label-no-videos">
         <source>No videos</source>
-        <extracomment>&quot;Label informing the user there are no preloaded videos&quot;</extracomment>
+        <extracomment>&quot;Label informing the user there are no preloaded videos&quot;
+----------
+Label informing the user there are not favorite videos
+----------
+Label informing the user there are no watched recently videos</extracomment>
         <translation>No videos</translation>
     </message>
     <message id="ytplayer-label-video-downloaded">
@@ -818,11 +822,6 @@ Remorse popup message telling the user video download will be removed</extracomm
         <extracomment>Main menu label indicating videos section of the page</extracomment>
         <translation>Videos</translation>
     </message>
-    <message id="ytplayer-acton-bookmarks">
-        <source>Bookmarks</source>
-        <extracomment>Menu option showing video bookmarks page</extracomment>
-        <translation>Bookmarks</translation>
-    </message>
     <message id="ytplayer-action-watched-recently">
         <source>Watched recently</source>
         <extracomment>Menu opion showing recently watched videos page</extracomment>
@@ -832,6 +831,21 @@ Remorse popup message telling the user video download will be removed</extracomm
         <source>Watched recently</source>
         <extracomment>Title for recently watched videos page</extracomment>
         <translation>Watched recently</translation>
+    </message>
+    <message id="ytplayer-acton-favorites">
+        <source>Favorites</source>
+        <extracomment>Menu option showing video favorites page</extracomment>
+        <translation>Favorites</translation>
+    </message>
+    <message id="ytplayer-title-favorites">
+        <source>Favorites</source>
+        <extracomment>Title for favorite videos page</extracomment>
+        <translation>Favorites</translation>
+    </message>
+    <message id="ytplayer-action-hide-search">
+        <source>Hide search</source>
+        <extracomment>Menu option allowing the user to hide search field</extracomment>
+        <translation>Hide search</translation>
     </message>
 </context>
 </TS>

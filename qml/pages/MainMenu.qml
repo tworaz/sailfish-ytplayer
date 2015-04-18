@@ -181,11 +181,11 @@ Page {
             }
 
             MainMenuItem {
-                //: Menu option showing video bookmarks page
-                //% "Bookmarks"
-                text: qsTrId("ytplayer-acton-bookmarks")
-                icon: "qrc:///icons/bookmark-2-64.png"
-                onClicked: Log.error("TODO: Implement bookmarks support")
+                //: Menu option showing video favorites page
+                //% "Favorites"
+                text: qsTrId("ytplayer-acton-favorites")
+                icon: "qrc:///icons/star-8-64.png"
+                onClicked: pageStack.push(Qt.resolvedUrl("Favorites.qml"))
             }
             MainMenuItem {
                 //: Menu option to show video categories page
