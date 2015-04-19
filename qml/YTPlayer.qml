@@ -44,6 +44,7 @@ ApplicationWindow
     readonly property color kBlackTransparentBg: "#AA000000"
     readonly property string kYoutubeVideoUrlBase: "https://www.youtube.com/watch?v="
     readonly property int kListAutoLoadItemThreshold: 10
+    readonly property int kStandardAnimationDuration: 250
 
     initialPage: Component { MainMenu { } }
     cover: YTNetworkManager.online ?

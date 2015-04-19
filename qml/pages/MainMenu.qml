@@ -165,8 +165,8 @@ Page {
                     visible: priv.showAccount
                     text: snippet.title
                     icon: snippet.thumbnails.default.url
-                    //scale: 0
                     height: 0
+                    opacity: 0
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),
                             { "channelId" : id, "title" : text })
@@ -185,13 +185,19 @@ Page {
                             target: userChannelScale
                             property: "yScale"
                             to: 1.0
-                            duration: 500
+                            duration: kStandardAnimationDuration
                         }
                         NumberAnimation {
                             target: userChannelItem
                             property: "height"
                             to: userChannelItem.implicitHeight
-                            duration: 500
+                            duration: kStandardAnimationDuration
+                        }
+                        NumberAnimation {
+                            target: userChannelItem
+                            property: "opacity"
+                            to: 1.0
+                            duration: kStandardAnimationDuration
                         }
                     }
                 } // MainMenuItem
