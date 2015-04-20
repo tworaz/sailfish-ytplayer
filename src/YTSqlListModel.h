@@ -27,34 +27,47 @@
  * SUCH DAMAGE.
  */
 
-import QtQuick 2.0
+#ifndef YTSQLLISTMODEL_H
+#define YTSQLLISTMODEL_H
 
-Image {
-    property string videoId: ""
-    property string title: ""
-    property string duration: ""
-    property variant thumbnails
+#include <QAbstractListModel>
+#include <QVariant>
+#include <QVector>
 
-    QtObject {
-        id: priv
-        property bool isFavourite: YTFavorites.isFavorite(videoId)
-    }
+class QSqlQuery;
 
-    source: priv.isFavourite ?
-        "image://theme/icon-m-favorite-selected" :
-        "image://theme/icon-m-favorite"
+class YTSqlListModel : public QAbstractListModel
+{
+    Q_OBJECT
+public:
+    explicit YTSqlListModel(QObject *parent = 0);
 
-    MouseArea {
-        anchors.fill: parent
-        onClicked: {
-            priv.isFavourite = !priv.isFavourite
-            if (priv.isFavourite) {
-                console.assert(thumbnails.hasOwnProperty("default") &&
-                               thumbnails.default.hasOwnProperty("url"))
-                YTFavorites.add(videoId, title, thumbnails.default.url, duration)
-            } else {
-                YTFavorites.removeForId(videoId)
-            }
-        }
-    }
-}
+    Q_INVOKABLE void remove(int index);
+    Q_INVOKABLE void search(QString);
+    Q_INVOKABLE void reload();
+    Q_INVOKABLE void clear();
+
+    // QAbstractListModel overrides
+    QVariant data(const QModelIndex &index, int role) const;
+    int rowCount(const QModelIndex&) const;
+    bool canFetchMore(const QModelIndex& parent) const;
+    void fetchMore(const QModelIndex& parent);
+
+protected:
+    virtual QSqlQuery getTableSizeQuery() const = 0;
+    virtual QSqlQuery getReloadDataQuery(int limit) const = 0;
+    virtual QSqlQuery getSearchQuery(const QString& query, int limit) const = 0;
+    virtual QSqlQuery getFetchMoreQuery(const QVector<QVariant>& lastRow, int limit) const = 0;
+    virtual void removeFromDatabase(const QVector<QVariant>&) = 0;
+
+    void handleNewData(QSqlQuery& q, bool append = false);
+
+    QList<QVector<QVariant> > _data;
+    int _totalRowCount;
+    bool _canFetchMore;
+    bool _searchMode;
+
+    Q_DISABLE_COPY(YTSqlListModel)
+};
+
+#endif // YTSQLLISTMODEL_H

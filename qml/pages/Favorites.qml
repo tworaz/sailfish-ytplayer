@@ -35,34 +35,44 @@ Page {
     allowedOrientations: Orientation.All
 
     onStatusChanged: {
-        if (status === PageStatus.Active) {
+        if (status === PageStatus.Active)
             requestCoverPage("Default.qml")
-        } else if (status === PageStatus.Activating) {
-            YTFavorites.refresh()
-        }
     }
 
-    Component.onDestruction: YTFavorites.reset()
+    Component.onCompleted: YTFavorites.reload()
+    Component.onDestruction: YTFavorites.clear()
 
     SilicaListView {
         id: listView
         anchors.fill: parent
+        // Make sure adding items to list view does not steal focus
+        // from SearchField in header.
+        currentIndex: -1
 
-        //PullDownMenu {
-        //    MenuItem {
-        //        text: listView.headerItem.searchVisible ?
-        //            //: Menu option allowing the user to hide search field
-        //            //% "Hide search"
-        //            qsTrId("ytplayer-action-hide-search") :
-        //            // Menu option allowing the user to show search field
-        //            //% "Search"
-        //            qsTrId("ytplayer-action-search")
-        //        onClicked: {
-        //            listView.headerItem.searchVisible =
-        //                !listView.headerItem.searchVisible
-        //        }
-        //    }
-        //}
+        PullDownMenu {
+            id: topPulley
+            property bool changeSearchVisibility: false
+            MenuItem {
+                text: listView.headerItem.searchVisible ?
+                    //: Menu option allowing the user to hide search field
+                    //% "Hide search"
+                    qsTrId("ytplayer-action-hide-search") :
+                    // Menu option allowing the user to show search field
+                    //% "Search"
+                    qsTrId("ytplayer-action-search")
+                onClicked: {
+                    topPulley.changeSearchVisibility = true
+                }
+            }
+
+            onActiveChanged: {
+                if (!active && topPulley.changeSearchVisibility) {
+                    listView.headerItem.searchVisible =
+                        !listView.headerItem.searchVisible
+                    topPulley.changeSearchVisibility = false
+                }
+            }
+        }
 
         header: Column {
             width: parent.width
@@ -70,9 +80,12 @@ Page {
 
             onSearchVisibleChanged: {
                 if (searchVisible) {
+                    search.state = "visible"
                     search.forceActiveFocus()
                 } else {
+                    search.state = "hidden"
                     header.forceActiveFocus()
+                    topPulley.close(true)
                 }
             }
 
@@ -85,14 +98,35 @@ Page {
             }
             SearchField {
                 id: search
-                visible: searchVisible
                 width: parent.width
                 EnterKey.enabled: false
-                onTextChanged: {
-                    //YTFavorites.search(text)
-                }
-            }
-        }
+                state: "hidden"
+                onTextChanged: YTFavorites.search(text)
+
+                states: [
+                    State {
+                        name: "visible"
+                        PropertyChanges { target: search; opacity: 1.0; scale: 1.0 }
+                    },
+                    State {
+                        name: "hidden"
+                        PropertyChanges { target: search; opacity: 0; height: 0; scale: 0.0 }
+                    }
+
+                ]
+                transitions: [
+                    Transition {
+                        NumberAnimation { properties: "opacity"; duration: kStandardAnimationDuration }
+                        NumberAnimation { properties: "scale"; duration: kStandardAnimationDuration }
+                        NumberAnimation { properties: "height"; duration: kStandardAnimationDuration }
+                        onRunningChanged: {
+                            if (!running && search.state === "hidden" && search.text.length > 0)
+                                search.text = ""
+                        }
+                    }
+                ]
+            } // SearchField
+        } // Column
 
         ViewPlaceholder {
             enabled: listView.count == 0
@@ -106,6 +140,7 @@ Page {
         delegate: YTListItem {
             title: video_title
             duration: video_duration
+            menu: contextMenuComponent
             youtubeId: {
                 "kind"    : "youtube#video",
                 "videoId" : video_id,
@@ -115,8 +150,29 @@ Page {
                     "url" : thumbnail_url,
                 }
             }
-        }
+
+            function remove() {
+                //: Remorse popup message telling the use favorite is about to be removed
+                //% "Removing favorite"
+                var msg = qsTrId("ytplayer-msg-removing-favorite")
+                remorseAction(msg, function() {
+                    YTFavorites.remove(index)
+                })
+            }
+
+            Component {
+                id: contextMenuComponent
+                ContextMenu {
+                    MenuItem {
+                        //: Menu action to remove the element from the list
+                        //% "Remove"
+                        text: qsTrId("ytplayer-action-remove")
+                        onClicked: remove()
+                    }
+                }
+            }
+        } // YTListItem
 
         VerticalScrollDecorator {}
-    }
+    } // SilicaListView
 }

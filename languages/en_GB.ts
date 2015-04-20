@@ -492,7 +492,9 @@ Label for current cache usage label</extracomment>
     </message>
     <message id="ytplayer-action-remove">
         <source>Remove</source>
-        <extracomment>Menu action to remove the element from the list</extracomment>
+        <extracomment>Menu action to remove the element from the list
+----------
+Menu action to remove the element from the list</extracomment>
         <translation>Remove</translation>
     </message>
     <message id="ytplayer-label-no-videos">
@@ -846,6 +848,11 @@ Remorse popup message telling the user video download will be removed</extracomm
         <source>Hide search</source>
         <extracomment>Menu option allowing the user to hide search field</extracomment>
         <translation>Hide search</translation>
+    </message>
+    <message id="ytplayer-msg-removing-favorite">
+        <source>Removing favorite</source>
+        <extracomment>Remorse popup message telling the use favorite is about to be removed</extracomment>
+        <translation>Removing favorite</translation>
     </message>
 </context>
 </TS>

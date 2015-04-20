@@ -30,12 +30,12 @@
 #include "YTFavorites.h"
 
 #include <QSqlDatabase>
-#include <QSqlRecord>
 #include <QSqlQuery>
 #include <QSqlError>
 #include <QDebug>
 
 namespace {
+
 const char kCreateDbQueryText[] =
     "CREATE TABLE favorites (video_id TEXT primary key,"
     "title TEXT, thumbnail_url TEXT, duration TEXT)";
@@ -50,20 +50,33 @@ const char kAddFavoriteQueryText[] =
 const char kRemoveFavoriteQueryText[] =
     "DELETE FROM favorites WHERE video_id=?";
 
-const char kRefreshViewQueryText[] =
+const char kReloadDataQueryText[] =
     "SELECT video_id, title, thumbnail_url, duration "
-    "FROM favorites ORDER BY title ASC";
-}
+    "FROM favorites ORDER BY title ASC LIMIT ?";
 
-YTFavorites::YTFavorites(QObject *parent) :
-    QSqlQueryModel(parent)
+const char kLoadMoreDataQueryText[] =
+    "SELECT video_id, title, thumbnail_url, duration "
+    "FROM favorites WHERE title>? "
+    "ORDER BY title ASC LIMIT ?";
+
+const char kSearchQueryText[] =
+   "SELECT video_id, title, thumbnail_url, duration "
+   "FROM favorites WHERE title LIKE ? COLLATE NOCASE LIMIT ?";
+
+const char kGetFavoriteCountQueryText[] =
+    "SELECT count(*) FROM favorites";
+
+} // namespace
+
+YTFavorites::YTFavorites(QObject *parent)
+    : YTSqlListModel(parent)
 {
     QSqlDatabase db = QSqlDatabase::database();
     if (!db.isValid())
         qFatal("Failed to open application database!");
     QStringList tables = db.tables();
     if (!tables.contains("favorites")) {
-        if (QSqlQuery().exec(kCreateDbQueryText))
+        if (!QSqlQuery().exec(kCreateDbQueryText))
             qFatal("Failed to create favorites table!");
     }
 
@@ -98,13 +111,75 @@ YTFavorites::add(QString videoId, QString title, QString thumbUrl, QString durat
     q.addBindValue(title);
     q.addBindValue(thumbUrl);
     q.addBindValue(duration);
-    if (!q.exec())
+    if (!q.exec()) {
         qWarning("Failed to add video %s to favorites: %s",
-               qPrintable(videoId), qPrintable(q.lastError().text()));
+                 qPrintable(videoId), qPrintable(q.lastError().text()));
+    }
 }
 
 void
-YTFavorites::remove(QString videoId)
+YTFavorites::removeForId(QString videoId)
+{
+    if (_data.size()) {
+        int index = findIndexForId(videoId);
+        beginRemoveRows(QModelIndex(), index, index);
+        _data.removeAt(index);
+        _totalRowCount--;
+        endRemoveRows();
+    }
+    removeFromDatabase(videoId);
+}
+
+void
+YTFavorites::removeFromDatabase(const QVector<QVariant>& rowData)
+{
+    QString videoId = rowData.at(VideoIdRole - Qt::UserRole).toString();
+    removeFromDatabase(videoId);
+}
+
+QSqlQuery
+YTFavorites::getTableSizeQuery() const
+{
+    QSqlQuery q;
+    q.prepare(kGetFavoriteCountQueryText);
+    return q;
+}
+
+QSqlQuery
+YTFavorites::getReloadDataQuery(int limit) const
+{
+    QSqlQuery q;
+    q.prepare(kReloadDataQueryText);
+    q.addBindValue(limit);
+    return q;
+}
+
+QSqlQuery
+YTFavorites::getSearchQuery(const QString& query, int limit) const
+{
+    QSqlQuery q;
+    q.prepare(kSearchQueryText);
+    QString newQuery = query;
+    newQuery.prepend("%");
+    newQuery.append("%");
+    q.addBindValue(newQuery);
+    q.addBindValue(limit);
+    return q;
+}
+
+QSqlQuery
+YTFavorites::getFetchMoreQuery(const QVector<QVariant>& lastRow, int limit) const
+{
+    QString lastTitle = lastRow.at(TitleRole - Qt::UserRole).toString();
+    QSqlQuery q;
+    q.prepare(kLoadMoreDataQueryText);
+    q.addBindValue(lastTitle);
+    q.addBindValue(limit);
+    return q;
+}
+
+void
+YTFavorites::removeFromDatabase(const QString& videoId)
 {
     qDebug() << "Removing video" << videoId << "from favorites";
     QSqlQuery q;
@@ -112,21 +187,18 @@ YTFavorites::remove(QString videoId)
     q.addBindValue(videoId);
     if (!q.exec())
         qWarning("Failed to remove video %s from favorites: %s",
-               qPrintable(videoId), qPrintable(q.lastError().text()));
+                 qPrintable(videoId), qPrintable(q.lastError().text()));
 }
 
-QVariant
-YTFavorites::data(const QModelIndex &item, int role) const
+int
+YTFavorites::findIndexForId(const QString& id)
 {
-    if (role < Qt::UserRole)
-        return QSqlQueryModel::data(item, role);
-    QSqlRecord r = record(item.row());
-    return r.value(role - Qt::UserRole);
-}
-
-void
-YTFavorites::refresh()
-{
-    setQuery(kRefreshViewQueryText, QSqlDatabase::database());
-    Q_ASSERT(lastError().type() == QSqlError::NoError);
+    QList<QVector<QVariant> >::const_iterator it = _data.begin();
+    for (; it != _data.end(); ++it) {
+        const QString& sid = it->at(VideoIdRole - Qt::UserRole).toString();
+        if (sid == id)
+            return it - _data.begin();
+    }
+    Q_ASSERT(false);
+    return -1;
 }

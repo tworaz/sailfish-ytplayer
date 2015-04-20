@@ -30,27 +30,38 @@
 #ifndef YTFAVORITES_H
 #define YTFAVORITES_H
 
-#include <QSqlQueryModel>
+#include "YTSqlListModel.h"
+
 #include <QHash>
 
-class YTFavorites : public QSqlQueryModel
+class QSqlQuery;
+
+class YTFavorites : public YTSqlListModel
 {
     Q_OBJECT
+
 public:
     explicit YTFavorites(QObject *parent = 0);
 
     Q_INVOKABLE bool isFavorite(QString videoId);
     Q_INVOKABLE void add(QString videoId, QString title,
                          QString thumbUrl, QString duration);
-    Q_INVOKABLE void remove(QString videoId);
+    Q_INVOKABLE void removeForId(QString videoId);
 
-    Q_INVOKABLE void refresh();
-    Q_INVOKABLE void reset() { clear(); }
-
+    // Overrides from QAbstractListModel
     QHash<int, QByteArray> roleNames() const { return _roleNames; }
-    QVariant data(const QModelIndex &item, int role) const;
 
 private:
+    // Overrides for YTSqlListModel
+    QSqlQuery getTableSizeQuery() const;
+    QSqlQuery getReloadDataQuery(int limit) const;
+    QSqlQuery getSearchQuery(const QString& query, int limit) const;
+    QSqlQuery getFetchMoreQuery(const QVector<QVariant>& lastRow, int limit) const;
+    void removeFromDatabase(const QVector<QVariant>&);
+
+    void removeFromDatabase(const QString& id);
+    int findIndexForId(const QString& id);
+
     enum {
         VideoIdRole = Qt::UserRole,
         TitleRole,
