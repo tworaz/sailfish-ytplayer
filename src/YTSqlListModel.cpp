@@ -150,6 +150,8 @@ YTSqlListModel::fetchMore(const QModelIndex&)
                  qPrintable(q.lastError().text()));
         return;
     }
+
+    handleNewData(q, true);
 }
 
 void
