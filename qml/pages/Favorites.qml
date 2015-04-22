@@ -60,9 +60,7 @@ Page {
                     // Menu option allowing the user to show search field
                     //% "Search"
                     qsTrId("ytplayer-action-search")
-                onClicked: {
-                    topPulley.changeSearchVisibility = true
-                }
+                onClicked: topPulley.changeSearchVisibility = true
             }
 
             onActiveChanged: {
@@ -70,63 +68,18 @@ Page {
                     listView.headerItem.searchVisible =
                         !listView.headerItem.searchVisible
                     topPulley.changeSearchVisibility = false
+                    topPulley.close(true)
                 }
             }
         }
 
-        header: Column {
+        header: SearchHeader {
             width: parent.width
-            property bool searchVisible: false
-
-            onSearchVisibleChanged: {
-                if (searchVisible) {
-                    search.state = "visible"
-                    search.forceActiveFocus()
-                } else {
-                    search.state = "hidden"
-                    header.forceActiveFocus()
-                    topPulley.close(true)
-                }
-            }
-
-            PageHeader {
-                id: header
-                width: parent.width
-                //: Title for favorite videos page
-                //% "Favorites"
-                title: qsTrId("ytplayer-title-favorites")
-            }
-            SearchField {
-                id: search
-                width: parent.width
-                EnterKey.enabled: false
-                state: "hidden"
-                onTextChanged: YTFavorites.search(text)
-
-                states: [
-                    State {
-                        name: "visible"
-                        PropertyChanges { target: search; opacity: 1.0; scale: 1.0 }
-                    },
-                    State {
-                        name: "hidden"
-                        PropertyChanges { target: search; opacity: 0; height: 0; scale: 0.0 }
-                    }
-
-                ]
-                transitions: [
-                    Transition {
-                        NumberAnimation { properties: "opacity"; duration: kStandardAnimationDuration }
-                        NumberAnimation { properties: "scale"; duration: kStandardAnimationDuration }
-                        NumberAnimation { properties: "height"; duration: kStandardAnimationDuration }
-                        onRunningChanged: {
-                            if (!running && search.state === "hidden" && search.text.length > 0)
-                                search.text = ""
-                        }
-                    }
-                ]
-            } // SearchField
-        } // Column
+            //: Title for favorite videos page
+            //% "Favorites"
+            title: qsTrId("ytplayer-title-favorites")
+            onSearchQueryChanged: YTFavorites.search(text)
+        }
 
         ViewPlaceholder {
             enabled: listView.count == 0

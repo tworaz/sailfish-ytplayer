@@ -36,6 +36,7 @@
 #include <QDebug>
 
 namespace {
+
 const int kMaximumDatabaseRows = 500;
 
 const char kCreateDBQueryText[] =
@@ -47,17 +48,31 @@ const char kInsertDataQueryText[] =
     "INSERT OR REPLACE INTO watched_recently"
     "(video_id, title, duration, thumbnail_url) VALUES (?,?,?,?)";
 
-const char kRefreshViewQuertText[] =
-    "SELECT video_id, title, thumbnail_url, duration "
-    "FROM watched_recently ORDER BY timestamp DESC";
+const char kReloadDataQueryText[] =
+    "SELECT video_id, title, thumbnail_url, duration, timestamp "
+    "FROM watched_recently ORDER BY timestamp DESC LIMIT ?";
 
 const char kTrimQueryText[] =
     "DELETE FROM watched_recently WHERE video_id IN "
     "(SELECT video_id FROM watched_recently ORDER BY timestamp ASC LIMIT ?)";
-}
 
-YTWatchedRecently::YTWatchedRecently(QObject *parent) :
-    QSqlQueryModel(parent)
+const char kTableSizeQueryText[] =
+    "SELECT count(*) from watched_recently";
+
+const char kLoadMoreDataQueryText[] =
+    "SELECT video_id, title, thumbnail_url, duration, timestamp "
+    "FROM watched_recently WHERE timestamp<? "
+    "ORDER BY timestamp DESC LIMIT ?";
+
+const char kSearchQueryText[] =
+   "SELECT video_id, title, thumbnail_url, duration, timestamp "
+   "FROM watched_recently WHERE title LIKE ? COLLATE NOCASE "
+   "ORDER BY timestamp DESC LIMIT ?";
+
+} // namespace
+
+YTWatchedRecently::YTWatchedRecently(QObject *parent)
+    : YTSqlListModel(parent)
 {
     QSqlDatabase db = QSqlDatabase::database();
     if (!db.isValid())
@@ -74,7 +89,7 @@ YTWatchedRecently::YTWatchedRecently(QObject *parent) :
     _roleNames[VideoDurationRole] = "video_duration";
 
     QSqlQuery q;
-    q.prepare("SELECT count(*) FROM watched_recently");
+    q.prepare(kTableSizeQueryText);
     if (q.exec() && q.first() && (q.value(0).toInt() > kMaximumDatabaseRows)) {
         int drop_count = q.value(0).toInt() - kMaximumDatabaseRows;
         qDebug() << "Watched recently table has more than"
@@ -85,23 +100,6 @@ YTWatchedRecently::YTWatchedRecently(QObject *parent) :
         if (!q.exec())
             qWarning() << "Failed to trim watched_recently database:" << q.lastError();
     }
-}
-
-QVariant
-YTWatchedRecently::data(const QModelIndex &index, int role) const
-{
-    if (role < Qt::UserRole)
-        return QSqlQueryModel::data(index, role);
-
-    QSqlRecord r = record(index.row());
-    return r.value(role - Qt::UserRole);
-}
-
-void
-YTWatchedRecently::refresh()
-{
-    setQuery(kRefreshViewQuertText, QSqlDatabase::database());
-    Q_ASSERT(lastError().type() == QSqlError::NoError);
 }
 
 void
@@ -116,4 +114,52 @@ YTWatchedRecently::addVideo(QString videoId, QString title, QString thumb_url, Q
     if (!q.exec())
         qWarning("Failed to execute SQL query: %s",
                  qPrintable(q.lastError().text()));
+}
+
+QSqlQuery
+YTWatchedRecently::getTableSizeQuery() const
+{
+    QSqlQuery q;
+    q.prepare(kTableSizeQueryText);
+    return q;
+}
+
+QSqlQuery
+YTWatchedRecently::getReloadDataQuery(int limit) const
+{
+    QSqlQuery q;
+    q.prepare(kReloadDataQueryText);
+    q.addBindValue(limit);
+    return q;
+}
+
+QSqlQuery
+YTWatchedRecently::getSearchQuery(const QString& query, int limit) const
+{
+    QSqlQuery q;
+    q.prepare(kSearchQueryText);
+    QString newQuery = query;
+    newQuery.prepend("%");
+    newQuery.append("%");
+    q.addBindValue(newQuery);
+    q.addBindValue(limit);
+    return q;
+}
+
+QSqlQuery
+YTWatchedRecently::getFetchMoreQuery(const QVector<QVariant>& lastRow, int limit) const
+{
+    QVariant lastTimestamp = lastRow.at(TimestampRole - Qt::UserRole);
+    QSqlQuery q;
+    q.prepare(kLoadMoreDataQueryText);
+    q.addBindValue(lastTimestamp);
+    q.addBindValue(limit);
+    return q;
+}
+
+void
+YTWatchedRecently::removeFromDatabase(const QVector<QVariant>&)
+{
+    // Recently warched video removal not supporetd in UI.
+    Q_ASSERT(false);
 }

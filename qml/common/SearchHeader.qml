@@ -27,45 +27,58 @@
  * SUCH DAMAGE.
  */
 
-#ifndef YTWATCHEDRECENTLY_H
-#define YTWATCHEDRECENTLY_H
+import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-#include "YTSqlListModel.h"
+Column {
+    id: root
 
-#include <QByteArray>
-#include <QHash>
+    property alias title: header.title
+    property bool searchVisible: false
 
-class YTWatchedRecently : public YTSqlListModel
-{
-    Q_OBJECT
-public:
-    explicit YTWatchedRecently(QObject *parent = 0);
+    signal searchQueryChanged(var text)
 
-    Q_INVOKABLE void addVideo(QString videoId, QString title,
-                              QString thumb_url, QString duration);
+    onSearchVisibleChanged: {
+        if (searchVisible) {
+            search.state = "visible"
+            search.forceActiveFocus()
+        } else {
+            search.state = "hidden"
+            header.forceActiveFocus()
+        }
+    }
 
-    // Overrides fror QAbstractListModel
-    QHash<int, QByteArray> roleNames() const { return _roleNames; }
+    PageHeader {
+        id: header
+    }
+    SearchField {
+        id: search
+        width: parent.width
+        EnterKey.enabled: false
+        state: "hidden"
+        onTextChanged: root.searchQueryChanged(text)
 
-private:
-    // Overrides for YTSqlListModel
-    QSqlQuery getTableSizeQuery() const;
-    QSqlQuery getReloadDataQuery(int limit) const;
-    QSqlQuery getSearchQuery(const QString& query, int limit) const;
-    QSqlQuery getFetchMoreQuery(const QVector<QVariant>& lastRow, int limit) const;
-    void removeFromDatabase(const QVector<QVariant>&);
+        states: [
+            State {
+                name: "visible"
+                PropertyChanges { target: search; opacity: 1.0; scale: 1.0 }
+            },
+            State {
+                name: "hidden"
+                PropertyChanges { target: search; opacity: 0; height: 0; scale: 0.0 }
+            }
 
-    enum {
-        VideoIdRole = Qt::UserRole,
-        TitleRole,
-        ThumbnailUrlRole,
-        VideoDurationRole,
-        TimestampRole,
-    };
-
-    QHash<int, QByteArray> _roleNames;
-
-    Q_DISABLE_COPY(YTWatchedRecently)
-};
-
-#endif // YTWATCHEDRECENTLY_H
+        ]
+        transitions: [
+            Transition {
+                NumberAnimation { properties: "opacity"; duration: kStandardAnimationDuration }
+                NumberAnimation { properties: "scale"; duration: kStandardAnimationDuration }
+                NumberAnimation { properties: "height"; duration: kStandardAnimationDuration }
+                onRunningChanged: {
+                    if (!running && search.state === "hidden" && search.text.length > 0)
+                        search.text = ""
+                }
+            }
+        ]
+    }
+}

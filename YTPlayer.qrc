@@ -68,5 +68,6 @@
         <file>qml/pages/WatchedRecently.qml</file>
         <file>qml/common/FavoriteVideoButton.qml</file>
         <file>qml/pages/Favorites.qml</file>
+        <file>qml/common/SearchHeader.qml</file>
     </qresource>
 </RCC>

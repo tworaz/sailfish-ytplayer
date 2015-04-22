@@ -39,17 +39,46 @@ Page {
             requestCoverPage("Default.qml")
     }
 
-    Component.onCompleted: YTWatchedRecently.refresh()
-    Component.onDestruction: YTWatchedRecently.reset()
+    Component.onCompleted: YTWatchedRecently.reload()
+    Component.onDestruction: YTWatchedRecently.clear()
 
     SilicaListView {
         id: listView
         anchors.fill: parent
+        // Make sure adding items to list view does not steal focus
+        // from SearchField in header.
+        currentIndex: -1
 
-        header: PageHeader {
+        PullDownMenu {
+            id: topPulley
+            property bool changeSearchVisibility: false
+            MenuItem {
+                text: listView.headerItem.searchVisible ?
+                    //: Menu option allowing the user to hide search field
+                    //% "Hide search"
+                    qsTrId("ytplayer-action-hide-search") :
+                    // Menu option allowing the user to show search field
+                    //% "Search"
+                    qsTrId("ytplayer-action-search")
+                onClicked: topPulley.changeSearchVisibility = true
+            }
+
+            onActiveChanged: {
+                if (!active && topPulley.changeSearchVisibility) {
+                    listView.headerItem.searchVisible =
+                        !listView.headerItem.searchVisible
+                    topPulley.changeSearchVisibility = false
+                    topPulley.close(true)
+                }
+            }
+        }
+
+        header: SearchHeader {
+            width: parent.width
             //: Title for recently watched videos page
             //% "Watched recently"
             title: qsTrId("ytplayer-title-watched-recently")
+            onSearchQueryChanged: YTWatchedRecently.search(text)
         }
 
         ViewPlaceholder {
