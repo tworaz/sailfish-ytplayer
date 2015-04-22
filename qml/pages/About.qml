@@ -99,7 +99,7 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
-            text: "Copyright \u00A9 2014 Piotr Tworek"
+            text: "Copyright \u00A9 2014-2015 Piotr Tworek"
         }
         Label {
             width: parent.width
