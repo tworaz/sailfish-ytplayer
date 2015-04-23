@@ -117,6 +117,7 @@ Page {
             params = {
                 "part" : "id,snippet",
                 "mine" : true,
+                "order": "alphabetical",
             }
         } else if (state === "LIKES") {
             request.resource = "videos"
