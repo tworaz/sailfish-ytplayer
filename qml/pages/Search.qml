@@ -150,7 +150,7 @@ Page {
         }
     }
 
-    SilicaListView {
+    YTListView {
         id: searchView
         anchors.fill: parent
 
@@ -275,5 +275,5 @@ Page {
         }
 
         VerticalScrollDecorator {}
-    } // SilicaListView
+    } // YTListView
 }

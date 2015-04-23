@@ -88,6 +88,8 @@ Page {
         contentHeight: column.height
 
         PullDownMenu {
+            busy: request.busy
+
             MenuItem {
                 //: Menu option to show about page
                 //% "About"
@@ -165,39 +167,38 @@ Page {
                     visible: priv.showAccount
                     text: snippet.title
                     icon: snippet.thumbnails.default.url
-                    height: 0
-                    opacity: 0
                     onClicked: {
                         pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),
                             { "channelId" : id, "title" : text })
                     }
                     Component.onCompleted: kUserChannelIds.push(id)
 
-                    transform: Scale {
-                        id: userChannelScale
-                        xScale: 1.0
-                        yScale: 0.0
-                    }
-
                     ParallelAnimation {
                         running: true
                         NumberAnimation {
-                            target: userChannelScale
-                            property: "yScale"
+                            //target: userChannelScale
+                            target: userChannelItem
+                            properties: "scale"
+                            //property: "yScale"
                             to: 1.0
                             duration: kStandardAnimationDuration
+                            easing.type: Easing.OutCubic
                         }
                         NumberAnimation {
                             target: userChannelItem
                             property: "height"
+                            from: 0
                             to: userChannelItem.implicitHeight
                             duration: kStandardAnimationDuration
+                            easing.type: Easing.OutCubic
                         }
                         NumberAnimation {
                             target: userChannelItem
                             property: "opacity"
+                            from: 0.0
                             to: 1.0
                             duration: kStandardAnimationDuration
+                            easing.type: Easing.OutCubic
                         }
                     }
                 } // MainMenuItem

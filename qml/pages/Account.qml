@@ -178,7 +178,7 @@ Page {
         running: request.busy && (listModel.count === 0)
     }
 
-    SilicaListView {
+    YTListView {
         id: listView
         anchors.fill: parent
         property string nextPageToken: ""

@@ -71,9 +71,21 @@ Column {
         ]
         transitions: [
             Transition {
-                NumberAnimation { properties: "opacity"; duration: kStandardAnimationDuration }
-                NumberAnimation { properties: "scale"; duration: kStandardAnimationDuration }
-                NumberAnimation { properties: "height"; duration: kStandardAnimationDuration }
+                NumberAnimation {
+                    properties: "opacity"
+                    duration: kStandardAnimationDuration
+                    easing.type: Easing.OutCubic
+                }
+                NumberAnimation {
+                    properties: "scale"
+                    duration: kStandardAnimationDuration
+                    easing.type: Easing.OutCubic
+                }
+                NumberAnimation {
+                    properties: "height"
+                    duration: kStandardAnimationDuration
+                    easing.type: Easing.OutCubic
+                }
                 onRunningChanged: {
                     if (!running && search.state === "hidden" && search.text.length > 0)
                         search.text = ""

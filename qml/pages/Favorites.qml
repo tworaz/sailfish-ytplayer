@@ -42,7 +42,7 @@ Page {
     Component.onCompleted: YTFavorites.reload()
     Component.onDestruction: YTFavorites.clear()
 
-    SilicaListView {
+    YTListView {
         id: listView
         anchors.fill: parent
         // Make sure adding items to list view does not steal focus
@@ -127,5 +127,5 @@ Page {
         } // YTListItem
 
         VerticalScrollDecorator {}
-    } // SilicaListView
+    } // YTListView
 }

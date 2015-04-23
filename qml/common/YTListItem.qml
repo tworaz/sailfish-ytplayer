@@ -91,45 +91,6 @@ ListItem {
         }
     }
 
-    transform: Scale {
-        id: scaleTransform
-        xScale: 1.0
-        yScale: 1.0
-    }
-
-    ListView.onRemove: SequentialAnimation {
-        PropertyAction {
-            target: ytItem
-            property: "ListView.delayRemove";
-            value: true
-        }
-        ParallelAnimation {
-            NumberAnimation {
-                target: ytItem
-                property: "height"
-                to: 0
-                duration: kStandardAnimationDuration
-            }
-            NumberAnimation {
-                target: scaleTransform
-                property: "yScale"
-                to: 0
-                duration: kStandardAnimationDuration
-            }
-            NumberAnimation {
-                target: ytItem
-                property: "opacity"
-                to: 0
-                duration: kStandardAnimationDuration
-            }
-        }
-        PropertyAction {
-            target: ytItem
-            property: "ListView.delayRemove"
-            value: false
-        }
-    }
-
     onClicked: {
         if (youtubeId.kind === "youtube#video") {
             Log.debug("Selected item is a video, opening video overview page")

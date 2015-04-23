@@ -42,7 +42,7 @@ Page {
             requestCoverPage("Default.qml")
     }
 
-    SilicaListView {
+    YTListView {
         id: listView
         anchors.fill: parent
 
@@ -234,5 +234,5 @@ Page {
         } // ListItem
 
         VerticalScrollDecorator {}
-    } // SilicaListView
+    } // YTListView
 }
