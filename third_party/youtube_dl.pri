@@ -1,3 +1,7 @@
+# Copyright (c) 2015 Piotr Tworek. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE.YTPlayer file.
+
 _SRC = $$PWD/youtube-dl
 _BUILD_DIR = $$top_builddir/build-ytdl
 _PYTHON='$$LITERAL_HASH!/usr/bin/env python'

@@ -1,11 +1,7 @@
-# The name of your app.
-# NOTICE: name defined in TARGET has a corresponding QML filename.
-#         If name defined in TARGET is changed, following needs to be
-#         done to match new name:
-#         - corresponding QML filename must be changed
-#         - desktop icon filename must be changed
-#         - desktop filename must be changed
-#         - icon definition filename in desktop file must be changed
+# Copyright (c) 2015 Piotr Tworek. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE.YTPlayer file.
+
 TARGET = harbour-ytplayer
 
 CONFIG += sailfishapp sailfishapp_no_deploy_qml
@@ -114,4 +110,3 @@ mcc_data.commands = \
 
 QMAKE_EXTRA_TARGETS += mcc-data
 PRE_TARGETDEPS += mcc-data
-
