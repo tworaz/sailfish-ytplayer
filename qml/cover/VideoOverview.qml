@@ -75,8 +75,6 @@ CoverBackground {
     }
 
     CoverActionList {
-        id: actions
-
         CoverAction {
             iconSource: "image://theme/icon-cover-search"
             onTriggered: {
@@ -84,7 +82,6 @@ CoverBackground {
                 activate()
             }
         }
-
         CoverAction {
             iconSource: "image://theme/icon-cover-play"
             onTriggered: {

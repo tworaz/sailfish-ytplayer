@@ -44,7 +44,6 @@ Page {
     property alias streams: videoController.streams
     property variant thumbnails
     property variant iso_duration: ""
-    property bool applicationActive: Qt.application.active
 
     Component.onCompleted: {
         Log.debug("Video player page created, video ID: " + videoId)
@@ -53,42 +52,41 @@ Page {
 
     onStatusChanged: {
         if (status === PageStatus.Active) {
-            requestCoverPage("VideoPlayer.qml", {
-                "title"       : page.title,
-                "thumbnails"  : thumbnails,
-                "mediaPlayer" : mediaPlayer
-            })
+            requestCoverPage()
             videoController.activate()
             YTWatchedRecently.addVideo(videoId, title,
                 thumbnails.default.url, page.iso_duration)
         } else if (status === PageStatus.Deactivating) {
-            Log.debug("VidePlayer page deactivating");
+            Log.debug("VideoPlayer page deactivating");
             videoController.deactivate()
         }
     }
 
-    onApplicationActiveChanged:  {
-        if (!applicationActive) {
-            if (!videoController.keepPlayingAferMinimize) {
-                mediaPlayer.pause()
+    Connections {
+        target: Qt.application
+        onActiveChanged: {
+            showVideoControls(Qt.application.active)
+            if (!Qt.application.active) {
+                if (!videoController.keepPlayingAferMinimize)
+                    mediaPlayer.pause()
+                screenBlanking.prevent(false)
+            } else {
+                screenBlanking.prevent(videoController.playing)
             }
-            screenBlanking.prevent(false)
-        } else {
-            screenBlanking.prevent(videoController.playing)
         }
     }
 
     onOrientationChanged: {
         if (page.orientation & (Orientation.Landscape | Orientation.LandscapeInverted)) {
             Log.debug("Video player orientation changed to landscape")
-            showVideoControls(!videoController.playing)
+            showVideoControls(!videoController.playing && Qt.application.active)
             videoController.hideBottomMenu()
             if (videoController.playing) {
                 controlsTimer.restart()
             }
         } else {
             Log.debug("Video player orientation changed to portrait")
-            showVideoControls(true)
+            showVideoControls(Qt.application.active)
         }
     }
 
@@ -184,7 +182,7 @@ Page {
 
         onPlaybackFinishedChanged: {
             if (playbackFinished && page.isLandscape){
-                showVideoControls(true)
+                showVideoControls(Qt.application.active)
             }
         }
 
@@ -203,6 +201,21 @@ Page {
             }
             if (playing && page.isLandscape) {
                 controlsTimer.restart()
+            }
+        }
+    }
+
+    CoverActionList {
+        CoverAction {
+            iconSource: videoController.playing ?
+                "image://theme/icon-cover-pause" :
+                "image://theme/icon-cover-play"
+            onTriggered: {
+                if (videoController.playing) {
+                    mediaPlayer.pause()
+                } else {
+                    mediaPlayer.play()
+                }
             }
         }
     }
