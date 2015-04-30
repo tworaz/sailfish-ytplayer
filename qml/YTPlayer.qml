@@ -45,6 +45,7 @@ ApplicationWindow
     readonly property string kYoutubeVideoUrlBase: "https://www.youtube.com/watch?v="
     readonly property int kListAutoLoadItemThreshold: 10
     readonly property int kStandardAnimationDuration: 250
+    readonly property int kLongAnimationDuration: 500
 
     initialPage: Component { MainMenu { } }
     cover: YTNetworkManager.online ?
@@ -58,11 +59,17 @@ ApplicationWindow
     }
 
     function requestCoverPage(coverFile, props) {
+        if (!coverFile) {
+            cover = null
+            return;
+        }
+
         var coverUrl = undefined
-        if (YTNetworkManager.online)
+        if (YTNetworkManager.online) {
             coverUrl = Qt.resolvedUrl("cover/" + coverFile)
-        else
+        } else {
             coverUrl = Qt.resolvedUrl("cover/NetworkOffline.qml")
+        }
 
         if (coverUrl !== cover) {
             Log.info("Changing cover to: " + coverFile)

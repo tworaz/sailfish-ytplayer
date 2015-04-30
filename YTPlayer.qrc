@@ -15,6 +15,8 @@
         <file alias="categorize-64.png">resources/icons/categorize-64.png</file>
         <file alias="bookmark-2-64.png">resources/icons/bookmark-2-64.png</file>
         <file alias="star-8-64.png">resources/icons/star-8-64.png</file>
+        <file alias="play-64.png">resources/icons/play-64.png</file>
+        <file alias="pause-64.png">resources/icons/pause-64.png</file>
     </qresource>
     <qresource prefix="/fonts">
         <file alias="youtube-icons.ttf">resources/fonts/youtube-icons.ttf</file>
@@ -37,7 +39,6 @@
         <file>qml/cover/Default.qml</file>
         <file>qml/cover/NetworkOffline.qml</file>
         <file>qml/cover/VideoOverview.qml</file>
-        <file>qml/cover/VideoPlayer.qml</file>
         <file>qml/pages/About.qml</file>
         <file>qml/pages/Account.qml</file>
         <file>qml/pages/CacheSettings.qml</file>
@@ -70,5 +71,7 @@
         <file>qml/pages/Favorites.qml</file>
         <file>qml/common/SearchHeader.qml</file>
         <file>qml/common/YTListView.qml</file>
+        <file>qml/pages/VideoPlayer2.qml</file>
+        <file>qml/common/YTIconButton.qml</file>
     </qresource>
 </RCC>
