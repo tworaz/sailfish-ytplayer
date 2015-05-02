@@ -74,7 +74,7 @@ Page {
             rating.enabled = YTPrefs.isAuthEnabled()
         } else if (status === PageStatus.Active) {
             if (!priv.playerPage) {
-                priv.playerPage = pageStack.pushAttached(Qt.resolvedUrl("VideoPlayer2.qml"), {
+                priv.playerPage = pageStack.pushAttached(Qt.resolvedUrl("VideoPlayer.qml"), {
                     "videoId"      : videoId,
                     "title"        : title,
                     "localVideo"   : localVideo

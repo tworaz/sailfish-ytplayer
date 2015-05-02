@@ -55,9 +55,7 @@
         <file>qml/pages/Settings.qml</file>
         <file>qml/pages/ThirdPartySoftware.qml</file>
         <file>qml/pages/VideoCategories.qml</file>
-        <file>qml/pages/VideoController.qml</file>
         <file>qml/pages/VideoOverview.qml</file>
-        <file>qml/pages/VideoPlayer.qml</file>
         <file>qml/pages/YTOAuth2.qml</file>
         <file>qml/pages/BrowserLauncher.qml</file>
         <file>qml/common/SearchSuggestions.qml</file>
@@ -71,7 +69,7 @@
         <file>qml/pages/Favorites.qml</file>
         <file>qml/common/SearchHeader.qml</file>
         <file>qml/common/YTListView.qml</file>
-        <file>qml/pages/VideoPlayer2.qml</file>
+        <file>qml/pages/VideoPlayer.qml</file>
         <file>qml/common/YTIconButton.qml</file>
     </qresource>
 </RCC>
