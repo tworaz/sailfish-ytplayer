@@ -33,39 +33,24 @@ import Sailfish.Silica 1.0
 BackgroundItem {
     id: root
     property alias text: _label.text
-    property alias indicatorRunning: _indicator.running
-    property alias labelOpacity: _label.opacity
     property bool isPortrait: true
 
-    width: _row.width + 2 * Theme.paddingLarge
+    width: _label.width + 2 * Theme.paddingLarge
     height: root.isPortrait ? Theme.itemSizeLarge : Theme.itemSizeSmall
     opacity: visible ? 1.0 : 0.0
 
     Behavior on opacity {
-        NumberAnimation {
-            duration: 400
-        }
+        FadeAnimation {}
     }
 
-    Row {
-        id: _row
+    Label {
+        id: _label
         anchors.right: parent.right
         anchors.rightMargin: Theme.paddingLarge
         anchors.verticalCenter: parent.verticalCenter
-
-        BusyIndicator {
-            id: _indicator
-            visible: running
-            size: BusyIndicatorSize.Small
-            anchors.verticalCenter: parent.verticalCenter
-        }
-
-        Label {
-            id: _label
-            color: root.highlighted ? Theme.highlightColor : Theme.primaryColor
-            truncationMode: TruncationMode.Fade
-            font.pixelSize: Theme.fontSizeLarge
-            font.family: Theme.fontFamilyHeading
-        }
+        color: root.highlighted ? Theme.highlightColor : Theme.primaryColor
+        truncationMode: TruncationMode.Fade
+        font.pixelSize: Theme.fontSizeLarge
+        font.family: Theme.fontFamilyHeading
     }
 }
