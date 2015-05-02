@@ -33,7 +33,6 @@ Page {
     QtObject {
         id: priv
         property variant channelBrowserData: ({})
-        //property variant streamResponse: undefined
         property string iso_duration: ""
         property Item playerPage: null
         property bool hasDirectVideoUrl: priv.playerPage !== null &&
@@ -41,41 +40,23 @@ Page {
         readonly property real sideMargin: Theme.paddingMedium
     }
 
+    Connections {
+        target: priv.playerPage
+        property bool addedToWatchedRecently: false
+        onPlaybackStarted: {
+            if (!addedToWatchedRecently) {
+                Log.debug("Video " + videoId + " added to watched recently list")
+                YTWatchedRecently.addVideo(videoId, title,
+                    thumbnails.default.url, priv.iso_duration)
+                addedToWatchedRecently = true
+            }
+        }
+    }
+
     function play() {
         console.assert(priv.playerPage)
         pageStack.navigateForward(PageStackAction.Animated)
-        YTWatchedRecently.addVideo(videoId, title,
-            thumbnails.default.url, priv.iso_duration)
-        //if (priv.playerPage) {
-        //    pageStack.navigateForward(PageStackAction.Animated)
-        //} else {
-        //    Qt.openUrlExternally(kYoutubeVideoUrlBase + videoId)
-        //}
     }
-
-    //function handleStreamChange(streams) {
-    //    if (!priv.playerPage) {
-    //        // Don't push the page during transition it has negative effect on performance
-    //        if (page.status !== PageStatus.Active) {
-    //            priv.streamResponse = streams
-    //            return
-    //        }
-
-    //        Log.debug("Player page not attached, pushing it")
-    //        console.assert(page.thumbnails.hasOwnProperty("default"))
-    //        priv.playerPage = pageStack.pushAttached(Qt.resolvedUrl("VideoPlayer2.qml"), {
-    //            "thumbnails"   : thumbnails,
-    //            "videoId"      : videoId,
-    //            "title"        : title,
-    //            //"streams"      : streams,
-    //            "iso_duration" : priv.iso_duration,
-    //            "localVideo"   : localVideo
-    //        })
-    //    } else {
-    //        console.assert(priv.playerPage.hasOwnProperty("streams"))
-    //        priv.playerPage.streams = streams
-    //    }
-    //}
 
     Component.onCompleted: {
         Log.debug("Video overview page for video ID: " + videoId + " created")
@@ -92,23 +73,10 @@ Page {
                 request.run()
             rating.enabled = YTPrefs.isAuthEnabled()
         } else if (status === PageStatus.Active) {
-            //if (!priv.playerPage) {
-            //    if (localVideo.status === YTLocalVideo.Downloaded) {
-            //        if (!page.thumbnails.hasOwnProperty("default"))
-            //            page.thumbnails = localVideo.thumbnails
-            //        handleStreamChange(localVideo.streams)
-            //    } else if (priv.streamResponse !== undefined) {
-            //        handleStreamChange(priv.streamResponse)
-            //        priv.streamResponse = undefined
-            //    }
-            //}
             if (!priv.playerPage) {
                 priv.playerPage = pageStack.pushAttached(Qt.resolvedUrl("VideoPlayer2.qml"), {
-                    //"thumbnails"   : thumbnails,
                     "videoId"      : videoId,
                     "title"        : title,
-                    //"streams"      : streams,
-                    //"iso_duration" : priv.iso_duration,
                     "localVideo"   : localVideo
                 })
             }
@@ -174,33 +142,8 @@ Page {
                 "title"      : page.title,
                 "parent"     : page
             })
-
-            //if (localVideo.status !== YTLocalVideo.Downloaded && !streamUrlRequest.loaded)
-            //    streamUrlRequest.run()
         }
     }
-
-    //Notification {
-    //    id: noStreamsNotification
-    //    category: "network.error"
-    //    //: Notification summary informing the user direct video playback is not possible
-    //    //% "Direct video playback not possible"
-    //    previewSummary: qsTrId("ytplayer-msg-direct-playback-impossible")
-    //    //: Notification body explaining why direct video playback is not possible
-    //    //% "YTPLayer failed to find usable video streams"
-    //    previewBody: qsTrId("ytplayer-msg-direct-playback-impossible-desc")
-    //}
-
-    //YTRequest {
-    //    id: streamUrlRequest
-    //    method: YTRequest.List
-    //    resource: "video/url"
-    //    params: {
-    //        "video_id" : videoId,
-    //    }
-    //    onSuccess: handleStreamChange(response)
-    //    onError: noStreamsNotification.publish()
-    //}
 
     YTLocalVideo {
         id: localVideo
@@ -220,8 +163,6 @@ Page {
             case YTLocalVideo.Downloaded:
                 Log.info("Video data storred locally and available for playback")
                 page.thumbnails = localVideo.thumbnails
-                //if (!pageStack.busy && priv.playerPage)
-                //    handleStreamChange(localVideo.streams)
                 break
             }
         }
@@ -331,8 +272,6 @@ Page {
             id: header
             anchors.top: parent.top
             anchors.right: parent.right
-            //labelOpacity: priv.hasDirectVideoUrl ? 1.0 : 0.5
-            //indicatorRunning: streamUrlRequest.busy
             isPortrait: page.isPortrait
             //: Label for video play button
             //% "Play"
@@ -392,9 +331,7 @@ Page {
                         visible: opacity !== 0.0
                         color: "#AA000000"
                         Behavior on opacity {
-                            NumberAnimation {
-                                duration: 400
-                            }
+                            FadeAnimation {}
                         }
 
                         Label {
