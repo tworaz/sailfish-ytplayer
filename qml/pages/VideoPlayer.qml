@@ -29,7 +29,7 @@ Page {
         Log.debug("Video player page created")
         if (localVideo.status !== YTLocalVideo.Downloaded) {
             flickable.showStatusIndicator(true)
-            statusIndicator.text = "Looking for streams"
+            statusIndicator.text = "Looking for streams" // TODO: translate
             streamRequest.run()
         } else {
             page.streams = localVideo.streams
@@ -56,6 +56,17 @@ Page {
              page.orientation === Orientation.PortraitInverted) &&
             Qt.application.active) {
             flickable.showControls(true)
+        }
+    }
+
+    Connections {
+        target: page.localVideo
+        onStatusChanged: {
+            if (localVideo.status === YTLocalVideo.Downloaded) {
+                if (mediaPlayer.playing)
+                    mediaPlayer.savePosition()
+                bottomMenu.handleNewStreams(localVideo.streams)
+            }
         }
     }
 
@@ -242,20 +253,25 @@ Page {
                 Log.debug("Media player status changed: " + status)
                 switch (status) {
                 case MediaPlayer.Loading:
+                    statusIndicator.text = "Loading" // TODO: translate
                     flickable.showStatusIndicator(true)
-                    statusIndicator.text = "Loading"
                     break;
                 case MediaPlayer.Buffering:
+                    statusIndicator.text = "Buffering" // TODO: translate
                     flickable.showStatusIndicator(true)
-                    statusIndicator.text = "Buffering"
                     break;
                 case MediaPlayer.Stalled:
+                    statusIndicator.text = "Stalled" // TODO: translate
                     flickable.showStatusIndicator(true)
-                    statusIndicator.text = "Stalled"
                     break;
                 case MediaPlayer.Buffered:
                     flickable.showStatusIndicator(false)
                     break
+                case MediaPlayer.InvalidMedia:
+                    Log.error("Invalid media!")
+                    statusIndicator.text = "Invalid media" // TODO: translate
+                    flickable.showStatusIndicator(true)
+                    break;
                 case MediaPlayer.EndOfMedia:
                     savedPosition = 0
                     flickable.showStatusIndicator(false)
