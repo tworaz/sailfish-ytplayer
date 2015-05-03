@@ -71,5 +71,6 @@
         <file>qml/common/YTListView.qml</file>
         <file>qml/pages/VideoPlayer.qml</file>
         <file>qml/common/YTIconButton.qml</file>
+        <file>qml/pages/PlayerSettings.qml</file>
     </qresource>
 </RCC>
