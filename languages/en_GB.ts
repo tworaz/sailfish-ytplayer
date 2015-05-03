@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en" sourcelanguage="en">
+<TS version="2.1" language="en" sourcelanguage="en">
 <context>
     <name></name>
     <message id="ytplayer-title-video-categories">
@@ -67,46 +67,6 @@
         <source>Video count</source>
         <extracomment>Label for channel video count field</extracomment>
         <translation>Video count</translation>
-    </message>
-    <message id="ytplayer-status-buffering">
-        <source>Buffering: %1%</source>
-        <extracomment>Media player status indicating content is buffering</extracomment>
-        <translation>Buffering: %1%</translation>
-    </message>
-    <message id="ytplayer-status-no-media">
-        <source>No media</source>
-        <extracomment>Media player status indicating there is no content to play</extracomment>
-        <translation>No media</translation>
-    </message>
-    <message id="ytplayer-status-loading">
-        <source>Loading</source>
-        <extracomment>Media player status indicating content is loading</extracomment>
-        <translation>Loading</translation>
-    </message>
-    <message id="ytplayer-status-loaded">
-        <source>Loaded</source>
-        <extracomment>Media player status indicating content was loaded</extracomment>
-        <translation>Loaded</translation>
-    </message>
-    <message id="ytplayer-status-stalled">
-        <source>Stalled</source>
-        <extracomment>Media player status indicating content loading has stalled</extracomment>
-        <translation>Stalled</translation>
-    </message>
-    <message id="ytplayer-status-buffered">
-        <source>Buffered</source>
-        <extracomment>Media player status indicating content has been buffered</extracomment>
-        <translation>Buffered</translation>
-    </message>
-    <message id="ytplayer-status-end-of-media">
-        <source>End of media</source>
-        <extracomment>Media player status indicating end of content has been reached</extracomment>
-        <translation>End of media</translation>
-    </message>
-    <message id="ytplayer-status-invalid-media">
-        <source>Invalid media</source>
-        <extracomment>Media player status indicating invalid content type</extracomment>
-        <translation>Invalid media</translation>
     </message>
     <message id="ytplayer-label-latest-videos">
         <source>Latest videos</source>
@@ -229,21 +189,6 @@ Label for menu option allowing the user to change video quality</extracomment>
         <source>About</source>
         <extracomment>Menu option to show about page</extracomment>
         <translation>About</translation>
-    </message>
-    <message id="ytplayer-label-duration-with-value">
-        <source>Duration: %1</source>
-        <extracomment>Video duration label with value</extracomment>
-        <translation>Duration: %1</translation>
-    </message>
-    <message id="ytplayer-label-extra-options">
-        <source>Player options</source>
-        <extracomment>Label for extra video player options section</extracomment>
-        <translation>Player options</translation>
-    </message>
-    <message id="ytplayer-label-keep-playing-after-minimize">
-        <source>Keep playing after minimize</source>
-        <extracomment>Menu option label allowing the user to disable video playback pausing on player minimization.</extracomment>
-        <translation>Keep playing after minimize</translation>
     </message>
     <message id="ytplayer-action-view-license">
         <source>View license</source>
@@ -846,13 +791,106 @@ Remorse popup message telling the user video download will be removed</extracomm
     </message>
     <message id="ytplayer-action-hide-search">
         <source>Hide search</source>
-        <extracomment>Menu option allowing the user to hide search field</extracomment>
+        <extracomment>Menu option allowing the user to hide search field
+----------
+Menu option allowing the user to hide search field</extracomment>
         <translation>Hide search</translation>
     </message>
     <message id="ytplayer-msg-removing-favorite">
         <source>Removing favorite</source>
         <extracomment>Remorse popup message telling the use favorite is about to be removed</extracomment>
         <translation>Removing favorite</translation>
+    </message>
+    <message id="ytplayer-title-player-settings">
+        <source>Player settings</source>
+        <extracomment>Title of video player settings page</extracomment>
+        <translation>Player settings</translation>
+    </message>
+    <message id="ytplayer-action-player-settings">
+        <source>Player</source>
+        <extracomment>Label for menu option showing video player settings page</extracomment>
+        <translation>Player</translation>
+    </message>
+    <message id="ytplayer-status-looking-for-streams">
+        <source>Looking for streams</source>
+        <extracomment>Status message indicating video player is looking for audio/video streams</extracomment>
+        <translation>Looking for streams</translation>
+    </message>
+    <message id="ytplayer-status-buffering">
+        <source>Buffering: %1%</source>
+        <extracomment>Media player status indicating content is buffering</extracomment>
+        <translation>Buffering %1%</translation>
+    </message>
+    <message id="ytplayer-status-loading">
+        <source>Loading</source>
+        <extracomment>Media player status indicating content is loading</extracomment>
+        <translation>Loading</translation>
+    </message>
+    <message id="ytplayer-status-stalled">
+        <source>Stalled</source>
+        <extracomment>Media player status indicating content loading has stalled</extracomment>
+        <translation>Stalled</translation>
+    </message>
+    <message id="ytplayer-status-invalid-media">
+        <source>Invalid media</source>
+        <extracomment>Media player status indicating invalid content type</extracomment>
+        <translation>Invalid media</translation>
+    </message>
+    <message id="ytplayer-label-controls-hide-delay">
+        <source>Controls hide delay</source>
+        <extracomment>Lael for slider changing video player controls hide delay</extracomment>
+        <translation>Controls hide delay</translation>
+    </message>
+    <message id="ytplayer-label-autopause">
+        <source>Auto pause when deactivated</source>
+        <extracomment>Label for video auto pause option on/off switch.</extracomment>
+        <translation>Auto pause when deactivated</translation>
+    </message>
+    <message id="ytplayer-description-autopause">
+        <source>Automatically pause video playback when application is deactivated.</source>
+        <oldsource>Automatically pause video playback when application is deactivated</oldsource>
+        <extracomment>Description of video auto pause option switch.</extracomment>
+        <translation>Automatically pause video playback when application is deactivated.</translation>
+    </message>
+    <message id="ytplayer-label-quality-wifi">
+        <source>Default video quality on WiFi</source>
+        <extracomment>Label for combo box allowing the user to change default video quality when using WiFi connection.</extracomment>
+        <translation>Default video quality on WiFi</translation>
+    </message>
+    <message id="ytplayer-label-quality-cellular">
+        <source>Default video quality on cellular</source>
+        <extracomment>Label for combo box allowing the user to change default video quality when using cellular connection.</extracomment>
+        <translation>Default video quality on cellular</translation>
+    </message>
+    <message id="ytplayer-label-autoload">
+        <source>Early video loading</source>
+        <extracomment>Label for combo box allowing the user to change video autoload behavior.</extracomment>
+        <translation>Early video loading</translation>
+    </message>
+    <message id="ytplayer-description-autoload">
+        <source>Start preloading video data before player page is activated.</source>
+        <extracomment>Descripton for combo box allowing the user to change video autload behavior.</extracomment>
+        <translation>Start preloading video data before player page is activated.</translation>
+    </message>
+    <message id="ytplayer-action-autoload-always">
+        <source>Always</source>
+        <extracomment>Menu option allowing the player to always preaload video data.</extracomment>
+        <translation>Always</translation>
+    </message>
+    <message id="ytplayer-action-autoload-wifi">
+        <source>WiFi only</source>
+        <extracomment>Menu option allowing the player to preaload video data only when using WiFi connection.</extracomment>
+        <translation>WiFi only</translation>
+    </message>
+    <message id="ytplayer-action-autoload-cellular">
+        <source>Cellular only</source>
+        <extracomment>Menu option allowing the player to preaload video data only when using cellular connection.</extracomment>
+        <translation>Cellular only</translation>
+    </message>
+    <message id="ytplayer-action-autoload-never">
+        <source>Never</source>
+        <extracomment>Menu option disallowing the player to always preaload video data.</extracomment>
+        <translation>Never</translation>
     </message>
 </context>
 </TS>

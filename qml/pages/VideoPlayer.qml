@@ -29,7 +29,9 @@ Page {
         Log.debug("Video player page created")
         if (localVideo.status !== YTLocalVideo.Downloaded) {
             flickable.showStatusIndicator(true)
-            statusIndicator.text = "Looking for streams" // TODO: translate
+            //: Status message indicating video player is looking for audio/video streams
+            //% "Looking for streams"
+            statusIndicator.text = qsTrId("ytplayer-status-looking-for-streams")
             streamRequest.run()
         } else {
             page.streams = localVideo.streams
@@ -89,8 +91,9 @@ Page {
     QtObject {
         id: priv
         readonly property bool controlsVisible: progressSlider.opacity === 1.0
-        readonly property bool pausePlayackOnDectivate: true // TODO: Make this customizable via settings
-        readonly property bool hideControlsWhenPaused: false // TODO: ditto
+
+        readonly property int controlsHideDelay: YTPrefs.get("Player/ControlsHideDelay")
+        readonly property bool pausePlayackOnDectivate: YTPrefs.getBool("Player/AutoPause")
     }
 
     Notification {
@@ -127,7 +130,7 @@ Page {
     SilicaFlickable {
         id: flickable
         anchors.fill: parent
-        contentHeight: childrenRect.height
+        contentHeight: page.height + bottomMenu.implicitHeight
 
         function showControls(show) {
             header.opacity = show
@@ -142,9 +145,12 @@ Page {
             statusIndicatorBg.opacity = show / 2
         }
 
+        onDragStarted: showControls(true)
+        onDragEnded: controlsTimer.startIfNeeded()
+
         Timer {
             id: controlsTimer
-            interval: 3000 // TODO: Make this customizable via settings
+            interval: priv.controlsHideDelay
             repeat: false
             onTriggered: flickable.showControls(false)
 
@@ -205,6 +211,7 @@ Page {
                 anchors.fill: parent
                 source: mediaPlayer
                 fillMode: VideoOutput.PreserveAspectFit
+
                 MouseArea {
                     anchors.fill: parent
                     onPressed: flickable.showControls(true)
@@ -237,7 +244,15 @@ Page {
 
         MediaPlayer {
             id: mediaPlayer
-            autoLoad: true // TODO: Make this cusomizable via app settings
+            autoLoad: {
+                switch (YTPrefs.get("Player/AutoLoad")) {
+                case "Always"   : return true
+                case "Never"    : return false
+                case "WiFi"     : return !YTNetworkManager.cellular
+                case "Cellular" : return YTNetworkManager.cellular
+                default         : console.assert(false)
+                }
+            }
 
             readonly property bool playing: playbackState === MediaPlayer.PlayingState
             property int savedPosition: 0
@@ -249,19 +264,35 @@ Page {
                 }
             }
 
+            onBufferProgressChanged: {
+                var b = Math.round(bufferProgress * 100)
+                if (b < 100) {
+                    //% "Buffering: %1%"
+                    statusIndicator.text = qsTrId('ytplayer-status-buffering').arg(
+                        Math.round(bufferProgress * 100))
+                }
+            }
+
             onStatusChanged: {
                 Log.debug("Media player status changed: " + status)
                 switch (status) {
                 case MediaPlayer.Loading:
-                    statusIndicator.text = "Loading" // TODO: translate
+                    //: Media player status indicating content is loading
+                    //% "Loading"
+                    statusIndicator.text = qsTrId("ytplayer-status-loading")
                     flickable.showStatusIndicator(true)
                     break;
                 case MediaPlayer.Buffering:
-                    statusIndicator.text = "Buffering" // TODO: translate
+                    //: Media player status indicating content is buffering
+                    //% "Buffering: %1%"
+                    statusIndicator.text = qsTrId('ytplayer-status-buffering').arg(
+                        Math.round(bufferProgress * 100))
                     flickable.showStatusIndicator(true)
                     break;
                 case MediaPlayer.Stalled:
-                    statusIndicator.text = "Stalled" // TODO: translate
+                    //: Media player status indicating content loading has stalled
+                    //% "Stalled"
+                    statusIndicator.text =  qsTrId('ytplayer-status-stalled')
                     flickable.showStatusIndicator(true)
                     break;
                 case MediaPlayer.Buffered:
@@ -269,7 +300,9 @@ Page {
                     break
                 case MediaPlayer.InvalidMedia:
                     Log.error("Invalid media!")
-                    statusIndicator.text = "Invalid media" // TODO: translate
+                    //: Media player status indicating invalid content type
+                    //% "Invalid media"
+                    statusIndicator.text =  qsTrId('ytplayer-status-invalid-media')
                     flickable.showStatusIndicator(true)
                     break;
                 case MediaPlayer.EndOfMedia:
@@ -457,9 +490,18 @@ Page {
                         item.visible = false
                     }
                 }
-                _h(q360p, true)
-                _h(q720p, !YTNetworkManager.cellular)
-                _h(q1080p)
+
+                var defaultQuality
+                if (YTNetworkManager.cellular) {
+                    defaultQuality = YTPrefs.get("Player/DefaultQualityCellular")
+                } else {
+                    defaultQuality = YTPrefs.get("Player/DefaultQualityWiFi")
+                }
+                console.assert(defaultQuality === "360p" ||
+                               defaultQuality === "720p")
+
+                _h(q360p, defaultQuality === "360p")
+                _h(q720p, defaultQuality === "720p")
 
                 // Don't change quality in case it was already selected
                 if (selectedItem)
@@ -477,11 +519,6 @@ Page {
                 //: Label for menu option allowing the user to change video quality
                 //% "Video quality"
                 text: qsTrId("ytplayer-label-video-quality")
-            }
-            MenuItem {
-                id: q1080p
-                text: "1080p"
-                onClicked: bottomMenu.selectQuality(q720p)
             }
             MenuItem {
                 id: q720p

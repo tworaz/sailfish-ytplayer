@@ -80,6 +80,17 @@ YTPrefs::initialize()
         settings.setValue("Download/Location", dir);
     }
 
+    if (!settings.contains("Player/ControlsHideDelay"))
+        settings.setValue("Player/ControlsHideDelay", 3000);
+    if (!settings.contains("Player/AutoPause"))
+        settings.setValue("Player/AutoPause", true);
+    if (!settings.contains("Player/DefaultQualityWiFi"))
+        settings.setValue("Player/DefaultQualityWiFi", "720p");
+    if (!settings.contains("Player/DefaultQualityCellular"))
+        settings.setValue("Player/DefaultQualityCellular", "360p");
+    if (!settings.contains("Player/AutoLoad"))
+        settings.setValue("Player/AutoLoad", "WiFi");
+
     if (!settings.contains(kSearchSuggestionEngineKey))
         settings.setValue(kSearchSuggestionEngineKey,
                           kHistorySuggestionEngine);
