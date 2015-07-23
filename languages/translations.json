@@ -28,6 +28,13 @@
       "authors" : [
         "Petr Tsymbarovich <petr@tsymbarovich.ru>"
       ]
+    },
+    {
+      "name" : "Svenska",
+      "code" : "sv",
+      "authors" : [
+        "Åke Engelbrektson <https://svenskasprakfiler.se>"
+      ]
     }
   ]
 }
