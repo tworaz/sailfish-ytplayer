@@ -171,7 +171,7 @@ Page {
             ComboBox {
                 id: duration
                 //: Label for video duration combo box
-                //% "Video duration
+                //% "Video duration"
                 label: qsTrId("ytplayer-label-video-duration")
                 visible: priv.videoTypeSelected
                 menu: ContextMenu {
@@ -192,7 +192,7 @@ Page {
                     }
                     MenuItem {
                         //: Label for short (less than 4 minutes) video option MenuItem
-                        //% "Less than 4 minutes
+                        //% "Less than 4 minutes"
                         text: qsTrId("ytplayer-label-video-duration-short")
                         property string value: "short"
                     }
