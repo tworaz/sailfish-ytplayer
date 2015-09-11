@@ -113,7 +113,9 @@ Page {
             //% "YTPlayer is licensed under 3-clause BSD License"
             text: qsTrId("ytplayer-label-application-license")
         }
+        Item { height: Theme.paddingLarge; width: parent.width }
         Button {
+            width: kPreferredButtonWidth
             anchors.horizontalCenter: parent.horizontalCenter
             //: Button for showing license viewer page
             //% "View license"
@@ -122,22 +124,18 @@ Page {
                 "licenseFile": "LICENSE.YTPlayer"
             })
         }
-        Item {
-            width: parent.width
-            height: Theme.paddingLarge
-        }
+        Item { height: Theme.paddingLarge; width: parent.width }
         Button {
+            width: kPreferredButtonWidth
             anchors.horizontalCenter: parent.horizontalCenter
             //: Label for button showing third party software listing page
             //% "Third party software"
             text: qsTrId("ytplayer-action-third-party-software")
             onClicked: pageStack.push(Qt.resolvedUrl("ThirdPartySoftware.qml"))
         }
-        Item {
-            width: parent.width
-            height: Theme.paddingLarge
-        }
+        Item { height: Theme.paddingLarge; width: parent.width }
         Button {
+            width: kPreferredButtonWidth
             anchors.horizontalCenter: parent.horizontalCenter
             //: Label for button showing application translation credits page
             //% "Translations"

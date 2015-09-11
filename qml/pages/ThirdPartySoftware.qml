@@ -62,10 +62,15 @@ Page {
             anchors.horizontalCenter: parent.horizontalCenter
             font.pixelSize: Theme.fontSizeExtraSmall
             color: Theme.secondaryColor
-            text: "Copyright \u00A9 2013 Jolla Ltd"
+            text: "Copyright \u00A9 2015 Jolla Ltd"
+        }
+        Item {
+            width: parent.width
+            height: Theme.paddingMedium
         }
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
+            width: kPreferredButtonWidth
             //: Button for showing license viewer page
             //% "View license"
             text: qsTrId("ytplayer-action-view-license")
@@ -91,8 +96,13 @@ Page {
             color: Theme.secondaryColor
             text: "Copyright \u00A9 2013 Evan W. Isnor"
         }
+        Item {
+            width: parent.width
+            height: Theme.paddingMedium
+        }
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
+            width: kPreferredButtonWidth
             //: Button for showing license viewer page
             //% "View license"
             text: qsTrId("ytplayer-action-view-license")
@@ -118,8 +128,13 @@ Page {
             color: Theme.secondaryColor
             text: "Public Domain License"
         }
+        Item {
+            width: parent.width
+            height: Theme.paddingMedium
+        }
         Button {
             anchors.horizontalCenter: parent.horizontalCenter
+            width: kPreferredButtonWidth
             //: Button for showing license viewer page
             //% "View license"
             text: qsTrId("ytplayer-action-view-license")

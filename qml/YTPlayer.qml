@@ -46,6 +46,7 @@ ApplicationWindow
     readonly property int kListAutoLoadItemThreshold: 10
     readonly property int kStandardAnimationDuration: 250
     readonly property int kLongAnimationDuration: 500
+    readonly property int kPreferredButtonWidth: 300
 
     initialPage: Component { MainMenu { } }
     cover: YTNetworkManager.online ?
