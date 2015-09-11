@@ -3,13 +3,25 @@
 // found in the LICENSE.YTPlayer file.
 
 import QtQuick 2.0
+import Sailfish.Silica 1.0
 
-Image {
+Rectangle {
     id: root
     opacity: 0.0
+    radius: Theme.paddingMedium
+    width: image.width + 2 * Theme.paddingMedium
+    height: image.height + 2 * Theme.paddingMedium
+    color: Theme.secondaryHighlightColor
+
+    property alias source: image.source
 
     function trigger() {
         animation.start()
+    }
+
+    Image {
+        id: image
+        anchors.centerIn: parent
     }
 
     ParallelAnimation {

@@ -403,7 +403,6 @@ Page {
                 FadeAnimation {}
             }
         }
-
         Slider {
             id: progressSlider
             anchors.bottom: bottomMenu.top
@@ -431,6 +430,20 @@ Page {
             color: "black"
             opacity: 0.5
             z: progressSlider.z - 1
+            Behavior on opacity {
+                FadeAnimation {}
+            }
+        }
+        Text {
+            color: "white"
+            anchors.right: parent.right
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: Theme.paddingSmall
+            anchors.rightMargin: Theme.paddingSmall
+            font.pixelSize: Theme.fontSizeExtraSmall
+            text: H.parseDuration(mediaPlayer.duration)
+            opacity: mediaPlayer.duration > 0 ? 1.0 : 0.0
+            z: progressSliderBg.z + 1
             Behavior on opacity {
                 FadeAnimation {}
             }
