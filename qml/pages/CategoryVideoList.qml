@@ -55,16 +55,6 @@ Page {
         id: videoListView
         anchors.fill: parent
 
-        PullDownMenu {
-            visible: videoListView.busy
-            busy: true
-        }
-
-        PushUpMenu {
-            visible: videoListView.busy
-            busy: true
-        }
-
         header: PageHeader {
             title: page.title
         }
