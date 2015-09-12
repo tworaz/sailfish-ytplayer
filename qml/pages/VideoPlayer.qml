@@ -12,7 +12,7 @@ import "../common"
 
 Page {
     id: page
-    allowedOrientations: Orientation.All
+    allowedOrientations: Qt.application.active ? Orientation.All : Orientation.Portrait
     showNavigationIndicator: header.opacity > 0
 
     // Set by parent page
