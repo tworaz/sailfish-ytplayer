@@ -35,6 +35,8 @@ Page {
         property variant channelBrowserData: ({})
         property string iso_duration: ""
         property Item playerPage: null
+        property bool haveStreams: true
+        property bool videoNoLongerAvailable: false
         property bool hasDirectVideoUrl: priv.playerPage !== null &&
                                          priv.playerPage.streams !== undefined
         readonly property real sideMargin: Theme.paddingMedium
@@ -51,11 +53,18 @@ Page {
                 addedToWatchedRecently = true
             }
         }
+        onNoStreamsAvailable: {
+            Log.debug("No video streams available, removing attached player page")
+            pageStack.popAttached(PageStackAction.Animated)
+            priv.playerPage = null
+            priv.haveStreams = false
+        }
     }
 
     function play() {
-        console.assert(priv.playerPage)
-        pageStack.navigateForward(PageStackAction.Animated)
+        if (priv.playerPage) {
+            pageStack.navigateForward(PageStackAction.Animated)
+        }
     }
 
     Component.onCompleted: {
@@ -73,12 +82,16 @@ Page {
                 request.run()
             rating.enabled = YTPrefs.isAuthEnabled()
         } else if (status === PageStatus.Active) {
-            if (!priv.playerPage) {
+            if (!priv.playerPage && priv.haveStreams) {
                 priv.playerPage = pageStack.pushAttached(Qt.resolvedUrl("VideoPlayer.qml"), {
                     "videoId"      : videoId,
                     "title"        : title,
                     "localVideo"   : localVideo
                 })
+            }
+            if (priv.videoNoLongerAvailable) {
+                pageStack.pop()
+                return
             }
 
             if (page.thumbnails.hasOwnProperty("default")) {
@@ -89,6 +102,17 @@ Page {
                 })
             }
         }
+    }
+
+    Notification {
+        id: videoNoLongerAvailableNotification
+        category: "network.error"
+        //: Notification summary informing the user video is no longer available.
+        //% "Video no longer available"
+        previewSummary: qsTrId("ytplayer-msg-video-unavailable")
+        //: Notification body explaining why video is no longer available.
+        //% "Video was removed from YouTube"
+        previewBody: qsTrId("ytplayer-msg-video-unavailable-desc")
     }
 
     RemorsePopup {
@@ -106,10 +130,20 @@ Page {
 
         onSuccess: {
             console.assert(response.kind === "youtube#videoListResponse")
-            console.assert(response.items.length === 1)
+
+            if (response.items.length === 0) {
+                console.error("Video no longer available!")
+                priv.videoNoLongerAvailable = true
+                videoNoLongerAvailableNotification.publish()
+                if (page.status === PageStatus.Active) {
+                    pageStack.pop()
+                }
+                return
+            }
+
             console.assert(response.items[0].kind === "youtube#video")
+
             var details = response.items[0]
-            //Log.debug("Have video details: " + JSON.stringify(details, undefined, 2))
 
             if (details.snippet.description) {
                 description.text = Helpers.plainToStyledText(details.snippet.description)
@@ -273,9 +307,14 @@ Page {
             anchors.top: parent.top
             anchors.right: parent.right
             isPortrait: page.isPortrait
-            //: Label for video play button
-            //% "Play"
-            text: qsTrId("ytplayer-label-play")
+            text: priv.haveStreams ?
+                      //: Label for video play button.
+                      //% "Play"
+                      qsTrId("ytplayer-label-play") :
+                      //: Label indicating current video has no valid streams. It
+                      //: replaces Play button in the video overview page header.
+                      //% "No streams!"
+                      qsTrId("ytplayer-label-no-streams")
             onClicked: page.play()
         }
 

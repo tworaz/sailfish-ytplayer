@@ -315,11 +315,11 @@ YTRequest::onFinished()
 }
 
 void
-YTRequest::onURLFetcherFailed()
+YTRequest::onURLFetcherFailed(QVariantMap map)
 {
     setBusy(false);
     setLoaded(true);
-    emit error(QVariant());
+    emit error(QVariant(map));
 }
 
 void
@@ -416,9 +416,12 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
     QString streamMap = query.queryItemValue("url_encoded_fmt_stream_map", QUrl::FullyDecoded);
     if (streamMap.isEmpty()) {
         qWarning() << "YouTube get_video_info did not return proper stream map!";
-        qDebug() << "Reply: " << reply->readAll();
-        emit error(QVariant());
-        return true;
+        if (tryExternalStreamFetcher()) {
+            return false;
+        } else {
+            emit error(QVariant());
+            return true;
+        }
     }
 
     QStringList mapEntries = streamMap.split(",", QString::SkipEmptyParts);
@@ -445,23 +448,12 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
             } else if (it->first == "itag") {
                 itag = it->second.toInt();
             } else if (it->first == "s" ) {
-                if (!YTVideoUrlFetcher::available()) {
-                    qWarning() << "youtube-dl stream fetcher not available or broken!";
+                if (tryExternalStreamFetcher()) {
+                    return false;
+                } else {
                     emit error(QVariant());
                     return true;
                 }
-                // Encrypted content, use youtube-dl to find video streams
-                if (!_url_fetcher) {
-                    _url_fetcher = new YTVideoUrlFetcher;
-                    connect(_url_fetcher, &YTVideoUrlFetcher::success,
-                            this, &YTRequest::onURLFetcherSucceeded);
-                    connect(_url_fetcher, &YTVideoUrlFetcher::failure,
-                            this, &YTRequest::onURLFetcherFailed);
-                }
-                Q_ASSERT(_params.contains("video_id") &&
-                         _params["video_id"].canConvert(QVariant::String));
-                _url_fetcher->fetchUrlsFor(_params["video_id"].toString());
-                return false;
             } else {
                 streamDetailsMap.insert(it->first, it->second);
             }
@@ -540,6 +532,27 @@ YTRequest::refreshToken()
 
     _token_reply = _network_access_manager.post(request, data);
     connect(_token_reply, SIGNAL(finished()), this, SLOT(onTokenRequestFinished()));
+}
+
+bool
+YTRequest::tryExternalStreamFetcher()
+{
+    if (!YTVideoUrlFetcher::available()) {
+        qWarning() << "youtube-dl stream fetcher not available or broken!";
+        return false;
+    }
+    // Encrypted content, use youtube-dl to find video streams
+    if (!_url_fetcher) {
+        _url_fetcher = new YTVideoUrlFetcher;
+        connect(_url_fetcher, &YTVideoUrlFetcher::success,
+                this, &YTRequest::onURLFetcherSucceeded);
+        connect(_url_fetcher, &YTVideoUrlFetcher::failure,
+                this, &YTRequest::onURLFetcherFailed);
+    }
+    Q_ASSERT(_params.contains("video_id") &&
+             _params["video_id"].canConvert(QVariant::String));
+    _url_fetcher->fetchUrlsFor(_params["video_id"].toString());
+    return true;
 }
 
 QUrl

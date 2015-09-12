@@ -141,12 +141,12 @@ YTVideoUrlFetcher::onProcessFinished(int code, QProcess::ExitStatus status)
     qDebug() << "youtube-dl process finished, status:" << status
              << ", exit code:" << code;
     if (status == QProcess::NormalExit && code == 0) {
-        QByteArray rawJson = _process->readAllStandardOutput();
+        QByteArray response = _process->readAllStandardOutput();
         QJsonParseError error;
-        QJsonDocument doc = QJsonDocument::fromJson(rawJson, &error);
+        QJsonDocument doc = QJsonDocument::fromJson(response, &error);
         if (error.error != QJsonParseError::NoError) {
             qCritical() << "JSON parse error:" << error.errorString();
-            emit failure();
+            emit failure(QVariantMap());
         } else {
             Q_ASSERT(!doc.isNull());
             QVariantMap response = parseResponse(doc);
@@ -156,13 +156,25 @@ YTVideoUrlFetcher::onProcessFinished(int code, QProcess::ExitStatus status)
                 _response_cache.insert(map["id"].toString(), new QVariantMap(response));
                 emit success(response);
             } else {
-                emit failure();
+                qCritical() << "Invalid youtube-dl JSON response: " << response;
+                emit failure(QVariantMap());
             }
         }
     } else {
-        qCritical() << "YouTubeDL process did not finish cleanly:"
-                    << _process->readAllStandardError();
-        emit failure();
+        QByteArray response = _process->readAllStandardError();
+        qCritical() << "YouTubeDL process did not finish cleanly:" << response;
+        QString reason;
+        if (response.contains("YouTube said:")) {
+            QRegExp rx("YouTube\\ssaid:\\s(.*)$");
+            rx.indexIn(response, 0);
+            reason = rx.cap(1).simplified();
+        }
+
+        QVariantMap map;
+        if (!response.isEmpty()) {
+            map["message"] = reason;
+        }
+        emit failure(map);
     }
     delete _process;
     _process = NULL;
@@ -174,7 +186,7 @@ YTVideoUrlFetcher::onProcessError(QProcess::ProcessError error)
     qCritical() << "Process error:" << error;
     delete _process;
     _process = NULL;
-    emit failure();
+    emit failure(QVariantMap());
 }
 
 YTVideoUrlFetcher::~YTVideoUrlFetcher()

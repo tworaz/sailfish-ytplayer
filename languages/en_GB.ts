@@ -397,7 +397,7 @@ Label for channel name text field</extracomment>
     </message>
     <message id="ytplayer-label-play">
         <source>Play</source>
-        <extracomment>Label for video play button</extracomment>
+        <extracomment>Label for video play button.</extracomment>
         <translation>Play</translation>
     </message>
     <message id="ytplayer-label-clear-cache">
@@ -649,9 +649,10 @@ Label informing the user there are no watched recently videos</extracomment>
         <translation>Browse channel</translation>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible">
-        <source>Direct video playback not possible</source>
+        <source>No video streams available</source>
+        <oldsource>Direct video playback not possible</oldsource>
         <extracomment>Notification summary informing the user direct video playback is not possible</extracomment>
-        <translation>Direct video playback not possible</translation>
+        <translation>No video streams available</translation>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible-desc">
         <source>YTPLayer failed to find usable video streams</source>
@@ -878,6 +879,23 @@ Label informing the user there are no watched recently videos</extracomment>
         <source>No image</source>
         <extracomment>Label shown where video thumbnail is not valid, can&apos;t be loaded. Should be very short 8-10 characters max.</extracomment>
         <translation>No image</translation>
+    </message>
+    <message id="ytplayer-label-no-streams">
+        <source>No streams!</source>
+        <extracomment>Label indicating current video has no valid streams. It replaces Play button in the video overview page header.</extracomment>
+        <translation>No streams!</translation>
+    </message>
+    <message id="ytplayer-msg-video-unavailable">
+        <source>Video no longer available</source>
+        <oldsource>Video no longer available!</oldsource>
+        <extracomment>Notification summary informing the user video is no longer available.</extracomment>
+        <translation>Video no longer available</translation>
+    </message>
+    <message id="ytplayer-msg-video-unavailable-desc">
+        <source>Video was removed from YouTube</source>
+        <oldsource>Video was removed from YouTube.</oldsource>
+        <extracomment>Notification body explaining why video is no longer available.</extracomment>
+        <translation>Video was removed from YouTube</translation>
     </message>
 </context>
 </TS>

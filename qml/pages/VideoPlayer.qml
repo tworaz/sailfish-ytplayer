@@ -24,6 +24,7 @@ Page {
     property variant streams
 
     signal playbackStarted()
+    signal noStreamsAvailable()
 
     Component.onCompleted: {
         Log.debug("Video player page created")
@@ -91,7 +92,6 @@ Page {
     QtObject {
         id: priv
         readonly property bool controlsVisible: progressSlider.opacity === 1.0
-
         readonly property int controlsHideDelay: YTPrefs.get("Player/ControlsHideDelay")
         readonly property bool pausePlayackOnDectivate: YTPrefs.getBool("Player/AutoPause")
     }
@@ -100,7 +100,7 @@ Page {
         id: noStreamsNotification
         category: "network.error"
         //: Notification summary informing the user direct video playback is not possible
-        //% "Direct video playback not possible"
+        //% "No video streams available"
         previewSummary: qsTrId("ytplayer-msg-direct-playback-impossible")
         //: Notification body explaining why direct video playback is not possible
         //% "YTPLayer failed to find usable video streams"
@@ -121,9 +121,11 @@ Page {
         }
         onError: {
             Log.error("No video streams found!")
+            if (details.hasOwnProperty("message") && details.message !== undefined) {
+                noStreamsNotification.previewBody = details.message
+            }
             noStreamsNotification.publish()
-            if (page.status === PageStatus.Active)
-                pageStack.navigateBack(PageStackAction.Animated)
+            page.noStreamsAvailable()
         }
     }
 
@@ -442,7 +444,7 @@ Page {
             anchors.rightMargin: Theme.paddingSmall
             font.pixelSize: Theme.fontSizeExtraSmall
             text: H.parseDuration(mediaPlayer.duration)
-            opacity: mediaPlayer.duration > 0 ? 1.0 : 0.0
+            opacity: mediaPlayer.duration > 0 ? progressSliderBg.opacity * 2 : 0.0
             z: progressSliderBg.z + 1
             Behavior on opacity {
                 FadeAnimation {}

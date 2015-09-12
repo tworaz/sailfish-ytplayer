@@ -50,7 +50,7 @@ public:
 
 signals:
     void success(QVariantMap streamsMap);
-    void failure();
+    void failure(QVariantMap);
 
 private slots:
     void onFetchUrlsFor(QString videoId);

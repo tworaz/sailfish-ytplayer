@@ -87,7 +87,7 @@ signals:
 protected slots:
     void onTokenRequestFinished();
     void onFinished();
-    void onURLFetcherFailed();
+    void onURLFetcherFailed(QVariantMap);
     void onURLFetcherSucceeded(QVariantMap);
 
 private:
@@ -97,6 +97,7 @@ private:
     bool handleVideoInfoReply(QNetworkReply*);
     void requestToken();
     void refreshToken();
+    bool tryExternalStreamFetcher();
 
     QString resource() const { return _resource; }
     Method method() const { return _method; }
