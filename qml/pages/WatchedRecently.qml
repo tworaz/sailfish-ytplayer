@@ -40,7 +40,13 @@ Page {
     }
 
     Component.onCompleted: YTWatchedRecently.reload()
-    Component.onDestruction: YTWatchedRecently.clear()
+    Component.onDestruction: {
+        // Can be null in case the application is closed
+        // when the page is present on the stack.
+        if (YTWatchedRecently) {
+            YTWatchedRecently.clear()
+        }
+    }
 
     YTListView {
         id: listView
