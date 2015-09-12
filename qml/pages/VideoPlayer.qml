@@ -98,7 +98,6 @@ Page {
 
     Notification {
         id: noStreamsNotification
-        category: "network.error"
         //: Notification summary informing the user direct video playback is not possible
         //% "No video streams available"
         previewSummary: qsTrId("ytplayer-msg-direct-playback-impossible")

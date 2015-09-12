@@ -106,7 +106,6 @@ Page {
 
     Notification {
         id: videoNoLongerAvailableNotification
-        category: "network.error"
         //: Notification summary informing the user video is no longer available.
         //% "Video no longer available"
         previewSummary: qsTrId("ytplayer-msg-video-unavailable")

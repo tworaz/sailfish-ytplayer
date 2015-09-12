@@ -63,12 +63,10 @@ Page {
         //: Notification informing the user that YouTube sign in succeeded
         //% "Sign in successful"
         previewBody: qsTrId("ytplayer-youtube-sign-in-successful")
-        category: "network"
     }
 
     Notification {
         id: failureNotification
-        category: "network.error"
     }
 
     YTRequest {
