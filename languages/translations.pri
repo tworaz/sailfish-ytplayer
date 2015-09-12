@@ -6,7 +6,8 @@ TRANSLATIONS += \
         languages/de_DE.ts \
         languages/en_GB.ts \
         languages/nl_NL.ts \
-        languages/ru_RU.ts
+        languages/ru_RU.ts \
+        languages/sv.ts
 
 OTHER_FILES += languages/translations.json
 
