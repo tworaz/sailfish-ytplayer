@@ -220,6 +220,7 @@ Page {
                     anchors.fill: parent
                     onPressed: flickable.showControls(true)
                     onReleased: controlsTimer.startIfNeeded()
+                    onCanceled: controlsTimer.startIfNeeded()
                     onClicked: {
                         if (!priv.controlsVisible)
                             return
