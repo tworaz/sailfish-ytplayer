@@ -118,7 +118,9 @@
     </message>
     <message id="ytplayer-label-network-offline">
         <source>Network Offline</source>
-        <extracomment>Network offline screen label</extracomment>
+        <extracomment>Network offline screen label
+----------
+Network offline screen label</extracomment>
         <translation>Network Offline</translation>
     </message>
     <message id="ytplayer-label-video-quality">
@@ -190,7 +192,9 @@ Label for menu option allowing the user to change video quality</extracomment>
     </message>
     <message id="ytplayer-action-view-license">
         <source>View license</source>
-        <extracomment>Button for showing license viewer page</extracomment>
+        <extracomment>Button for showing license viewer page
+----------
+Button for showing license viewer page</extracomment>
         <translation>View license</translation>
     </message>
     <message id="ytplayer-label-application-license">
@@ -412,7 +416,9 @@ Label for channel name text field</extracomment>
     </message>
     <message id="ytplayer-label-current-usage">
         <source>Current usage</source>
-        <extracomment>Label for current cache usage label</extracomment>
+        <extracomment>Label for current cache usage label
+----------
+Label for current cache usage label</extracomment>
         <translation>Current usage</translation>
     </message>
     <message id="ytplayer-label-api-req-cache-size">
@@ -427,7 +433,9 @@ Label for channel name text field</extracomment>
     </message>
     <message id="ytplayer-action-remove">
         <source>Remove</source>
-        <extracomment>Menu action to remove the element from the list</extracomment>
+        <extracomment>Menu action to remove the element from the list
+----------
+Menu action to remove the element from the list</extracomment>
         <translation>Remove</translation>
     </message>
     <message id="ytplayer-label-no-videos">
@@ -575,12 +583,16 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-msg-cancelling-download">
         <source>Cancelling download</source>
-        <extracomment>Remorse popup message telling the user video download will be cancelled</extracomment>
+        <extracomment>Remorse popup message telling the user video download will be cancelled
+----------
+Remorse popup message telling the user video download will be cancelled</extracomment>
         <translation>Cancelling download</translation>
     </message>
     <message id="ytplayer-msg-removing-download">
         <source>Removing download</source>
-        <extracomment>Remorse popup message telling the user video download will be removed</extracomment>
+        <extracomment>Remorse popup message telling the user video download will be removed
+----------
+Remorse popup message telling the user video download will be removed</extracomment>
         <translation>Removing download</translation>
     </message>
     <message id="ytplayer-msg-clearing-cache">
@@ -776,7 +788,9 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-action-hide-search">
         <source>Hide search</source>
-        <extracomment>Menu option allowing the user to hide search field</extracomment>
+        <extracomment>Menu option allowing the user to hide search field
+----------
+Menu option allowing the user to hide search field</extracomment>
         <translation>Hide search</translation>
     </message>
     <message id="ytplayer-msg-removing-favorite">
@@ -896,6 +910,11 @@ Label informing the user there are no watched recently videos</extracomment>
         <oldsource>Video was removed from YouTube.</oldsource>
         <extracomment>Notification body explaining why video is no longer available.</extracomment>
         <translation>Video was removed from YouTube</translation>
+    </message>
+    <message id="ytplayer-label-channel-unavailable">
+        <source>Channel no longer available</source>
+        <extracomment>Label for placeholder informing the user the channel is no longer available.</extracomment>
+        <translation>Channel no longer available</translation>
     </message>
 </context>
 </TS>

@@ -44,6 +44,8 @@ Page {
     QtObject {
         id: priv
         property bool channelSubscribed: false
+        property bool channelAvailable: true
+        property bool authEnabled: YTPrefs.isAuthEnabled()
         property string subscriptionId: ""
         property string mobileBannerUrl
         property string normalBannerUrl
@@ -75,7 +77,7 @@ Page {
                 requestCoverPage("ChannelBrowser.qml", priv.coverData)
             }
             Log.debug("User channel: " + priv.isUserChannel)
-            subscriptionMenu.visible = YTPrefs.isAuthEnabled() && !priv.isUserChannel
+            priv.authEnabled = YTPrefs.isAuthEnabled()
         }
     }
 
@@ -194,7 +196,7 @@ Page {
 
         PullDownMenu {
             id: subscriptionMenu
-            visible: false
+            visible: priv.authEnabled && !priv.isUserChannel && priv.channelAvailable
             MenuItem {
                 visible: subscriptionMenu.visible
                 text: priv.channelSubscribed ?
@@ -219,9 +221,11 @@ Page {
             }
         }
 
-        PushUpMenu {
-            visible: channelVideoList.busy
-            busy: true
+        ViewPlaceholder {
+            enabled: !priv.channelAvailable
+            //: Label for placeholder informing the user the channel is no longer available.
+            //% "Channel no longer available"
+            text: qsTrId("ytplayer-label-channel-unavailable")
         }
 
         header: Column {
@@ -229,6 +233,7 @@ Page {
             x: Theme.paddingMedium
             width: parent.width - 2 * Theme.paddingMedium
             spacing: Theme.paddingMedium
+            visible: priv.channelAvailable
 
             YTRequest {
                 id: channelRequest
@@ -240,9 +245,13 @@ Page {
                 }
 
                 onSuccess: {
-                    console.assert(response.kind ==="youtube#channelListResponse" &&
-                                   response.items.length === 1 &&
-                                   response.items[0].kind === "youtube#channel")
+                    console.assert(response.kind ==="youtube#channelListResponse")
+                    if (response.items.length === 0) {
+                        priv.channelAvailable = false
+                        return;
+                    }
+
+                    console.assert(response.items[0].kind === "youtube#channel")
 
                     var d = new Date(response.items[0].snippet.publishedAt)
                     var loc = Qt.locale(YTTranslations.language)
