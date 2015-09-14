@@ -55,8 +55,10 @@ Page {
         }
         onNoStreamsAvailable: {
             Log.debug("No video streams available, removing attached player page")
-            pageStack.popAttached(PageStackAction.Animated)
-            priv.playerPage = null
+            if (priv.playerPage) {
+                pageStack.popAttached(PageStackAction.Animated)
+                priv.playerPage = null
+            }
             priv.haveStreams = false
         }
     }
@@ -298,6 +300,10 @@ Page {
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"),
                         priv.channelBrowserData)
+                    if (priv.playerPage) {
+                        priv.playerPage.isAttached = false
+                        priv.playerPage = null
+                    }
                 }
             }
         }

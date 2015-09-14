@@ -19,6 +19,7 @@ Page {
     property string videoId
     property alias title: header.title
     property YTLocalVideo localVideo
+    property bool isAttached: true
 
     // Set by this page, but used outside
     property variant streams
@@ -123,7 +124,9 @@ Page {
             if (details.hasOwnProperty("message") && details.message !== undefined) {
                 noStreamsNotification.previewBody = details.message
             }
-            noStreamsNotification.publish()
+            if (page.isAttached) {
+                noStreamsNotification.publish()
+            }
             page.noStreamsAvailable()
         }
     }
