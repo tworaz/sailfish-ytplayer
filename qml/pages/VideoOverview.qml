@@ -155,7 +155,8 @@ Page {
             rating.dataValid = true
 
             var pd = new Date(details.snippet.publishedAt)
-            publishDate.value = Qt.formatDateTime(pd, "d MMMM yyyy")
+            var loc = Qt.locale(YTTranslations.language)
+            publishDate.value = pd.toLocaleDateString(loc, Locale.ShortFormat)
             priv.iso_duration = details.contentDetails.duration
             duration.value = (new DJS.Duration(priv.iso_duration)).asClock()
 

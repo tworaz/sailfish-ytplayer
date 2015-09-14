@@ -245,7 +245,8 @@ Page {
                                    response.items[0].kind === "youtube#channel")
 
                     var d = new Date(response.items[0].snippet.publishedAt)
-                    creationDate.value = Qt.formatDate(d, "d MMMM yyyy")
+                    var loc = Qt.locale(YTTranslations.language)
+                    creationDate.value = d.toLocaleDateString(loc, Locale.ShortFormat)
 
                     channelVideoList.channelPlaylistId =
                             response.items[0].contentDetails.relatedPlaylists.uploads
