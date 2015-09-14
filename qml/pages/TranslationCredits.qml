@@ -68,5 +68,7 @@ Page {
                 height: Theme.paddingLarge
             }
         }
+
+        VerticalScrollDecorator {}
     }
 }
