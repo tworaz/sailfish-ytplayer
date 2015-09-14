@@ -121,7 +121,7 @@ Page {
         }
         onError: {
             Log.error("No video streams found!")
-            if (details.hasOwnProperty("message") && details.message !== undefined) {
+            if (details && details.hasOwnProperty("message") && details.message !== undefined) {
                 noStreamsNotification.previewBody = details.message
             }
             if (page.isAttached) {
