@@ -24,7 +24,10 @@ Image {
         visible: status === Image.Error
         Label {
             anchors.centerIn: parent
+            width: parent.width
+            maximumLineCount: 1
             font.pixelSize: Theme.fontSizeExtraSmall
+            horizontalAlignment: Text.AlignHCenter
             //: Label shown where video thumbnail is not valid, can't be loaded.
             //: Should be very short 8-10 characters max.
             //% "No image"
