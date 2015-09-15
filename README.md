@@ -3,6 +3,12 @@ YTPlayer
 
 YTPlayer is and unofficial YouTube client for SailfishOS.
 
+<div class="row">
+<img width="280px" src="https://raw.githubusercontent.com/tworaz/sailfish-ytplayer/master/artwork/screenshots/20150915210645.jpg" />
+<img width="280px" src="https://raw.githubusercontent.com/tworaz/sailfish-ytplayer/master/artwork/screenshots/20150915210731.jpg" />
+<img width="280px" src="https://raw.githubusercontent.com/tworaz/sailfish-ytplayer/master/artwork/screenshots/20150915210805.jpg" />
+</div>
+
 Getting the source
 ------------------
 
