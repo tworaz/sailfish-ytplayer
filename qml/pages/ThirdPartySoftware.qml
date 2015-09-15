@@ -25,11 +25,6 @@ Page {
         ListModel {
             id: contentModel
             ListElement {
-                name: "nemo-qml-plugin-notifications"
-                license: "Copyright \u00A9 2015 Jolla Ltd"
-                file: "LICENSE.nemo-notifications"
-            }
-            ListElement {
                 name: "duration.js"
                 license: "Copyright \u00A9 2013 Evan W. Isnor"
                 file: "LICENSE.durationjs"
