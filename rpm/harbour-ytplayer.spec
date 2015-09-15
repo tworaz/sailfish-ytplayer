@@ -12,7 +12,6 @@ License:    BSD-3-Clause
 URL:        https://github.com/tworaz/sailfish-ytplayer
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   sailfishsilica-qt5 >= 0.10.9
-Requires:   python >= 2.7.6
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Core)
