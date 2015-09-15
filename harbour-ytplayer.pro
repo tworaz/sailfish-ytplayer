@@ -62,7 +62,6 @@ OTHER_FILES += \
         scripts/get_version_str.sh \
         rpm/harbour-ytplayer.spec
 
-include(third_party/notifications.pri)
 include(third_party/youtube_dl.pri)
 include(languages/translations.pri)
 

@@ -40,9 +40,6 @@
 #include <qtconcurrentrun.h>
 #include <sailfishapp.h>
 
-// third party code
-#include <notification.h>
-
 #include "YTVideoDownloadNotification.h"
 #include "YTPlayer.h"
 #include "YTListModel.h"
@@ -166,7 +163,6 @@ main(int argc, char *argv[])
         return -1;
     }
 
-    qmlRegisterType<Notification>("harbour.ytplayer.notifications", 1, 0, "Notification");
     qmlRegisterType<YTRequest>("harbour.ytplayer", 1, 0, "YTRequest");
     qmlRegisterType<YTListModel>("harbour.ytplayer", 1, 0, "YTListModel");
     qmlRegisterType<YTListModelFilter>("harbour.ytplayer", 1, 0, "YTListModelFilter");
