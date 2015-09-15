@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="en" sourcelanguage="en">
+<TS version="2.0" language="en" sourcelanguage="en">
 <context>
     <name></name>
     <message id="ytplayer-title-video-categories">
@@ -915,6 +915,11 @@ Menu option allowing the user to hide search field</extracomment>
         <source>Channel no longer available</source>
         <extracomment>Label for placeholder informing the user the channel is no longer available.</extracomment>
         <translation>Channel no longer available</translation>
+    </message>
+    <message id="ytplayer-action-translate-app">
+        <source>Translate YTPlayer</source>
+        <extracomment>Menu option opening a link to YTPlayer translation page on Transifex.</extracomment>
+        <translation>Translate YTPlayer</translation>
     </message>
 </context>
 </TS>

@@ -37,6 +37,15 @@ Page {
         id: listview
         anchors.fill: parent
 
+        PullDownMenu {
+            MenuItem {
+                //: Menu option opening a link to YTPlayer translation page on Transifex.
+                //% "Translate YTPlayer"
+                text: qsTrId("ytplayer-action-translate-app")
+                onClicked: openLinkInBrowser("https://www.transifex.com/tworaz/ytplayer/")
+            }
+        }
+
         header: PageHeader {
             //: Title of translation credits page
             //% "Translations"

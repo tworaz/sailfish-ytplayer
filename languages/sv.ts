@@ -73,35 +73,15 @@
         <extracomment>Media player status indicating content is buffering</extracomment>
         <translation>Buffrar: %1%</translation>
     </message>
-    <message id="ytplayer-status-no-media">
-        <source>No media</source>
-        <extracomment>Media player status indicating there is no content to play</extracomment>
-        <translation>Ingen media</translation>
-    </message>
     <message id="ytplayer-status-loading">
         <source>Loading</source>
         <extracomment>Media player status indicating content is loading</extracomment>
         <translation>Läser in</translation>
     </message>
-    <message id="ytplayer-status-loaded">
-        <source>Loaded</source>
-        <extracomment>Media player status indicating content was loaded</extracomment>
-        <translation>Inläst</translation>
-    </message>
     <message id="ytplayer-status-stalled">
         <source>Stalled</source>
         <extracomment>Media player status indicating content loading has stalled</extracomment>
         <translation>Avstannad</translation>
-    </message>
-    <message id="ytplayer-status-buffered">
-        <source>Buffered</source>
-        <extracomment>Media player status indicating content has been buffered</extracomment>
-        <translation>Buffrad</translation>
-    </message>
-    <message id="ytplayer-status-end-of-media">
-        <source>End of media</source>
-        <extracomment>Media player status indicating end of content has been reached</extracomment>
-        <translation>Filmen är slut</translation>
     </message>
     <message id="ytplayer-status-invalid-media">
         <source>Invalid media</source>
@@ -158,9 +138,7 @@
     </message>
     <message id="ytplayer-label-network-offline">
         <source>Network Offline</source>
-        <extracomment>Network offline screen label
-----------
-Network offline screen label</extracomment>
+        <extracomment>Network offline screen label</extracomment>
         <translation>Nätverk nedkopplat</translation>
     </message>
     <message id="ytplayer-label-video-quality">
@@ -230,30 +208,9 @@ Label for menu option allowing the user to change video quality</extracomment>
         <extracomment>Menu option to show about page</extracomment>
         <translation>Om</translation>
     </message>
-    <message id="ytplayer-label-duration-with-value">
-        <source>Duration: %1</source>
-        <extracomment>Video duration label with value</extracomment>
-        <translation>Varaktighet: %1</translation>
-    </message>
-    <message id="ytplayer-label-extra-options">
-        <source>Player options</source>
-        <extracomment>Label for extra video player options section</extracomment>
-        <translation>Spelaralternativ</translation>
-    </message>
-    <message id="ytplayer-label-keep-playing-after-minimize">
-        <source>Keep playing after minimize</source>
-        <extracomment>Menu option label allowing the user to disable video playback pausing on player minimization.</extracomment>
-        <translation>Fortsätt spela efter minimering</translation>
-    </message>
     <message id="ytplayer-action-view-license">
         <source>View license</source>
-        <extracomment>Button for showing license viewer page
-----------
-Button for showing license viewer page
-----------
-Button for showing license viewer page
-----------
-Button for showing license viewer page</extracomment>
+        <extracomment>Button for showing license viewer page</extracomment>
         <translation>Visa licens</translation>
     </message>
     <message id="ytplayer-label-application-license">
@@ -460,7 +417,7 @@ Label for channel name text field</extracomment>
     </message>
     <message id="ytplayer-label-play">
         <source>Play</source>
-        <extracomment>Label for video play button</extracomment>
+        <extracomment>Label for video play button.</extracomment>
         <translation>Spela upp</translation>
     </message>
     <message id="ytplayer-label-clear-cache">
@@ -475,9 +432,7 @@ Label for channel name text field</extracomment>
     </message>
     <message id="ytplayer-label-current-usage">
         <source>Current usage</source>
-        <extracomment>Label for current cache usage label
-----------
-Label for current cache usage label</extracomment>
+        <extracomment>Label for current cache usage label</extracomment>
         <translation>Aktuell användning</translation>
     </message>
     <message id="ytplayer-label-api-req-cache-size">
@@ -492,9 +447,7 @@ Label for current cache usage label</extracomment>
     </message>
     <message id="ytplayer-action-remove">
         <source>Remove</source>
-        <extracomment>Menu action to remove the element from the list
-----------
-Menu action to remove the element from the list</extracomment>
+        <extracomment>Menu action to remove the element from the list</extracomment>
         <translation>Ta bort</translation>
     </message>
     <message id="ytplayer-label-no-videos">
@@ -642,16 +595,12 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-msg-cancelling-download">
         <source>Cancelling download</source>
-        <extracomment>Remorse popup message telling the user video download will be cancelled
-----------
-Remorse popup message telling the user video download will be cancelled</extracomment>
+        <extracomment>Remorse popup message telling the user video download will be cancelled</extracomment>
         <translation>Avbryter nedladdning</translation>
     </message>
     <message id="ytplayer-msg-removing-download">
         <source>Removing download</source>
-        <extracomment>Remorse popup message telling the user video download will be removed
-----------
-Remorse popup message telling the user video download will be removed</extracomment>
+        <extracomment>Remorse popup message telling the user video download will be removed</extracomment>
         <translation>Tar bort nedladdning</translation>
     </message>
     <message id="ytplayer-msg-clearing-cache">
@@ -720,9 +669,10 @@ Remorse popup message telling the user video download will be removed</extracomm
         <translation>Bläddra kanal</translation>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible">
-        <source>Direct video playback not possible</source>
+        <source>No video streams available</source>
+        <oldsource>Direct video playback not possible</oldsource>
         <extracomment>Notification summary informing the user direct video playback is not possible</extracomment>
-        <translation>Direktuppspelning inte möjlig</translation>
+        <translation type="unfinished">Direktuppspelning inte möjlig</translation>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible-desc">
         <source>YTPLayer failed to find usable video streams</source>
@@ -853,6 +803,101 @@ Remorse popup message telling the user video download will be removed</extracomm
         <source>Removing favorite</source>
         <extracomment>Remorse popup message telling the use favorite is about to be removed</extracomment>
         <translation>Tar bort favorit</translation>
+    </message>
+    <message id="ytplayer-label-broken-image">
+        <source>No image</source>
+        <extracomment>Label shown where video thumbnail is not valid, can&apos;t be loaded. Should be very short 8-10 characters max.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-label-channel-unavailable">
+        <source>Channel no longer available</source>
+        <extracomment>Label for placeholder informing the user the channel is no longer available.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-title-player-settings">
+        <source>Player settings</source>
+        <extracomment>Title of video player settings page</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-label-autopause">
+        <source>Auto pause when deactivated</source>
+        <extracomment>Label for video auto pause option on/off switch.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-description-autopause">
+        <source>Automatically pause video playback when application is deactivated.</source>
+        <extracomment>Description of video auto pause option switch.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-label-controls-hide-delay">
+        <source>Controls hide delay</source>
+        <extracomment>Lael for slider changing video player controls hide delay</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-label-autoload">
+        <source>Early video loading</source>
+        <extracomment>Label for combo box allowing the user to change video autoload behavior.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-description-autoload">
+        <source>Start preloading video data before player page is activated.</source>
+        <extracomment>Descripton for combo box allowing the user to change video autload behavior.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-action-autoload-always">
+        <source>Always</source>
+        <extracomment>Menu option allowing the player to always preaload video data.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-action-autoload-wifi">
+        <source>WiFi only</source>
+        <extracomment>Menu option allowing the player to preaload video data only when using WiFi connection.</extracomment>
+        <translation type="unfinished">Endast WiFi</translation>
+    </message>
+    <message id="ytplayer-action-autoload-cellular">
+        <source>Cellular only</source>
+        <extracomment>Menu option allowing the player to preaload video data only when using cellular connection.</extracomment>
+        <translation type="unfinished">Endast mobilnät</translation>
+    </message>
+    <message id="ytplayer-action-autoload-never">
+        <source>Never</source>
+        <extracomment>Menu option disallowing the player to always preaload video data.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-label-quality-wifi">
+        <source>Default video quality on WiFi</source>
+        <extracomment>Label for combo box allowing the user to change default video quality when using WiFi connection.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-label-quality-cellular">
+        <source>Default video quality on cellular</source>
+        <extracomment>Label for combo box allowing the user to change default video quality when using cellular connection.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-action-player-settings">
+        <source>Player</source>
+        <extracomment>Label for menu option showing video player settings page</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-msg-video-unavailable">
+        <source>Video no longer available</source>
+        <extracomment>Notification summary informing the user video is no longer available.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-msg-video-unavailable-desc">
+        <source>Video was removed from YouTube</source>
+        <extracomment>Notification body explaining why video is no longer available.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-label-no-streams">
+        <source>No streams!</source>
+        <extracomment>Label indicating current video has no valid streams. It replaces Play button in the video overview page header.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-status-looking-for-streams">
+        <source>Looking for streams</source>
+        <extracomment>Status message indicating video player is looking for audio/video streams</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
