@@ -4,13 +4,13 @@
 <context>
     <name></name>
     <message id="ytplayer-msg-download-finished">
-        <location filename="../qml/YTPlayer.qml" line="120"/>
+        <location filename="../qml/YTPlayer.qml" line="121"/>
         <source>Video download finished</source>
         <extracomment>Notification summary informing the user video download has been finished</extracomment>
         <translation>Видео загружено</translation>
     </message>
     <message id="ytplayer-msg-download-failed">
-        <location filename="../qml/YTPlayer.qml" line="129"/>
+        <location filename="../qml/YTPlayer.qml" line="130"/>
         <source>Video download failed</source>
         <extracomment>Notification summary informing the user video download has failed</extracomment>
         <translation>Загрузка видео не удалась</translation>
@@ -257,8 +257,8 @@
     </message>
     <message id="ytplayer-label-no-videos">
         <location filename="../qml/pages/DownloadedVideos.qml" line="59"/>
-        <location filename="../qml/pages/Favorites.qml" line="101"/>
-        <location filename="../qml/pages/WatchedRecently.qml" line="59"/>
+        <location filename="../qml/pages/Favorites.qml" line="88"/>
+        <location filename="../qml/pages/WatchedRecently.qml" line="88"/>
         <source>No videos</source>
         <extracomment>&quot;Label informing the user there are no preloaded videos&quot;
 ----------
@@ -306,6 +306,7 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-action-remove">
         <location filename="../qml/pages/DownloadedVideos.qml" line="220"/>
+        <location filename="../qml/pages/Favorites.qml" line="122"/>
         <source>Remove</source>
         <extracomment>Menu action to remove the element from the list</extracomment>
         <translation>Удалить</translation>
@@ -346,94 +347,109 @@ Label informing the user there are no watched recently videos</extracomment>
         <translation>Лог сохранен</translation>
     </message>
     <message id="ytplayer-action-open-link-from-clipboard">
-        <location filename="../qml/pages/MainMenu.qml" line="108"/>
+        <location filename="../qml/pages/MainMenu.qml" line="110"/>
         <source>Open link from clipboard</source>
         <extracomment>Menu opion for opening video links from clipboard</extracomment>
         <translation>Открыть ссылку из буфера обмена</translation>
     </message>
+    <message id="ytplayer-action-hide-search">
+        <location filename="../qml/pages/Favorites.qml" line="59"/>
+        <location filename="../qml/pages/WatchedRecently.qml" line="59"/>
+        <source>Hide search</source>
+        <extracomment>Menu option allowing the user to hide search field</extracomment>
+        <translation>Спрятать строку поиска</translation>
+    </message>
     <message id="ytplayer-action-search">
-        <location filename="../qml/pages/MainMenu.qml" line="120"/>
+        <location filename="../qml/pages/Favorites.qml" line="62"/>
+        <location filename="../qml/pages/MainMenu.qml" line="122"/>
+        <location filename="../qml/pages/WatchedRecently.qml" line="62"/>
         <source>Search</source>
         <extracomment>Menu option to show search page</extracomment>
         <translation>Поиск</translation>
     </message>
+    <message id="ytplayer-msg-removing-favorite">
+        <location filename="../qml/pages/Favorites.qml" line="110"/>
+        <source>Removing favorite</source>
+        <extracomment>Remorse popup message telling the use favorite is about to be removed</extracomment>
+        <translation>Удаление из избранного</translation>
+    </message>
     <message id="ytplayer-label-channels">
-        <location filename="../qml/pages/MainMenu.qml" line="135"/>
+        <location filename="../qml/pages/MainMenu.qml" line="137"/>
         <source>Channels</source>
         <extracomment>Label for channels section indicator in main menu</extracomment>
         <translation>Каналы</translation>
     </message>
     <message id="ytplayer-label-videos">
-        <location filename="../qml/pages/MainMenu.qml" line="205"/>
+        <location filename="../qml/pages/MainMenu.qml" line="212"/>
         <source>Videos</source>
         <extracomment>Main menu label indicating videos section of the page</extracomment>
         <translation>Видео</translation>
     </message>
     <message id="ytplayer-acton-favorites">
-        <location filename="../qml/pages/MainMenu.qml" line="211"/>
+        <location filename="../qml/pages/MainMenu.qml" line="218"/>
         <source>Favorites</source>
         <extracomment>Menu option showing video favorites page</extracomment>
         <translation>Избранное</translation>
     </message>
     <message id="ytplayer-action-video-categories">
-        <location filename="../qml/pages/MainMenu.qml" line="218"/>
+        <location filename="../qml/pages/MainMenu.qml" line="225"/>
         <source>Categories</source>
         <oldsource>Video categories</oldsource>
         <extracomment>Menu option to show video categories page</extracomment>
         <translation>Категории</translation>
     </message>
     <message id="ytplayer-action-downloaded-videos">
-        <location filename="../qml/pages/MainMenu.qml" line="225"/>
+        <location filename="../qml/pages/MainMenu.qml" line="232"/>
         <source>Downloads</source>
         <oldsource>Downloaded videos</oldsource>
         <extracomment>Menu option showing downloaded videos page</extracomment>
         <translation>Загрузки</translation>
     </message>
     <message id="ytplayer-action-watched-recently">
-        <location filename="../qml/pages/MainMenu.qml" line="241"/>
+        <location filename="../qml/pages/MainMenu.qml" line="248"/>
         <source>Watched recently</source>
         <extracomment>Menu opion showing recently watched videos page</extracomment>
         <translation>Просмотренные</translation>
     </message>
     <message id="ytplayer-action-recommended">
-        <location filename="../qml/pages/MainMenu.qml" line="232"/>
+        <location filename="../qml/pages/MainMenu.qml" line="239"/>
         <source>Recommendations</source>
         <oldsource>Recommended for you</oldsource>
         <extracomment>Menu option fo show YouTube recommendations page</extracomment>
         <translation>Рекомендации</translation>
     </message>
     <message id="ytplayer-action-subscriptions">
-        <location filename="../qml/pages/MainMenu.qml" line="142"/>
+        <location filename="../qml/pages/MainMenu.qml" line="144"/>
         <source>Subscriptions</source>
         <extracomment>Menu option responsible for showing user subscriptions page</extracomment>
         <translation>Подписки</translation>
     </message>
     <message id="ytplayer-action-latest-subscribed-videos">
-        <location filename="../qml/pages/Account.qml" line="192"/>
+        <location filename="../qml/pages/Account.qml" line="193"/>
         <source>Latest videos</source>
         <extracomment>Sub-Menu option responsible for showing latest subsribed videos page</extracomment>
         <translation>Последние видео</translation>
     </message>
     <message id="ytplayer-action-likes">
-        <location filename="../qml/pages/MainMenu.qml" line="248"/>
+        <location filename="../qml/pages/MainMenu.qml" line="255"/>
         <source>Likes</source>
         <extracomment>Menu option responsible for showing user likes page</extracomment>
         <translation>Понравившиеся</translation>
     </message>
     <message id="ytplayer-action-dislikes">
-        <location filename="../qml/pages/MainMenu.qml" line="257"/>
+        <location filename="../qml/pages/MainMenu.qml" line="264"/>
         <source>Dislikes</source>
         <extracomment>Menu option responsible for showing user dislikes page</extracomment>
         <translation>Непонравившиеся</translation>
     </message>
     <message id="ytplayer-action-settings">
-        <location filename="../qml/pages/MainMenu.qml" line="101"/>
+        <location filename="../qml/pages/MainMenu.qml" line="103"/>
         <source>Settings</source>
         <extracomment>Menu option to show settings page</extracomment>
         <translation>Настройки</translation>
     </message>
     <message id="ytplayer-action-about">
-        <location filename="../qml/pages/MainMenu.qml" line="94"/>
+        <location filename="../qml/pages/MainMenu.qml" line="96"/>
         <source>About</source>
         <extracomment>Menu option to show about page</extracomment>
         <translation>О приложении</translation>
@@ -776,7 +792,7 @@ Label for menu option allowing the user to change video quality</extracomment>
         <translation>Стороннее ПО</translation>
     </message>
     <message id="ytplayer-title-video-categories">
-        <location filename="../qml/pages/VideoCategories.qml" line="74"/>
+        <location filename="../qml/pages/VideoCategories.qml" line="75"/>
         <source>Video categories</source>
         <extracomment>Video categories page title</extracomment>
         <translation>Категории видео</translation>
@@ -1006,13 +1022,13 @@ Label for menu option allowing the user to change video quality</extracomment>
         <translation>Перевод</translation>
     </message>
     <message id="ytplayer-title-watched-recently">
-        <location filename="../qml/pages/WatchedRecently.qml" line="52"/>
+        <location filename="../qml/pages/WatchedRecently.qml" line="80"/>
         <source>Watched recently</source>
         <extracomment>Title for recently watched videos page</extracomment>
         <translation>Просмотренные</translation>
     </message>
     <message id="ytplayer-title-favorites">
-        <location filename="../qml/pages/Favorites.qml" line="84"/>
+        <location filename="../qml/pages/Favorites.qml" line="80"/>
         <source>Favorites</source>
         <extracomment>Title for favorite videos page</extracomment>
         <translation>Избранное</translation>
