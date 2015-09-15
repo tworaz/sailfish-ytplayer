@@ -1,7 +1,7 @@
 YTPlayer
 =======
 
-YTPlayer is and unofficial YouTube client for SailfishOS.
+YTPlayer is an unofficial YouTube client for SailfishOS.
 
 <div class="row">
 <img width="240px" src="https://raw.githubusercontent.com/tworaz/sailfish-ytplayer/master/artwork/screenshots/20150915210645.jpg" />
