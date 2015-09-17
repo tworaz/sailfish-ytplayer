@@ -23,11 +23,13 @@ Image {
         color: Theme.secondaryHighlightColor
         visible: status === Image.Error
         Label {
-            anchors.centerIn: parent
+            anchors.fill: parent
             width: parent.width
             maximumLineCount: 1
             font.pixelSize: Theme.fontSizeExtraSmall
             horizontalAlignment: Text.AlignHCenter
+            verticalAlignment: Text.AlignVCenter
+            fontSizeMode: Text.HorizontalFit
             //: Label shown where video thumbnail is not valid, can't be loaded.
             //: Should be very short 8-10 characters max.
             //% "No image"
