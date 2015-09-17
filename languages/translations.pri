@@ -3,6 +3,7 @@
 # found in the LICENSE.YTPlayer file.
 
 TRANSLATIONS += \
+        languages/cs_CZ.ts \
         languages/de_DE.ts \
         languages/en_GB.ts \
         languages/nl_NL.ts \
