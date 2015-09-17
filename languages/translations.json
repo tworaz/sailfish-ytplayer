@@ -2,6 +2,13 @@
   "default" : "en_GB",
   "items" : [
     {
+      "name" : "Čeština",
+      "code" : "cs_CZ",
+      "authors" : [
+        "Bobsikus"
+      ]
+    },
+    {
       "name" : "Deutsch",
       "code" : "de_DE",
       "authors" : [
