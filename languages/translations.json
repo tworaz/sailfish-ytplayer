@@ -10,9 +10,10 @@
     },
     {
       "name" : "Deutsch",
-      "code" : "de_DE",
+      "code" : "de",
       "authors" : [
-        "Björn Bidar <theodorstormgrade@gmail.com>"
+        "Björn Bidar <theodorstormgrade@gmail.com>",
+        "Pascal Schmid"
       ]
     },
     {
