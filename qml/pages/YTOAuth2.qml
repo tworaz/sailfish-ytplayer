@@ -107,6 +107,7 @@ Page {
         onLoadingChanged: {
             switch(loadRequest.status) {
             case WebView.LoadSucceededStatus:
+                Log.info("Authorization page loading succeeded.")
                 if (_authCode.length === 0) {
                     visible = true
                 }
@@ -136,6 +137,7 @@ Page {
             } else if (title.length > 0) {
                 Log.debug("OAuth page title changed: " + title)
                 pageTitle = title
+                visible = true
             }
         }
     }
