@@ -43,6 +43,7 @@ public:
     explicit YTSqlListModel(QObject *parent = 0);
 
     Q_INVOKABLE void remove(int index);
+    Q_INVOKABLE void removeAll();
     Q_INVOKABLE void search(QString);
     Q_INVOKABLE void reload();
     Q_INVOKABLE void clear();
@@ -58,7 +59,8 @@ protected:
     virtual QSqlQuery getReloadDataQuery(int limit) const = 0;
     virtual QSqlQuery getSearchQuery(const QString& query, int limit) const = 0;
     virtual QSqlQuery getFetchMoreQuery(const QVector<QVariant>& lastRow, int limit) const = 0;
-    virtual void removeFromDatabase(const QVector<QVariant>&) = 0;
+    virtual void removeFromDatabase(const QVector<QVariant>&);
+    virtual void removeAllFromDatabase();
 
     void handleNewData(QSqlQuery& q, bool append = false);
 

@@ -55,9 +55,26 @@ Page {
         // from SearchField in header.
         currentIndex: -1
 
+        RemorsePopup {
+            id: remorse
+        }
+
         PullDownMenu {
             id: topPulley
             property bool changeSearchVisibility: false
+            MenuItem {
+                //: Menu option allowing the user to clear search history
+                //% "Clear history"
+                text: qsTrId("ytplayer-action-clear-history")
+                visible: parent.visible
+                onClicked: {
+                    //: "Remorse popup message telling the user search history is about to be cleared"
+                    //% "Clearing history"
+                    remorse.execute(qsTrId("ytplayer-msg-clearing-history"), function() {
+                        YTWatchedRecently.removeAll()
+                    })
+                }
+            }
             MenuItem {
                 text: listView.headerItem.searchVisible ?
                     //: Menu option allowing the user to hide search field

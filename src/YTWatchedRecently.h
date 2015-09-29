@@ -53,7 +53,7 @@ private:
     QSqlQuery getReloadDataQuery(int limit) const;
     QSqlQuery getSearchQuery(const QString& query, int limit) const;
     QSqlQuery getFetchMoreQuery(const QVector<QVariant>& lastRow, int limit) const;
-    void removeFromDatabase(const QVector<QVariant>&);
+    void removeAllFromDatabase();
 
     enum {
         VideoIdRole = Qt::UserRole,

@@ -59,6 +59,13 @@ YTSqlListModel::remove(int index)
     endRemoveRows();
 }
 
+void YTSqlListModel::removeAll()
+{
+    beginRemoveRows(QModelIndex(), 0, _data.size());
+    removeAllFromDatabase();
+    endRemoveRows();
+}
+
 void
 YTSqlListModel::search(QString query)
 {
@@ -152,6 +159,20 @@ YTSqlListModel::fetchMore(const QModelIndex&)
     }
 
     handleNewData(q, true);
+}
+
+void
+YTSqlListModel::removeFromDatabase(const QVector<QVariant> &)
+{
+    // Not implemented
+    Q_ASSERT(false);
+}
+
+void
+YTSqlListModel::removeAllFromDatabase()
+{
+    // Not implemented;
+    Q_ASSERT(false);
 }
 
 void

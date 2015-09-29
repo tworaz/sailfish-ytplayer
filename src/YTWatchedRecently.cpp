@@ -69,6 +69,9 @@ const char kSearchQueryText[] =
    "FROM watched_recently WHERE title LIKE ? COLLATE NOCASE "
    "ORDER BY timestamp DESC LIMIT ?";
 
+const char kDeleteAllQueryText[] =
+   "DELETE FROM watched_recently";
+
 } // namespace
 
 YTWatchedRecently::YTWatchedRecently(QObject *parent)
@@ -158,8 +161,11 @@ YTWatchedRecently::getFetchMoreQuery(const QVector<QVariant>& lastRow, int limit
 }
 
 void
-YTWatchedRecently::removeFromDatabase(const QVector<QVariant>&)
+YTWatchedRecently::removeAllFromDatabase()
 {
-    // Recently warched video removal not supporetd in UI.
-    Q_ASSERT(false);
+    QSqlQuery q;
+    q.prepare(kDeleteAllQueryText);
+    if (!q.exec())
+        qCritical("Failed to execute SQL query: %s",
+                  qPrintable(q.lastError().text()));
 }
