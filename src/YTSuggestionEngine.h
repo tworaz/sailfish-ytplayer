@@ -52,7 +52,7 @@ public:
 
 signals:
     void suggestionListChanged(QList<QVariant> suggestionList);
-    void historySizeChanged(int size);
+    void historySizeChanged();
 
 private slots:
     void onClearHistory();

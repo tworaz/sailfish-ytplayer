@@ -148,6 +148,7 @@ YTSuggestionEngine::addToHistory(QString query)
         q.prepare("INSERT INTO search_history (query) VALUES (?);");
         q.addBindValue(query);
         executeSqlQuery(q);
+        emit historySizeChanged();
     }
 }
 
@@ -163,7 +164,7 @@ YTSuggestionEngine::onClearHistory()
     QSqlQuery q;
     q.prepare("DELETE FROM search_history;");
     executeSqlQuery(q);
-    emit historySizeChanged(0);
+    emit historySizeChanged();
 }
 
 void
@@ -216,9 +217,16 @@ YTSuggestionEngine::historySize() const
         qCritical() << "Failed to obtain the number of history items!";
         return 0;
     }
-    Q_ASSERT(q.first());
-    qDebug() << "History size:" << q.value(0).toInt();
-    return q.value(0).toInt();
+
+    if (q.first()) {
+        qDebug() << "History size:" << q.value(0).toInt();
+        return q.value(0).toInt();
+    }
+
+    // The count select query should always return something.
+    Q_ASSERT(false);
+
+    return 0;
 }
 
 void
