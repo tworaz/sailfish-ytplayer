@@ -14,6 +14,7 @@ Page {
     id: page
     allowedOrientations: Qt.application.active ? Orientation.All : Orientation.Portrait
     showNavigationIndicator: header.opacity > 0
+    objectName: "VideoPlayer"
 
     // Set by parent page
     property string videoId
@@ -26,6 +27,11 @@ Page {
 
     signal playbackStarted()
     signal noStreamsAvailable()
+
+    function networkOffline() {
+        Log.debug("VideoPlayer: Network offline")
+        priv.resumeOnActivate = false
+    }
 
     Component.onCompleted: {
         Log.debug("Video player page created")
@@ -46,8 +52,9 @@ Page {
             // Transparent cover
             requestCoverPage()
             controlsTimer.startIfNeeded()
-            if (mediaPlayer.source)
+            if (mediaPlayer.source && priv.resumeOnActivate)
                 mediaPlayer.play()
+            priv.resumeOnActivate = true
         } else if (status === PageStatus.Deactivating) {
             if (mediaPlayer.playing)
                 mediaPlayer.pause()
@@ -95,6 +102,7 @@ Page {
         readonly property bool controlsVisible: progressSlider.opacity === 1.0
         readonly property int controlsHideDelay: YTPrefs.get("Player/ControlsHideDelay")
         readonly property bool pausePlayackOnDectivate: YTPrefs.getBool("Player/AutoPause")
+        property bool resumeOnActivate: true
     }
 
     Notification {

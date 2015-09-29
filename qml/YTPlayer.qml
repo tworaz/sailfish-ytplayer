@@ -115,6 +115,10 @@ ApplicationWindow
             if (online) {
                 pageStack.pop()
             } else {
+                if (pageStack.currentPage.hasOwnProperty("networkOffline")) {
+                    pageStack.currentPage.networkOffline()
+                }
+
                 pageStack.push(Qt.resolvedUrl("pages/NetworkOffline.qml"),
                                undefined, PageStackAction.Immediate)
             }
