@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="en" sourcelanguage="en">
+<TS version="2.1" language="en" sourcelanguage="en">
 <context>
     <name></name>
     <message id="ytplayer-title-video-categories">
@@ -143,7 +143,7 @@ Label for menu option allowing the user to change video quality</extracomment>
     <message id="ytplayer-action-recommended">
         <source>Recommendations</source>
         <extracomment>Menu option fo show YouTube recommendations page</extracomment>
-        <translation>Redommendations</translation>
+        <translation>Recommendations</translation>
     </message>
     <message id="ytplayer-action-subscriptions">
         <source>Subscriptions</source>
