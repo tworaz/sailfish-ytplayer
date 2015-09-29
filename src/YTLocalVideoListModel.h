@@ -44,15 +44,16 @@ class YTLocalVideoListModel : public QSqlQueryModel
 public:
     explicit YTLocalVideoListModel(QObject *parent = 0);
 
-    QHash<int, QByteArray> roleNames() const { return _roleNames; }
-    QVariant data(const QModelIndex&, int role) const;
-
     Q_INVOKABLE void remove(int index);
 
 private slots:
     void onRemove(int index);
 
 private:
+    // QAbstractListModel overrides.
+    QHash<int, QByteArray> roleNames() const override { return _roleNames; }
+    QVariant data(const QModelIndex&, int role) const override;
+
     QHash<int, QByteArray> _roleNames;
 
     Q_DISABLE_COPY(YTLocalVideoListModel)

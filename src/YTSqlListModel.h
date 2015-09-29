@@ -49,10 +49,10 @@ public:
     Q_INVOKABLE void clear();
 
     // QAbstractListModel overrides
-    QVariant data(const QModelIndex &index, int role) const;
-    int rowCount(const QModelIndex&) const;
-    bool canFetchMore(const QModelIndex& parent) const;
-    void fetchMore(const QModelIndex& parent);
+    QVariant data(const QModelIndex &index, int role) const override;
+    int rowCount(const QModelIndex&) const override;
+    bool canFetchMore(const QModelIndex& parent) const override;
+    void fetchMore(const QModelIndex& parent) override;
 
 protected:
     virtual QSqlQuery getTableSizeQuery() const = 0;

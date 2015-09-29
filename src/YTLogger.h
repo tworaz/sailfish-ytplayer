@@ -60,15 +60,15 @@ public:
     Q_INVOKABLE void warn(QString msg)  { _log(LOG_WARN, msg); }
     Q_INVOKABLE void info(QString msg)  { _log(LOG_INFO, msg); }
 
-    // QAbstractListModel
-    int rowCount(const QModelIndex& parent = QModelIndex()) const;
-    QVariant data(const QModelIndex &index, int role) const;
-    QHash<int, QByteArray> roleNames() const;
-
 signals:
     void logSaved(QString path);
 
 private:
+    // QAbstractListModel
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    QHash<int, QByteArray> roleNames() const override;
+
     explicit YTLogger(QObject *parent = 0);
     void _log(LogType, QString);
     static void saveLogToFile();

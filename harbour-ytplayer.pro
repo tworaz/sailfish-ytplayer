@@ -4,7 +4,7 @@
 
 TARGET = harbour-ytplayer
 
-CONFIG += sailfishapp sailfishapp_no_deploy_qml
+CONFIG += sailfishapp sailfishapp_no_deploy_qml c++11
 QT += dbus sql concurrent
 
 SOURCES += \

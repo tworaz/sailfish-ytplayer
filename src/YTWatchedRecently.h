@@ -45,14 +45,14 @@ public:
                               QString thumb_url, QString duration);
 
     // Overrides fror QAbstractListModel
-    QHash<int, QByteArray> roleNames() const { return _roleNames; }
+    QHash<int, QByteArray> roleNames() const override { return _roleNames; }
 
 private:
     // Overrides for YTSqlListModel
-    QSqlQuery getTableSizeQuery() const;
-    QSqlQuery getReloadDataQuery(int limit) const;
-    QSqlQuery getSearchQuery(const QString& query, int limit) const;
-    QSqlQuery getFetchMoreQuery(const QVector<QVariant>& lastRow, int limit) const;
+    QSqlQuery getTableSizeQuery() const override;
+    QSqlQuery getReloadDataQuery(int limit) const override;
+    QSqlQuery getSearchQuery(const QString& query, int limit) const override;
+    QSqlQuery getFetchMoreQuery(const QVector<QVariant>& lastRow, int limit) const override;
     void removeAllFromDatabase();
 
     enum {

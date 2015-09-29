@@ -65,10 +65,6 @@ public:
     explicit YTListModel(QObject *parent = 0);
     ~YTListModel();
 
-    int rowCount(const QModelIndex& parent = QModelIndex()) const;
-    QVariant data(const QModelIndex &index, int role) const;
-    QHash<int, QByteArray> roleNames() const;
-
     void append(QList<QVariant>);
     Q_INVOKABLE void clear();
     Q_INVOKABLE QVariant get(int i) const;
@@ -77,6 +73,11 @@ signals:
     void countChanged(int);
 
 private:
+    // QAbstractListModel overrides.
+    int rowCount(const QModelIndex& parent = QModelIndex()) const override;
+    QVariant data(const QModelIndex &index, int role) const override;
+    QHash<int, QByteArray> roleNames() const override;
+
     YTListModelFilter *filter() const { return _filter; }
     void initializeRoles(QList<QVariant>&);
     void filter(QList<QVariant>&);
