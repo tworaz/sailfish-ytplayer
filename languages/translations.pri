@@ -4,8 +4,9 @@
 
 TRANSLATIONS += \
         languages/cs_CZ.ts \
-        languages/de_DE.ts \
+        languages/de.ts \
         languages/en_GB.ts \
+        languages/it_IT.ts \
         languages/nl_NL.ts \
         languages/ru_RU.ts \
         languages/sv.ts

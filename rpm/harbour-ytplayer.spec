@@ -12,6 +12,7 @@ License:    BSD-3-Clause
 URL:        https://github.com/tworaz/sailfish-ytplayer
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   sailfishsilica-qt5 >= 0.10.9
+Requires:   pyotherside-qml-plugin-python3-qt5
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Core)
@@ -19,6 +20,7 @@ BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(sailfishapp) >= 0.0.10
 BuildRequires:  desktop-file-utils
 BuildRequires:  zip
+BuildRequires:  python3-base
 
 %description
 YTPlayer is an unofficial YouTube client for SailfishOS

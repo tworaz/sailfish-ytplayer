@@ -5,14 +5,15 @@
       "name" : "Čeština",
       "code" : "cs_CZ",
       "authors" : [
-        "Bobsikus"
+        "Bobsik"
       ]
     },
     {
       "name" : "Deutsch",
-      "code" : "de_DE",
+      "code" : "de",
       "authors" : [
-        "Björn Bidar <theodorstormgrade@gmail.com>"
+        "Björn Bidar <theodorstormgrade@gmail.com>",
+        "Pascal Schmid"
       ]
     },
     {
@@ -20,6 +21,13 @@
       "code" : "en_GB",
       "authors" : [
         "Piotr Tworek <tworaz666@gmail.com>"
+      ]
+    },
+    {
+      "name" : "Italiano",
+      "code" : "it_IT",
+      "authors" : [
+        "Gio Scino"
       ]
     },
     {
