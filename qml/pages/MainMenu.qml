@@ -143,8 +143,13 @@ Page {
                 //% "Subscriptions"
                 text: qsTrId("ytplayer-action-subscriptions")
                 icon: "qrc:///icons/rss-m.png"
-                onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
-                    { "state" : "SUBSCRIPTION_CHANNELS" })
+                onClicked: {
+                    var pageState = YTPrefs.get("SubscriptionPageState")
+                    if (pageState === undefined) {
+                        pageState = "SUBSCRIPTION_CHANNELS"
+                    }
+                    pageStack.push(Qt.resolvedUrl("Account.qml"), { "state" : pageState })
+                }
             }
 
             YTRequest {

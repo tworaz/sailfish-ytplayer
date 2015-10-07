@@ -54,7 +54,7 @@ Page {
                 //: YouTube latest subscribed videos page title
                 //% "Latest videos"
                 title: qsTrId("ytplayer-title-subscription-videos")
-                topPulleyVisible: false
+                topPulleyVisible: true
             }
         },
         State {
@@ -188,12 +188,35 @@ Page {
             id: topPulley
             busy: request.busy
             MenuItem {
-                //: Sub-Menu option responsible for showing latest subsribed videos page
-                //% "Latest videos"
-                text: qsTrId("ytplayer-action-latest-subscribed-videos")
+                text: {
+                    if (page.state === "SUBSCRIPTION_CHANNELS") {
+                        //: Sub-Menu option responsible for showing latest subsribed videos page
+                        //% "Latest videos"
+                        return qsTrId("ytplayer-action-latest-subscribed-videos")
+                    } else {
+                        // TODO: > 0.5.x, add new dedicated action string instead of reusing the
+                        //       suscriptions page title.
+                        return qsTrId("ytplayer-title-subscribed-channels")
+                    }
+                }
                 visible: parent.visible
-                onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
-                    { "state" : "SUBSCRIPTION_VIDEOS"  })
+                onClicked: {
+                    var newState;
+                    switch (page.state) {
+                    case "SUBSCRIPTION_VIDEOS":
+                        newState = "SUBSCRIPTION_CHANNELS"
+                        break
+                    case "SUBSCRIPTION_CHANNELS":
+                        newState = "SUBSCRIPTION_VIDEOS"
+                        break
+                    default:
+                        console.assert(false)
+                        return
+                    }
+                    YTPrefs.set("SubscriptionPageState", newState)
+                    pageStack.replace(Qt.resolvedUrl("Account.qml"), { "state" : newState },
+                                      PageStackAction.Animated)
+                }
             }
         }
 
