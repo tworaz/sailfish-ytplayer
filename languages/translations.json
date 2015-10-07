@@ -2,6 +2,13 @@
   "default" : "en_GB",
   "items" : [
     {
+      "name" : "Català",
+      "code" : "ca",
+      "authors" : [
+        "Agustí Clara"
+      ]
+    },
+    {
       "name" : "Čeština",
       "code" : "cs_CZ",
       "authors" : [
