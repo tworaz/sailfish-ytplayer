@@ -422,7 +422,7 @@ Page {
             width: parent.width
             z: videoOutput.z + 2
             handleVisible: true;
-            enabled: true
+            enabled: opacity > 0.0
             minimumValue: 0
             valueText: H.parseDuration(value)
             onPressed: controlsTimer.stop()
