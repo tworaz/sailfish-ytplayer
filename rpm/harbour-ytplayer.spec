@@ -12,6 +12,7 @@ License:    BSD-3-Clause
 URL:        https://github.com/tworaz/sailfish-ytplayer
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   sailfishsilica-qt5 >= 0.10.9
+Requires:   nemo-qml-plugin-notifications-qt5
 Requires:   pyotherside-qml-plugin-python3-qt5
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Qml)
