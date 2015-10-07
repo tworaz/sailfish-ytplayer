@@ -31,6 +31,13 @@
       ]
     },
     {
+      "name" : "Español",
+      "code" : "es",
+      "authors" : [
+        "Carmen Fernández B."
+      ]
+    },
+    {
       "name" : "Français",
       "code" : "fr_FR",
       "authors" : [

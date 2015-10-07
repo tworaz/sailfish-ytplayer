@@ -7,6 +7,7 @@ TRANSLATIONS += \
         languages/cs_CZ.ts \
         languages/de.ts \
         languages/en_GB.ts \
+        languages/es.ts \
         languages/fr_FR.ts \
         languages/it_IT.ts \
         languages/nl_NL.ts \
