@@ -59,6 +59,13 @@
       ]
     },
     {
+      "name": "Polski",
+      "code": "pl_PL",
+      "authors": [
+        "pemekcz"
+      ]
+    },
+    {
       "name" : "Русский",
       "code" : "ru_RU",
       "authors" : [
