@@ -78,7 +78,7 @@
         <translation>Не удалось загрузить страницу авторизации OAuth!</translation>
     </message>
     <message id="ytplayer-oauth-access-denied">
-        <source>YouTube OAuth access denined!</source>
+        <source>YouTube OAuth access denied!</source>
         <extracomment>Message informing the user about YouTube OAuth autorization denial</extracomment>
         <translation>Доступ запрещен!</translation>
     </message>
@@ -199,8 +199,7 @@ Button for showing license viewer page</extracomment>
     <message id="ytplayer-label-application-license">
         <source>YTPlayer is licensed under 3-clause BSD License</source>
         <extracomment>Label displaying YTPlayer licensing information</extracomment>
-        <translation>YTPlayer распространяется под лицензией
-3-clause BSD</translation>
+        <translation>YTPlayer распространяется на условиях 3-clause BSD</translation>
     </message>
     <message id="ytplayer-action-third-party-software">
         <source>Third party software</source>
@@ -508,7 +507,7 @@ Label informing the user there are no watched recently videos</extracomment>
         <translation>Автоматически продолжать загрузки</translation>
     </message>
     <message id="ytplayer-description-autoresume">
-        <source>On startup, resume all downloads which were either quened or in progress when YTPlayer was closed.</source>
+        <source>On startup, resume all downloads which were either queued or in progress when YTPlayer was closed.</source>
         <extracomment>Description of video download auto resume switch in settings</extracomment>
         <translation>Автоматически продолжать все незавершенные загрузки или загрузки в очереди при старте.</translation>
     </message>
@@ -613,12 +612,12 @@ Remorse popup message telling the user video download will be removed</extracomm
     <message id="ytplayer-label-account-integration">
         <source>YouTube account integration</source>
         <extracomment>Label of switch activating/deactivating YouTube account integration</extracomment>
-        <translation>Интеграция с аккаунтом YouTube</translation>
+        <translation>Использовать учётную запись YouTube</translation>
     </message>
     <message id="ytplayer-description-account-integration">
         <source>Allow YTPlayer to manage YouTube user account.</source>
         <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
-        <translation>Разрешить YTPlayer управлять аккаунтом YouTube.</translation>
+        <translation>Разрешить YTPlayer управлять учётной записью YouTube.</translation>
     </message>
     <message id="ytplayer-msg-channel-subscribed">
         <source>Channel subscribed</source>
@@ -714,22 +713,22 @@ Remorse popup message telling the user video download will be removed</extracomm
     <message id="ytplayer-action-save-log">
         <source>Save log</source>
         <extracomment>Menu action allowing the user to save application log</extracomment>
-        <translation>Сохранить лог</translation>
+        <translation>Сохранить журнал</translation>
     </message>
     <message id="ytplayer-msg-saving-log">
         <source>Saving log</source>
         <extracomment>Remorse popup message telling the user log file will be saved</extracomment>
-        <translation>Сохранение лога</translation>
+        <translation>Сохранение журнала</translation>
     </message>
     <message id="ytplayer-msg-log-saved">
         <source>Log saved</source>
         <extracomment>Body of notification informing the user application log was saved</extracomment>
-        <translation>Лог сохранен</translation>
+        <translation>Журнал сохранен</translation>
     </message>
     <message id="ytplayer-action-view-logs">
         <source>View logs</source>
         <extracomment>Label for menu option showing application log viewer</extracomment>
-        <translation>Просмотр логов</translation>
+        <translation>Просмотр журнала</translation>
     </message>
     <message id="ytplayer-title-language-settings">
         <source>Language settings</source>
@@ -791,7 +790,7 @@ Remorse popup message telling the user video download will be removed</extracomm
         <extracomment>Menu option allowing the user to hide search field
 ----------
 Menu option allowing the user to hide search field</extracomment>
-        <translation>Спрятать строку поиска</translation>
+        <translation>Убрать строку поиска</translation>
     </message>
     <message id="ytplayer-msg-removing-favorite">
         <source>Removing favorite</source>
@@ -835,7 +834,7 @@ Menu option allowing the user to hide search field</extracomment>
     </message>
     <message id="ytplayer-label-controls-hide-delay">
         <source>Controls hide delay</source>
-        <extracomment>Lael for slider changing video player controls hide delay</extracomment>
+        <extracomment>Label for slider changing video player controls hide delay</extracomment>
         <translation>Показывать меню</translation>
     </message>
     <message id="ytplayer-label-autopause">

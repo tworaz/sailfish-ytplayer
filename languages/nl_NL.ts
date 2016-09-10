@@ -99,7 +99,7 @@
         <translation>Mislukt om OAuth-authorisatiepagina te laden!</translation>
     </message>
     <message id="ytplayer-oauth-access-denied">
-        <source>YouTube OAuth access denined!</source>
+        <source>YouTube OAuth access denied!</source>
         <extracomment>Message informing the user about YouTube OAuth autorization denial</extracomment>
         <translation>YouTube OAuth-toegang geweigerd!</translation>
     </message>
@@ -523,7 +523,7 @@ Label informing the user there are no watched recently videos</extracomment>
         <translation>Downloads automatisch hervatten</translation>
     </message>
     <message id="ytplayer-description-autoresume">
-        <source>On startup, resume all downloads which were either quened or in progress when YTPlayer was closed.</source>
+        <source>On startup, resume all downloads which were either queued or in progress when YTPlayer was closed.</source>
         <extracomment>Description of video download auto resume switch in settings</extracomment>
         <translation>Alle downloads in de wachtrij of die bezig waren met downloaden toen YTPlayer werd gesloten hervatten bij het opstarten.</translation>
     </message>
@@ -816,7 +816,7 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-label-controls-hide-delay">
         <source>Controls hide delay</source>
-        <extracomment>Lael for slider changing video player controls hide delay</extracomment>
+        <extracomment>Label for slider changing video player controls hide delay</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-label-autoload">
