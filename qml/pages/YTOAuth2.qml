@@ -130,7 +130,7 @@ Page {
             } else if (title.indexOf('Denied error') !== -1) {
                 Log.debug("Youtube OAuth access denied!")
                 //: Message informing the user about YouTube OAuth autorization denial
-                //% "YouTube OAuth access denined!"
+                //% "YouTube OAuth access denied!"
                 failureNotification.previewBody = qsTrId("ytplayer-oauth-access-denied")
                 failureNotification.publish()
                 pageStack.navigateBack(PageStackAction.Animated)

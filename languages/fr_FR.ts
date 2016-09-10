@@ -77,7 +77,7 @@
         <translation>Le chargement de la page d&apos;autorisation OAuth à échoué!</translation>
     </message>
     <message id="ytplayer-oauth-access-denied">
-        <source>YouTube OAuth access denined!</source>
+        <source>YouTube OAuth access denied!</source>
         <extracomment>Message informing the user about YouTube OAuth autorization denial</extracomment>
         <translation>L&apos;accès à l&apos;OAuth YouTube a échoué!</translation>
     </message>
@@ -506,7 +506,7 @@ Label informing the user there are no watched recently videos</extracomment>
         <translation>Reprendre automatiquement les téléchargements</translation>
     </message>
     <message id="ytplayer-description-autoresume">
-        <source>On startup, resume all downloads which were either quened or in progress when YTPlayer was closed.</source>
+        <source>On startup, resume all downloads which were either queued or in progress when YTPlayer was closed.</source>
         <extracomment>Description of video download auto resume switch in settings</extracomment>
         <translation>Au démarrage, reprendre tous les téléchargements qui étaient en attente ou en cours lors de la fermeture de YTPlayer.</translation>
     </message>
@@ -833,7 +833,7 @@ Menu option allowing the user to hide search field</extracomment>
     </message>
     <message id="ytplayer-label-controls-hide-delay">
         <source>Controls hide delay</source>
-        <extracomment>Lael for slider changing video player controls hide delay</extracomment>
+        <extracomment>Label for slider changing video player controls hide delay</extracomment>
         <translation>Délai de masquage des contrôles</translation>
     </message>
     <message id="ytplayer-label-autopause">
