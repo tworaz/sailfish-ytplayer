@@ -30,11 +30,19 @@
 #ifndef YTSUGGESTIONENGINE_H
 #define YTSUGGESTIONENGINE_H
 
-#include <QNetworkAccessManager>
+#include <QtNetwork/QNetworkAccessManager>
 #include <QVariant>
 #include <QObject>
 #include <QString>
 #include <QList>
+#include <QJsonDocument>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QUrlQuery>
+#include <QSqlError>
+#include <QSettings>
+#include <QDebug>
+#include <QUrl>
 
 class QNetworkReply;
 

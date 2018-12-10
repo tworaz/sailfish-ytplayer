@@ -29,9 +29,6 @@
 
 #include "YTListModel.h"
 
-#include <QStringList>
-#include <QDebug>
-
 YTListModel::YTListModel(QObject *parent)
     : QAbstractListModel(parent)
     , _filter(new YTListModelFilter(this))

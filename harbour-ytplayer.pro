@@ -6,6 +6,9 @@ TARGET = harbour-ytplayer
 
 CONFIG += sailfishapp sailfishapp_no_deploy_qml
 QT += dbus sql concurrent
+#CONFIG += sailfishapp_i18n
+
+QT += dbus sql concurrent qml core
 
 SOURCES += \
         src/YTPlayer.cpp \
@@ -78,7 +81,7 @@ CLIENT_ID_FILE = $$top_srcdir/youtube-client-id.json
 configh.input = KEY_FILE
 configh.output = $$top_builddir/config.h
 configh.commands = \
-    $$top_srcdir/scripts/generate-config-h.py \
+    python3 $$top_srcdir/scripts/generate-config-h.py \
             --keyfile=$$KEY_FILE \
             --idfile=$$CLIENT_ID_FILE \
             --outfile=$$top_builddir/config.h
@@ -102,7 +105,7 @@ RESOURCES += \
 
 mcc_data.target = mcc-data
 mcc_data.commands = \
-    $$top_srcdir/scripts/mcc-data-util.py \
+    python3 $$top_srcdir/scripts/mcc-data-util.py \
         --keyfile=$$top_srcdir/youtube-data-api-v3.key \
         --mccfile=$$top_srcdir/resources/mcc-data.json \
         --verbose --mode check

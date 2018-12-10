@@ -29,17 +29,6 @@
 
 #include "YTNetworkManager.h"
 
-#include <QNetworkConfigurationManager>
-#include <QNetworkAccessManager>
-#include <QDBusPendingCall>
-#include <QNetworkRequest>
-#include <QNetworkSession>
-#include <QDBusConnection>
-#include <QSharedPointer>
-#include <QDBusMessage>
-#include <QSettings>
-#include <QDebug>
-
 #include "YTPlayer.h"
 #include "YTRequest.h"
 

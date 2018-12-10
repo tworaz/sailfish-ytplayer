@@ -27,21 +27,13 @@
  * SUCH DAMAGE.
  */
 
-#include <QNetworkAccessManager>
-#include <QNetworkDiskCache>
-#include <QGuiApplication>
-#include <QStandardPaths>
-#include <QQuickView>
-#include <QSqlError>
-#include <QtQml>
-#include <QDebug>
-#include <QFontDatabase>
-#include <QSqlDatabase>
-#include <qtconcurrentrun.h>
-#include <sailfishapp.h>
+#ifdef QT_QML_DEBUG
+#include <QtQuick>
+#endif
+
+#include "YTPlayer.h"
 
 #include "YTVideoDownloadNotification.h"
-#include "YTPlayer.h"
 #include "YTListModel.h"
 #include "YTNetworkManager.h"
 #include "YTLocalVideoManager.h"

@@ -34,6 +34,7 @@
 #include <QObject>
 #include <QVariantMap>
 #include <QSharedPointer>
+#include <QDebug>
 
 class YTLocalVideoManager;
 class YTLocalVideoData;

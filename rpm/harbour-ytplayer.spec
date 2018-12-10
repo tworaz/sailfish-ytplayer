@@ -4,6 +4,14 @@
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 
 Name:       harbour-ytplayer
+
+# >> macros
+# << macros
+
+%{!?qtc_qmake:%define qtc_qmake %qmake}
+%{!?qtc_qmake5:%define qtc_qmake5 %qmake5}
+%{!?qtc_make:%define qtc_make make}
+%{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Native YouTube client for SailfishOS
 Version:    0.5.99
 Release:    1
@@ -17,7 +25,7 @@ BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5DBus)
-BuildRequires:  pkgconfig(sailfishapp) >= 0.0.10
+BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  desktop-file-utils
 BuildRequires:  zip
 BuildRequires:  python3-base

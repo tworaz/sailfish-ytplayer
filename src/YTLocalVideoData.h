@@ -36,6 +36,13 @@
 #include <QMutex>
 #include <QFile>
 #include <QUrl>
+#include <QRegularExpression>
+#include <QStandardPaths>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QSettings>
+#include <QDebug>
+#include <QDir>
 
 #include "YTLocalVideo.h"
 

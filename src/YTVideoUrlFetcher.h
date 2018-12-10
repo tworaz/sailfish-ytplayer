@@ -32,9 +32,14 @@
 
 #include <QCache>
 #include <QObject>
-#include <QProcess>
 #include <QVariantMap>
 #include <QJsonDocument>
+#include <sailfishapp.h>
+#include <QJsonObject>
+#include <QStringList>
+#include <QProcess>
+#include <QDebug>
+#include <QDir>
 
 class YTVideoUrlFetcher: public QObject
 {

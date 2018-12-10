@@ -34,8 +34,18 @@
 #include <QObject>
 #include <QString>
 #include <QVariantMap>
-#include <QNetworkReply>
+#include <QtNetwork/QNetworkReply>
 #include <QSharedPointer>
+#include <QtNetwork/QNetworkConfigurationManager>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QScopedPointer>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QStringList>
+#include <QUrlQuery>
+#include <QSettings>
+#include <QLocale>
+#include <QDebug>
 
 #include "YTListModel.h"
 

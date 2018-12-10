@@ -29,17 +29,6 @@
 
 #include "YTRequest.h"
 
-#include <QNetworkConfigurationManager>
-#include <QNetworkAccessManager>
-#include <QScopedPointer>
-#include <QJsonDocument>
-#include <QJsonObject>
-#include <QStringList>
-#include <QUrlQuery>
-#include <QSettings>
-#include <QLocale>
-#include <QDebug>
-
 #include "YTVideoUrlFetcher.h"
 #include "YTNetworkManager.h"
 #include "YTTranslations.h"
@@ -495,15 +484,15 @@ YTRequest::requestToken()
 
     qDebug() << "Requesting YouTube OAuth2 tokens";
 
-    QNetworkRequest request(QUrl(YOUTUBE_AUTH_TOKEN_URI));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QNetworkRequest* request = new QNetworkRequest(QUrl(YOUTUBE_AUTH_TOKEN_URI));
+    request->setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
     if (_token_reply) {
         Q_ASSERT(_token_reply->isFinished());
         delete _token_reply;
     }
 
-    _token_reply = _network_access_manager.post(request, data);
+    _token_reply = _network_access_manager.post(*request, data);
     connect(_token_reply, SIGNAL(finished()), this, SLOT(onTokenRequestFinished()));
 }
 
@@ -522,15 +511,15 @@ YTRequest::refreshToken()
     query.addQueryItem("grant_type", "refresh_token");
     QByteArray data = query.toString(QUrl::FullyEncoded).toLocal8Bit();
 
-    QNetworkRequest request(QUrl(YOUTUBE_AUTH_TOKEN_URI));
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
+    QNetworkRequest* request = new QNetworkRequest(QUrl(YOUTUBE_AUTH_TOKEN_URI));
+    request->setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
     if (_token_reply) {
         Q_ASSERT(_token_reply->isFinished());
         delete _token_reply;
     }
 
-    _token_reply = _network_access_manager.post(request, data);
+    _token_reply = _network_access_manager.post(*request, data);
     connect(_token_reply, SIGNAL(finished()), this, SLOT(onTokenRequestFinished()));
 }
 

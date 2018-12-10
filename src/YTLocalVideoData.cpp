@@ -29,14 +29,6 @@
 
 #include "YTLocalVideoData.h"
 
-#include <QRegularExpression>
-#include <QStandardPaths>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QSettings>
-#include <QDebug>
-#include <QDir>
-
 #include "YTLocalVideoManager.h"
 #include "YTPlayer.h"
 

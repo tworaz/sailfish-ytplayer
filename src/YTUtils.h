@@ -31,6 +31,16 @@
 #define NATIVEUTIL_H
 
 #include <QObject>
+#include <QFile>
+#include <QJsonObject>
+#include <QJsonDocument>
+#include <QDBusMessage>
+#include <QDBusArgument>
+#include <QDBusConnection>
+#include <QDBusObjectPath>
+#include <QDebug>
+#include <QDir>
+#include <sailfishapp.h>
 
 class YTUtils : public QObject
 {

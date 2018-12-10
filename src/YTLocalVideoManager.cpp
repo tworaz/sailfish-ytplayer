@@ -29,16 +29,6 @@
 
 #include "YTLocalVideoManager.h"
 
-#include <QNetworkAccessManager>
-#include <QSqlDatabase>
-#include <QStringList>
-#include <QJsonObject>
-#include <QSettings>
-#include <QFileInfo>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QDebug>
-
 #include "YTNetworkManager.h"
 #include "YTLocalVideoData.h"
 #include "YTRequest.h"

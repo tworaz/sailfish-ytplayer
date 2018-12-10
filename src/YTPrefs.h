@@ -32,6 +32,10 @@
 
 #include <QString>
 #include <QVariant>
+#include <QSettings>
+#include <QStandardPaths>
+#include <QDir>
+#include <QDebug>
 
 extern const char kWiFiOnly[];
 extern const char kCellularOnly[];

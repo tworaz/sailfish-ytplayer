@@ -29,14 +29,6 @@
 
 #include "YTTranslations.h"
 
-#include <QGuiApplication>
-#include <QJsonDocument>
-#include <QSettings>
-#include <QLocale>
-#include <QDebug>
-#include <QFile>
-#include <sailfishapp.h>
-
 #include "YTPrefs.h"
 
 namespace {

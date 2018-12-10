@@ -29,14 +29,6 @@
 
 #include "YTVideoUrlFetcher.h"
 
-#include <QJsonDocument>
-#include <sailfishapp.h>
-#include <QJsonObject>
-#include <QStringList>
-#include <QProcess>
-#include <QDebug>
-#include <QDir>
-
 #include "YTPlayer.h"
 
 namespace {

@@ -29,11 +29,6 @@
 
 #include "YTSqlListModel.h"
 
-#include <QSqlQuery>
-#include <QSqlRecord>
-#include <QSqlError>
-#include <QDebug>
-
 namespace {
 
 static int kResultPageSize = 50;
