@@ -904,5 +904,10 @@ Label informing the user there are no watched recently videos</extracomment>
         <extracomment>Title for recently watched videos page</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message id="ytplayer-action-translate-app">
+        <source>Translate YTPlayer</source>
+        <extracomment>Menu option opening a link to YTPlayer translation page on Transifex.</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
