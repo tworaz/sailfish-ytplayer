@@ -39,9 +39,7 @@ QString getYouTubeDLPath()
 {
     static QString program;
     if (program.isEmpty()) {
-        program = SailfishApp::pathTo("bin").toLocalFile();
-        program.append(QDir::separator());
-        program.append(kYouTubeDLBinaryName);
+        program = "/usr/bin/python3";
         Q_ASSERT(QFile(program).exists());
     }
     return program;
@@ -57,6 +55,8 @@ YTVideoUrlFetcher::YTVideoUrlFetcher()
     : QObject(0)
     , _process(0)
 {
+    Q_ASSERT(QFile(SailfishApp::pathTo("bin").toLocalFile()+QDir::separator()+kYouTubeDLBinaryName).exists());
+
     static bool registered = false;
     if (!registered) {
         qRegisterMetaType<QProcess::ExitStatus>("QProcess::ExitStatus");
@@ -71,7 +71,8 @@ void
 YTVideoUrlFetcher::runInitialCheck()
 {
     QStringList arguments;
-    arguments << "--version";
+    arguments << SailfishApp::pathTo("bin").toLocalFile()+QDir::separator()+kYouTubeDLBinaryName
+              << "--version";
 
     QProcess process;
     process.start(getYouTubeDLPath(), arguments, QIODevice::ReadOnly);
@@ -111,7 +112,8 @@ YTVideoUrlFetcher::onFetchUrlsFor(QString videoId)
     }
 
     QStringList arguments;
-    arguments << "--dump-json"
+    arguments << SailfishApp::pathTo("bin").toLocalFile()+QDir::separator()+kYouTubeDLBinaryName
+              << "--dump-json"
               << "--youtube-skip-dash-manifest"
               << "--no-cache-dir"
               << "--no-call-home"

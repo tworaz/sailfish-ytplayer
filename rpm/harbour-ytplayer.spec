@@ -52,7 +52,7 @@ desktop-file-install --delete-original       \
 %files
 %defattr(0644,root,root,-)
 %attr(0755,root,root) %{_bindir}/%{name}
-%attr(0755,root,root) %{_datadir}/%{name}/bin/youtube-dl
+%{_datadir}/%{name}/bin/youtube-dl
 %{_datadir}/%{name}/licenses
 %{_datadir}/%{name}/translations
 %{_datadir}/applications/%{name}.desktop
