@@ -93,7 +93,7 @@ CLIENT_ID_FILE = $$top_srcdir/youtube-client-id.json
 configh.input = KEY_FILE
 configh.output = $$top_builddir/config.h
 configh.commands = \
-    python3 $$top_srcdir/scripts/generate-config-h.py \
+    python $$top_srcdir/scripts/generate-config-h.py \
             --keyfile=$$KEY_FILE \
             --idfile=$$CLIENT_ID_FILE \
             --outfile=$$top_builddir/config.h
@@ -102,7 +102,7 @@ configh.CONFIG += no_link
 QMAKE_EXTRA_COMPILERS += configh
 PRE_TARGETDEPS += compiler_configh_make_all
 
-DEFINES += VERSION_STR=\\\"$$system($${top_srcdir}/scripts/get_version_str.sh)\\\"
+DEFINES += VERSION_STR=\\\"$$system(bash $${top_srcdir}/scripts/get_version_str.sh)\\\"
 
 licenses.files = $$files($$top_srcdir/LICENSE.*)
 licenses.path = /usr/share/$${TARGET}/licenses
@@ -117,7 +117,7 @@ RESOURCES += \
 
 mcc_data.target = mcc-data
 mcc_data.commands = \
-    python3 $$top_srcdir/scripts/mcc-data-util.py \
+    python $$top_srcdir/scripts/mcc-data-util.py \
         --keyfile=$$top_srcdir/youtube-data-api-v3.key \
         --mccfile=$$top_srcdir/resources/mcc-data.json \
         --verbose --mode check

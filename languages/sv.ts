@@ -79,7 +79,7 @@
         <translation>Kunde inte läsa in inloggningssidan!</translation>
     </message>
     <message id="ytplayer-oauth-access-denied">
-        <source>YouTube OAuth access denined!</source>
+        <source>YouTube OAuth access denied!</source>
         <extracomment>Message informing the user about YouTube OAuth autorization denial</extracomment>
         <translation>YouTube-åtkomst nekades!</translation>
     </message>
@@ -500,7 +500,7 @@ Label informing the user there are no watched recently videos</extracomment>
         <translation>Återuppta nedladdningar automatiskt</translation>
     </message>
     <message id="ytplayer-description-autoresume">
-        <source>On startup, resume all downloads which were either quened or in progress when YTPlayer was closed.</source>
+        <source>On startup, resume all downloads which were either queued or in progress when YTPlayer was closed.</source>
         <extracomment>Description of video download auto resume switch in settings</extracomment>
         <translation>Vid uppstart återupptas alla nedladdningar som var antingen köade eller under nedladdning när YTPlayer stängdes.</translation>
     </message>
@@ -650,7 +650,6 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible">
         <source>No video streams available</source>
-        <oldsource>Direct video playback not possible</oldsource>
         <extracomment>Notification summary informing the user direct video playback is not possible</extracomment>
         <translation>Inga filmtrömmar tillgängliga</translation>
     </message>
@@ -821,7 +820,7 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-label-controls-hide-delay">
         <source>Controls hide delay</source>
-        <extracomment>Lael for slider changing video player controls hide delay</extracomment>
+        <extracomment>Label for slider changing video player controls hide delay</extracomment>
         <translation>Kontrollfördröjning</translation>
     </message>
     <message id="ytplayer-label-autopause">
@@ -831,7 +830,6 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-description-autopause">
         <source>Automatically pause video playback when application is deactivated.</source>
-        <oldsource>Automatically pause video playback when application is deactivated</oldsource>
         <extracomment>Description of video auto pause option switch.</extracomment>
         <translation>Pausa uppspelning automatiskt när programmet inaktiveras.</translation>
     </message>
@@ -887,13 +885,11 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-msg-video-unavailable">
         <source>Video no longer available</source>
-        <oldsource>Video no longer available!</oldsource>
         <extracomment>Notification summary informing the user video is no longer available.</extracomment>
         <translation>Filmen inte tillgänglig längre</translation>
     </message>
     <message id="ytplayer-msg-video-unavailable-desc">
         <source>Video was removed from YouTube</source>
-        <oldsource>Video was removed from YouTube.</oldsource>
         <extracomment>Notification body explaining why video is no longer available.</extracomment>
         <translation>Filmen har tagist bort från YouTube</translation>
     </message>

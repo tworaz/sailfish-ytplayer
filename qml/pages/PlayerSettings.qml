@@ -41,7 +41,7 @@ Page {
             }
 
             Slider {
-                //: Lael for slider changing video player controls hide delay
+                //: Label for slider changing video player controls hide delay
                 //% "Controls hide delay"
                 label: qsTrId("ytplayer-label-controls-hide-delay")
                 width: parent.width

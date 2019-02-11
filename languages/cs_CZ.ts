@@ -79,7 +79,7 @@
         <translation>Nepodařilo se načíst OAuth autorizační stránku!</translation>
     </message>
     <message id="ytplayer-oauth-access-denied">
-        <source>YouTube OAuth access denined!</source>
+        <source>YouTube OAuth access denied!</source>
         <extracomment>Message informing the user about YouTube OAuth autorization denial</extracomment>
         <translation>Přístup YouTube OAuth zamítnut!</translation>
     </message>
@@ -500,7 +500,7 @@ Label informing the user there are no watched recently videos</extracomment>
         <translation>Automaticky pokračovat ve stahování</translation>
     </message>
     <message id="ytplayer-description-autoresume">
-        <source>On startup, resume all downloads which were either quened or in progress when YTPlayer was closed.</source>
+        <source>On startup, resume all downloads which were either queued or in progress when YTPlayer was closed.</source>
         <extracomment>Description of video download auto resume switch in settings</extracomment>
         <translation>Po startu pokračovat ve stahování všech videí, které byly zařazeny do fronty, nebo probíhaly, než byl YTPlayer zavřen.</translation>
     </message>
@@ -650,7 +650,6 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible">
         <source>No video streams available</source>
-        <oldsource>Direct video playback not possible</oldsource>
         <extracomment>Notification summary informing the user direct video playback is not possible</extracomment>
         <translation>Žádná videa</translation>
     </message>
@@ -821,7 +820,7 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-label-controls-hide-delay">
         <source>Controls hide delay</source>
-        <extracomment>Lael for slider changing video player controls hide delay</extracomment>
+        <extracomment>Label for slider changing video player controls hide delay</extracomment>
         <translation>Zpoždění skrytí ovládacích prvků</translation>
     </message>
     <message id="ytplayer-label-autopause">
@@ -831,7 +830,6 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-description-autopause">
         <source>Automatically pause video playback when application is deactivated.</source>
-        <oldsource>Automatically pause video playback when application is deactivated</oldsource>
         <extracomment>Description of video auto pause option switch.</extracomment>
         <translation>Automaticky pozastavit přehrávání videa když je aplikace pozastavena</translation>
     </message>
@@ -887,13 +885,11 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-msg-video-unavailable">
         <source>Video no longer available</source>
-        <oldsource>Video no longer available!</oldsource>
         <extracomment>Notification summary informing the user video is no longer available.</extracomment>
         <translation>Video již nedostupné</translation>
     </message>
     <message id="ytplayer-msg-video-unavailable-desc">
         <source>Video was removed from YouTube</source>
-        <oldsource>Video was removed from YouTube.</oldsource>
         <extracomment>Notification body explaining why video is no longer available.</extracomment>
         <translation>Video bylo smazáno z YouTube</translation>
     </message>

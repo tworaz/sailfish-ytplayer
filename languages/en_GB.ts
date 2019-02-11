@@ -46,7 +46,7 @@
     <message id="ytplayer-label-region-code">
         <source>Region code: %1</source>
         <extracomment>Region code field value</extracomment>
-        <translation>Region Code: %1</translation>
+        <translation>Region code: %1</translation>
     </message>
     <message id="ytplayer-label-publish-date">
         <source>Published on</source>
@@ -79,7 +79,7 @@
         <translation>Failed to load OAuth authorization page!</translation>
     </message>
     <message id="ytplayer-oauth-access-denied">
-        <source>YouTube OAuth access denined!</source>
+        <source>YouTube OAuth access denied!</source>
         <extracomment>Message informing the user about YouTube OAuth autorization denial</extracomment>
         <translation>YouTube OAuth access denied!</translation>
     </message>
@@ -500,7 +500,7 @@ Label informing the user there are no watched recently videos</extracomment>
         <translation>Automatically resume downloads</translation>
     </message>
     <message id="ytplayer-description-autoresume">
-        <source>On startup, resume all downloads which were either quened or in progress when YTPlayer was closed.</source>
+        <source>On startup, resume all downloads which were either queued or in progress when YTPlayer was closed.</source>
         <extracomment>Description of video download auto resume switch in settings</extracomment>
         <translation>On startup, resume all downloads which were either queued or in progress when YTPlayer was closed.</translation>
     </message>
@@ -606,7 +606,7 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-description-account-integration">
         <source>Allow YTPlayer to manage YouTube user account.</source>
         <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
-        <translation>Allow YTPlayer to manager YouTube user account.</translation>
+        <translation>Allow YTPlayer to manage YouTube user account.</translation>
     </message>
     <message id="ytplayer-msg-channel-subscribed">
         <source>Channel subscribed</source>
@@ -616,7 +616,7 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-msg-unsubscribing-channel">
         <source>Unsubscribing channel</source>
         <extracomment>Remorse popup message telling the user channel is about to be unsubscribed</extracomment>
-        <translation>Unsiscribing channel</translation>
+        <translation>Unsubscribing channel</translation>
     </message>
     <message id="ytplayer-msg-channel-unsubscribed">
         <source>Channel unsubscribed</source>
@@ -650,7 +650,6 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible">
         <source>No video streams available</source>
-        <oldsource>Direct video playback not possible</oldsource>
         <extracomment>Notification summary informing the user direct video playback is not possible</extracomment>
         <translation>No video streams available</translation>
     </message>
@@ -821,7 +820,7 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-label-controls-hide-delay">
         <source>Controls hide delay</source>
-        <extracomment>Lael for slider changing video player controls hide delay</extracomment>
+        <extracomment>Label for slider changing video player controls hide delay</extracomment>
         <translation>Controls hide delay</translation>
     </message>
     <message id="ytplayer-label-autopause">
@@ -831,7 +830,6 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-description-autopause">
         <source>Automatically pause video playback when application is deactivated.</source>
-        <oldsource>Automatically pause video playback when application is deactivated</oldsource>
         <extracomment>Description of video auto pause option switch.</extracomment>
         <translation>Automatically pause video playback when application is deactivated.</translation>
     </message>
@@ -887,13 +885,11 @@ Label informing the user there are no watched recently videos</extracomment>
     </message>
     <message id="ytplayer-msg-video-unavailable">
         <source>Video no longer available</source>
-        <oldsource>Video no longer available!</oldsource>
         <extracomment>Notification summary informing the user video is no longer available.</extracomment>
         <translation>Video no longer available</translation>
     </message>
     <message id="ytplayer-msg-video-unavailable-desc">
         <source>Video was removed from YouTube</source>
-        <oldsource>Video was removed from YouTube.</oldsource>
         <extracomment>Notification body explaining why video is no longer available.</extracomment>
         <translation>Video was removed from YouTube</translation>
     </message>

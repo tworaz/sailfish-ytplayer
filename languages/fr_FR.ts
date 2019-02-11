@@ -1,147 +1,147 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="de" sourcelanguage="en">
+<TS version="2.1" language="fr_FR" sourcelanguage="en">
 <context>
     <name></name>
     <message id="ytplayer-title-video-categories">
         <source>Video categories</source>
         <extracomment>Video categories page title</extracomment>
-        <translation>Video-Kategorien</translation>
+        <translation>Catégories</translation>
     </message>
     <message id="ytplayer-label-search">
         <source>Search</source>
         <extracomment>Label of video search text field</extracomment>
-        <translation>Suche</translation>
+        <translation>Que cherchez-vous ?</translation>
     </message>
     <message id="ytplayer-action-search">
         <source>Search</source>
         <extracomment>Menu option to show search page</extracomment>
-        <translation>Suche</translation>
+        <translation>Rechercher</translation>
     </message>
     <message id="ytplayer-title-settings">
         <source>Settings</source>
         <extracomment>Settings page title</extracomment>
-        <translation>Einstellungen</translation>
+        <translation>Paramètres</translation>
     </message>
     <message id="ytplayer-action-settings">
         <source>Settings</source>
         <extracomment>Menu option to show settings page</extracomment>
-        <translation>Einstellungen</translation>
+        <translation>Paramètres</translation>
     </message>
     <message id="ytplayer-title-about">
         <source>About YTPlayer</source>
         <extracomment>Title of about page</extracomment>
-        <translation>Über YTPlayer</translation>
+        <translation>À propos de YTPlayer</translation>
     </message>
     <message id="ytplayer-label-application-description">
         <source>Unofficial YouTube client for Sailfish OS</source>
         <extracomment>YTPlayer application description in about page</extracomment>
-        <translation>Inoffizieller YouTube Client für Sailfish OS</translation>
+        <translation>Un client YouTube pour Sailfish OS.</translation>
     </message>
     <message id="ytplayer-label-version">
         <source>Version: %1</source>
         <extracomment>Version label value</extracomment>
-        <translation>Version: %1</translation>
+        <translation>Version : %1</translation>
     </message>
     <message id="ytplayer-label-region-code">
         <source>Region code: %1</source>
         <extracomment>Region code field value</extracomment>
-        <translation>Region Code: %1</translation>
+        <translation>Code Région : %1</translation>
     </message>
     <message id="ytplayer-label-publish-date">
         <source>Published on</source>
         <extracomment>Label for video upload date field</extracomment>
-        <translation>Veröffentlicht am</translation>
+        <translation>Publié le</translation>
     </message>
     <message id="ytplayer-label-duration">
         <source>Duration</source>
         <extracomment>Label for video duration field</extracomment>
-        <translation>Länge</translation>
+        <translation>Durée</translation>
     </message>
     <message id="ytplayer-label-created-on">
         <source>Created on</source>
         <extracomment>Label for youtube channel creation date field</extracomment>
-        <translation>Erstellt am</translation>
+        <translation>Inscrit le</translation>
     </message>
     <message id="ytplayer-label-video-count">
         <source>Video count</source>
         <extracomment>Label for channel video count field</extracomment>
-        <translation>Aufrufe</translation>
+        <translation>Nombre de vidéos</translation>
     </message>
     <message id="ytplayer-label-latest-videos">
         <source>Latest videos</source>
         <extracomment>Label/Title for the list of latest videos in certain category</extracomment>
-        <translation>Aktuelle Videos</translation>
+        <translation>Dernières vidéos</translation>
     </message>
     <message id="ytplayer-oauth-page-loading-failed">
         <source>Failed to load OAuth authorization page!</source>
         <extracomment>YouTube OAuth page loading failure message</extracomment>
-        <translation>Laden der OAuth-Authorisierungsseite fehlgeschlagen!</translation>
+        <translation>Le chargement de la page d&apos;autorisation OAuth a échoué !</translation>
     </message>
     <message id="ytplayer-oauth-access-denied">
         <source>YouTube OAuth access denied!</source>
         <extracomment>Message informing the user about YouTube OAuth autorization denial</extracomment>
-        <translation>YouTube OAuth-Zugriff verweigert!</translation>
+        <translation>L&apos;accès à l&apos;OAuth YouTube a échoué !</translation>
     </message>
     <message id="ytplayer-youtube-sign-in-successful">
         <source>Sign in successful</source>
         <extracomment>Notification informing the user that YouTube sign in succeeded</extracomment>
-        <translation>Anmeldung erfolgreich</translation>
+        <translation>Connexion réussie</translation>
     </message>
     <message id="ytplayer-oauth-failed">
         <source>OAuth authorization failed!</source>
         <extracomment>Error message informing the user about OAuth authorization failure</extracomment>
-        <translation>OAuth-Authorisierung fehlgeschlagen!</translation>
+        <translation>L&apos;autorisation OAuth a échoué !</translation>
     </message>
     <message id="ytplayer-channel-unsubscribe">
         <source>Unsubscribe</source>
         <extracomment>Menu option to unsubscribe from YouTube channel</extracomment>
-        <translation>Abbestellen</translation>
+        <translation>Se désabonner</translation>
     </message>
     <message id="ytplayer-channel-subscribe">
         <source>Subscribe</source>
-        <translation>Abonnieren</translation>
+        <translation>S&apos;abonner</translation>
     </message>
     <message id="ytplayer-action-video-categories">
         <source>Categories</source>
         <extracomment>Menu option to show video categories page</extracomment>
-        <translation>Kategorien</translation>
+        <translation>Catégories</translation>
     </message>
     <message id="ytplayer-search-no-results">
         <source>No results</source>
         <extracomment>Background label informing the user there are no search results</extracomment>
-        <translation>Keine Treffer</translation>
+        <translation>Aucun résultat</translation>
     </message>
     <message id="ytplayer-title-log-viewer">
         <source>Log viewer</source>
-        <translation>Log viewer</translation>
+        <translation>Journal</translation>
     </message>
     <message id="ytplayer-label-network-offline">
         <source>Network Offline</source>
         <extracomment>Network offline screen label</extracomment>
-        <translation>Netzwerk nicht verfügbar</translation>
+        <translation>Réseau hors-ligne</translation>
     </message>
     <message id="ytplayer-label-video-quality">
         <source>Video quality</source>
         <extracomment>Label for video quality selection combo box
 ----------
 Label for menu option allowing the user to change video quality</extracomment>
-        <translation>Videoqualität</translation>
+        <translation>Qualité</translation>
     </message>
     <message id="ytplayer-title-likes">
         <source>Likes</source>
         <extracomment>YouTube likes page title</extracomment>
-        <translation>Likes</translation>
+        <translation>J&apos;aime</translation>
     </message>
     <message id="ytplayer-title-dislikes">
         <source>Dislikes</source>
         <extracomment>YouTube dislikes page title</extracomment>
-        <translation>Dislikes</translation>
+        <translation>Je n&apos;aime pas</translation>
     </message>
     <message id="ytplayer-action-recommended">
         <source>Recommendations</source>
         <extracomment>Menu option fo show YouTube recommendations page</extracomment>
-        <translation>Empfehlungen</translation>
+        <translation>Recommandations</translation>
     </message>
     <message id="ytplayer-action-subscriptions">
         <source>Subscriptions</source>
@@ -151,144 +151,144 @@ Label for menu option allowing the user to change video quality</extracomment>
     <message id="ytplayer-action-likes">
         <source>Likes</source>
         <extracomment>Menu option responsible for showing user likes page</extracomment>
-        <translation>Likes</translation>
+        <translation>J&apos;aime</translation>
     </message>
     <message id="ytplayer-action-dislikes">
         <source>Dislikes</source>
         <extracomment>Menu option responsible for showing user dislikes page</extracomment>
-        <translation>Dislikes</translation>
+        <translation>Je n&apos;aime pas</translation>
     </message>
     <message id="ytplayer-title-recommended">
         <source>Recommended for you</source>
         <extracomment>YouTube recommendations page title</extracomment>
-        <translation>Für dich empfohlen</translation>
+        <translation>Quelques recommandations</translation>
     </message>
     <message id="ytplayer-title-subscribed-channels">
         <source>Subscribed channels</source>
         <extracomment>YouTube subscribed channels page title</extracomment>
-        <translation>Abonnierte Kanäle</translation>
+        <translation>Chaînes suivies</translation>
     </message>
     <message id="ytplayer-title-subscription-videos">
         <source>Latest videos</source>
         <extracomment>YouTube latest subscribed videos page title</extracomment>
-        <translation>Neueste Videos</translation>
+        <translation>Dernières vidéos</translation>
     </message>
     <message id="ytplayer-action-latest-subscribed-videos">
         <source>Latest videos</source>
         <extracomment>Sub-Menu option responsible for showing latest subsribed videos page</extracomment>
-        <translation>Neueste Videos</translation>
+        <translation>Dernières vidéos</translation>
     </message>
     <message id="ytplayer-label-network-connection-retry">
         <source>Retry</source>
         <extracomment>Label of network connection retry button</extracomment>
-        <translation>Wiederhole</translation>
+        <translation>Réessayer</translation>
     </message>
     <message id="ytplayer-action-about">
         <source>About</source>
         <extracomment>Menu option to show about page</extracomment>
-        <translation>Über</translation>
+        <translation>À propos</translation>
     </message>
     <message id="ytplayer-action-view-license">
         <source>View license</source>
         <extracomment>Button for showing license viewer page</extracomment>
-        <translation>Sieh Lizenz an</translation>
+        <translation>Voir la licence</translation>
     </message>
     <message id="ytplayer-label-application-license">
         <source>YTPlayer is licensed under 3-clause BSD License</source>
         <extracomment>Label displaying YTPlayer licensing information</extracomment>
-        <translation>YTPlayer steht unter der 3-Klausel BSD-Lizenz</translation>
+        <translation>YTPlayer est soumis aux conditions de la licence BSD 3-CL.</translation>
     </message>
     <message id="ytplayer-action-third-party-software">
         <source>Third party software</source>
         <extracomment>Label for button showing third party software listing page</extracomment>
-        <translation>Drittanbieter-Software</translation>
+        <translation>Logiciels tiers</translation>
     </message>
     <message id="ytplayer-title-license-viewer">
         <source>License</source>
         <extracomment>License viewer page title</extracomment>
-        <translation>Lizenz</translation>
+        <translation>Licence</translation>
     </message>
     <message id="ytplayer-title-third-party-software">
         <source>Third party software</source>
         <extracomment>Third party software license page title</extracomment>
-        <translation>Drittanbieter-Software</translation>
+        <translation>Logiciels tiers</translation>
     </message>
     <message id="ytplayer-label-signing-in">
         <source>Signing in</source>
         <extracomment>Information label informing the user YouTube sign in process is in progress</extracomment>
-        <translation>Anmelden</translation>
+        <translation>Connexion en cours</translation>
     </message>
     <message id="ytplayer-title-search-options">
         <source>Search options</source>
         <extracomment>Search options page title</extracomment>
-        <translation>Suchoptionen</translation>
+        <translation>Options de recherche</translation>
     </message>
     <message id="ytplayer-label-advanced">
         <source>Advanced</source>
         <extracomment>Generic options menu/button label</extracomment>
-        <translation>Erweitert</translation>
+        <translation>Avancé</translation>
     </message>
     <message id="ytplayer-label-result-type">
         <source>Result type</source>
         <extracomment>Label for YouTube content type search combo box</extracomment>
-        <translation>Treffer-Art</translation>
+        <translation>Type de résultat</translation>
     </message>
     <message id="ytplayer-label-any">
         <source>Any</source>
         <extracomment>Label for generic option menu matching any content type</extracomment>
-        <translation>Beliebig</translation>
+        <translation>Tout</translation>
     </message>
     <message id="ytplayer-label-channel">
         <source>Channel</source>
         <extracomment>Label for menu option indicating YouTube channel content type
 ----------
 Label for channel name text field</extracomment>
-        <translation>Kanal</translation>
+        <translation>Chaîne</translation>
     </message>
     <message id="ytplayer-label-video">
         <source>Video</source>
         <extracomment>Label for menu option indicating YouTube video content type</extracomment>
-        <translation>Video</translation>
+        <translation>Vidéo</translation>
     </message>
     <message id="ytplayer-label-high-definition">
         <source>High definition</source>
         <extracomment>Label for high video quality menu option</extracomment>
-        <translation>Hohe Auflösung</translation>
+        <translation>HD</translation>
     </message>
     <message id="ytplayer-label-standard-definition">
         <source>Standard definition</source>
         <extracomment>Label for standard video quality menu option</extracomment>
-        <translation>Normale Auflösung</translation>
+        <translation>Standard</translation>
     </message>
     <message id="ytplayer-label-video-duration">
         <source>Video duration</source>
         <extracomment>Label for video duration combo box</extracomment>
-        <translation>Videolänge</translation>
+        <translation>Durée de la vidéo</translation>
     </message>
     <message id="ytplayer-label-video-duration-long">
         <source>Longer than 20 minutes</source>
         <extracomment>Label for long (more than 20 minutes) video option menu</extracomment>
-        <translation>Länger als 20 Minuten</translation>
+        <translation>Plus de 20 minutes</translation>
     </message>
     <message id="ytplayer-label-video-duration-medium">
         <source>Between 4 and 20 minutes</source>
         <extracomment>Label for medium (4-20 miniutes) video option menu</extracomment>
-        <translation>Zwischen 4 und 20 Minuten</translation>
+        <translation>Entre 4 et 20 minutes</translation>
     </message>
     <message id="ytplayer-label-video-duration-short">
         <source>Less than 4 minutes</source>
         <extracomment>Label for short (less than 4 minutes) video option MenuItem</extracomment>
-        <translation>Kürzer als 4 Minuten</translation>
+        <translation>Moins de 4 minutes</translation>
     </message>
     <message id="ytplayer-label-video-type">
         <source>Video type</source>
         <extracomment>Label for video type combo box</extracomment>
-        <translation>Videotyp</translation>
+        <translation>Type de vidéo</translation>
     </message>
     <message id="ytplayer-label-video-episode">
         <source>Episode</source>
         <extracomment>Label for episode video type</extracomment>
-        <translation>Episode</translation>
+        <translation>Épisode</translation>
     </message>
     <message id="ytplayer-label-video-movie">
         <source>Movie</source>
@@ -298,7 +298,7 @@ Label for channel name text field</extracomment>
     <message id="ytplayer-label-video-license">
         <source>Video license</source>
         <extracomment>Label for video license combo box</extracomment>
-        <translation>Videolizenz</translation>
+        <translation>Licence de la vidéo</translation>
     </message>
     <message id="ytplayer-label-cretive-commons-license">
         <source>Creative Commons</source>
@@ -313,122 +313,122 @@ Label for channel name text field</extracomment>
     <message id="ytplayer-label-video-event-type">
         <source>Event Type</source>
         <extracomment>Label for video event type combo box</extracomment>
-        <translation>Event-Typ</translation>
+        <translation>Type d’événement</translation>
     </message>
     <message id="ytplayer-label-completed-event">
         <source>Completed</source>
         <extracomment>Label for completed event type option</extracomment>
-        <translation>Fertig</translation>
+        <translation>Terminé</translation>
     </message>
     <message id="ytplayer-label-live-event">
         <source>Live</source>
         <extracomment>Label for live event type option</extracomment>
-        <translation>Live</translation>
+        <translation>En direct</translation>
     </message>
     <message id="ytplayer-label-upcoming-event">
         <source>Upcoming</source>
         <extracomment>Label for upcoming event type option</extracomment>
-        <translation>Bevorstehend</translation>
+        <translation>À venir</translation>
     </message>
     <message id="ytplayer-label-results-order-by">
         <source>Order by</source>
         <extracomment>Label for search result ordering combo box</extracomment>
-        <translation>Sortiere nach</translation>
+        <translation>Trier par</translation>
     </message>
     <message id="ytplayer-label-order-relevance">
         <source>Relevance</source>
         <extracomment>Label for relevance ordering menu option</extracomment>
-        <translation>Relevanz</translation>
+        <translation>Pertinence</translation>
     </message>
     <message id="ytplayer-label-order-date">
         <source>Date</source>
         <extracomment>Label for date ordering menu option</extracomment>
-        <translation>Datum</translation>
+        <translation>Date</translation>
     </message>
     <message id="ytplayer-label-order-rating">
         <source>Rating</source>
         <extracomment>Label for rating ordering menu option</extracomment>
-        <translation>Bewertung</translation>
+        <translation>Classement</translation>
     </message>
     <message id="ytplayer-label-order-title">
         <source>Title</source>
         <extracomment>Label for title ordering menu option</extracomment>
-        <translation>Titel</translation>
+        <translation>Titre</translation>
     </message>
     <message id="ytplayer-label-order-video-count">
         <source>Video count</source>
         <extracomment>Label for video count ordering menu option</extracomment>
-        <translation>Videoaufrufe</translation>
+        <translation>Nombre de vidéos</translation>
     </message>
     <message id="ytplayer-label-order-view-count">
         <source>View count</source>
         <extracomment>Label for view count ordering menu option</extracomment>
-        <translation>Videoaufrufe</translation>
+        <translation>Nombre de vues</translation>
     </message>
     <message id="ytplayer-label-safe-search">
         <source>Safe search</source>
         <extracomment>Label for safe search combo box</extracomment>
-        <translation>Sichere Suche</translation>
+        <translation>Mode restreint</translation>
     </message>
     <message id="ytplayer-label-safe-search-moderate">
         <source>Moderate</source>
         <extracomment>Label for moderate content search filtering option</extracomment>
-        <translation>Moderat</translation>
+        <translation>Modéré</translation>
     </message>
     <message id="ytplayer-label-safe-search-none">
         <source>None</source>
         <extracomment>Label for no search content filtering menu option</extracomment>
-        <translation>Keine</translation>
+        <translation>Désactivé</translation>
     </message>
     <message id="ytplayer-label-safe-search-strict">
         <source>Strict</source>
         <extracomment>Label for strict search content filtering menu option</extracomment>
-        <translation>Strikt</translation>
+        <translation>Strict</translation>
     </message>
     <message id="ytplayer-label-published-before">
         <source>Published before</source>
         <extracomment>Label for published before search option menu</extracomment>
-        <translation>Veröffentlicht vor</translation>
+        <translation>Publications avant</translation>
     </message>
     <message id="ytplayer-label-published-after">
         <source>Published after</source>
         <extracomment>Label for published after search option MenuItem</extracomment>
-        <translation>Veröffentlicht nach</translation>
+        <translation>Publications après</translation>
     </message>
     <message id="ytplayer-label-play">
         <source>Play</source>
         <extracomment>Label for video play button.</extracomment>
-        <translation>Abspielen</translation>
+        <translation>Lecture</translation>
     </message>
     <message id="ytplayer-label-clear-cache">
         <source>Clear cache</source>
         <extracomment>Menu option to clear application caches</extracomment>
-        <translation>Lösche Cache</translation>
+        <translation>Effacer le cache</translation>
     </message>
     <message id="ytplayer-label-image-cache-size">
         <source>Image cache size</source>
         <extracomment>Label for image cache size slider</extracomment>
-        <translation>Größe des Bild-Cache</translation>
+        <translation>Taille du cache d&apos;images</translation>
     </message>
     <message id="ytplayer-label-current-usage">
         <source>Current usage</source>
         <extracomment>Label for current cache usage label</extracomment>
-        <translation>Aktuelle Nutzung</translation>
+        <translation>Utilisation courante</translation>
     </message>
     <message id="ytplayer-label-api-req-cache-size">
         <source>YouTube API response cache size</source>
         <extracomment>Label for YouTube API response cache size slider</extracomment>
-        <translation>Größe des YouTube API Zwischenspeichers</translation>
+        <translation>Taille du cache de réponse de l&apos;API YouTube</translation>
     </message>
     <message id="ytplayer-label-video-queued">
         <source>Download queued</source>
         <extracomment>&quot;Label indicating video was queued for preload&quot;</extracomment>
-        <translation>Download eingereiht</translation>
+        <translation>Téléchargement en attente</translation>
     </message>
     <message id="ytplayer-action-remove">
         <source>Remove</source>
         <extracomment>Menu action to remove the element from the list</extracomment>
-        <translation>Löschen</translation>
+        <translation>Supprimer</translation>
     </message>
     <message id="ytplayer-label-no-videos">
         <source>No videos</source>
@@ -437,86 +437,86 @@ Label for channel name text field</extracomment>
 Label informing the user there are not favorite videos
 ----------
 Label informing the user there are no watched recently videos</extracomment>
-        <translation>Keine Videos</translation>
+        <translation>Aucune vidéo</translation>
     </message>
     <message id="ytplayer-label-video-downloaded">
         <source>Downloaded</source>
         <extracomment>Label indicating the video was downloaded to local device storage</extracomment>
-        <translation>Heruntergeladen</translation>
+        <translation>Téléchargée</translation>
     </message>
     <message id="ytplayer-title-cache-settings">
         <source>Cache settings</source>
         <extracomment>Title of cache settings page</extracomment>
-        <translation>Cache-Einstellungen</translation>
+        <translation>Paramètres du cache</translation>
     </message>
     <message id="ytplayer-label-video-download-paused">
         <source>Download paused</source>
         <extracomment>&quot;Label indicating video download was paused&quot;</extracomment>
-        <translation>Download pausiert</translation>
+        <translation>Téléchargement en pause</translation>
     </message>
     <message id="ytplayer-label-video-downloading-percentage">
         <source>Downloading: %1%</source>
         <extracomment>&quot;Label indicating video download progress with actual percentage value&quot;</extracomment>
-        <translation>Lade herunter: %1%</translation>
+        <translation>Téléchargement : %1%</translation>
     </message>
     <message id="ytplayer-msg-download-finished">
         <source>Video download finished</source>
         <extracomment>Notification summary informing the user video download has been finished</extracomment>
-        <translation>Videodownload abgeschlossen</translation>
+        <translation>Téléchargement de la vidéo terminé</translation>
     </message>
     <message id="ytplayer-msg-download-failed">
         <source>Video download failed</source>
         <extracomment>Notification summary informing the user video download has failed</extracomment>
-        <translation>Videodownload abgebrochen</translation>
+        <translation>Échec du téléchargement de la vidéo</translation>
     </message>
     <message id="ytplayer-action-downloaded-videos">
         <source>Downloads</source>
         <extracomment>Menu option showing downloaded videos page</extracomment>
-        <translation>Downloads</translation>
+        <translation>Vidéos téléchargées</translation>
     </message>
     <message id="ytplayer-title-downloaded-videos">
         <source>Downloaded videos</source>
         <extracomment>Title of downloaded videos page</extracomment>
-        <translation>Heruntergeladene Videos</translation>
+        <translation>Vidéos téléchargées</translation>
     </message>
     <message id="ytplayer-title-download-settings">
         <source>Download settings</source>
         <extracomment>Title of video download settings pge</extracomment>
-        <translation>Download-Einstellungen</translation>
+        <translation>Paramètres de téléchargement</translation>
     </message>
     <message id="ytplayer-label-preferred-quality">
         <source>Preferred video quality</source>
         <extracomment>Label for preferred video quality selection combobox</extracomment>
-        <translation>Bevorzugte Videoqualität</translation>
+        <translation>Qualité préférée</translation>
     </message>
     <message id="ytplayer-label-connection-type">
         <source>Connection type</source>
         <extracomment>Label for video download connection type combobox</extracomment>
-        <translation>Verbindungsart</translation>
+        <translation>Type de connexion</translation>
     </message>
     <message id="ytplayer-label-autoresume">
         <source>Automatically resume downloads</source>
         <extracomment>Label for video download auto resume switch in settings</extracomment>
-        <translation>Setze Downloads automatisch fort</translation>
+        <translation>Reprendre automatiquement les téléchargements</translation>
     </message>
     <message id="ytplayer-description-autoresume">
         <source>On startup, resume all downloads which were either queued or in progress when YTPlayer was closed.</source>
         <extracomment>Description of video download auto resume switch in settings</extracomment>
-        <translation>Setze beim Starten alle Downloads fort, die entweder eingereiht waren oder heruntergeladen wurden, als YTPlayer geschlossen wurde</translation>
+        <translation>Au démarrage, reprendre tous les téléchargements qui étaient en cours ou en attente lors de la fermeture de YTPlayer.</translation>
     </message>
     <message id="ytplayer-label-download-paused">
         <source>Paused</source>
         <extracomment>Label for video download staus indicator telling the user download is paused</extracomment>
-        <translation>Pausiert</translation>
+        <translation>En pause</translation>
     </message>
     <message id="ytplayer-label-download-queued">
         <source>Queued</source>
-        <translation>Eingereiht</translation>
+        <translation>En attente</translation>
     </message>
     <message id="ytplayer-action-resume">
         <source>Resume</source>
         <extracomment>Menu action to resume paused video download</extracomment>
-        <translation>Setze Fort</translation>
+        <translation>Reprendre la lecture</translation>
     </message>
     <message id="ytplayer-action-pause">
         <source>Pause</source>
@@ -526,67 +526,67 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-action-wifi-only">
         <source>WiFi only</source>
         <extracomment>Menu option indicating downloads are allowed only when using WiFi</extracomment>
-        <translation>Nur WLAN</translation>
+        <translation>Wi-Fi seulement</translation>
     </message>
     <message id="ytplayer-action-wifi-cellular">
         <source>WiFi + Cellular</source>
         <extracomment>Menu option indicating downloads are allowed on both WiFi and 3G</extracomment>
-        <translation>WLAN + Mobile Daten</translation>
+        <translation>Wi-Fi + réseau mobile</translation>
     </message>
     <message id="ytplayer-action-cellular-only">
         <source>Cellular only</source>
         <extracomment>Menu option indicating downloads are allowed only when using 3G</extracomment>
-        <translation>Nur Mobile Daten</translation>
+        <translation>Réseau mobile seulement</translation>
     </message>
     <message id="ytplayer-label-max-concurrent-downloads">
         <source>Max. concurrent downloads</source>
         <extracomment>Label for slider changing the maximum number of concurrent downloads</extracomment>
-        <translation>Max. gleichzeitige Downloads</translation>
+        <translation>Téléchargements simultanés max.</translation>
     </message>
     <message id="ytplayer-action-cancel">
         <source>Cancel</source>
         <extracomment>Menu action to cancel paused/queued video download</extracomment>
-        <translation>Abbrechen</translation>
+        <translation>Annuler</translation>
     </message>
     <message id="ytplayer-action-download-video">
         <source>Download video</source>
         <extracomment>Menu option triggering video preload</extracomment>
-        <translation>Lade Video herunter</translation>
+        <translation>Télécharger la vidéo</translation>
     </message>
     <message id="ytplayer-action-cancel-download">
         <source>Cancel download</source>
         <extracomment>Menu option canceling pending/in progress video preload</extracomment>
-        <translation>Brich Download ab</translation>
+        <translation>Annuler le téléchargement</translation>
     </message>
     <message id="ytplayer-action-pause-download">
         <source>Pause download</source>
         <extracomment>Menu option allowing the user to pause video download</extracomment>
-        <translation>Pausiere Download</translation>
+        <translation>Mettre en pause le téléchargement</translation>
     </message>
     <message id="ytplayer-action-resume-download">
         <source>Resume download</source>
         <extracomment>Menu option allowing the user to resume video download</extracomment>
-        <translation>Setze Download fort</translation>
+        <translation>Reprendre le téléchargement</translation>
     </message>
     <message id="ytplayer-action-remove-download">
         <source>Remove download</source>
         <extracomment>Menu option allowing the user to remove downloaded video</extracomment>
-        <translation>Entferne Download</translation>
+        <translation>Supprimer la vidéo téléchargée</translation>
     </message>
     <message id="ytplayer-msg-cancelling-download">
         <source>Cancelling download</source>
         <extracomment>Remorse popup message telling the user video download will be cancelled</extracomment>
-        <translation>Download abbrechen</translation>
+        <translation>Annulation du téléchargement</translation>
     </message>
     <message id="ytplayer-msg-removing-download">
         <source>Removing download</source>
         <extracomment>Remorse popup message telling the user video download will be removed</extracomment>
-        <translation>Entferne Download</translation>
+        <translation>Suppression de la vidéo téléchargée</translation>
     </message>
     <message id="ytplayer-msg-clearing-cache">
         <source>Clearing cache</source>
         <extracomment>Remorse popup message telling the user the cache will be cleaned</extracomment>
-        <translation>Lösche Cache</translation>
+        <translation>Nettoyage du cache</translation>
     </message>
     <message id="ytplayer-action-cache-settings">
         <source>Cache</source>
@@ -596,92 +596,92 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-action-download-settings">
         <source>Download</source>
         <extracomment>Label for menu option showing video download settings page</extracomment>
-        <translation>Download</translation>
+        <translation>Téléchargement</translation>
     </message>
     <message id="ytplayer-label-account-integration">
         <source>YouTube account integration</source>
         <extracomment>Label of switch activating/deactivating YouTube account integration</extracomment>
-        <translation>YouTube-Kontointegration</translation>
+        <translation>Intégration du compte YouTube</translation>
     </message>
     <message id="ytplayer-description-account-integration">
         <source>Allow YTPlayer to manage YouTube user account.</source>
         <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
-        <translation>Erlaube YTPlayer das YouTube-Benutzerkonto zu verwalten</translation>
+        <translation>Autorise YTPlayer à gérer votre compte utilisateur YouTube.</translation>
     </message>
     <message id="ytplayer-msg-channel-subscribed">
         <source>Channel subscribed</source>
         <extracomment>Notification summary telling the user channel was succesfully subscribed</extracomment>
-        <translation>Kanal abonniert</translation>
+        <translation>Abonné à la chaîne</translation>
     </message>
     <message id="ytplayer-msg-unsubscribing-channel">
         <source>Unsubscribing channel</source>
         <extracomment>Remorse popup message telling the user channel is about to be unsubscribed</extracomment>
-        <translation>Bestelle Kanal ab</translation>
+        <translation>Désabonnement de la chaîne</translation>
     </message>
     <message id="ytplayer-msg-channel-unsubscribed">
         <source>Channel unsubscribed</source>
         <extracomment>Notification summary telling the user channel was succesfully unsubscribed</extracomment>
-        <translation>Kanal abbestellt</translation>
+        <translation>Désabonné de la chaîne</translation>
     </message>
     <message id="ytplayer-action-copy-link-to-clipboard">
         <source>Copy link to clipboard</source>
         <extracomment>Menu option copying video link to clipboard</extracomment>
-        <translation>Kopiere Link in Zwischenablage</translation>
+        <translation>Copier le lien dans le presse-papier</translation>
     </message>
     <message id="ytplayer-msg-link-copied">
         <source>Link copied</source>
         <extracomment>Notification summary informing the user link was copied to clipboard</extracomment>
-        <translation>Link kopiert</translation>
+        <translation>Lien copié</translation>
     </message>
     <message id="ytplayer-action-open-link-from-clipboard">
         <source>Open link from clipboard</source>
         <extracomment>Menu opion for opening video links from clipboard</extracomment>
-        <translation>Öffne Link aus Zwischenablage</translation>
+        <translation>Ouvrir le lien depuis le presse-papier</translation>
     </message>
     <message id="ytplayer-action-open-in-browser">
         <source>Open in browser</source>
         <extracomment>Menu option opening YouTube video page in a web browser</extracomment>
-        <translation>Öffne in Browser</translation>
+        <translation>Ouvrir dans le navigateur</translation>
     </message>
     <message id="ytplayer-action-browse-channel">
         <source>Browser channel</source>
         <extracomment>menu option allowing the user to browser YouTube channel</extracomment>
-        <translation>Durchsuche Kanal</translation>
+        <translation>Parcourir la chaîne</translation>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible">
         <source>No video streams available</source>
         <extracomment>Notification summary informing the user direct video playback is not possible</extracomment>
-        <translation>Keine Videostreams verfügbar</translation>
+        <translation>Aucun flux vidéo disponible</translation>
     </message>
     <message id="ytplayer-msg-direct-playback-impossible-desc">
         <source>YTPLayer failed to find usable video streams</source>
         <extracomment>Notification body explaining why direct video playback is not possible</extracomment>
-        <translation>YTPlayer konnte keine Videostreams finden</translation>
+        <translation>YTPlayer n&apos;a pas trouvé de flux vidéo exploitable</translation>
     </message>
     <message id="ytplayer-msg-launching-browser">
         <source>Launching browser</source>
         <extracomment>Message informing the user web browser is being launched</extracomment>
-        <translation>Öffne Browser</translation>
+        <translation>Ouverture du navigateur</translation>
     </message>
     <message id="ytplayer-action-clear-history">
         <source>Clear history</source>
         <extracomment>Menu option allowing the user to clear search history</extracomment>
-        <translation>Lösche Verlauf</translation>
+        <translation>Nettoyer l&apos;historique</translation>
     </message>
     <message id="ytplayer-msg-clearing-history">
         <source>Clearing history</source>
         <extracomment>&quot;Remorse popup message telling the user search history is about to be cleared&quot;</extracomment>
-        <translation>Lösche Verlauf</translation>
+        <translation>Nettoyage de l&apos;historique</translation>
     </message>
     <message id="ytplayer-title-search-settings">
         <source>Search settings</source>
         <extracomment>Search settings page title</extracomment>
-        <translation>Suchoptionen</translation>
+        <translation>Paramètres de recherche</translation>
     </message>
     <message id="ytplayer-label-suggestion-engine">
         <source>Suggestion source</source>
         <extracomment>Label for the search suggestion engine combo box</extracomment>
-        <translation>Vorschlagssuche</translation>
+        <translation>Source des suggestions</translation>
     </message>
     <message id="ytplayer-label-google-suggestion-engine">
         <source>Google</source>
@@ -691,217 +691,217 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-label-history-suggestion-engine">
         <source>Search history</source>
         <extracomment>Label for history based search suggestion engine</extracomment>
-        <translation>Durchsuche Verlauf</translation>
+        <translation>Historique de recherche</translation>
     </message>
     <message id="ytplayer-action-search-settings">
         <source>Search</source>
         <extracomment>Label for menu option showing search settings page</extracomment>
-        <translation>Suche</translation>
+        <translation>Recherche</translation>
     </message>
     <message id="ytplayer-action-save-log">
         <source>Save log</source>
         <extracomment>Menu action allowing the user to save application log</extracomment>
-        <translation>Speichere Log</translation>
+        <translation>Enregistrer le journal</translation>
     </message>
     <message id="ytplayer-msg-saving-log">
         <source>Saving log</source>
         <extracomment>Remorse popup message telling the user log file will be saved</extracomment>
-        <translation>Speichere Log</translation>
+        <translation>Enregistrement du journal</translation>
     </message>
     <message id="ytplayer-msg-log-saved">
         <source>Log saved</source>
         <extracomment>Body of notification informing the user application log was saved</extracomment>
-        <translation>Log gespeichert</translation>
+        <translation>Journal enregistré</translation>
     </message>
     <message id="ytplayer-action-view-logs">
         <source>View logs</source>
         <extracomment>Label for menu option showing application log viewer</extracomment>
-        <translation>Betrache Logs</translation>
+        <translation>Voir le journal</translation>
     </message>
     <message id="ytplayer-title-language-settings">
         <source>Language settings</source>
         <extracomment>Title of language settings page</extracomment>
-        <translation>Sprachoptionen</translation>
+        <translation>Paramètres de langue</translation>
     </message>
     <message id="ytplayer-action-language-settings">
         <source>Language</source>
         <extracomment>Label for menu option showing application language settings page</extracomment>
-        <translation>Sprache</translation>
+        <translation>Langue</translation>
     </message>
     <message id="ytplayer-msg-change-language">
         <source>Change language to %1?</source>
         <extracomment>Dialog text asking the user if UI language change should be performed</extracomment>
-        <translation>Ändere Sprache zu %1?</translation>
+        <translation>Passer en %1 ?</translation>
     </message>
     <message id="ytplayer-action-translation-credits">
         <source>Translations</source>
         <extracomment>Label for button showing application translation credits page</extracomment>
-        <translation>Übersetzungen</translation>
+        <translation>Traductions</translation>
     </message>
     <message id="ytplayer-title-translation-credits">
         <source>Translations</source>
         <extracomment>Title of translation credits page</extracomment>
-        <translation>Übersetzungen</translation>
+        <translation>Traductions</translation>
     </message>
     <message id="ytplayer-label-channels">
         <source>Channels</source>
         <extracomment>Label for channels section indicator in main menu</extracomment>
-        <translation>Kanäle</translation>
+        <translation>Chaînes</translation>
     </message>
     <message id="ytplayer-label-videos">
         <source>Videos</source>
         <extracomment>Main menu label indicating videos section of the page</extracomment>
-        <translation>Videos</translation>
+        <translation>Vidéos</translation>
     </message>
     <message id="ytplayer-action-watched-recently">
         <source>Watched recently</source>
         <extracomment>Menu opion showing recently watched videos page</extracomment>
-        <translation>Kürzlich angesehen</translation>
+        <translation>Derniers visionnages</translation>
     </message>
     <message id="ytplayer-title-watched-recently">
         <source>Watched recently</source>
         <extracomment>Title for recently watched videos page</extracomment>
-        <translation>Kürzlich angesehen</translation>
+        <translation>Derniers visionnages</translation>
     </message>
     <message id="ytplayer-acton-favorites">
         <source>Favorites</source>
         <extracomment>Menu option showing video favorites page</extracomment>
-        <translation>Favoriten</translation>
+        <translation>Favoris</translation>
     </message>
     <message id="ytplayer-title-favorites">
         <source>Favorites</source>
         <extracomment>Title for favorite videos page</extracomment>
-        <translation>Favoriten</translation>
+        <translation>Favoris</translation>
     </message>
     <message id="ytplayer-action-hide-search">
         <source>Hide search</source>
         <extracomment>Menu option allowing the user to hide search field</extracomment>
-        <translation>Verberge Suche</translation>
+        <translation>Masquer la recherche</translation>
     </message>
     <message id="ytplayer-msg-removing-favorite">
         <source>Removing favorite</source>
         <extracomment>Remorse popup message telling the use favorite is about to be removed</extracomment>
-        <translation>Entferne Favorit</translation>
+        <translation>Suppression du favori</translation>
     </message>
     <message id="ytplayer-title-player-settings">
         <source>Player settings</source>
         <extracomment>Title of video player settings page</extracomment>
-        <translation>Player-Einstellungen</translation>
+        <translation>Paramètres de lecture</translation>
     </message>
     <message id="ytplayer-action-player-settings">
         <source>Player</source>
         <extracomment>Label for menu option showing video player settings page</extracomment>
-        <translation>Player</translation>
+        <translation>Lecteur</translation>
     </message>
     <message id="ytplayer-status-looking-for-streams">
         <source>Looking for streams</source>
         <extracomment>Status message indicating video player is looking for audio/video streams</extracomment>
-        <translation>Suche nach Streams</translation>
+        <translation>Recherche de flux</translation>
     </message>
     <message id="ytplayer-status-buffering">
         <source>Buffering: %1%</source>
         <extracomment>Media player status indicating content is buffering</extracomment>
-        <translation>Buffere %1%</translation>
+        <translation>Mise en mémoire tampon : %1%</translation>
     </message>
     <message id="ytplayer-status-loading">
         <source>Loading</source>
         <extracomment>Media player status indicating content is loading</extracomment>
-        <translation>Lade</translation>
+        <translation>Chargement</translation>
     </message>
     <message id="ytplayer-status-stalled">
         <source>Stalled</source>
         <extracomment>Media player status indicating content loading has stalled</extracomment>
-        <translation>Angehalten</translation>
+        <translation>Bloqué</translation>
     </message>
     <message id="ytplayer-status-invalid-media">
         <source>Invalid media</source>
         <extracomment>Media player status indicating invalid content type</extracomment>
-        <translation>Ungültiges Medium</translation>
+        <translation>Média non valide</translation>
     </message>
     <message id="ytplayer-label-controls-hide-delay">
         <source>Controls hide delay</source>
         <extracomment>Label for slider changing video player controls hide delay</extracomment>
-        <translation>Verzögerung beim Steueremelente verstecken</translation>
+        <translation>Délai de masquage des contrôles</translation>
     </message>
     <message id="ytplayer-label-autopause">
         <source>Auto pause when deactivated</source>
         <extracomment>Label for video auto pause option on/off switch.</extracomment>
-        <translation>Pausiere automatisch wenn in den Hintergrund verschoben</translation>
+        <translation>Pause automatique en arrière-plan</translation>
     </message>
     <message id="ytplayer-description-autopause">
         <source>Automatically pause video playback when application is deactivated.</source>
         <extracomment>Description of video auto pause option switch.</extracomment>
-        <translation>Pausiere Videowiedergabe automatisch wenn die Anwendung in den Hintergrund verschoben wird</translation>
+        <translation>Met automatiquement en pause la vidéo lorsque l&apos;application passe en arrière-plan.</translation>
     </message>
     <message id="ytplayer-label-quality-wifi">
         <source>Default video quality on WiFi</source>
         <extracomment>Label for combo box allowing the user to change default video quality when using WiFi connection.</extracomment>
-        <translation>Standard-Videoqualität bei WLAN</translation>
+        <translation>Qualité par défaut avec Wi-Fi</translation>
     </message>
     <message id="ytplayer-label-quality-cellular">
         <source>Default video quality on cellular</source>
         <extracomment>Label for combo box allowing the user to change default video quality when using cellular connection.</extracomment>
-        <translation>Standard-Videoqualität bei mobilen Daten</translation>
+        <translation>Qualité par défaut avec réseau mobile</translation>
     </message>
     <message id="ytplayer-label-autoload">
         <source>Early video loading</source>
         <extracomment>Label for combo box allowing the user to change video autoload behavior.</extracomment>
-        <translation>Frühzeitiges Video-Laden</translation>
+        <translation>Préchargement de la vidéo</translation>
     </message>
     <message id="ytplayer-description-autoload">
         <source>Start preloading video data before player page is activated.</source>
         <extracomment>Descripton for combo box allowing the user to change video autload behavior.</extracomment>
-        <translation>Starte frühzeitiges Video-Laden bevor die Player-Seite aktiviert wird</translation>
+        <translation>Démarre le préchargement de la vidéo avant même que le lecteur ne soit mis en route.</translation>
     </message>
     <message id="ytplayer-action-autoload-always">
         <source>Always</source>
         <extracomment>Menu option allowing the player to always preaload video data.</extracomment>
-        <translation>Immer</translation>
+        <translation>Toujours</translation>
     </message>
     <message id="ytplayer-action-autoload-wifi">
         <source>WiFi only</source>
         <extracomment>Menu option allowing the player to preaload video data only when using WiFi connection.</extracomment>
-        <translation>Nur WLAN</translation>
+        <translation>Wi-Fi seulement</translation>
     </message>
     <message id="ytplayer-action-autoload-cellular">
         <source>Cellular only</source>
         <extracomment>Menu option allowing the player to preaload video data only when using cellular connection.</extracomment>
-        <translation>Nur Mobile Daten</translation>
+        <translation>Réseau mobile seulement</translation>
     </message>
     <message id="ytplayer-action-autoload-never">
         <source>Never</source>
         <extracomment>Menu option disallowing the player to always preaload video data.</extracomment>
-        <translation>Niemals</translation>
+        <translation>Jamais</translation>
     </message>
     <message id="ytplayer-label-broken-image">
         <source>No image</source>
         <extracomment>Label shown where video thumbnail is not valid, can&apos;t be loaded. Should be very short 8-10 characters max.</extracomment>
-        <translation>Kein Bild</translation>
+        <translation>Pas d&apos;image</translation>
     </message>
     <message id="ytplayer-label-no-streams">
         <source>No streams!</source>
         <extracomment>Label indicating current video has no valid streams. It replaces Play button in the video overview page header.</extracomment>
-        <translation>Keine Streams!</translation>
+        <translation>Pas de flux !</translation>
     </message>
     <message id="ytplayer-msg-video-unavailable">
         <source>Video no longer available</source>
         <extracomment>Notification summary informing the user video is no longer available.</extracomment>
-        <translation>Video nicht länger verfügbar</translation>
+        <translation>Vidéo indisponible</translation>
     </message>
     <message id="ytplayer-msg-video-unavailable-desc">
         <source>Video was removed from YouTube</source>
         <extracomment>Notification body explaining why video is no longer available.</extracomment>
-        <translation>Video wurde von YouTube entfernt</translation>
+        <translation>La vidéo a été supprimée de YouTube</translation>
     </message>
     <message id="ytplayer-label-channel-unavailable">
         <source>Channel no longer available</source>
         <extracomment>Label for placeholder informing the user the channel is no longer available.</extracomment>
-        <translation>Kanal nicht länger verfügbar</translation>
+        <translation>Chaîne indisponible</translation>
     </message>
     <message id="ytplayer-action-translate-app">
         <source>Translate YTPlayer</source>
         <extracomment>Menu option opening a link to YTPlayer translation page on Transifex.</extracomment>
-        <translation>Übersetze YTPlayer</translation>
+        <translation>Traduire YTPlayer</translation>
     </message>
 </context>
 </TS>
