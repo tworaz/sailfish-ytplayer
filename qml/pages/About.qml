@@ -141,6 +141,6 @@ Page {
         anchors.bottomMargin: Theme.paddingSmall
         color: Theme.secondaryColor
         font.pixelSize: Theme.fontSizeTiny
-        text: "https://github.com/tworaz/sailfish-ytplayer"
+        text: "https://github.com/direc85/sailfish-ytplayer"
     }
 }

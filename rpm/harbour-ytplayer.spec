@@ -17,7 +17,7 @@ Version:    0.6.0
 Release:    1
 Group:      Qt/Qt
 License:    BSD-3-Clause
-URL:        https://github.com/tworaz/sailfish-ytplayer
+URL:        https://github.com/direc85/sailfish-ytplayer
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   pyotherside-qml-plugin-python3-qt5
