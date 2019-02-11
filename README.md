@@ -14,7 +14,7 @@ Getting the source
 
 Since YTPlayer uses some extra 3rd party components shipped in git submodules it needs to be cloned with --recursive option. Ex:
 
-- git clone --recursive https://github.com/tworaz/sailfish-ytplayer.git
+- git clone --recursive https://github.com/direc85/sailfish-ytplayer.git
 
 Build Prequisites
 -----------------
