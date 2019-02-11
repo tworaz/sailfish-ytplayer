@@ -75,6 +75,8 @@ DISTFILES += \
         bin/youtube-dl \
         languages/*.ts
 
+SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
+
 include(third_party/youtube_dl.pri)
 include(languages/translations.pri)
 

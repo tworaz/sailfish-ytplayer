@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file alias="mcc-data.json">resources/mcc-data.json</file>
-        <file alias="logo.png">resources/logo.png</file>
         <file alias="translations.json">languages/translations.json</file>
     </qresource>
     <qresource prefix="/icons">
