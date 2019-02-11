@@ -4,12 +4,7 @@
 
 TARGET = harbour-ytplayer
 
-CONFIG += sailfishapp sailfishapp_no_deploy_qml
-
-# Enable this _once_ to build translations.
-# For some strange reason, it needs to be disabled
-# for RPM packet to get built..!?
-#CONFIG += sailfishapp_i18n
+CONFIG += sailfishapp sailfishapp_no_deploy_qml sailfishapp_i18n
 
 QT += dbus sql concurrent qml core multimedia
 
@@ -67,18 +62,18 @@ OTHER_FILES += \
         scripts/generate-config-h.py \
         scripts/get_version_str.sh \
         rpm/harbour-ytplayer.spec \
-        languages/*.qm \
+        translations/*.qm \
         bin/youtube-dl
 
 DISTFILES += \
-        languages/*.qm \
+        translations/*.qm \
         bin/youtube-dl \
-        languages/*.ts
+        translations/*.ts
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
 include(third_party/youtube_dl.pri)
-include(languages/translations.pri)
+include(translations/translations.pri)
 
 KEY_FILE = $$top_srcdir/youtube-data-api-v3.key
 CLIENT_ID_FILE = $$top_srcdir/youtube-client-id.json

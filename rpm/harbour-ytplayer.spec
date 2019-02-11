@@ -54,6 +54,6 @@ desktop-file-install --delete-original       \
 %attr(0755,root,root) %{_bindir}/%{name}
 %attr(0755,root,root) %{_datadir}/%{name}/bin/youtube-dl
 %{_datadir}/%{name}/licenses
-%{_datadir}/%{name}/languages
+%{_datadir}/%{name}/translations
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/icons/hicolor/*/apps/%{name}.png
