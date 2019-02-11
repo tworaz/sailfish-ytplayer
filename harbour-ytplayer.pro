@@ -4,7 +4,7 @@
 
 TARGET = harbour-ytplayer
 
-CONFIG += sailfishapp sailfishapp_no_deploy_qml sailfishapp_i18n
+CONFIG += sailfishapp sailfishapp_no_deploy_qml # sailfishapp_i18n
 
 QT += dbus sql concurrent qml core multimedia
 
@@ -62,13 +62,12 @@ OTHER_FILES += \
         scripts/generate-config-h.py \
         scripts/get_version_str.sh \
         rpm/harbour-ytplayer.spec \
-        translations/*.qm \
+        translations/*.ts \
         bin/youtube-dl
 
 DISTFILES += \
         translations/*.qm \
-        bin/youtube-dl \
-        translations/*.ts
+        bin/youtube-dl
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 

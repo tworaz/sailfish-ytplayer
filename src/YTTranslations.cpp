@@ -74,7 +74,7 @@ bool
 YTTranslations::initialize()
 {
     QString locale = QLocale::system().name();
-    QString dir = SailfishApp::pathTo(QString("languages")).toLocalFile();
+    QString dir = SailfishApp::pathTo(QString("translations")).toLocalFile();
 
     qDebug() << "System locale is:" << locale;
 
@@ -94,9 +94,11 @@ YTTranslations::initialize()
     }
 
     if (!_translator.load(_language, dir)) {
-        qCritical() << "Failed to load translation:" << _language;
+        qCritical() << "Failed to load translation:" << dir + _language;
         return false;
     }
+
+
 
     return QGuiApplication::installTranslator(&_translator);
 }
@@ -135,7 +137,7 @@ YTTranslations::setLanguage(QString lang)
         QSettings().setValue(kLanguageKey, lang);
     }
 
-    QString dir = SailfishApp::pathTo(QString("languages")).toLocalFile();
+    QString dir = SailfishApp::pathTo(QString("translations")).toLocalFile();
     _translator.load(lang, dir);
 
     emit languageChanged(lang);
