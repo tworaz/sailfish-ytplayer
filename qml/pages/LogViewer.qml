@@ -30,7 +30,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer 1.0
-import org.nemomobile.notifications 1.0
+import Nemo.Notifications 1.0
 
 Page {
     allowedOrientations: Orientation.All

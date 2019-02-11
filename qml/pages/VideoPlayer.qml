@@ -7,7 +7,7 @@ import Sailfish.Silica 1.0
 import QtMultimedia 5.0
 import Sailfish.Media 1.0
 import harbour.ytplayer 1.0
-import org.nemomobile.notifications 1.0
+import Nemo.Notifications 1.0
 import "../common/Helpers.js" as H
 import "../common"
 
