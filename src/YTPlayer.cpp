@@ -129,6 +129,20 @@ public:
 int
 main(int argc, char *argv[])
 {
+    // Some more speed & memory improvements
+	// Borrowed these from LLC MediaPlayer :)
+    setenv("QT_NO_FAST_MOVE", "0", 0);
+    setenv("QT_NO_FT_CACHE","0",0);
+    setenv("QT_NO_FAST_SCROLL","0",0);
+    setenv("QT_NO_ANTIALIASING","1",1);
+    setenv("QT_NO_FREE","0",0);
+    setenv("QT_PREDICT_FUTURE", "1", 1);
+    setenv("QT_NO_BUG", "1", 1);
+    setenv("QT_NO_QT", "1", 1);
+    // Taken from sailfish-browser
+    setenv("USE_ASYNC", "1", 1);
+    QQuickWindow::setDefaultAlphaBuffer(true);
+
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> view(SailfishApp::createView());
     YTTranslations translations;

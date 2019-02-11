@@ -5,6 +5,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtMultimedia 5.0
+import Sailfish.Media 1.0
 import harbour.ytplayer 1.0
 import org.nemomobile.notifications 1.0
 import "../common/Helpers.js" as H
@@ -171,6 +172,7 @@ Page {
         PageHeader {
             id: header
             z: videoOutput.z + 2
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
@@ -184,6 +186,7 @@ Page {
             color: "black"
             opacity: 0.5
             z: header.z - 1
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
@@ -390,6 +393,7 @@ Page {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.highlightColor
             }
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
@@ -404,6 +408,7 @@ Page {
             radius: 4.0
             color: "black"
             opacity: 0.0
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
@@ -422,6 +427,7 @@ Page {
                 mediaPlayer.seek(value)
                 controlsTimer.startIfNeeded()
             }
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
@@ -435,6 +441,7 @@ Page {
             color: "black"
             opacity: 0.5
             z: progressSlider.z - 1
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
@@ -449,6 +456,7 @@ Page {
             text: H.parseDuration(mediaPlayer.duration)
             opacity: mediaPlayer.duration > 0 ? progressSliderBg.opacity * 2 : 0.0
             z: progressSliderBg.z + 1
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
@@ -457,7 +465,7 @@ Page {
         PushUpMenu {
             id: bottomMenu
             bottomMargin: Theme.paddingSmall
-            visible: priv.controlsVisible && multipleQualitiesAvailable
+            visible: opacity > 0.0 && priv.controlsVisible && multipleQualitiesAvailable
 
             property bool multipleQualitiesAvailable: false
             property Item selectedItem
