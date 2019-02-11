@@ -5,10 +5,13 @@
 TARGET = harbour-ytplayer
 
 CONFIG += sailfishapp sailfishapp_no_deploy_qml
-QT += dbus sql concurrent
+
+# Enable this _once_ to build translations.
+# For some strange reason, it needs to be disabled
+# for RPM packet to get built..!?
 #CONFIG += sailfishapp_i18n
 
-QT += dbus sql concurrent qml core
+QT += dbus sql concurrent qml core multimedia
 
 SOURCES += \
         src/YTPlayer.cpp \
@@ -63,7 +66,14 @@ OTHER_FILES += \
         scripts/mcc-data-util.py \
         scripts/generate-config-h.py \
         scripts/get_version_str.sh \
-        rpm/harbour-ytplayer.spec
+        rpm/harbour-ytplayer.spec \
+        languages/*.qm \
+        bin/youtube-dl
+
+DISTFILES += \
+        languages/*.qm \
+        bin/youtube-dl \
+        languages/*.ts
 
 include(third_party/youtube_dl.pri)
 include(languages/translations.pri)
