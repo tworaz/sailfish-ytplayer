@@ -39,22 +39,28 @@ BackgroundItem {
 
     AsyncImage {
         id: image
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: parent.left
-        anchors.leftMargin: Theme.paddingLarge
-        //height: Theme.itemSizeMedium * 0.7
-        //width: Theme.itemSizeMedium * 0.7
+        anchors {
+            verticalCenter: parent.verticalCenter
+            left: parent.left
+            leftMargin: Theme.paddingLarge
+        }
         fillMode: Image.PreserveAspectFit
     }
     Label {
         id: label
-        anchors.verticalCenter: parent.verticalCenter
-        anchors.left: image.right
-        anchors.right: parent.right
-        anchors.leftMargin: Theme.paddingLarge
-        anchors.rightMargin: sidePadding
-        color: parent.highlighted ? Theme.highlightColor : Theme.primaryColor
-        font.family: Theme.fontFamilyHeading
-        font.pixelSize: Theme.fontSizeMedium
+        anchors {
+            verticalCenter: parent.verticalCenter
+            left: image.right
+            right: parent.right
+            leftMargin: Theme.paddingLarge
+            rightMargin: sidePadding
+        }
+        color: parent.highlighted
+               ? Theme.highlightColor
+               : Theme.primaryColor
+        font {
+            family: Theme.fontFamilyHeading
+            pixelSize: Theme.fontSizeMedium
+        }
     }
 }
