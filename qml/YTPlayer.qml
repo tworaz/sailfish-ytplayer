@@ -40,7 +40,6 @@ ApplicationWindow
     readonly property double thumbnailAspectRatio: 9 / 16
     readonly property string youtubeIconsFontName: "youtube-icons"
     readonly property int kMaxCoverThumbnailCount: 12
-    readonly property int kThumbnailWidth: 120
     readonly property color kBlackTransparentBg: "#AA000000"
     readonly property string kYoutubeVideoUrlBase: "https://www.youtube.com/watch?v="
     readonly property int kListAutoLoadItemThreshold: 10
