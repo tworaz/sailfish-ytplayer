@@ -29,6 +29,8 @@ BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  desktop-file-utils
 BuildRequires:  zip
 BuildRequires:  python3-base
+BuildRequires:  qt5-qtconcurrent-devel
+BuildRequires:  qt5-qttools-linguist
 
 %description
 YTPlayer is an unofficial YouTube client for SailfishOS
