@@ -4,9 +4,9 @@ YTPlayer
 YTPlayer is an unofficial YouTube client for SailfishOS.
 
 <div class="row">
-<img width="240px" src="https://raw.githubusercontent.com/tworaz/sailfish-ytplayer/master/artwork/screenshots/20150915210645.jpg" />
-<img width="240px" src="https://raw.githubusercontent.com/tworaz/sailfish-ytplayer/master/artwork/screenshots/20150915210731.jpg" />
-<img width="240px" src="https://raw.githubusercontent.com/tworaz/sailfish-ytplayer/master/artwork/screenshots/20150915210805.jpg" />
+<img width="240px" src="https://github.com/direc85/harbour-ytplayer/raw/master/artwork/screenshots/VirtualBox_Sailfish%20OS%20Emulator_02_12_2018_00_53_48.png" />
+<img width="240px" src="https://github.com/direc85/harbour-ytplayer/raw/master/artwork/screenshots/VirtualBox_Sailfish%20OS%20Emulator_12_02_2019_15_00_00.png" />
+<img width="240px" src="https://github.com/direc85/harbour-ytplayer/raw/master/artwork/screenshots/VirtualBox_Sailfish%20OS%20Emulator_12_02_2019_15_00_45.png" />
 </div>
 
 Getting the source
