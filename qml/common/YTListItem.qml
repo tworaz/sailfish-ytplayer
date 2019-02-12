@@ -55,18 +55,19 @@ ListItem {
         Rectangle {
             anchors.bottom: parent.bottom
             anchors.right: parent.right
-            visible: (ytItem.duration.length > 0) &&
-                     parent.status === Image.Ready
+            visible: (ytItem.duration.length > 0) && parent.status === Image.Ready
             color: "black"
             height: childrenRect.height
             width: childrenRect.width + 2 * Theme.paddingSmall
+            opacity: 0.8
 
             Label {
                 x: Theme.paddingSmall
                 text: ytItem.duration.length > 0 ?
                           (new DJS.Duration(ytItem.duration)).asClock() : ""
                 color: Theme.primaryColor
-                font.pixelSize: Theme.fontSizeExtraSmall * 0.8
+                font.pixelSize: Theme.fontSizeExtraSmall * 0.7
+                font.weight: Font.Bold
                 horizontalAlignment: Text.AlignHCenter
             }
         }
