@@ -10,6 +10,7 @@ ytdl.target = youtube-dl
 ytdl.commands = \
     cd $$_SRC && \
     touch README.txt youtube-dl.1 youtube-dl.fish youtube-dl.bash-completion && \
+    python3 setup.py build_lazy_extractors && \
     python3 setup.py build_py --quiet --compile -O2 --build-lib $$_BUILD_DIR && \
     cd $$_BUILD_DIR && \
     find youtube_dl -type f -name '*.pyo' -delete && \
