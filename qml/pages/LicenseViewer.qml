@@ -45,10 +45,11 @@ Page {
     }
 
     SilicaFlickable {
+        id: licenseFlickable
         anchors.fill: parent
-        anchors.leftMargin: Theme.paddingMedium
-        anchors.rightMargin: Theme.paddingMedium
-        contentHeight: column.height
+        contentHeight: column.height + Theme.paddingLarge
+
+        VerticalScrollDecorator { flickable: licenseFlickable }
 
         Column {
             id: column
@@ -61,14 +62,13 @@ Page {
             }
             Text {
                 id: licenseText
-                width: parent.width
+                x: Theme.paddingMedium
+                width: parent.width - 2*x
                 font.pixelSize: Theme.fontSizeExtraSmall
                 color: Theme.secondaryColor
                 text: YTUtils.getLicense(licenseFile)
                 wrapMode: Text.Wrap
             }
         }
-
-        VerticalScrollDecorator {}
     }
 }
