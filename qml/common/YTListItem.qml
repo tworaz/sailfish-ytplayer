@@ -81,14 +81,27 @@ ListItem {
         wrapMode: Text.Wrap
         anchors {
             left: thumbnail.right
-            right: parent.right
+            right: imageChannel.visible ? imageChannel.right : parent.right
             leftMargin: Theme.paddingSmall
             rightMargin: Theme.paddingSmall
             verticalCenter: parent.verticalCenter
         }
         font {
             family: Theme.fontFamily
-            pixelSize: Theme.fontSizeExtraSmall
+            pixelSize: Theme.fontSizeSmall
+        }
+    }
+
+    Image {
+        id: imageChannel
+        source: "image://theme/icon-m-media-artists"
+        visible: youtubeId.kind === "youtube#channel"
+        width: Theme.iconSizeMedium
+        height: Theme.iconSizeMedium
+        anchors {
+            right: parent.right
+            rightMargin: Theme.paddingSmall
+            verticalCenter: parent.verticalCenter
         }
     }
 
