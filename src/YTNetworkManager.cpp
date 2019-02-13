@@ -39,11 +39,14 @@ _isCellular(const QNetworkConfiguration& config)
 {
     switch (config.bearerType()) {
     case QNetworkConfiguration::Bearer2G:
-    case QNetworkConfiguration::BearerBluetooth:
     case QNetworkConfiguration::BearerHSPA:
     case QNetworkConfiguration::BearerCDMA2000:
     case QNetworkConfiguration::BearerWCDMA:
     case QNetworkConfiguration::BearerWiMAX:
+    case QNetworkConfiguration::BearerEVDO:
+    case QNetworkConfiguration::BearerLTE:
+    case QNetworkConfiguration::Bearer3G:
+    case QNetworkConfiguration::Bearer4G:
         return true;
     default:
         return false;
