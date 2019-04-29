@@ -1,5 +1,6 @@
-/*.pro.user
-/mcc.json
-/youtube-data-api-v3.key
-/youtube-client-id.json
-/rpm/*.spec.*
+*.pro.user
+mcc.json
+youtube-data-api-v3.key
+youtube-client-id.json
+rpm/*.spec*
+srv/config.h
