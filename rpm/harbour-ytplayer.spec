@@ -13,8 +13,8 @@ Name:       harbour-ytplayer
 %{!?qtc_make:%define qtc_make make}
 %{?qtc_builddir:%define _builddir %qtc_builddir}
 Summary:    Native YouTube client for SailfishOS
-Version:    0.6.0
-Release:    2
+Version:    0.6.1
+Release:    3
 Group:      Qt/Qt
 License:    BSD-3-Clause
 URL:        https://github.com/direc85/sailfish-ytplayer
