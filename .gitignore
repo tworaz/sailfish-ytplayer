@@ -4,3 +4,4 @@ youtube-data-api-v3.key
 youtube-client-id.json
 rpm/*.spec*
 src/config.h
+*.bak
