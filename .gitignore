@@ -1,7 +1,7 @@
 *.pro.user
 mcc.json
-youtube-data-api-v3.key
-youtube-client-id.json
+youtube-data-api-v3*
+youtube-client-id*
 rpm/*.spec*
 src/config.h
 *.bak
