@@ -903,5 +903,45 @@ Label informing the user there are no watched recently videos</extracomment>
         <extracomment>Menu option opening a link to YTPlayer translation page on Transifex.</extracomment>
         <translation>Ajudeu a traduir YTPlayer</translation>
     </message>
+    <message id="ytplayer-update-checking-local-version">
+        <source>Checking local version...</source>
+        <extracomment>Shown while checking for local version of youtube-dl</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-checking-remote-version">
+        <source>Checking remote version...</source>
+        <extracomment>Shown while checking for remote version of youtube-dl</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-checking-remote-version-failed">
+        <source>Could not check for updates</source>
+        <extracomment>Shown when checking youtube-dl version from the Internet failed</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-downloading">
+        <source>Downloading youtube-dl...</source>
+        <extracomment>Shown while downloading the youtube-dl update from the Internet</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-up-to-date">
+        <source>Youtube-dl is up to date</source>
+        <extracomment>Shown when youtube-dl is up to date and no update is needed</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-failed">
+        <source>Updating youtube-dl failed</source>
+        <extracomment>Shown after youtube-dl update failed</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-successful">
+        <source>Updated youtube-dl succesfully</source>
+        <extracomment>Shown after youtube-dl update succeeded</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-youtubedl">
+        <source>Update youtube-dl</source>
+        <extracomment>MenuItem text for updating youtube-dl</extracomment>
+        <translation type="unfinished">Memòria cau</translation>
+    </message>
 </context>
 </TS>

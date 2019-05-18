@@ -17,7 +17,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-title-about">
-        <location filename="../qml/pages/About.qml" line="23"/>
+        <location filename="../qml/pages/About.qml" line="31"/>
         <source>About YTPlayer</source>
         <extracomment>Title of about page</extracomment>
         <translation type="unfinished"></translation>
@@ -29,38 +29,38 @@
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-label-region-code">
-        <location filename="../qml/pages/About.qml" line="60"/>
+        <location filename="../qml/pages/About.qml" line="56"/>
         <source>Region code: %1</source>
         <extracomment>Region code field value</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-label-version">
-        <location filename="../qml/pages/About.qml" line="68"/>
+        <location filename="../qml/pages/About.qml" line="64"/>
         <source>Version: %1</source>
         <extracomment>Version label value</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-label-application-license">
-        <location filename="../qml/pages/About.qml" line="90"/>
+        <location filename="../qml/pages/About.qml" line="85"/>
         <source>YTPlayer is licensed under 3-clause BSD License</source>
         <extracomment>Label displaying YTPlayer licensing information</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-view-license">
-        <location filename="../qml/pages/About.qml" line="109"/>
+        <location filename="../qml/pages/About.qml" line="100"/>
         <location filename="../qml/pages/ThirdPartySoftware.qml" line="69"/>
         <source>View license</source>
         <extracomment>Button for showing license viewer page</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-third-party-software">
-        <location filename="../qml/pages/About.qml" line="121"/>
+        <location filename="../qml/pages/About.qml" line="109"/>
         <source>Third party software</source>
         <extracomment>Label for button showing third party software listing page</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-translation-credits">
-        <location filename="../qml/pages/About.qml" line="131"/>
+        <location filename="../qml/pages/About.qml" line="118"/>
         <source>Translations</source>
         <extracomment>Label for button showing application translation credits page</extracomment>
         <translation type="unfinished"></translation>
@@ -359,7 +359,7 @@ Label informing the user there are no watched recently videos</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-title-license-viewer">
-        <location filename="../qml/pages/LicenseViewer.qml" line="60"/>
+        <location filename="../qml/pages/LicenseViewer.qml" line="61"/>
         <source>License</source>
         <extracomment>License viewer page title</extracomment>
         <translation type="unfinished"></translation>
@@ -818,56 +818,107 @@ Label for menu option allowing the user to change video quality</extracomment>
         <extracomment>Label for history based search suggestion engine</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message id="ytplayer-update-checking-local-version">
+        <location filename="../qml/pages/Settings.qml" line="39"/>
+        <source>Checking local version...</source>
+        <extracomment>Shown while checking for local version of youtube-dl</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-checking-remote-version">
+        <location filename="../qml/pages/Settings.qml" line="50"/>
+        <source>Checking remote version...</source>
+        <extracomment>Shown while checking for remote version of youtube-dl</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-checking-remote-version-failed">
+        <location filename="../qml/pages/Settings.qml" line="62"/>
+        <source>Could not check for updates</source>
+        <extracomment>Shown when checking youtube-dl version from the Internet failed</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-downloading">
+        <location filename="../qml/pages/Settings.qml" line="66"/>
+        <source>Downloading youtube-dl...</source>
+        <extracomment>Shown while downloading the youtube-dl update from the Internet</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-up-to-date">
+        <location filename="../qml/pages/Settings.qml" line="72"/>
+        <location filename="../qml/pages/Settings.qml" line="163"/>
+        <source>Youtube-dl is up to date</source>
+        <extracomment>Shown when youtube-dl is up to date and no update is needed</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-failed">
+        <location filename="../qml/pages/Settings.qml" line="82"/>
+        <source>Updating youtube-dl failed</source>
+        <extracomment>Shown after youtube-dl update failed</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-successful">
+        <location filename="../qml/pages/Settings.qml" line="86"/>
+        <source>Updated youtube-dl succesfully</source>
+        <extracomment>Shown after youtube-dl update succeeded</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="ytplayer-action-view-logs">
-        <location filename="../qml/pages/Settings.qml" line="30"/>
+        <location filename="../qml/pages/Settings.qml" line="98"/>
+        <location filename="../qml/pages/YoutubeDl.qml" line="25"/>
         <source>View logs</source>
         <extracomment>Label for menu option showing application log viewer</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-title-settings">
-        <location filename="../qml/pages/Settings.qml" line="45"/>
+        <location filename="../qml/pages/Settings.qml" line="113"/>
+        <location filename="../qml/pages/YoutubeDl.qml" line="40"/>
         <source>Settings</source>
         <extracomment>Settings page title</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-label-account-integration">
-        <location filename="../qml/pages/Settings.qml" line="52"/>
+        <location filename="../qml/pages/Settings.qml" line="120"/>
         <source>YouTube account integration</source>
         <extracomment>Label of switch activating/deactivating YouTube account integration</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-description-account-integration">
-        <location filename="../qml/pages/Settings.qml" line="55"/>
+        <location filename="../qml/pages/Settings.qml" line="123"/>
         <source>Allow YTPlayer to manage YouTube user account.</source>
         <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message id="ytplayer-update-youtubedl">
+        <location filename="../qml/pages/Settings.qml" line="161"/>
+        <source>Update youtube-dl</source>
+        <extracomment>MenuItem text for updating youtube-dl</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="ytplayer-action-cache-settings">
-        <location filename="../qml/pages/Settings.qml" line="83"/>
+        <location filename="../qml/pages/Settings.qml" line="183"/>
         <source>Cache</source>
         <extracomment>Label for menu option showing cache settings page</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-download-settings">
-        <location filename="../qml/pages/Settings.qml" line="92"/>
+        <location filename="../qml/pages/Settings.qml" line="192"/>
         <source>Download</source>
         <extracomment>Label for menu option showing video download settings page</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-language-settings">
-        <location filename="../qml/pages/Settings.qml" line="101"/>
+        <location filename="../qml/pages/Settings.qml" line="201"/>
         <source>Language</source>
         <extracomment>Label for menu option showing application language settings page</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-player-settings">
-        <location filename="../qml/pages/Settings.qml" line="110"/>
+        <location filename="../qml/pages/Settings.qml" line="210"/>
         <source>Player</source>
         <extracomment>Label for menu option showing video player settings page</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-search-settings">
-        <location filename="../qml/pages/Settings.qml" line="119"/>
+        <location filename="../qml/pages/Settings.qml" line="219"/>
         <source>Search</source>
         <extracomment>Label for menu option showing search settings page</extracomment>
         <translation type="unfinished"></translation>
@@ -885,7 +936,7 @@ Label for menu option allowing the user to change video quality</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-title-translation-credits">
-        <location filename="../qml/pages/TranslationCredits.qml" line="52"/>
+        <location filename="../qml/pages/TranslationCredits.qml" line="54"/>
         <source>Translations</source>
         <extracomment>Title of translation credits page</extracomment>
         <translation type="unfinished"></translation>
@@ -1090,13 +1141,13 @@ Label for menu option allowing the user to change video quality</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-msg-download-finished">
-        <location filename="../qml/YTPlayer.qml" line="129"/>
+        <location filename="../qml/YTPlayer.qml" line="128"/>
         <source>Video download finished</source>
         <extracomment>Notification summary informing the user video download has been finished</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-msg-download-failed">
-        <location filename="../qml/YTPlayer.qml" line="138"/>
+        <location filename="../qml/YTPlayer.qml" line="137"/>
         <source>Video download failed</source>
         <extracomment>Notification summary informing the user video download has failed</extracomment>
         <translation type="unfinished"></translation>
