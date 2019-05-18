@@ -25,7 +25,7 @@ public:
     Q_INVOKABLE void startUpdate();
     Q_INVOKABLE void checkLocalVersion();
     Q_INVOKABLE void checkRemoteVersion();
-    Q_INVOKABLE bool isInstalled();
+    Q_INVOKABLE bool ytdlExists();
 
     QString getLocalVersion()  { return localVersion; }
     QString getRemoteVersion() { return remoteVersion; }

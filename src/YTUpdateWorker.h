@@ -7,6 +7,7 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QDebug>
+#include "YTVideoUrlFetcher.h"
 
 class YTUpdateWorker : public QObject
 {

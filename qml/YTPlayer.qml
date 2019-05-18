@@ -105,6 +105,10 @@ ApplicationWindow
             if (!YTNetworkManager.online) {
                 YTNetworkManager.onOnlineChanged(false)
             }
+            if(!YTUpdater.ytdlExists()) {
+                pageStack.push(Qt.resolvedUrl("pages/Settings.qml"),
+                               { autoUpdate: true })
+            }
         }
     }
 

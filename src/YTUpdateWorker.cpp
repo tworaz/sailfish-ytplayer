@@ -72,6 +72,7 @@ void YTUpdateWorker::installUpdate() {
     if (process.exitStatus() == QProcess::NormalExit &&
         process.exitCode() == 0) {
         refreshLocal();
+        YTVideoUrlFetcher::runInitialCheck();
     }
     emit updateComplete();
     return;

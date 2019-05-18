@@ -15,10 +15,17 @@ Page {
         if (status === PageStatus.Active) {
             accountSwitch.checked = YTPrefs.isAuthEnabled()
             requestCoverPage("Default.qml")
+            if(autoUpdate) {
+                // We have to use this so that the
+                // functions do not fire at page activation
+                updateButtonClicked = true
+                startUpdate()
+            }
         }
     }
 
     // Update-related properties
+    property bool autoUpdate: false // Used from YTPlayer.qml
     property string localVersion: YTUpdater.localVersion
     property string remoteVersion: YTUpdater.remoteVersion
     property bool updating: YTUpdater.updating

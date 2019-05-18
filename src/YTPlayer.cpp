@@ -179,7 +179,6 @@ main(int argc, char *argv[])
     qmlRegisterType<YTLocalVideoListModel>("harbour.ytplayer", 1, 0, "YTLocalVideoListModel");
     qmlRegisterType<YTVideoDownloadNotification>("harbour.ytplayer", 1, 0, "YTVideoDownloadNotification");
     qmlRegisterType<YTSuggestionEngine>("harbour.ytplayer", 1, 0, "YTSuggestionEngine");
-    qmlRegisterType<YTUpdater>("harbour.ytplayer", 1, 0, "YTUpdater");
 
     qmlRegisterUncreatableType<YTLogger>("harbour.ytplayer", 1, 0, "YTLogger",
                                          "Please use global Log instance");
