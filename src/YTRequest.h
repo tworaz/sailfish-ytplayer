@@ -48,6 +48,7 @@
 #include <QDebug>
 
 #include "YTListModel.h"
+#include "YTUpdater.h"
 
 class QNetworkAccessManager;
 class YTVideoUrlFetcher;

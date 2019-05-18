@@ -28,23 +28,21 @@
  */
 
 #include "YTVideoUrlFetcher.h"
-
 #include "YTPlayer.h"
 
 namespace {
-const char kYouTubeDLBinaryName[] = "youtube-dl";
 const int kMaxResponseCacheSize = 20;
+const char kYouTubeDLBinaryName[] = "youtube-dl";
 
-QString getYouTubeDLPath()
-{
-    static QString program;
-    if (program.isEmpty()) {
-        program = "/usr/bin/python3";
-        Q_ASSERT(QFile(program).exists());
+    QString getYouTubeDLPath()
+    {
+        static QString program;
+        if (program.isEmpty()) {
+            program = "/usr/bin/python3";
+            Q_ASSERT(QFile(program).exists());
+        }
+        return program;
     }
-    return program;
-}
-
 }
 
 QCache<QString, QVariantMap> YTVideoUrlFetcher::_response_cache;
@@ -55,7 +53,7 @@ YTVideoUrlFetcher::YTVideoUrlFetcher()
     : QObject(0)
     , _process(0)
 {
-    Q_ASSERT(QFile(SailfishApp::pathTo("bin").toLocalFile()+QDir::separator()+kYouTubeDLBinaryName).exists());
+    Q_ASSERT(QFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+kYouTubeDLBinaryName).exists());
 
     static bool registered = false;
     if (!registered) {
@@ -71,7 +69,7 @@ void
 YTVideoUrlFetcher::runInitialCheck()
 {
     QStringList arguments;
-    arguments << SailfishApp::pathTo("bin").toLocalFile()+QDir::separator()+kYouTubeDLBinaryName
+    arguments << QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+kYouTubeDLBinaryName
               << "--version";
 
     QProcess process;
@@ -85,7 +83,7 @@ YTVideoUrlFetcher::runInitialCheck()
         _works = true;
         qDebug() << "youtube-dl works, current version:" << _version_str;
     } else {
-        qWarning() << "youtune-dl is non functional:" << process.readAllStandardError();
+        qWarning() << "youtube-dl is non functional:" << process.readAllStandardError();
     }
 }
 
@@ -112,7 +110,7 @@ YTVideoUrlFetcher::onFetchUrlsFor(QString videoId)
     }
 
     QStringList arguments;
-    arguments << SailfishApp::pathTo("bin").toLocalFile()+QDir::separator()+kYouTubeDLBinaryName
+    arguments << QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+QDir::separator()+kYouTubeDLBinaryName
               << "--dump-json"
               << "--youtube-skip-dash-manifest"
               << "--no-cache-dir"

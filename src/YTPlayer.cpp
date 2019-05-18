@@ -48,6 +48,7 @@
 #include "YTLogger.h"
 #include "YTUtils.h"
 #include "YTPrefs.h"
+#include "YTUpdater.h"
 
 namespace {
 const QString kApplicationDBFileName = "YTPlayer.sqlite";
@@ -159,6 +160,8 @@ main(int argc, char *argv[])
     // Make sure the logger is initialized
     YTLogger::instance();
 
+    YTUpdater updater;
+
     if (!YTTranslations::initialize()) {
         qCritical() << "Failed to initialize YTTranslations!";
         return -1;
@@ -176,6 +179,7 @@ main(int argc, char *argv[])
     qmlRegisterType<YTLocalVideoListModel>("harbour.ytplayer", 1, 0, "YTLocalVideoListModel");
     qmlRegisterType<YTVideoDownloadNotification>("harbour.ytplayer", 1, 0, "YTVideoDownloadNotification");
     qmlRegisterType<YTSuggestionEngine>("harbour.ytplayer", 1, 0, "YTSuggestionEngine");
+    qmlRegisterType<YTUpdater>("harbour.ytplayer", 1, 0, "YTUpdater");
 
     qmlRegisterUncreatableType<YTLogger>("harbour.ytplayer", 1, 0, "YTLogger",
                                          "Please use global Log instance");
@@ -187,6 +191,7 @@ main(int argc, char *argv[])
     view->rootContext()->setContextProperty("YTTranslations", &translations);
     view->rootContext()->setContextProperty("YTWatchedRecently", &watched_recently);
     view->rootContext()->setContextProperty("YTFavorites", &favorites);
+    view->rootContext()->setContextProperty("YTUpdater", &updater);
 
     view->engine()->addImportPath("qrc:/ui/qml/");
     view->setSource(QUrl("qrc:/ui/qml/YTPlayer.qml"));

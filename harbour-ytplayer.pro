@@ -26,7 +26,9 @@ SOURCES += \
         src/YTTranslations.cpp \
         src/YTWatchedRecently.cpp \
         src/YTFavorites.cpp \
-        src/YTSqlListModel.cpp
+        src/YTSqlListModel.cpp \
+        src/YTUpdater.cpp \
+        src/YTUpdateWorker.cpp
 
 HEADERS += \
         src/YTPlayer.h \
@@ -46,7 +48,9 @@ HEADERS += \
         src/YTTranslations.h \
         src/YTWatchedRecently.h \
         src/YTFavorites.h \
-        src/YTSqlListModel.h
+        src/YTSqlListModel.h \
+        src/YTUpdater.h \
+        src/YTUpdateWorker.h
 
 QML_SOURCES = \
         qml/*.qml \
