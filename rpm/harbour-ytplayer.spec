@@ -21,14 +21,16 @@ URL:        https://github.com/direc85/sailfish-ytplayer
 Source0:    %{name}-%{version}.tar.bz2
 Requires:   sailfishsilica-qt5 >= 0.10.9
 Requires:   pyotherside-qml-plugin-python3-qt5
+Requires:   curl
+Requires:   python3-base
 BuildRequires:  pkgconfig(Qt5Quick)
 BuildRequires:  pkgconfig(Qt5Qml)
 BuildRequires:  pkgconfig(Qt5Core)
 BuildRequires:  pkgconfig(Qt5DBus)
 BuildRequires:  pkgconfig(sailfishapp) >= 1.0.2
 BuildRequires:  desktop-file-utils
-BuildRequires:  zip
-BuildRequires:  python3-base
+# BuildRequires:  zip
+# BuildRequires:  python3-base
 BuildRequires:  qt5-qtconcurrent-devel
 BuildRequires:  qt5-qttools-linguist
 
@@ -54,7 +56,6 @@ desktop-file-install --delete-original       \
 %files
 %defattr(0644,root,root,-)
 %attr(0755,root,root) %{_bindir}/%{name}
-%{_datadir}/%{name}/bin/youtube-dl
 %{_datadir}/%{name}/licenses
 %{_datadir}/%{name}/translations
 %{_datadir}/applications/%{name}.desktop

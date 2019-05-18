@@ -66,16 +66,15 @@ OTHER_FILES += \
         scripts/generate-config-h.py \
         scripts/get_version_str.sh \
         rpm/harbour-ytplayer.spec \
-        translations/*.ts \
-        bin/youtube-dl
+        translations/*.ts
 
 DISTFILES += \
-        translations/*.qm \
-        bin/youtube-dl
+        translations/*.qm
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
-include(third_party/youtube_dl.pri)
+# Update option in Settings now!
+# include(third_party/youtube_dl.pri)
 include(translations/translations.pri)
 
 KEY_FILE = $$top_srcdir/youtube-data-api-v3.key
