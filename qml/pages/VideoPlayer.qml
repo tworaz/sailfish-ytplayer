@@ -193,7 +193,12 @@ Page {
         }
 
         Rectangle {
-            color: "black"
+            color: Qt.application.active ? "black" : "transparent"
+            Behavior on color {
+                ColorAnimation {
+                    duration: Qt.application.active ? 300 : 0
+                }
+            }
             width: page.width
             height: page.height
             Text {
