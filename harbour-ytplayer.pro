@@ -9,67 +9,68 @@ CONFIG += sailfishapp sailfishapp_no_deploy_qml # sailfishapp_i18n
 QT += dbus sql concurrent qml core multimedia
 
 SOURCES += \
-        src/YTPlayer.cpp \
-        src/YTUtils.cpp \
-        src/YTLogger.cpp \
-        src/YTPrefs.cpp  \
-        src/YTRequest.cpp \
-        src/YTListModel.cpp \
-        src/YTNetworkManager.cpp \
-        src/YTLocalVideo.cpp \
-        src/YTLocalVideoData.cpp \
-        src/YTLocalVideoManager.cpp \
-        src/YTLocalVideoListModel.cpp \
-        src/YTVideoDownloadNotification.cpp \
-        src/YTVIdeoUrlFetcher.cpp \
-        src/YTSuggestionEngine.cpp \
-        src/YTTranslations.cpp \
-        src/YTWatchedRecently.cpp \
-        src/YTFavorites.cpp \
-        src/YTSqlListModel.cpp \
-        src/YTUpdater.cpp \
-        src/YTUpdateWorker.cpp
+    src/YTPlayer.cpp \
+    src/YTUtils.cpp \
+    src/YTLogger.cpp \
+    src/YTPrefs.cpp  \
+    src/YTRequest.cpp \
+    src/YTListModel.cpp \
+    src/YTNetworkManager.cpp \
+    src/YTLocalVideo.cpp \
+    src/YTLocalVideoData.cpp \
+    src/YTLocalVideoManager.cpp \
+    src/YTLocalVideoListModel.cpp \
+    src/YTVideoDownloadNotification.cpp \
+    src/YTVIdeoUrlFetcher.cpp \
+    src/YTSuggestionEngine.cpp \
+    src/YTTranslations.cpp \
+    src/YTWatchedRecently.cpp \
+    src/YTFavorites.cpp \
+    src/YTSqlListModel.cpp \
+    src/YTUpdater.cpp \
+    src/YTUpdateWorker.cpp
 
 HEADERS += \
-        src/YTPlayer.h \
-        src/YTUtils.h  \
-        src/YTLogger.h \
-        src/YTPrefs.h \
-        src/YTRequest.h \
-        src/YTListModel.h \
-        src/YTNetworkManager.h \
-        src/YTLocalVideo.h \
-        src/YTLocalVideoData.h \
-        src/YTLocalVideoManager.h \
-        src/YTLocalVideoListModel.h \
-        src/YTVideoDownloadNotification.h \
-        src/YTVideoUrlFetcher.h \
-        src/YTSuggestionEngine.h \
-        src/YTTranslations.h \
-        src/YTWatchedRecently.h \
-        src/YTFavorites.h \
-        src/YTSqlListModel.h \
-        src/YTUpdater.h \
-        src/YTUpdateWorker.h
+    src/YTPlayer.h \
+    src/YTUtils.h  \
+    src/YTLogger.h \
+    src/YTPrefs.h \
+    src/YTRequest.h \
+    src/YTListModel.h \
+    src/YTNetworkManager.h \
+    src/YTLocalVideo.h \
+    src/YTLocalVideoData.h \
+    src/YTLocalVideoManager.h \
+    src/YTLocalVideoListModel.h \
+    src/YTVideoDownloadNotification.h \
+    src/YTVideoUrlFetcher.h \
+    src/YTSuggestionEngine.h \
+    src/YTTranslations.h \
+    src/YTWatchedRecently.h \
+    src/YTFavorites.h \
+    src/YTSqlListModel.h \
+    src/YTUpdater.h \
+    src/YTUpdateWorker.h
 
 QML_SOURCES = \
-        qml/*.qml \
-        qml/pages/*.qml \
-        qml/cover/*.qml \
-        qml/common/*.qml \
-        qml/common/*.js
+    qml/*.qml \
+    qml/pages/*.qml \
+    qml/cover/*.qml \
+    qml/common/*.qml \
+    qml/common/*.js
 
 OTHER_FILES += \
-        $$QML_SOURCES \
-        harbour-ytplayer.desktop \
-        scripts/mcc-data-util.py \
-        scripts/generate-config-h.py \
-        scripts/get_version_str.sh \
-        rpm/harbour-ytplayer.spec \
-        translations/*.ts
+    $$QML_SOURCES \
+    harbour-ytplayer.desktop \
+    scripts/mcc-data-util.py \
+    scripts/generate-config-h.py \
+    scripts/get_version_str.sh \
+    rpm/harbour-ytplayer.spec \
+    translations/*.ts
 
 DISTFILES += \
-        translations/*.qm
+    translations/*.qm \
+    rpm/harbour-ytplayer.changes
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
