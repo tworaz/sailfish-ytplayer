@@ -44,6 +44,8 @@ BackgroundItem {
             left: parent.left
             leftMargin: Theme.paddingLarge
         }
+        width: parent.height * 0.7
+        height: parent.height * 0.7
         fillMode: Image.PreserveAspectFit
     }
     Label {
