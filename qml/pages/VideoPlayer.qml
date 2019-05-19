@@ -245,12 +245,12 @@ Page {
                 YTIconButton {
                     id: playButton
                     anchors.centerIn: parent
-                    source: "qrc:///icons/play-64.png"
+                    source: "qrc:///icons/play-64-white.png"
                 }
                 YTIconButton {
                     id: pauseButton
                     anchors.centerIn: parent
-                    source: "qrc:///icons/pause-64.png"
+                    source: "qrc:///icons/pause-64-white.png"
                 }
             }
         }
@@ -396,7 +396,7 @@ Page {
             Text {
                 id: statusLabel
                 font.pixelSize: Theme.fontSizeSmall
-                color: Theme.highlightColor
+                color: Theme.lightPrimaryColor
             }
             visible: opacity > 0.0
             Behavior on opacity {
@@ -420,6 +420,9 @@ Page {
         }
         Slider {
             id: progressSlider
+            color: Theme.lightPrimaryColor
+            backgroundColor: Theme.lightSecondaryColor
+            highlightColor: Theme.highlightColor
             anchors.bottom: bottomMenu.top
             width: parent.width
             z: videoOutput.z + 2
@@ -427,6 +430,7 @@ Page {
             enabled: true
             minimumValue: 0
             valueText: H.parseDuration(value)
+            valueLabelColor: Theme.lightPrimaryColor
             onPressed: controlsTimer.stop()
             onReleased: {
                 mediaPlayer.seek(value)
@@ -452,7 +456,7 @@ Page {
             }
         }
         Text {
-            color: "white"
+            color: Theme.lightPrimaryColor
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.bottomMargin: Theme.paddingSmall

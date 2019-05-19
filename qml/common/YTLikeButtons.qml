@@ -131,7 +131,7 @@ Row {
         Image {
             property color hcolor: parent.pressed ? Theme.highlightColor : Theme.primaryColor
             id: likeIcon
-            source: "qrc:///icons/like-m.png"
+            source: "qrc:///icons/like-m"+iconColor+".png"
             anchors.verticalCenter: parent.verticalCenter
             opacity: parent.selected ? 1 : priv.inactiveButtonOpacity
             Behavior on opacity {
@@ -190,7 +190,7 @@ Row {
         Image {
             property color hcolor: parent.pressed ? Theme.highlightColor : Theme.primaryColor
             id: dislikeIcon
-            source: "qrc:///icons/dislike-m.png"
+            source: "qrc:///icons/dislike-m"+iconColor+".png"
             anchors.right: parent.right
             anchors.verticalCenter: parent.verticalCenter
             opacity: parent.selected ? 1 : priv.inactiveButtonOpacity

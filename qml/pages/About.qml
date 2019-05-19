@@ -32,7 +32,8 @@ Page {
             }
             Image {
                 anchors.horizontalCenter: parent.horizontalCenter
-                height: 256
+                height: Theme.itemSizeMedium
+                width: Theme.itemSizeMedium
                 fillMode: Image.PreserveAspectFit
                 source: "qrc:///logo.png"
             }

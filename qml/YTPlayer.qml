@@ -46,6 +46,9 @@ ApplicationWindow
     readonly property int kStandardAnimationDuration: 250
     readonly property int kLongAnimationDuration: 500
     readonly property int kPreferredButtonWidth: 300
+    property string iconColor: Theme.darkPrimaryColor !== "undefined"
+                               && Theme.darkPrimaryColor === Theme.primaryColor
+                               ? "-black" : "-white"
 
     initialPage: Component { MainMenu { } }
     cover: YTNetworkManager.online ?
@@ -92,9 +95,8 @@ ApplicationWindow
 
     function openLinkInBrowser(url) {
         Log.debug("Opening link in browser: " + url)
-        pageStack.push(Qt.resolvedUrl("pages/BrowserLauncher.qml"), {
-            "url" : url,
-        })
+        pageStack.push(Qt.resolvedUrl("pages/BrowserLauncher.qml"),
+                       { "url" : url })
     }
 
     Timer {

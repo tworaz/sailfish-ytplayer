@@ -65,7 +65,7 @@ ListItem {
                 x: Theme.paddingSmall
                 text: ytItem.duration.length > 0 ?
                           (new DJS.Duration(ytItem.duration)).asClock() : ""
-                color: Theme.primaryColor
+                color: Theme.lightPrimaryColor
                 font.pixelSize: Theme.fontSizeExtraSmall * 0.7
                 font.weight: Font.Bold
                 horizontalAlignment: Text.AlignHCenter
