@@ -78,7 +78,7 @@ CoverBackground {
         width: root.width
         height: children[0].height + 2 * Theme.paddingMedium
         z: imageGrid.z + 1
-        color: "#AA000000"
+        color: "transparent"
 
         Label {
             id: category
