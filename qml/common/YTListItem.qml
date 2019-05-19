@@ -42,8 +42,8 @@ ListItem {
 
     AsyncImage {
         id: thumbnail
-        width: Theme.itemSizeMedium
-        height: width * thumbnailAspectRatio
+        height: Theme.itemSizeMedium * 0.85
+        width: height / thumbnailAspectRatio
         anchors {
             verticalCenter: parent.verticalCenter
             left: parent.left
@@ -86,10 +86,7 @@ ListItem {
             rightMargin: Theme.paddingSmall
             verticalCenter: parent.verticalCenter
         }
-        font {
-            family: Theme.fontFamily
-            pixelSize: Theme.fontSizeSmall
-        }
+        font.pixelSize: Theme.fontSizeSmall
     }
 
     Image {
