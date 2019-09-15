@@ -156,8 +156,6 @@ Page {
                     id: updateYtdlButton
                     anchors.fill: parent
                     enabled: localVersion !== remoteVersion
-                    //: MenuItem text for updating youtube-dl
-                    //% "Update youtube-dl"
                     text: {
                         if(localVersion !== remoteVersion)
                             //: MenuItem text for updating youtube-dl
