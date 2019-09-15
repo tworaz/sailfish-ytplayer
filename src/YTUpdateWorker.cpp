@@ -48,7 +48,7 @@ void YTUpdateWorker::refreshRemote() {
 
     // If the string could not be parsed,
     // no network connection etc.
-    if(remoteVersion.length() != 10) {
+    if(remoteVersion.length() < 10 || remoteVersion.length() > 20) {
         qDebug() << "Error checking remote version";
         remoteVersion = "----.--.--";
     }
