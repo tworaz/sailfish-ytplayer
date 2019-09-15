@@ -36,7 +36,7 @@
     <message id="ytplayer-label-application-description">
         <source>Unofficial YouTube client for Sailfish OS</source>
         <extracomment>YTPlayer application description in about page</extracomment>
-        <translation>Sailfish OS的非官方YouTube客户端</translation>
+        <translation>旗鱼系统非官方 YouTube 客户端</translation>
     </message>
     <message id="ytplayer-label-version">
         <source>Version: %1</source>
@@ -76,12 +76,12 @@
     <message id="ytplayer-oauth-page-loading-failed">
         <source>Failed to load OAuth authorization page!</source>
         <extracomment>YouTube OAuth page loading failure message</extracomment>
-        <translation>无法加载OAuth授权页面！</translation>
+        <translation>无法加载 OAuth 授权页面！</translation>
     </message>
     <message id="ytplayer-oauth-access-denied">
         <source>YouTube OAuth access denied!</source>
         <extracomment>Message informing the user about YouTube OAuth autorization denial</extracomment>
-        <translation>YouTube OAuth访问被拒绝！</translation>
+        <translation>YouTube OAuth 访问被拒绝！</translation>
     </message>
     <message id="ytplayer-youtube-sign-in-successful">
         <source>Sign in successful</source>
@@ -91,7 +91,7 @@
     <message id="ytplayer-oauth-failed">
         <source>OAuth authorization failed!</source>
         <extracomment>Error message informing the user about OAuth authorization failure</extracomment>
-        <translation>OAuth授权失败！</translation>
+        <translation>OAuth 授权失败！</translation>
     </message>
     <message id="ytplayer-channel-unsubscribe">
         <source>Unsubscribe</source>
@@ -196,7 +196,7 @@ Label for menu option allowing the user to change video quality</extracomment>
     <message id="ytplayer-label-application-license">
         <source>YTPlayer is licensed under 3-clause BSD License</source>
         <extracomment>Label displaying YTPlayer licensing information</extracomment>
-        <translation>YTPlayer采用3-clause BSD许可协议进行许可</translation>
+        <translation>YTPlayer 采用 3-clause BSD 许可协议进行许可</translation>
     </message>
     <message id="ytplayer-action-third-party-software">
         <source>Third party software</source>
@@ -526,7 +526,7 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-action-wifi-only">
         <source>WiFi only</source>
         <extracomment>Menu option indicating downloads are allowed only when using WiFi</extracomment>
-        <translation>仅当连接到WLAN时</translation>
+        <translation>仅当连接到 WLAN 时</translation>
     </message>
     <message id="ytplayer-action-wifi-cellular">
         <source>WiFi + Cellular</source>
@@ -601,12 +601,12 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-label-account-integration">
         <source>YouTube account integration</source>
         <extracomment>Label of switch activating/deactivating YouTube account integration</extracomment>
-        <translation>登录YouTube帐户</translation>
+        <translation>登录 YouTube 帐户</translation>
     </message>
     <message id="ytplayer-description-account-integration">
         <source>Allow YTPlayer to manage YouTube user account.</source>
         <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
-        <translation>允许YTPlayer管理YouTube用户帐户。</translation>
+        <translation>允许 YTPlayer 管理 YouTube 用户帐户。</translation>
     </message>
     <message id="ytplayer-msg-channel-subscribed">
         <source>Channel subscribed</source>
@@ -731,7 +731,7 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-msg-change-language">
         <source>Change language to %1?</source>
         <extracomment>Dialog text asking the user if UI language change should be performed</extracomment>
-        <translation>将语言更改为%1?</translation>
+        <translation>是否将语言更改为 %1 ?</translation>
     </message>
     <message id="ytplayer-action-translation-credits">
         <source>Translations</source>
@@ -831,17 +831,17 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-description-autopause">
         <source>Automatically pause video playback when application is deactivated.</source>
         <extracomment>Description of video auto pause option switch.</extracomment>
-        <translation>切换App于后台执行时自动暂停播放。</translation>
+        <translation>软件处于后台运行时自动暂停播放。</translation>
     </message>
     <message id="ytplayer-label-quality-wifi">
         <source>Default video quality on WiFi</source>
         <extracomment>Label for combo box allowing the user to change default video quality when using WiFi connection.</extracomment>
-        <translation>连接WLAN时的预设画质</translation>
+        <translation>连接 WLAN 时的预设画质</translation>
     </message>
     <message id="ytplayer-label-quality-cellular">
         <source>Default video quality on cellular</source>
         <extracomment>Label for combo box allowing the user to change default video quality when using cellular connection.</extracomment>
-        <translation>连接行动网络时的预设画质</translation>
+        <translation>连接行动网络时的默认画质</translation>
     </message>
     <message id="ytplayer-label-autoload">
         <source>Early video loading</source>
@@ -861,7 +861,7 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-action-autoload-wifi">
         <source>WiFi only</source>
         <extracomment>Menu option allowing the player to preaload video data only when using WiFi connection.</extracomment>
-        <translation>仅当连接到WLAN时</translation>
+        <translation>仅当连接到 WLAN 时</translation>
     </message>
     <message id="ytplayer-action-autoload-cellular">
         <source>Cellular only</source>
@@ -891,7 +891,7 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-msg-video-unavailable-desc">
         <source>Video was removed from YouTube</source>
         <extracomment>Notification body explaining why video is no longer available.</extracomment>
-        <translation>视频已从YouTube中删除</translation>
+        <translation>视频已从 YouTube 删除</translation>
     </message>
     <message id="ytplayer-label-channel-unavailable">
         <source>Channel no longer available</source>
@@ -901,22 +901,22 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-action-translate-app">
         <source>Translate YTPlayer</source>
         <extracomment>Menu option opening a link to YTPlayer translation page on Transifex.</extracomment>
-        <translation>翻译YTPlayer</translation>
+        <translation>翻译 YTPlayer</translation>
     </message>
     <message id="ytplayer-update-checking-local-version">
         <source>Checking local version...</source>
         <extracomment>Shown while checking for local version of youtube-dl</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>正在检测本地版本……</translation>
     </message>
     <message id="ytplayer-update-checking-remote-version">
         <source>Checking remote version...</source>
         <extracomment>Shown while checking for remote version of youtube-dl</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>正在检测远程版本……</translation>
     </message>
     <message id="ytplayer-update-checking-remote-version-failed">
         <source>Could not check for updates</source>
         <extracomment>Shown when checking youtube-dl version from the Internet failed</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>无法更新</translation>
     </message>
     <message id="ytplayer-update-downloading">
         <source>Downloading youtube-dl...</source>
@@ -926,22 +926,22 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-update-up-to-date">
         <source>Youtube-dl is up to date</source>
         <extracomment>Shown when youtube-dl is up to date and no update is needed</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>Youtube-dl已更新到最新</translation>
     </message>
     <message id="ytplayer-update-failed">
         <source>Updating youtube-dl failed</source>
         <extracomment>Shown after youtube-dl update failed</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>更新 Youtube-dl 失败</translation>
     </message>
     <message id="ytplayer-update-successful">
         <source>Updated youtube-dl succesfully</source>
         <extracomment>Shown after youtube-dl update succeeded</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>已更新 Youtube-dl</translation>
     </message>
     <message id="ytplayer-update-youtubedl">
         <source>Update youtube-dl</source>
         <extracomment>MenuItem text for updating youtube-dl</extracomment>
-        <translation type="unfinished">缓存</translation>
+        <translation>更新 youtube-dl</translation>
     </message>
 </context>
 </TS>
