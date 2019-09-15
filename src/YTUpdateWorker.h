@@ -7,6 +7,7 @@
 #include <QStandardPaths>
 #include <QDir>
 #include <QDebug>
+#include "YTLogger.h"
 #include "YTVideoUrlFetcher.h"
 
 class YTUpdateWorker : public QObject
@@ -25,6 +26,7 @@ private:
     QString python = "/usr/bin/python3";
     QString localVersion = "----.--.--";
     QString remoteVersion = "----.--.--";
+    YTLogger* logger;
 
 signals:
     void updateComplete();

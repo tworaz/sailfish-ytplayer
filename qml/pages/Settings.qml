@@ -79,7 +79,6 @@ Page {
 
     // Phase 4: Verify the updated version, or inform about failure
     onUpdatingChanged: {
-        console.log("update done "+localVersion+remoteVersion)
         if(!updateButtonClicked)
             return;
         if(localVersion !== remoteVersion)

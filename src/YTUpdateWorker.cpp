@@ -2,7 +2,7 @@
 
 YTUpdateWorker::YTUpdateWorker() : QObject()
 {
-
+    logger = &YTLogger::instance();
 }
 
 void YTUpdateWorker::refreshLocal() {
@@ -20,11 +20,11 @@ void YTUpdateWorker::refreshLocal() {
             process.exitCode() == 0) {
             localVersion = QString(process.readAllStandardOutput());
             localVersion = localVersion.trimmed();
-            qDebug() << "New local version:" << localVersion;
+            logger->info(QString("youtube-dl " +localVersion+ " is installed"));
         }
     }
     else {
-        qDebug() << "Local version not installed";
+        logger->warn(QString("youtube-dl is not installed"));
         localVersion = "0000.00.00";
     }
     emit localRefreshComplete(localVersion);
@@ -44,16 +44,19 @@ void YTUpdateWorker::refreshRemote() {
         process.exitCode() == 0) {
         remoteVersion = QString(process.readAllStandardOutput());
         remoteVersion = remoteVersion.section("(v",1,1).section(")",0,0);
+        logger->info(QString("youtube-dl " + remoteVersion + " is available for download"));
+    }
+    else {
+        logger->error(QString("Could not download youtube-dl update information"));
     }
 
     // If the string could not be parsed,
     // no network connection etc.
     if(remoteVersion.length() < 10 || remoteVersion.length() > 20) {
-        qDebug() << "Error checking remote version";
+        logger->error(QString("Could not parse youtube-dl update information"));
         remoteVersion = "----.--.--";
     }
 
-    qDebug() << "New remote version found:" << remoteVersion;
     emit remoteRefreshComplete(remoteVersion);
     return;
 }
@@ -71,8 +74,12 @@ void YTUpdateWorker::installUpdate() {
 
     if (process.exitStatus() == QProcess::NormalExit &&
         process.exitCode() == 0) {
+        logger->info("youtube-dl updated successfully");
         refreshLocal();
         YTVideoUrlFetcher::runInitialCheck();
+    }
+    else {
+        logger->error("youtube-dl update failed");
     }
     emit updateComplete();
     return;
