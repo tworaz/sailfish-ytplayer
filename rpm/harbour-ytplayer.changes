@@ -1,3 +1,9 @@
+* Sun Sep 15 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.7-1
+- Fix updating youtube-dl
+- Use internal log when updating youtube-dl
+- Better propagate youtube-dl update internally
+- Translations refreshed
+
 * Fri May 24 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.7-1
 - Update German translation
 - Fix category cover page background
