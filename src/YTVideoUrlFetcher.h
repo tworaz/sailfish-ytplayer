@@ -50,6 +50,7 @@ public:
     static void runInitialCheck();
     static bool available() { return _works; }
     static QString version() { return _version_str; }
+    static void setVersion(QString newVersion, bool newWorks);
 
     void fetchUrlsFor(QString videoId);
 

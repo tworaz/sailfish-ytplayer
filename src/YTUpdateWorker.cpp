@@ -21,11 +21,13 @@ void YTUpdateWorker::refreshLocal() {
             localVersion = QString(process.readAllStandardOutput());
             localVersion = localVersion.trimmed();
             logger->info(QString("youtube-dl " +localVersion+ " is installed"));
+            YTVideoUrlFetcher::setVersion(localVersion, true);
         }
     }
     else {
         logger->warn(QString("youtube-dl is not installed"));
         localVersion = "0000.00.00";
+        YTVideoUrlFetcher::setVersion(localVersion, false);
     }
     emit localRefreshComplete(localVersion);
     return;

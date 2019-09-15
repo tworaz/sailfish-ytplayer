@@ -68,6 +68,13 @@ YTVideoUrlFetcher::YTVideoUrlFetcher()
 void
 YTVideoUrlFetcher::runInitialCheck()
 {
+    QFile youtubedl(QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+kYouTubeDLBinaryName);
+    if(!youtubedl.exists()) {
+        _version_str = "";
+        _works = false;
+        return;
+    }
+
     QStringList arguments;
     arguments << QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+kYouTubeDLBinaryName
               << "--version";
@@ -85,6 +92,12 @@ YTVideoUrlFetcher::runInitialCheck()
     } else {
         qWarning() << "youtube-dl is non functional:" << process.readAllStandardError();
     }
+}
+
+void
+YTVideoUrlFetcher::setVersion(QString newVersion, bool newWorks) {
+    _version_str = newVersion;
+    _works = newWorks;
 }
 
 void
