@@ -1,7 +1,8 @@
-*.pro.user
+*.pro.user*
 mcc.json
 youtube-data-api-v3*
 youtube-client-id*
 rpm/*.spec*
 src/config.h
 *.bak
+*.autosave
