@@ -243,9 +243,6 @@ YTVideoUrlFetcher::parseResponse(QJsonDocument doc)
         case 22:
             response.insert("720p", details);
             break;
-        case 37:
-            response.insert(("1080p"), details);
-            break;
         }
     }
 
