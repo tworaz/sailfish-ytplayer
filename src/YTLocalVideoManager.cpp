@@ -181,8 +181,6 @@ private slots:
                 quality = "720p";
             } else if (map.contains("360p")) {
                 quality = "360p";
-            } else if (map.contains("1080p")) {
-                quality = "1080p";
             } else {
                 Q_ASSERT(false);
                 onMetadataRequestError(response);

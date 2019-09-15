@@ -460,9 +460,6 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
         case 22: // MP4 1280 x 720
             outMap.insert("720p", streamDetailsMap);
             break;
-        case 37: // MP4 1920 x 1080
-            outMap.insert("1080p", streamDetailsMap);
-            break;
         }
     }
 
