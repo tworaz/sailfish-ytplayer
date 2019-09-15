@@ -1,3 +1,6 @@
+* Sun Sep 15 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.9-1
+- Remove unused 1080p menu element
+
 * Sun Sep 15 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.8-1
 - Fix updating youtube-dl
 - Use internal log when updating youtube-dl
