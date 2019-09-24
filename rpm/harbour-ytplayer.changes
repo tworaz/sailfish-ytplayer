@@ -1,3 +1,8 @@
+* Tue Sep 24 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.10-1
+- Update Chinese translation
+- Use .yaml file to generate .spec
+- Use git head revision in About page
+
 * Sun Sep 15 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.9-1
 - Remove unused 1080p menu element
 
