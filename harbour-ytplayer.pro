@@ -65,10 +65,11 @@ OTHER_FILES += \
     scripts/mcc-data-util.py \
     scripts/generate-config-h.py \
     scripts/get_version_str.sh \
-    rpm/harbour-ytplayer.spec \
     translations/*.ts
 
 DISTFILES += \
+    rpm/harbour-ytplayer.spec \
+    rpm/harbour-ytplayer.yaml \
     translations/*.qm \
     rpm/harbour-ytplayer.changes
 
