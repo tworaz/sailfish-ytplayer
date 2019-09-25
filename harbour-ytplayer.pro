@@ -101,7 +101,8 @@ configh.CONFIG += no_link
 QMAKE_EXTRA_COMPILERS += configh
 PRE_TARGETDEPS += compiler_configh_make_all
 
-DEFINES += VERSION_STR=\\\"$$system(bash $${top_srcdir}/scripts/get_version_str.sh)\\\"
+VERSION_RUN = $$system(bash $${top_srcdir}/scripts/get_version_str.sh)
+DEFINES += VERSION_STR=\\\"$$system(cat $${top_srcdir}/scripts/version-str)\\\"
 
 licenses.files = $$files($$top_srcdir/LICENSE.*)
 licenses.path = /usr/share/$${TARGET}/licenses

@@ -6,3 +6,4 @@ rpm/*.spec*
 src/config.h
 *.bak
 *.autosave
+scripts/version-str
