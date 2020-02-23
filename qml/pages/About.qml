@@ -71,7 +71,7 @@ Page {
                 horizontalAlignment: Text.AlignHCenter
                 text: "Copyright \u00A9 2014-2015 Piotr Tworek\n"
                       +"2015-2018 Petr Tsymbarovich\n"
-                      +"2019 Matti Viljanen"
+                      +"2019-2020 Matti Viljanen"
             }
             Label {
                 width: parent.width
