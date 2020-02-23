@@ -296,25 +296,25 @@ Label informing the user there are no watched recently videos</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-label-connection-type">
-        <location filename="../qml/pages/DownloadSettings.qml" line="109"/>
+        <location filename="../qml/pages/DownloadSettings.qml" line="104"/>
         <source>Connection type</source>
         <extracomment>Label for video download connection type combobox</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-wifi-only">
-        <location filename="../qml/pages/DownloadSettings.qml" line="129"/>
+        <location filename="../qml/pages/DownloadSettings.qml" line="124"/>
         <source>WiFi only</source>
         <extracomment>Menu option indicating downloads are allowed only when using WiFi</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-wifi-cellular">
-        <location filename="../qml/pages/DownloadSettings.qml" line="135"/>
+        <location filename="../qml/pages/DownloadSettings.qml" line="130"/>
         <source>WiFi + Cellular</source>
         <extracomment>Menu option indicating downloads are allowed on both WiFi and 3G</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-cellular-only">
-        <location filename="../qml/pages/DownloadSettings.qml" line="141"/>
+        <location filename="../qml/pages/DownloadSettings.qml" line="136"/>
         <source>Cellular only</source>
         <extracomment>Menu option indicating downloads are allowed only when using 3G</extracomment>
         <translation type="unfinished"></translation>
@@ -844,79 +844,79 @@ Label for menu option allowing the user to change video quality</extracomment>
     </message>
     <message id="ytplayer-update-up-to-date">
         <location filename="../qml/pages/Settings.qml" line="77"/>
-        <location filename="../qml/pages/Settings.qml" line="166"/>
+        <location filename="../qml/pages/Settings.qml" line="165"/>
         <source>Youtube-dl is up to date</source>
         <extracomment>Shown when youtube-dl is up to date and no update is needed</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-update-failed">
-        <location filename="../qml/pages/Settings.qml" line="88"/>
+        <location filename="../qml/pages/Settings.qml" line="87"/>
         <source>Updating youtube-dl failed</source>
         <extracomment>Shown after youtube-dl update failed</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-update-successful">
-        <location filename="../qml/pages/Settings.qml" line="92"/>
+        <location filename="../qml/pages/Settings.qml" line="91"/>
         <source>Updated youtube-dl succesfully</source>
         <extracomment>Shown after youtube-dl update succeeded</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-view-logs">
-        <location filename="../qml/pages/Settings.qml" line="104"/>
+        <location filename="../qml/pages/Settings.qml" line="103"/>
         <source>View logs</source>
         <extracomment>Label for menu option showing application log viewer</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-title-settings">
-        <location filename="../qml/pages/Settings.qml" line="119"/>
+        <location filename="../qml/pages/Settings.qml" line="118"/>
         <source>Settings</source>
         <extracomment>Settings page title</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-label-account-integration">
-        <location filename="../qml/pages/Settings.qml" line="126"/>
+        <location filename="../qml/pages/Settings.qml" line="125"/>
         <source>YouTube account integration</source>
         <extracomment>Label of switch activating/deactivating YouTube account integration</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-description-account-integration">
-        <location filename="../qml/pages/Settings.qml" line="129"/>
+        <location filename="../qml/pages/Settings.qml" line="128"/>
         <source>Allow YTPlayer to manage YouTube user account.</source>
         <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-update-youtubedl">
-        <location filename="../qml/pages/Settings.qml" line="164"/>
+        <location filename="../qml/pages/Settings.qml" line="163"/>
         <source>Update youtube-dl</source>
         <extracomment>MenuItem text for updating youtube-dl</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-cache-settings">
-        <location filename="../qml/pages/Settings.qml" line="188"/>
+        <location filename="../qml/pages/Settings.qml" line="187"/>
         <source>Cache</source>
         <extracomment>Label for menu option showing cache settings page</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-download-settings">
-        <location filename="../qml/pages/Settings.qml" line="197"/>
+        <location filename="../qml/pages/Settings.qml" line="196"/>
         <source>Download</source>
         <extracomment>Label for menu option showing video download settings page</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-language-settings">
-        <location filename="../qml/pages/Settings.qml" line="206"/>
+        <location filename="../qml/pages/Settings.qml" line="205"/>
         <source>Language</source>
         <extracomment>Label for menu option showing application language settings page</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-player-settings">
-        <location filename="../qml/pages/Settings.qml" line="215"/>
+        <location filename="../qml/pages/Settings.qml" line="214"/>
         <source>Player</source>
         <extracomment>Label for menu option showing video player settings page</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-search-settings">
-        <location filename="../qml/pages/Settings.qml" line="224"/>
+        <location filename="../qml/pages/Settings.qml" line="223"/>
         <source>Search</source>
         <extracomment>Label for menu option showing search settings page</extracomment>
         <translation type="unfinished"></translation>

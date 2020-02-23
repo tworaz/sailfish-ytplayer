@@ -396,7 +396,7 @@ Page {
             Text {
                 id: statusLabel
                 font.pixelSize: Theme.fontSizeSmall
-                color: Theme.lightPrimaryColor
+                color: Theme.lightPrimaryColor !== "undefined" ? Theme.lightPrimaryColor : Theme.primaryColor
             }
             visible: opacity > 0.0
             Behavior on opacity {
@@ -420,8 +420,8 @@ Page {
         }
         Slider {
             id: progressSlider
-            color: Theme.lightPrimaryColor
-            backgroundColor: Theme.lightSecondaryColor
+            color: Theme.lightPrimaryColor !== "undefined" ? Theme.lightPrimaryColor : Theme.primaryColor
+            backgroundColor: Theme.lightSecondaryColor !== "undefined" ? Theme.lightSecondaryColor : Theme.secondaryColor
             highlightColor: Theme.highlightColor
             anchors.bottom: bottomMenu.top
             width: parent.width
@@ -430,7 +430,7 @@ Page {
             enabled: true
             minimumValue: 0
             valueText: H.parseDuration(value)
-            valueLabelColor: Theme.lightPrimaryColor
+            valueLabelColor: Theme.lightPrimaryColor !== "undefined" ? Theme.lightPrimaryColor : Theme.primaryColor
             onPressed: controlsTimer.stop()
             onReleased: {
                 mediaPlayer.seek(value)
