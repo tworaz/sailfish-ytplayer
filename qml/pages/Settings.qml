@@ -15,17 +15,17 @@ Page {
         if (status === PageStatus.Active) {
             accountSwitch.checked = YTPrefs.isAuthEnabled()
             requestCoverPage("Default.qml")
-            if(autoUpdate) {
+            /*if(autoUpdate) {
                 // We have to use this so that the
                 // functions do not fire at page activation
                 updateButtonClicked = true
                 startUpdate()
-            }
+            }*/
         }
     }
 
     // Update-related properties
-    property bool autoUpdate: false // Used from YTPlayer.qml
+    /*property bool autoUpdate: false // Used from YTPlayer.qml
     property string localVersion: YTUpdater.localVersion
     property string remoteVersion: YTUpdater.remoteVersion
     property bool updating: YTUpdater.updating
@@ -89,7 +89,7 @@ Page {
             //: Shown after youtube-dl update succeeded
             //% "Updated youtube-dl succesfully"
             updateMenuItem(false, false, qsTrId("ytplayer-update-successful"))
-    }
+    }*/
 
     SilicaFlickable {
         anchors.fill: parent
@@ -149,7 +149,7 @@ Page {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: Theme.paddingLarge
 
-            Item {
+            /*Item {
                 height: updateYtdlButton.height
                 width: parent.width / parent.columns
                 SettingsButton {
@@ -179,7 +179,7 @@ Page {
                     running: false
                     visible: running
                 }
-            }
+            }*/
             SettingsButton {
                 width: parent.width / parent.columns
                 //: Label for menu option showing cache settings page
