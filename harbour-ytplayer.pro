@@ -71,7 +71,24 @@ DISTFILES += \
     rpm/harbour-ytplayer.spec \
     rpm/harbour-ytplayer.yaml \
     translations/*.qm \
-    rpm/harbour-ytplayer.changes
+    rpm/harbour-ytplayer.changes \
+    youtube-dl-lite/youtube-dl.py \
+    youtube-dl-lite/youtube_dl/*.py \
+    youtube-dl-lite/youtube_dl/downloader/*.py \
+    youtube-dl-lite/youtube_dl/postprocessor/*.py \
+    youtube-dl-lite/youtube_dl/extractor/*.py
+
+ytdl.files = $$files($$top_srcdir/youtube-dl-lite/youtube-dl)
+ytdl-y.files = $$files($$top_srcdir/youtube-dl-lite/youtube_dl/*.py)
+ytdl-d.files = $$files($$top_srcdir/youtube-dl-lite/youtube_dl/downloader/*.py)
+ytdl-p.files = $$files($$top_srcdir/youtube-dl-lite/youtube_dl/postprocessor/*.py)
+ytdl-e.files = $$files($$top_srcdir/youtube-dl-lite/youtube_dl/extractor/*.py)
+ytdl.path = /usr/share/$${TARGET}/youtube-dl-lite
+ytdl-y.path = /usr/share/$${TARGET}/youtube-dl-lite/youtube_dl
+ytdl-d.path = /usr/share/$${TARGET}/youtube-dl-lite/youtube_dl/downloader
+ytdl-p.path = /usr/share/$${TARGET}/youtube-dl-lite/youtube_dl/postprocessor
+ytdl-e.path = /usr/share/$${TARGET}/youtube-dl-lite/youtube_dl/extractor
+INSTALLS += ytdl ytdl-y ytdl-d ytdl-p ytdl-e
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
