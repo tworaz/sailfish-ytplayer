@@ -53,7 +53,7 @@ YTVideoUrlFetcher::YTVideoUrlFetcher()
     : QObject(0)
     , _process(0)
 {
-    Q_ASSERT(QFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+kYouTubeDLBinaryName).exists());
+    Q_ASSERT(QFile("/usr/share/harbour-ytplayer/youtube-dl-lite/youtube-dl").exists());
 
     static bool registered = false;
     if (!registered) {
@@ -68,15 +68,16 @@ YTVideoUrlFetcher::YTVideoUrlFetcher()
 void
 YTVideoUrlFetcher::runInitialCheck()
 {
-    QFile youtubedl(QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+kYouTubeDLBinaryName);
+    QFile youtubedl("/usr/share/harbour-ytplayer/youtube-dl-lite/youtube-dl");
     if(!youtubedl.exists()) {
         _version_str = "";
         _works = false;
+        qWarning() << "youtube-dl is non functional: file not found";
         return;
     }
 
     QStringList arguments;
-    arguments << QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+kYouTubeDLBinaryName
+    arguments << "/usr/share/harbour-ytplayer/youtube-dl-lite/youtube-dl"
               << "--version";
 
     QProcess process;

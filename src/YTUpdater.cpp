@@ -23,7 +23,7 @@ YTUpdater::YTUpdater(): QObject() {
 }
 
 bool YTUpdater::ytdlExists() {
-    QFile ytdl(QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+"youtube-dl");
+    QFile ytdl("/usr/share/harbour-ytplayer/youtube-dl-lite/youtube-dl");
     return ytdl.exists();
 }
 
