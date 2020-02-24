@@ -124,7 +124,7 @@ YTVideoUrlFetcher::onFetchUrlsFor(QString videoId)
     }
 
     QStringList arguments;
-    arguments << QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+QDir::separator()+kYouTubeDLBinaryName
+    arguments << "/usr/share/harbour-ytplayer/youtube-dl-lite/youtube-dl"
               << "--dump-json"
               << "--youtube-skip-dash-manifest"
               << "--no-cache-dir"
