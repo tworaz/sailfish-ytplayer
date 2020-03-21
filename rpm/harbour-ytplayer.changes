@@ -1,3 +1,11 @@
+* Sat Mar 21 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.13-1
+- Update youtube-dl-lite to 2020.03.08
+
+* Tue Feb 25 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.12-1
+- BETA RELEASE
+- Uses custom version of youtube-dl
+- Update functionality temporarily disabled
+
 * Sun Feb 23 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.11-1
 - Fix version number on about page
 - Fix video player page on SFOS 2.2
