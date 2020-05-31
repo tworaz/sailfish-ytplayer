@@ -239,8 +239,9 @@ Page {
                 text: qsTrId("ytplayer-action-recommended")
                 visible: priv.showAccount
                 icon: "qrc:///icons/approval-64"+iconColor+".png"
+                // For some reason, SUBSCRIPTION_VIDEOS shows "recommened" videos...
                 onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
-                                              { "state" : "RECOMMENDED" })
+                                              { "state" : "SUBSCRIPTION_VIDEOS" })
             }
             MainMenuItem {
                 //: Menu opion showing recently watched videos page
