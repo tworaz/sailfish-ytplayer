@@ -91,7 +91,8 @@ Page {
                 readonly property real buttonWidth: Math.max(kPreferredButtonWidth,
                                                              b1.implicitWidth,
                                                              b2.implicitWidth,
-                                                             b3.implicitWidth)
+                                                             b3.implicitWidth,
+                                                             b4.implicitWidth)
                 Button {
                     id: b1
                     width: parent.buttonWidth
@@ -119,16 +120,43 @@ Page {
                     text: qsTrId("ytplayer-action-translation-credits")
                     onClicked: pageStack.push(Qt.resolvedUrl("TranslationCredits.qml"))
                 }
-            }
-            Label {
-                width: parent.width
-                anchors.horizontalCenter: parent.horizontalCenter
-                color: Theme.secondaryColor
-                font.pixelSize: Theme.fontSizeTiny
-                text: "https://github.com/direc85/sailfish-ytplayer"
-                horizontalAlignment: Text.AlignHCenter
+                Button {
+                    id: b4
+                    width: parent.buttonWidth
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    //: Label for button showing application translation credits page
+                    text: "GitHub"
+                    onClicked: Qt.openUrlExternally("https://github.com/direc85/sailfish-ytplayer")
+                }
             }
 
+            Label {
+                width: parent.width - 2 * Theme.horizontalPageMargin
+                wrapMode: Text.WordWrap
+                font.pixelSize: Theme.fontSizeSmall
+                anchors.horizontalCenter: parent.horizontalCenter
+                color: Theme.secondaryColor
+                //: Description for Ko-Fi donation link image
+                //% "The original creator, tworaz, deserves all the credit for this awesome app. If, however, you would like to give your support to the maintainer, you can buy him a nice cup of coffee!"
+                text: qsTrId("ytplayer-about-ko-fiz")
+            }
+
+            BackgroundItem {
+                anchors.horizontalCenter: parent.horizontalCenter
+                width: Theme.iconSizeExtraLarge * 1.2
+                height: Theme.iconSizeExtraLarge * 1.2
+                onClicked: Qt.openUrlExternally("https://ko-fi.com/direc85")
+                contentItem.radius: Theme.paddingSmall
+
+                Image {
+                    anchors.centerIn: parent
+                    source: "qrc:///ko-fi.png"
+                    width: Theme.iconSizeExtraLarge
+                    height: Theme.iconSizeExtraLarge
+                    smooth: true
+                    asynchronous: true
+                }
+            }
         }
     }
 }
