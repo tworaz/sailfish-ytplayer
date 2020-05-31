@@ -44,7 +44,7 @@ Page {
                 //: YouTube subscribed channels page title
                 //% "Subscribed channels"
                 title: qsTrId("ytplayer-title-subscribed-channels")
-                topPulleyVisible: true
+                topPulleyVisible: false
             }
         },
         State {
