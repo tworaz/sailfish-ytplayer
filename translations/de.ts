@@ -906,42 +906,47 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-update-checking-local-version">
         <source>Checking local version...</source>
         <extracomment>Shown while checking for local version of youtube-dl</extracomment>
-        <translation>Überprüfe lokale Version...</translation>
+        <translation type="vanished">Überprüfe lokale Version...</translation>
     </message>
     <message id="ytplayer-update-checking-remote-version">
         <source>Checking remote version...</source>
         <extracomment>Shown while checking for remote version of youtube-dl</extracomment>
-        <translation>Überprüfe rechnerferne Version...</translation>
+        <translation type="vanished">Überprüfe rechnerferne Version...</translation>
     </message>
     <message id="ytplayer-update-checking-remote-version-failed">
         <source>Could not check for updates</source>
         <extracomment>Shown when checking youtube-dl version from the Internet failed</extracomment>
-        <translation>Konnte nicht nach Aktualisierungen suchen</translation>
+        <translation type="vanished">Konnte nicht nach Aktualisierungen suchen</translation>
     </message>
     <message id="ytplayer-update-downloading">
         <source>Downloading youtube-dl...</source>
         <extracomment>Shown while downloading the youtube-dl update from the Internet</extracomment>
-        <translation>Youtube-dl wird heruntergeladen...</translation>
+        <translation type="vanished">Youtube-dl wird heruntergeladen...</translation>
     </message>
     <message id="ytplayer-update-up-to-date">
         <source>Youtube-dl is up to date</source>
         <extracomment>Shown when youtube-dl is up to date and no update is needed</extracomment>
-        <translation>Youtube-dl ist aktuell</translation>
+        <translation type="vanished">Youtube-dl ist aktuell</translation>
     </message>
     <message id="ytplayer-update-failed">
         <source>Updating youtube-dl failed</source>
         <extracomment>Shown after youtube-dl update failed</extracomment>
-        <translation>Youtube-dl Aktualisierung fehlgeschlagen</translation>
+        <translation type="vanished">Youtube-dl Aktualisierung fehlgeschlagen</translation>
     </message>
     <message id="ytplayer-update-successful">
         <source>Updated youtube-dl succesfully</source>
         <extracomment>Shown after youtube-dl update succeeded</extracomment>
-        <translation>Youtube-dl Aktualisierung erfolgreich</translation>
+        <translation type="vanished">Youtube-dl Aktualisierung erfolgreich</translation>
     </message>
     <message id="ytplayer-update-youtubedl">
         <source>Update youtube-dl</source>
         <extracomment>MenuItem text for updating youtube-dl</extracomment>
-        <translation>Aktualisiere youtube-dl</translation>
+        <translation type="vanished">Aktualisiere youtube-dl</translation>
+    </message>
+    <message id="ytplayer-about-ko-fiz">
+        <source>The original creator, tworaz, deserves all the credit for this awesome app. If, however, you would like to give your support to the maintainer, you can buy him a nice cup of coffee!</source>
+        <extracomment>Description for Ko-Fi donation link image</extracomment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 </TS>
