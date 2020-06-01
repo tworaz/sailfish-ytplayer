@@ -9,7 +9,7 @@ Name:       harbour-ytplayer
 # << macros
 
 Summary:    Native YouTube client for SailfishOS
-Version:    0.6.14
+Version:    0.6.15
 Release:    1
 Group:      Applications/Multimedia
 License:    BSD-3-Clause
