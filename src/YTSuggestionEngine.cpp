@@ -82,7 +82,7 @@ initDatabase()
 YTSuggestionEngine::YTSuggestionEngine(QObject *parent)
     : QObject(parent)
     , _network_access_manager(YTRequest::GetNetworkAccessManager())
-    , _reply(NULL)
+    , _reply(nullptr)
 {
     static bool db_initialized = false;
     if (!db_initialized) {
@@ -104,7 +104,7 @@ YTSuggestionEngine::~YTSuggestionEngine()
 {
     if (_reply) {
         delete _reply;
-        _reply = NULL;
+        _reply = nullptr;
     }
 }
 
@@ -195,7 +195,7 @@ YTSuggestionEngine::onFinished()
     }
 
     _reply->deleteLater();
-    _reply = NULL;
+    _reply = nullptr;
 }
 
 int

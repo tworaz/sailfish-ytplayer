@@ -1,5 +1,5 @@
 * Thu Jun 11 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.16-1
-* Update youtube-dl-lite to 2020.05.08
+- Update youtube-dl-lite to 2020.05.08
 
 * Mon Jun 1 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.15-1
 - Revert "Recommened" videos change

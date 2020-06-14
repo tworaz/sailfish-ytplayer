@@ -50,8 +50,8 @@ QString YTVideoUrlFetcher::_version_str;
 bool YTVideoUrlFetcher::_works = false;
 
 YTVideoUrlFetcher::YTVideoUrlFetcher()
-    : QObject(0)
-    , _process(0)
+    : QObject(nullptr)
+    , _process(nullptr)
 {
     Q_ASSERT(QFile("/usr/share/harbour-ytplayer/youtube-dl-lite/youtube-dl").exists());
 
@@ -133,7 +133,7 @@ YTVideoUrlFetcher::onFetchUrlsFor(QString videoId)
 
     qDebug() << "YouTubeDL subprocess:" << getYouTubeDLPath() << arguments;
 
-    _process = new QProcess(0);
+    _process = new QProcess(nullptr);
     connect(_process, SIGNAL(finished(int, QProcess::ExitStatus)),
             this, SLOT(onProcessFinished(int, QProcess::ExitStatus)));
     connect(_process, SIGNAL(error(QProcess::ProcessError)),
@@ -183,7 +183,7 @@ YTVideoUrlFetcher::onProcessFinished(int code, QProcess::ExitStatus status)
         emit failure(map);
     }
     delete _process;
-    _process = NULL;
+    _process = nullptr;
 }
 
 void
@@ -191,7 +191,7 @@ YTVideoUrlFetcher::onProcessError(QProcess::ProcessError error)
 {
     qCritical() << "Process error:" << error;
     delete _process;
-    _process = NULL;
+    _process = nullptr;
     emit failure(QVariantMap());
 }
 
@@ -202,7 +202,7 @@ YTVideoUrlFetcher::~YTVideoUrlFetcher()
         _process->kill();
         _process->waitForFinished();
         _process->deleteLater();
-        _process = NULL;
+        _process = nullptr;
     }
 }
 

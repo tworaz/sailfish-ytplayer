@@ -81,12 +81,11 @@ appendAuthHeader(QNetworkRequest& request)
 static QString
 methodToString(YTRequest::Method method)
 {
-    switch (method) {
-    case YTRequest::List: return "list";
-    case YTRequest::Post: return "post";
-    case YTRequest::Delete: return "delete";
-    default: return "unknown";
-    }
+    if(method == YTRequest::List)   return "list";
+    if(method == YTRequest::List)   return "list";
+    if(method == YTRequest::Post)   return "post";
+    if(method == YTRequest::Delete) return "delete";
+    return "unknown";
 }
 
 static QUrl
@@ -121,13 +120,13 @@ youtubeVideoInfoUrl(QVariantMap params)
 
 YTRequest::YTRequest(QObject *parent, QNetworkAccessManager* nam)
     : QObject(parent)
-    , _reply(NULL)
-    , _token_reply(NULL)
-    , _url_fetcher(NULL)
+    , _reply(nullptr)
+    , _token_reply(nullptr)
+    , _url_fetcher(nullptr)
     , _network_access_manager(nam ? *nam : GetNetworkAccessManager())
     , _loaded(false)
     , _busy(false)
-    , _model(NULL)
+    , _model(nullptr)
     , _retryCount(0)
 {
     Q_ASSERT(thread() == _network_access_manager.thread());
@@ -139,18 +138,18 @@ YTRequest::~YTRequest()
         if (!_reply->isFinished())
             _reply->abort();
         _reply->deleteLater();
-        _reply = NULL;
+        _reply = nullptr;
     }
     if (_token_reply) {
         if (!_token_reply->isFinished())
             _token_reply->abort();
         _reply->deleteLater();
-        _token_reply = NULL;
+        _token_reply = nullptr;
     }
     if (_url_fetcher) {
         _url_fetcher->disconnect();
         _url_fetcher->deleteLater();
-        _url_fetcher = NULL;
+        _url_fetcher = nullptr;
     }
 }
 
@@ -237,13 +236,13 @@ YTRequest::onTokenRequestFinished()
         handleError(_token_reply);
         if (_reply) {
             delete _reply;
-            _reply = NULL;
+            _reply = nullptr;
         }
         break;
     }
 
     _token_reply->deleteLater();
-    _token_reply = NULL;
+    _token_reply = nullptr;
 }
 
 void
@@ -292,13 +291,14 @@ YTRequest::onFinished()
             refreshToken();
             break;
         }
+        /* fall thru */
     default:
         handleError(_reply);
         break;
     }
 
     _reply->deleteLater();
-    _reply = NULL;
+    _reply = nullptr;
 
     setBusy(busy);
 }
@@ -551,7 +551,7 @@ YTRequest::oAuth2Url() const
     query.addQueryItem("response_type", "code");
     query.addQueryItem("access_type=", "offline");
 
-    QUrl url(YOUTUBE_AUTH_URI);
+    QUrl url((YOUTUBE_AUTH_URI));
     url.setQuery(query);
     return url;
 }
