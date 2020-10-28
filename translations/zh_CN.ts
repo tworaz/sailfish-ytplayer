@@ -31,7 +31,7 @@
     <message id="ytplayer-title-about">
         <source>About YTPlayer</source>
         <extracomment>Title of about page</extracomment>
-        <translation>关于YTPlater</translation>
+        <translation>关于 YTPlater</translation>
     </message>
     <message id="ytplayer-label-application-description">
         <source>Unofficial YouTube client for Sailfish OS</source>
@@ -46,7 +46,7 @@
     <message id="ytplayer-label-region-code">
         <source>Region code: %1</source>
         <extracomment>Region code field value</extracomment>
-        <translation>地区代码: %1</translation>
+        <translation>地区代码:: %1</translation>
     </message>
     <message id="ytplayer-label-publish-date">
         <source>Published on</source>
@@ -110,7 +110,7 @@
     <message id="ytplayer-search-no-results">
         <source>No results</source>
         <extracomment>Background label informing the user there are no search results</extracomment>
-        <translation>沒有結果</translation>
+        <translation>无搜索结果</translation>
     </message>
     <message id="ytplayer-title-log-viewer">
         <source>Log viewer</source>
@@ -576,17 +576,17 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-msg-cancelling-download">
         <source>Cancelling download</source>
         <extracomment>Remorse popup message telling the user video download will be cancelled</extracomment>
-        <translation>将取消下载于</translation>
+        <translation>正在取消下载</translation>
     </message>
     <message id="ytplayer-msg-removing-download">
         <source>Removing download</source>
         <extracomment>Remorse popup message telling the user video download will be removed</extracomment>
-        <translation>将删除下载于</translation>
+        <translation>正在删除下载</translation>
     </message>
     <message id="ytplayer-msg-clearing-cache">
         <source>Clearing cache</source>
         <extracomment>Remorse popup message telling the user the cache will be cleaned</extracomment>
-        <translation>将清除缓存于</translation>
+        <translation>正在清除缓存</translation>
     </message>
     <message id="ytplayer-action-cache-settings">
         <source>Cache</source>
@@ -616,22 +616,22 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-msg-unsubscribing-channel">
         <source>Unsubscribing channel</source>
         <extracomment>Remorse popup message telling the user channel is about to be unsubscribed</extracomment>
-        <translation>将退订于</translation>
+        <translation>正在退订</translation>
     </message>
     <message id="ytplayer-msg-channel-unsubscribed">
         <source>Channel unsubscribed</source>
         <extracomment>Notification summary telling the user channel was succesfully unsubscribed</extracomment>
-        <translation>订阅已删除</translation>
+        <translation>已删除订阅</translation>
     </message>
     <message id="ytplayer-action-copy-link-to-clipboard">
         <source>Copy link to clipboard</source>
         <extracomment>Menu option copying video link to clipboard</extracomment>
-        <translation>将链接复制到剪贴板</translation>
+        <translation>正在链接复制到剪贴板</translation>
     </message>
     <message id="ytplayer-msg-link-copied">
         <source>Link copied</source>
         <extracomment>Notification summary informing the user link was copied to clipboard</extracomment>
-        <translation>链接已复制</translation>
+        <translation>已复制链接</translation>
     </message>
     <message id="ytplayer-action-open-link-from-clipboard">
         <source>Open link from clipboard</source>
@@ -671,7 +671,7 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-msg-clearing-history">
         <source>Clearing history</source>
         <extracomment>&quot;Remorse popup message telling the user search history is about to be cleared&quot;</extracomment>
-        <translation>将清除搜索记录于</translation>
+        <translation>正在清除搜索记录</translation>
     </message>
     <message id="ytplayer-title-search-settings">
         <source>Search settings</source>
@@ -766,22 +766,22 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-acton-favorites">
         <source>Favorites</source>
         <extracomment>Menu option showing video favorites page</extracomment>
-        <translation>我的最爱</translation>
+        <translation>我的收藏</translation>
     </message>
     <message id="ytplayer-title-favorites">
         <source>Favorites</source>
         <extracomment>Title for favorite videos page</extracomment>
-        <translation>我的最爱</translation>
+        <translation>我的收藏</translation>
     </message>
     <message id="ytplayer-action-hide-search">
         <source>Hide search</source>
         <extracomment>Menu option allowing the user to hide search field</extracomment>
-        <translation>關閉搜索框</translation>
+        <translation>关闭搜索框</translation>
     </message>
     <message id="ytplayer-msg-removing-favorite">
         <source>Removing favorite</source>
         <extracomment>Remorse popup message telling the use favorite is about to be removed</extracomment>
-        <translation>将删除我的最爱于</translation>
+        <translation>正在删除我的收藏</translation>
     </message>
     <message id="ytplayer-title-player-settings">
         <source>Player settings</source>
@@ -801,7 +801,7 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-status-buffering">
         <source>Buffering: %1%</source>
         <extracomment>Media player status indicating content is buffering</extracomment>
-        <translation>缓冲中 %1%</translation>
+        <translation>缓冲中:%1%</translation>
     </message>
     <message id="ytplayer-status-loading">
         <source>Loading</source>
@@ -841,12 +841,12 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-label-quality-cellular">
         <source>Default video quality on cellular</source>
         <extracomment>Label for combo box allowing the user to change default video quality when using cellular connection.</extracomment>
-        <translation>连接行动网络时的默认画质</translation>
+        <translation>使用移动数据时的默认画质</translation>
     </message>
     <message id="ytplayer-label-autoload">
         <source>Early video loading</source>
         <extracomment>Label for combo box allowing the user to change video autoload behavior.</extracomment>
-        <translation>预载视频</translation>
+        <translation>预加载视频</translation>
     </message>
     <message id="ytplayer-description-autoload">
         <source>Start preloading video data before player page is activated.</source>
@@ -871,7 +871,7 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-action-autoload-never">
         <source>Never</source>
         <extracomment>Menu option disallowing the player to always preaload video data.</extracomment>
-        <translation>决不</translation>
+        <translation>绝不</translation>
     </message>
     <message id="ytplayer-label-broken-image">
         <source>No image</source>
@@ -921,7 +921,7 @@ Label informing the user there are no watched recently videos</extracomment>
     <message id="ytplayer-update-downloading">
         <source>Downloading youtube-dl...</source>
         <extracomment>Shown while downloading the youtube-dl update from the Internet</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>正在下载 youtube-dl……</translation>
     </message>
     <message id="ytplayer-update-up-to-date">
         <source>Youtube-dl is up to date</source>
