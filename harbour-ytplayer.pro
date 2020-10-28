@@ -62,7 +62,6 @@ QML_SOURCES = \
 OTHER_FILES += \
     $$QML_SOURCES \
     harbour-ytplayer.desktop \
-    scripts/generate-config-h.py \
     scripts/get_version_str.sh \
     translations/*.ts
 
@@ -91,8 +90,6 @@ INSTALLS += ytdl ytdl-y ytdl-d ytdl-p ytdl-e
 
 SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
-# Update option in Settings now!
-# include(third_party/youtube_dl.pri)
 include(translations/translations.pri)
 
 VERSION_RUN = $$system(bash $${top_srcdir}/scripts/get_version_str.sh)
