@@ -7,3 +7,4 @@ src/config.h
 *.bak
 *.autosave
 scripts/version-str
+youtube-dl-lite
