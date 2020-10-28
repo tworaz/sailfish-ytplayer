@@ -62,7 +62,6 @@ QML_SOURCES = \
 OTHER_FILES += \
     $$QML_SOURCES \
     harbour-ytplayer.desktop \
-    scripts/mcc-data-util.py \
     scripts/generate-config-h.py \
     scripts/get_version_str.sh \
     translations/*.ts
@@ -96,28 +95,6 @@ SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 # include(third_party/youtube_dl.pri)
 include(translations/translations.pri)
 
-KEY_FILE = $$top_srcdir/youtube-data-api-v3.key
-CLIENT_ID_FILE = $$top_srcdir/youtube-client-id.json
-
-!exists($$KEY_FILE) {
-    error("YouTube data api key file not found: youtube-data-api-v3.key")
-}
-!exists($$CLIENT_ID_FILE) {
-    warning("YouTube client ID file not found, client authotization won't work!")
-}
-
-configh.input = KEY_FILE
-configh.output = $$top_builddir/config.h
-configh.commands = \
-    python $$top_srcdir/scripts/generate-config-h.py \
-            --keyfile=$$KEY_FILE \
-            --idfile=$$CLIENT_ID_FILE \
-            --outfile=$$top_builddir/config.h
-configh.CONFIG += no_link
-
-QMAKE_EXTRA_COMPILERS += configh
-PRE_TARGETDEPS += compiler_configh_make_all
-
 VERSION_RUN = $$system(bash $${top_srcdir}/scripts/get_version_str.sh)
 DEFINES += VERSION_STR=\\\"$$system(cat $${top_srcdir}/scripts/version-str)\\\"
 
@@ -131,13 +108,3 @@ SOURCES += $$QML_SOURCES
 
 RESOURCES += \
     YTPlayer.qrc
-
-mcc_data.target = mcc-data
-mcc_data.commands = \
-    python $$top_srcdir/scripts/mcc-data-util.py \
-        --keyfile=$$top_srcdir/youtube-data-api-v3.key \
-        --mccfile=$$top_srcdir/resources/mcc-data.json \
-        --verbose --mode check
-
-QMAKE_EXTRA_TARGETS += mcc-data
-PRE_TARGETDEPS += mcc-data
