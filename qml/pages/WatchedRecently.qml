@@ -97,6 +97,7 @@ Page {
         model: YTWatchedRecently
 
         delegate: YTListItem {
+            contentHeight: Theme.itemSizeMedium
             title: video_title
             duration: video_duration
             youtubeId: {

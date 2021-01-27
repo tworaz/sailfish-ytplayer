@@ -35,6 +35,7 @@ BackgroundItem {
 
     property alias text: label.text
     property bool selected: false
+    property alias color: label.color
 
     Label {
         id: label

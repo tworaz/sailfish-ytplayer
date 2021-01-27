@@ -43,7 +43,7 @@ Page {
                 //% "Automatically resume downloads"
                 text: qsTrId("ytplayer-label-autoresume")
                 //: Description of video download auto resume switch in settings
-                //% "On startup, resume all downloads which were either quened or "
+                //% "On startup, resume all downloads which were either queued or "
                 //% "in progress when YTPlayer was closed."
                 description: qsTrId("ytplayer-description-autoresume")
                 checked: YTPrefs.getBool("Download/ResumeOnStartup")

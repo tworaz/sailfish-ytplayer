@@ -34,6 +34,12 @@
 #include <QVariant>
 #include <QHash>
 #include <QList>
+#include <QSqlDatabase>
+#include <QTextStream>
+#include <QSqlRecord>
+#include <QSqlError>
+#include <QDebug>
+#include <QSqlQuery>
 
 class YTLocalVideoManager;
 

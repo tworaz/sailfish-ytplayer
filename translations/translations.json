@@ -1,0 +1,149 @@
+{
+  "default" : "en_GB",
+  "items" : [
+    {
+      "name" : "Català",
+      "code" : "ca",
+      "authors" : [
+        "Agustí Clara"
+      ]
+    },
+    {
+      "name" : "Deutsch",
+      "code" : "de",
+      "authors" : [
+        "Björn Bidar <theodorstormgrade@gmail.com>",
+        "Pascal Schmid",
+        "8bitp"
+      ]
+    },
+    {
+      "name" : "English (UK)",
+      "code" : "en_GB",
+      "authors" : [
+        "Piotr Tworek <tworaz666@gmail.com>"
+      ]
+    },
+    {
+      "name" : "Español",
+      "code" : "es",
+      "authors" : [
+        "Carmen Fernández B."
+      ]
+    },
+    {
+      "name" : "Français (France)",
+      "code" : "fr_FR",
+      "authors" : [
+        "Rudy Nappée",
+        "lutinotmalin"
+      ]
+    },
+    {
+      "name" : "Italiano (Italia)",
+      "code" : "it_IT",
+      "authors" : [
+        "Gio Scino"
+      ]
+    },
+    {
+      "name" : "Magyar (Magyarország)",
+      "code" : "hu_HU",
+      "authors" : [
+        "Veronika Simonkay",
+        "leoka"
+      ]
+    },
+    {
+      "name" : "Nederlands (Nederland)",
+      "code" : "nl_NL",
+      "authors" : [
+        "Heimen Stoffels"
+      ]
+    },
+    {
+      "name" : "Polski (Polska)",
+      "code" : "pl_PL",
+      "authors": [
+        "pemekcz"
+      ]
+    },
+    {
+      "name" : "Português (Brasil)",
+      "code" : "pt_BR",
+      "authors": [
+        "Rafael Vinicius Leite Mendes",
+        "Ivanor Paula"
+      ]
+    },
+    {
+      "name" : "Suomi (Suomi)",
+      "code" : "fi_FI",
+      "authors" : [
+        "Murtsi",
+        "Ari Järviö",
+        "Eero Sytelä",
+        "Matti Viljanen",
+        "Pauli Suomu",
+        "Simo Ruoho"
+      ]
+    },
+    {
+      "name" : "Svenska",
+      "code" : "sv",
+      "authors" : [
+        "Åke Engelbrektson <https://svenskasprakfiler.se>"
+      ]
+    },
+    {
+      "name" : "Türkçe",
+      "code" : "tr",
+      "authors" : [
+        "myusdat"
+      ]
+    },
+    {
+      "name" : "Čeština (Česká republika)",
+      "code" : "cs_CZ",
+      "authors" : [
+        "Bobsik"
+      ]
+    },
+    {
+      "name" : "Ελληνικά",
+      "code" : "el",
+      "authors" : [
+        "Dimitrios Glentadakis"
+      ]
+    },
+    {
+      "name" : "Русский",
+      "code" : "ru_RU",
+      "authors" : [
+        "Петр Цымбарович <petr@tsymbarovich.ru>",
+        "Dmitrij D. Czarkoff <czarkoff@gmail.com>"
+      ]
+    },
+    {
+      "name" : "日本語",
+      "code" : "ja",
+      "authors" : [
+        "Yamada Takashi"
+      ]
+    },
+    {
+      "name" : "简体中文 (中国)",
+      "code" : "zh_CN",
+      "authors" : [
+        "JIMMY CHEN"
+      ]
+    },
+    {
+      "name" : "繁體中文 (台灣)",
+      "code" : "zh_TW",
+      "authors" : [
+        "JIMMY CHEN"
+      ]
+    }
+  ]
+}

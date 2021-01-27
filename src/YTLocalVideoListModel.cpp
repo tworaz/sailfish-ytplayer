@@ -29,14 +29,6 @@
 
 #include "YTLocalVideoListModel.h"
 
-#include <QSqlDatabase>
-#include <QTextStream>
-#include <QSqlRecord>
-#include <QSqlError>
-#include <QDebug>
-
-#include <QSqlQuery>
-
 #include "YTLocalVideoManager.h"
 #include "YTLocalVideo.h"
 

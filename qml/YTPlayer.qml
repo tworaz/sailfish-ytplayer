@@ -29,7 +29,7 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import org.nemomobile.notifications 1.0
+import Nemo.Notifications 1.0
 import harbour.ytplayer 1.0
 import "pages"
 
@@ -40,13 +40,15 @@ ApplicationWindow
     readonly property double thumbnailAspectRatio: 9 / 16
     readonly property string youtubeIconsFontName: "youtube-icons"
     readonly property int kMaxCoverThumbnailCount: 12
-    readonly property int kThumbnailWidth: 120
     readonly property color kBlackTransparentBg: "#AA000000"
     readonly property string kYoutubeVideoUrlBase: "https://www.youtube.com/watch?v="
     readonly property int kListAutoLoadItemThreshold: 10
     readonly property int kStandardAnimationDuration: 250
     readonly property int kLongAnimationDuration: 500
     readonly property int kPreferredButtonWidth: 300
+    property string iconColor: Theme.darkPrimaryColor !== "undefined"
+                               && Theme.darkPrimaryColor === Theme.primaryColor
+                               ? "-black" : "-white"
 
     initialPage: Component { MainMenu { } }
     cover: YTNetworkManager.online ?
@@ -93,9 +95,8 @@ ApplicationWindow
 
     function openLinkInBrowser(url) {
         Log.debug("Opening link in browser: " + url)
-        pageStack.push(Qt.resolvedUrl("pages/BrowserLauncher.qml"), {
-            "url" : url,
-        })
+        pageStack.push(Qt.resolvedUrl("pages/BrowserLauncher.qml"),
+                       { "url" : url })
     }
 
     Timer {
@@ -105,6 +106,10 @@ ApplicationWindow
         onTriggered: {
             if (!YTNetworkManager.online) {
                 YTNetworkManager.onOnlineChanged(false)
+            }
+            if(!YTUpdater.ytdlExists()) {
+                pageStack.push(Qt.resolvedUrl("pages/Settings.qml"),
+                               { autoUpdate: true })
             }
         }
     }

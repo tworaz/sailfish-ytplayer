@@ -114,7 +114,7 @@ CoverBackground {
             font.family: Theme.fontFamilyHeading
             font.pixelSize: Theme.fontSizeSmall
             font.bold: true
-            color: Theme.primaryColor
+            color: Theme.lightPrimaryColor
             maximumLineCount: 2
             wrapMode: Text.Wrap
             text: "YTPlayer"

@@ -29,11 +29,6 @@
 
 #include "YTFavorites.h"
 
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QDebug>
-
 namespace {
 
 const char kCreateDbQueryText[] =

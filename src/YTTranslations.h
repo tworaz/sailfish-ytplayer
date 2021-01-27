@@ -33,6 +33,13 @@
 #include <QObject>
 #include <QTranslator>
 #include <QVariantList>
+#include <QGuiApplication>
+#include <QJsonDocument>
+#include <QSettings>
+#include <QLocale>
+#include <QDebug>
+#include <QFile>
+#include <sailfishapp.h>
 
 class YTTranslations : public QObject
 {

@@ -34,7 +34,7 @@ Page {
     allowedOrientations: Orientation.All
 
     SilicaListView {
-        id: listview
+        id: listView
         anchors.fill: parent
 
         PullDownMenu {
@@ -46,6 +46,8 @@ Page {
             }
         }
 
+        VerticalScrollDecorator { flickable: listView}
+
         header: PageHeader {
             //: Title of translation credits page
             //% "Translations"
@@ -56,28 +58,29 @@ Page {
 
         delegate: Column {
             id: listItem
-            width: parent.width
-            property variant autors: listview.model[index].authors
+            x: Theme.paddingLarge
+            width: parent.width - 2*x
+            property variant authors: listView.model[index].authors
 
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: listview.model[index].name
-                font.pixelSize: Theme.fontSizeLarge
+            SectionHeader {
+                text: listView.model[index].name
+                font.pixelSize: Theme.fontSizeSmall
             }
             Repeater {
-                model: listItem.autors
+                model: listItem.authors
                 Label {
-                    anchors.horizontalCenter: parent.horizontalCenter
-                    text: listItem.autors[index]
+                    anchors {
+                        horizontalCenter: parent.horizontalCenter
+                        bottomMargin: Theme.paddingSmall
+                    }
+                    text: listItem.authors[index]
                     font.pixelSize: Theme.fontSizeExtraSmall
+                    width: parent.width
+                    wrapMode: Text.Wrap
+                    //horizontalAlignment: Text.AlignHCenter
                 }
-            }
-            Item {
-                width: parent.width
-                height: Theme.paddingLarge
             }
         }
 
-        VerticalScrollDecorator {}
     }
 }

@@ -29,16 +29,6 @@
 
 #include "YTLocalVideoManager.h"
 
-#include <QNetworkAccessManager>
-#include <QSqlDatabase>
-#include <QStringList>
-#include <QJsonObject>
-#include <QSettings>
-#include <QFileInfo>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QDebug>
-
 #include "YTNetworkManager.h"
 #include "YTLocalVideoData.h"
 #include "YTRequest.h"
@@ -191,8 +181,6 @@ private slots:
                 quality = "720p";
             } else if (map.contains("360p")) {
                 quality = "360p";
-            } else if (map.contains("1080p")) {
-                quality = "1080p";
             } else {
                 Q_ASSERT(false);
                 onMetadataRequestError(response);

@@ -37,6 +37,9 @@
 #include <QVariantMap>
 #include <QContiguousCache>
 #include <QAbstractListModel>
+#include <QDebug>
+#include <QDir>
+#include <QtConcurrentRun>
 
 class YTLogger : public QAbstractListModel
 {

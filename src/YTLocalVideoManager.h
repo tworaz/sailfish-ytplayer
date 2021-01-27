@@ -32,12 +32,21 @@
 
 #include <QSharedPointer>
 #include <QScopedPointer>
-#include <QNetworkReply>
+#include <QtNetwork/QAbstractNetworkCache>
 #include <QWeakPointer>
 #include <QObject>
 #include <QMutex>
 #include <QUrl>
 #include <QMap>
+#include <QtNetwork/QAbstractNetworkCache>
+#include <QSqlDatabase>
+#include <QStringList>
+#include <QJsonObject>
+#include <QSettings>
+#include <QFileInfo>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QDebug>
 
 class QNetworkAccessManager;
 class YTLocalVideoData;

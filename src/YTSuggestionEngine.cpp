@@ -29,15 +29,6 @@
 
 #include "YTSuggestionEngine.h"
 
-#include <QJsonDocument>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QUrlQuery>
-#include <QSqlError>
-#include <QSettings>
-#include <QDebug>
-#include <QUrl>
-
 #include "YTRequest.h"
 #include "YTPrefs.h"
 

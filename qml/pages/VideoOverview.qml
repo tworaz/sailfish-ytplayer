@@ -5,7 +5,7 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer 1.0
-import org.nemomobile.notifications 1.0
+import Nemo.Notifications 1.0
 import "../common/Helpers.js" as Helpers
 import "../common/duration.js" as DJS
 import "../common"
@@ -500,7 +500,75 @@ Page {
                 wrapMode: Text.Wrap
                 font.pixelSize: Theme.fontSizeExtraSmall
                 linkColor: Theme.highlightColor
-                onLinkActivated: openLinkInBrowser(link)
+                onLinkActivated: {
+                    var match = link.match(/^(https?\:\/\/)?(www\.)?youtu.*\/.*$/)
+                    if (!match) {
+                        console.log("The activated link is not an Youtube link")
+                        openLinkInBrowser(link)
+                        return
+                    }
+
+                    match = link.match(/^.*youtu.*(embed\/|watch\?v=|\&v=|\.be\/)([A-Za-z0-9_\-]{11}).*$/)
+                    if (match) {
+                        console.log("The link to a Youtube video was activated")
+                        pageStack.push(Qt.resolvedUrl("VideoOverview.qml"), {
+                            "videoId" : match[2]
+                        })
+                        return
+                    }
+
+                    match = link.match(/^.*\/channel\/([A-Za-z0-9_\-]{1,}).*$/)
+                    if (match) {
+                        console.log(match)
+                        console.log("The link to a Youtube channel was activated")
+                        pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"), {
+                            "channelId" : match[1]
+                        })
+                        return
+                    }
+
+                    match = link.match(/^.*\/playlist.*$/)
+                    if (match) {
+                        console.log("The link to a Youtube playlist was activated")
+                        openLinkInBrowser(link)
+                        return
+                    }
+
+                    match = link.match(/^.*\/([A-Za-z0-9_\-]{1,}).*$/)
+                    if (match) {
+                        channelIdRequest.link = link
+                        channelIdRequest.params = {
+                            part        : "id",
+                            forUsername : match[1]
+                        }
+                        channelIdRequest.run()
+                    }
+                }
+
+                YTRequest {
+                    property string link
+
+                    id: channelIdRequest
+                    method: YTRequest.List
+                    resource: "channels"
+
+                    onSuccess: {
+                        console.log(response)
+                        console.assert(response.kind === "youtube#channelListResponse")
+                        if (response.items.length === 0) {
+                            console.log("Could not find a channel with username ", params.forUsername)
+                            openLinkInBrowser(link)
+                            return
+                        }
+
+                        var item = response.items[0]
+                        console.assert(item.kind === "youtube#channel")
+                        console.log("The link to a Youtube user was activated")
+                        pageStack.push(Qt.resolvedUrl("ChannelBrowser.qml"), {
+                            "channelId" : item.id
+                        })
+                    }
+                }
             }
         }
 

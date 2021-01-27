@@ -29,8 +29,6 @@
 
 #include "YTLocalVideo.h"
 
-#include <QDebug>
-
 #include "YTLocalVideoManager.h"
 #include "YTLocalVideoData.h"
 #include "YTPlayer.h"

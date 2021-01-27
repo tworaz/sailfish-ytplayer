@@ -28,33 +28,21 @@
  */
 
 #include "YTVideoUrlFetcher.h"
-
-#include <QJsonDocument>
-#include <sailfishapp.h>
-#include <QJsonObject>
-#include <QStringList>
-#include <QProcess>
-#include <QDebug>
-#include <QDir>
-
 #include "YTPlayer.h"
 
 namespace {
-const char kYouTubeDLBinaryName[] = "youtube-dl";
 const int kMaxResponseCacheSize = 20;
+const char kYouTubeDLBinaryName[] = "youtube-dl";
 
-QString getYouTubeDLPath()
-{
-    static QString program;
-    if (program.isEmpty()) {
-        program = SailfishApp::pathTo("bin").toLocalFile();
-        program.append(QDir::separator());
-        program.append(kYouTubeDLBinaryName);
-        Q_ASSERT(QFile(program).exists());
+    QString getYouTubeDLPath()
+    {
+        static QString program;
+        if (program.isEmpty()) {
+            program = "/usr/bin/python3";
+            Q_ASSERT(QFile(program).exists());
+        }
+        return program;
     }
-    return program;
-}
-
 }
 
 QCache<QString, QVariantMap> YTVideoUrlFetcher::_response_cache;
@@ -65,6 +53,8 @@ YTVideoUrlFetcher::YTVideoUrlFetcher()
     : QObject(0)
     , _process(0)
 {
+    Q_ASSERT(QFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+kYouTubeDLBinaryName).exists());
+
     static bool registered = false;
     if (!registered) {
         qRegisterMetaType<QProcess::ExitStatus>("QProcess::ExitStatus");
@@ -78,8 +68,16 @@ YTVideoUrlFetcher::YTVideoUrlFetcher()
 void
 YTVideoUrlFetcher::runInitialCheck()
 {
+    QFile youtubedl(QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+kYouTubeDLBinaryName);
+    if(!youtubedl.exists()) {
+        _version_str = "";
+        _works = false;
+        return;
+    }
+
     QStringList arguments;
-    arguments << "--version";
+    arguments << QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+kYouTubeDLBinaryName
+              << "--version";
 
     QProcess process;
     process.start(getYouTubeDLPath(), arguments, QIODevice::ReadOnly);
@@ -92,8 +90,14 @@ YTVideoUrlFetcher::runInitialCheck()
         _works = true;
         qDebug() << "youtube-dl works, current version:" << _version_str;
     } else {
-        qWarning() << "youtune-dl is non functional:" << process.readAllStandardError();
+        qWarning() << "youtube-dl is non functional:" << process.readAllStandardError();
     }
+}
+
+void
+YTVideoUrlFetcher::setVersion(QString newVersion, bool newWorks) {
+    _version_str = newVersion;
+    _works = newWorks;
 }
 
 void
@@ -119,7 +123,8 @@ YTVideoUrlFetcher::onFetchUrlsFor(QString videoId)
     }
 
     QStringList arguments;
-    arguments << "--dump-json"
+    arguments << QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+QDir::separator()+kYouTubeDLBinaryName
+              << "--dump-json"
               << "--youtube-skip-dash-manifest"
               << "--no-cache-dir"
               << "--no-call-home"
@@ -237,9 +242,6 @@ YTVideoUrlFetcher::parseResponse(QJsonDocument doc)
             break;
         case 22:
             response.insert("720p", details);
-            break;
-        case 37:
-            response.insert(("1080p"), details);
             break;
         }
     }

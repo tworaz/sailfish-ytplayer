@@ -34,7 +34,8 @@
 #include <QVariant>
 #include <QHash>
 #include <QList>
-
+#include <QStringList>
+#include <QDebug>
 
 class YTListModelFilter: public QObject
 {

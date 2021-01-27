@@ -66,6 +66,7 @@ YTListView {
     }
 
     delegate: YTListItem {
+        contentHeight: Theme.itemSizeMedium
         width: parent.width
         title: snippet.title
         thumbnails: snippet.thumbnails

@@ -29,10 +29,6 @@
 
 #include "YTLogger.h"
 
-#include <QDebug>
-#include <QDir>
-#include <qtconcurrentrun.h>
-
 namespace {
 int kLogCacheSize = 200;
 const char kLogFileName[] = "YTPlayer.log";

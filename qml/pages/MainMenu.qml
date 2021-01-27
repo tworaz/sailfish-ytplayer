@@ -94,7 +94,7 @@ Page {
                 //: Menu option to show about page
                 //% "About"
                 text: qsTrId("ytplayer-action-about")
-                //icon: "qrc:///icons/info-64.png"
+                //icon: "qrc:///icons/info-64"+iconColor+".png"
                 onClicked: pageStack.push(Qt.resolvedUrl("About.qml"))
             }
             MenuItem {
@@ -142,7 +142,7 @@ Page {
                 //: Menu option responsible for showing user subscriptions page
                 //% "Subscriptions"
                 text: qsTrId("ytplayer-action-subscriptions")
-                icon: "qrc:///icons/rss-m.png"
+                icon: "qrc:///icons/rss-m"+iconColor+".png"
                 onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
                     { "state" : "SUBSCRIPTION_CHANNELS" })
             }
@@ -216,21 +216,21 @@ Page {
                 //: Menu option showing video favorites page
                 //% "Favorites"
                 text: qsTrId("ytplayer-acton-favorites")
-                icon: "qrc:///icons/star-8-64.png"
+                icon: "qrc:///icons/star-8-64"+iconColor+".png"
                 onClicked: pageStack.push(Qt.resolvedUrl("Favorites.qml"))
             }
             MainMenuItem {
                 //: Menu option to show video categories page
                 //% "Categories"
                 text: qsTrId("ytplayer-action-video-categories")
-                icon: "qrc:///icons/categorize-64.png"
+                icon: "qrc:///icons/categorize-64"+iconColor+".png"
                 onClicked: pageStack.push(Qt.resolvedUrl("VideoCategories.qml"))
             }
             MainMenuItem {
                 //: Menu option showing downloaded videos page
                 //% "Downloads"
                 text: qsTrId("ytplayer-action-downloaded-videos")
-                icon: "qrc:///icons/downloaded-videos-64.png"
+                icon: "qrc:///icons/downloaded-videos-64"+iconColor+".png"
                 onClicked: pageStack.push(Qt.resolvedUrl("DownloadedVideos.qml"))
             }
             MainMenuItem {
@@ -238,7 +238,7 @@ Page {
                 //% "Recommendations"
                 text: qsTrId("ytplayer-action-recommended")
                 visible: priv.showAccount
-                icon: "qrc:///icons/approval-64.png"
+                icon: "qrc:///icons/approval-64"+iconColor+".png"
                 onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
                                               { "state" : "RECOMMENDED" })
             }
@@ -246,7 +246,7 @@ Page {
                 //: Menu opion showing recently watched videos page
                 //% "Watched recently"
                 text: qsTrId("ytplayer-action-watched-recently")
-                icon: "qrc:///icons/video-multi-m.png"
+                icon: "qrc:///icons/video-multi-m"+iconColor+".png"
                 onClicked: pageStack.push(Qt.resolvedUrl("WatchedRecently.qml"))
             }
             MainMenuItem {
@@ -254,7 +254,7 @@ Page {
                 //% "Likes"
                 text: qsTrId("ytplayer-action-likes")
                 visible: priv.showAccount
-                icon: "qrc:///icons/like-m.png"
+                icon: "qrc:///icons/like-m"+iconColor+".png"
                 onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
                                               { "state" : "LIKES" })
             }
@@ -263,7 +263,7 @@ Page {
                 //% "Dislikes"
                 text: qsTrId("ytplayer-action-dislikes")
                 visible: priv.showAccount
-                icon: "qrc:///icons/dislike-m.png"
+                icon: "qrc:///icons/dislike-m"+iconColor+".png"
                 onClicked: pageStack.push(Qt.resolvedUrl("Account.qml"),
                                               { "state" : "DISLIKES" })
             }

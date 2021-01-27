@@ -29,12 +29,6 @@
 
 #include "YTWatchedRecently.h"
 
-#include <QSqlDatabase>
-#include <QSqlRecord>
-#include <QSqlQuery>
-#include <QSqlError>
-#include <QDebug>
-
 namespace {
 
 const int kMaximumDatabaseRows = 500;

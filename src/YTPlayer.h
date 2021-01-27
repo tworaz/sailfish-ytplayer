@@ -30,8 +30,21 @@
 #ifndef YTPLAYER_H
 #define YTPLAYER_H
 
+#include <sailfishapp.h>
+#include <QQmlContext>
+#include <QQmlEngine>
 #include <QThread>
-#include <QNetworkDiskCache>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QtNetwork/QNetworkDiskCache>
+#include <QGuiApplication>
+#include <QStandardPaths>
+#include <QtQuick/QQuickView>
+#include <QSqlError>
+#include <QtQml/QQmlNetworkAccessManagerFactory>
+#include <QDebug>
+#include <QFontDatabase>
+#include <QSqlDatabase>
+#include <QtConcurrentRun>
 
 QThread* GetBackgroundTaskThread();
 QNetworkDiskCache* GetImageDiskCache();

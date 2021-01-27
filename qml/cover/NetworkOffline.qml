@@ -57,7 +57,7 @@ CoverBackground {
             horizontalAlignment: Text.AlignHCenter
             font.pixelSize: Theme.fontSizeSmall
             font.family: Theme.fontFamilyHeading
-            color: Theme.primaryColor
+            color: Theme.lightPrimaryColor
             maximumLineCount: 2
             wrapMode: Text.Wrap
             //: Network offline screen label

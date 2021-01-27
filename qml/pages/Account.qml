@@ -206,6 +206,7 @@ Page {
         }
 
         delegate: YTListItem {
+            contentHeight: Theme.itemSizeMedium
             title: snippet.title
             thumbnails: snippet.thumbnails
             youtubeId: {

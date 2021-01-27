@@ -29,11 +29,6 @@
 
 #include "YTPrefs.h"
 
-#include <QSettings>
-#include <QStandardPaths>
-#include <QDir>
-#include <QDebug>
-
 #include "YTLocalVideoManager.h"
 
 const char kWiFiOnly[] = "WiFi";
