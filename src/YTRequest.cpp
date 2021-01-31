@@ -34,13 +34,13 @@
 #include "YTTranslations.h"
 #include "YTPlayer.h"
 #include "YTUtils.h"
-#include "config.h"
 
 namespace {
 static const QString kYouTubeDataV3Url("https://www.googleapis.com/youtube/v3/");
 static const QString kYouTubeGetVideoInfoUrl("http://www.youtube.com/get_video_info");
 static const QString kMaxResults("50"); // Maximum allowed by YouTube
 static const int kMaxRetryCount = 3;
+static const QString kAuthTokenUri = "https://oauth2.googleapis.com/token";
 }
 
 static void
@@ -53,7 +53,8 @@ appendParams(QUrlQuery& query, QVariantMap& params)
 static void
 appendCommonParams(QUrlQuery& query)
 {
-    query.addQueryItem("key", YOUTUBE_DATA_API_V3_KEY);
+    QSettings settings;
+    query.addQueryItem("key", settings.value("YouTube/APIV3Key", QVariant()).toString());
     query.addQueryItem("regionCode", YTUtils::getRegionCode());
     query.addQueryItem("maxResults", kMaxResults);
     query.addQueryItem("hl", YTTranslations::language());
@@ -470,18 +471,19 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
 void
 YTRequest::requestToken()
 {
+    QSettings settings;
     QUrlQuery query;
     appendParams(query, _params);
     //query.addQueryItem("code", authCode);
-    query.addQueryItem("client_id", YOUTUBE_AUTH_CLIENT_ID);
-    query.addQueryItem("client_secret", YOUTUBE_AUTH_CLIENT_SECRET);
+    query.addQueryItem("client_id", settings.value("YouTube/ClientID", QVariant()).toString());
+    query.addQueryItem("client_secret", settings.value("YouTube/ClientSecret", QVariant()).toString());
     query.addQueryItem("redirect_uri", "urn:ietf:wg:oauth:2.0:oob");
     query.addQueryItem("grant_type", "authorization_code");
     QByteArray data = query.toString(QUrl::FullyEncoded).toLocal8Bit();
 
     qDebug() << "Requesting YouTube OAuth2 tokens";
 
-    QNetworkRequest* request = new QNetworkRequest(QUrl(YOUTUBE_AUTH_TOKEN_URI));
+    QNetworkRequest* request = new QNetworkRequest(QUrl(kAuthTokenUri));
     request->setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
     if (_token_reply) {
@@ -502,13 +504,13 @@ YTRequest::refreshToken()
     qDebug() << "OAuth2 token expired, refreshing";
     Q_ASSERT(settings.value("YouTube/RefreshToken").isValid());
 
-    query.addQueryItem("client_id", YOUTUBE_AUTH_CLIENT_ID);
-    query.addQueryItem("client_secret", YOUTUBE_AUTH_CLIENT_SECRET);
+    query.addQueryItem("client_id", settings.value("YouTube/ClientID", QVariant()).toString());
+    query.addQueryItem("client_secret", settings.value("YouTube/ClientSecret", QVariant()).toString());
     query.addQueryItem("refresh_token", settings.value("YouTube/RefreshToken").toString());
     query.addQueryItem("grant_type", "refresh_token");
     QByteArray data = query.toString(QUrl::FullyEncoded).toLocal8Bit();
 
-    QNetworkRequest* request = new QNetworkRequest(QUrl(YOUTUBE_AUTH_TOKEN_URI));
+    QNetworkRequest* request = new QNetworkRequest(QUrl(kAuthTokenUri));
     request->setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
     if (_token_reply) {
@@ -542,16 +544,17 @@ YTRequest::tryExternalStreamFetcher()
 }
 
 QUrl
-YTRequest::oAuth2Url() const
+YTRequest::oAuth2Url()
 {
+    QSettings settings;
     QUrlQuery query;
-    query.addQueryItem("client_id", YOUTUBE_AUTH_CLIENT_ID);
-    query.addQueryItem("redirect_uri", YOUTUBE_AUTH_REDIRECT_URI);
+    query.addQueryItem("client_id",  settings.value("YouTube/ClientID", QVariant()).toString());
+    query.addQueryItem("redirect_uri", "urn:ietf:wg:oauth:2.0:oob");
     query.addQueryItem("scope", "https://www.googleapis.com/auth/youtube");
     query.addQueryItem("response_type", "code");
     query.addQueryItem("access_type=", "offline");
 
-    QUrl url((YOUTUBE_AUTH_URI));
+    QUrl url("https://accounts.google.com/o/oauth2/auth");
     url.setQuery(query);
     return url;
 }

@@ -54,6 +54,7 @@
         <file>qml/cover/VideoOverview.qml</file>
         <file>qml/pages/About.qml</file>
         <file>qml/pages/Account.qml</file>
+		<file>qml/pages/APIKeys.qml</file>
         <file>qml/pages/CacheSettings.qml</file>
         <file>qml/pages/CategoryVideoList.qml</file>
         <file>qml/pages/ChannelBrowser.qml</file>

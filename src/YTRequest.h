@@ -119,7 +119,7 @@ private:
     bool loaded() const { return _loaded; }
     void setModel(YTListModel *model) { _model = model; }
     YTListModel *model() const { return _model; }
-    QUrl oAuth2Url() const;
+    QUrl oAuth2Url();
     void setLoaded(bool);
     void setBusy(bool);
 
