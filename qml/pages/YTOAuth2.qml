@@ -91,16 +91,12 @@ Page {
         }
     }
 
-    SilicaWebView {
+    WebView {
         id: webview
         anchors.fill: parent
         visible: false
 
         property string _authCode: ""
-
-        header: PageHeader {
-            title: page.pageTitle
-        }
 
         url: request.oAuth2Url
 
