@@ -6,11 +6,11 @@ YTUpdateWorker::YTUpdateWorker() : QObject()
 }
 
 void YTUpdateWorker::refreshLocal() {
-    QFile ytdl("/usr/share/harbour-ytplayer/youtube-dl-lite/youtube-dl");
+    QFile ytdl("/usr/share/harbour-ytplayer/youtube-dl/youtube-dl");
     if(ytdl.exists()) {
         QProcess process;
         QStringList args;
-        args.append("/usr/share/harbour-ytplayer/youtube-dl-lite/youtube-dl");
+        args.append("/usr/share/harbour-ytplayer/youtube-dl/youtube-dl");
         args.append(QString("--version"));
 
         process.start(python, args, QIODevice::ReadOnly);
