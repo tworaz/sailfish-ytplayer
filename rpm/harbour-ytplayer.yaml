@@ -1,6 +1,6 @@
 Name: harbour-ytplayer
 Summary: Native YouTube client for SailfishOS
-Version: 0.6.16
+Version: 0.6.17
 Release: 1
 # The contents of the Group field should be one of the groups listed here:
 # https://github.com/mer-tools/spectacle/blob/master/data/GROUPS
@@ -25,6 +25,7 @@ PkgConfigBR:
   - Qt5Quick
   - Qt5DBus
   - Qt5Concurrent
+  - nemonotifications-qt5
 
 # Build dependencies without a pkgconfig setup can be listed here
 PkgBR:
@@ -35,6 +36,7 @@ PkgBR:
 Requires:
   - sailfishsilica-qt5 >= 0.10.9
   - pyotherside-qml-plugin-python3-qt5
+  - nemo-qml-plugin-notifications-qt5
 
 # All installed files
 Files:
