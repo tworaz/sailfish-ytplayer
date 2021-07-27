@@ -1,7 +1,14 @@
-* Tue Jun 27 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.17-1
+* Tue Jun 27 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.18-1
 - Added youtube-dl update functionality in Settings
 - Read youtube-client-id.json and youtube-data-api-v3.key from Downloads
 - Improve error reporting a bit
+
+* Sun Jan 31 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.17-1
+- Use youtube-dl instead of youtube-dl-lite for now
+- Update youtube-dl to 2021.01.24.1
+- Remove preinstalled API keys
+- Enable (require) user supplied API keys
+- Release experimental aarch64 version
 
 * Thu Jun 11 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.16-1
 - Update youtube-dl-lite to 2020.05.08
