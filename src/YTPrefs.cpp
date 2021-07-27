@@ -123,6 +123,30 @@ YTPrefs::initialize()
         qDebug() << "Trying to proccess youtube-client-id.json...";
         settings.setValue("YouTube/DataAPIv3Key", QString(keyFile.readAll()).toUtf8());
         qDebug() << "DataAPIv3Key" <<  settings.value("YouTube/DataAPIv3Key");
+
+        if(settings.value("YouTube/DataAPIv3Key").toString().count() == 0
+                || settings.value("YouTube/ClientSecret").toString().count() == 0
+                || settings.value("YouTube/ClientID").toString().count() == 0) {
+            Notification notification;
+            notification.setAppName("YTPlayer");
+            notification.setAppIcon("harbour-ytplayer");
+            //: Error while parsing user-supplied json and key files
+            //% "Could not parse %1 or %2"
+            notification.setPreviewBody(qtTrId("ytplayer-msg-error-parsing-json")
+                                        .arg("youtube-client-id.json", "youtube-data-api-v3.key"));
+            notification.publish();
+        }
+    }
+    else if(settings.value("YouTube/DataAPIv3Key").toString().count() == 0
+            || settings.value("YouTube/ClientSecret").toString().count() == 0
+            || settings.value("YouTube/ClientID").toString().count() == 0) {
+        Notification notification;
+        notification.setAppName("YTPlayer");
+        //: User hasn't provided the .json and .key files in Downloads directory
+        //% "Files %1 and %2 not found in Downloads folder"
+        notification.setPreviewBody(qtTrId("ytplayer-msg-error-json-files-not-found")
+                                    .arg("youtube-client-id.json", "youtube-data-api-v3.key"));
+        notification.publish();
     }
     if(keyFile.isOpen())
         keyFile.close();

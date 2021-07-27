@@ -42,6 +42,8 @@
 #include <QJsonValue>
 #include <QDebug>
 
+#include <nemonotifications-qt5/notification.h>
+
 extern const char kWiFiOnly[];
 extern const char kCellularOnly[];
 extern const char kWiFiAndCellular[];
