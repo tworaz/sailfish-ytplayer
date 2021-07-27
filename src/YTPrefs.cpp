@@ -120,6 +120,8 @@ YTPrefs::initialize()
         settings.setValue("YouTube/ClientSecret", installed["client_secret"].toString());
         qDebug() << "ClientSecret" <<  settings.value("YouTube/ClientSecret");
 
+        QString oldKey = settings.value("YouTube/DataAPIv3Key","").toString();
+
         qDebug() << "Trying to proccess youtube-client-id.json...";
         settings.setValue("YouTube/DataAPIv3Key", QString(keyFile.readAll()).toUtf8());
         qDebug() << "DataAPIv3Key" <<  settings.value("YouTube/DataAPIv3Key");
@@ -135,6 +137,12 @@ YTPrefs::initialize()
             notification.setPreviewBody(qtTrId("ytplayer-msg-error-parsing-json")
                                         .arg("youtube-client-id.json", "youtube-data-api-v3.key"));
             notification.publish();
+        }
+        else if(oldKey != settings.value("YouTube/DataAPIv3Key").toString()) {
+            settings.remove("YouTube/AccessToken");
+            settings.remove("YouTube/RefreshToken");
+            settings.remove("YouTube/AccessTokenType");
+            settings.setValue("AccountIntegration", false);
         }
     }
     else if(settings.value("YouTube/DataAPIv3Key").toString().count() == 0
