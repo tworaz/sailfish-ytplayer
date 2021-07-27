@@ -47,6 +47,8 @@
 #include <QLocale>
 #include <QDebug>
 
+#include <nemonotifications-qt5/notification.h>
+
 #include "YTListModel.h"
 #include "YTUpdater.h"
 

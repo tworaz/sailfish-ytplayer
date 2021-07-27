@@ -6,6 +6,8 @@ TARGET = harbour-ytplayer
 
 CONFIG += sailfishapp sailfishapp_no_deploy_qml # sailfishapp_i18n
 
+PKGCONFIG += nemonotifications-qt5
+
 QT += dbus sql concurrent qml core multimedia
 
 SOURCES += \
