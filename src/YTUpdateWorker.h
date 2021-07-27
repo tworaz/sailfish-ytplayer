@@ -22,8 +22,9 @@ public slots:
     void installUpdate();
 
 private:
-    QString curl = "/usr/bin/curl";
-    QString python = "/usr/bin/python3";
+    const QString curl = "/usr/bin/curl";
+    const QString python = "/usr/bin/python3";
+    const QString ytdlFilename = QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+"youtube-dl";
     QString localVersion = "----.--.--";
     QString remoteVersion = "----.--.--";
     YTLogger* logger;

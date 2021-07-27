@@ -47,28 +47,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-view-license">
-        <location filename="../qml/pages/About.qml" line="102"/>
+        <location filename="../qml/pages/About.qml" line="101"/>
         <location filename="../qml/pages/ThirdPartySoftware.qml" line="69"/>
         <source>View license</source>
         <extracomment>Button for showing license viewer page</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-third-party-software">
-        <location filename="../qml/pages/About.qml" line="111"/>
+        <location filename="../qml/pages/About.qml" line="110"/>
         <source>Third party software</source>
         <extracomment>Label for button showing third party software listing page</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-translation-credits">
-        <location filename="../qml/pages/About.qml" line="120"/>
+        <location filename="../qml/pages/About.qml" line="119"/>
         <source>Translations</source>
         <extracomment>Label for button showing application translation credits page</extracomment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message id="ytplayer-about-ko-fiz">
-        <location filename="../qml/pages/About.qml" line="140"/>
-        <source>The original creator, tworaz, deserves all the credit for this awesome app. If, however, you would like to give your support to the maintainer, you can buy him a nice cup of coffee!</source>
-        <extracomment>Description for Ko-Fi donation link image</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-title-subscribed-channels">
@@ -824,6 +818,49 @@ Label for menu option allowing the user to change video quality</extracomment>
         <extracomment>Label for history based search suggestion engine</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message id="ytplayer-update-checking-local-version">
+        <location filename="../qml/pages/Settings.qml" line="46"/>
+        <source>Checking local version...</source>
+        <extracomment>Shown while checking for local version of youtube-dl</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-checking-remote-version">
+        <location filename="../qml/pages/Settings.qml" line="56"/>
+        <source>Checking remote version...</source>
+        <extracomment>Shown while checking for remote version of youtube-dl</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-checking-remote-version-failed">
+        <location filename="../qml/pages/Settings.qml" line="67"/>
+        <source>Could not check for updates</source>
+        <extracomment>Shown when checking youtube-dl version from the Internet failed</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-downloading">
+        <location filename="../qml/pages/Settings.qml" line="71"/>
+        <source>Downloading youtube-dl...</source>
+        <extracomment>Shown while downloading the youtube-dl update from the Internet</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-up-to-date">
+        <location filename="../qml/pages/Settings.qml" line="77"/>
+        <location filename="../qml/pages/Settings.qml" line="165"/>
+        <source>Youtube-dl is up to date</source>
+        <extracomment>Shown when youtube-dl is up to date and no update is needed</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-failed">
+        <location filename="../qml/pages/Settings.qml" line="87"/>
+        <source>Updating youtube-dl failed</source>
+        <extracomment>Shown after youtube-dl update failed</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-successful">
+        <location filename="../qml/pages/Settings.qml" line="91"/>
+        <source>Updated youtube-dl succesfully</source>
+        <extracomment>Shown after youtube-dl update succeeded</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
     <message id="ytplayer-action-view-logs">
         <location filename="../qml/pages/Settings.qml" line="103"/>
         <source>View logs</source>
@@ -846,6 +883,12 @@ Label for menu option allowing the user to change video quality</extracomment>
         <location filename="../qml/pages/Settings.qml" line="128"/>
         <source>Allow YTPlayer to manage YouTube user account.</source>
         <extracomment>Description of switch activating/deactivating YouTube account integration</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-update-youtubedl">
+        <location filename="../qml/pages/Settings.qml" line="163"/>
+        <source>Update youtube-dl</source>
+        <extracomment>MenuItem text for updating youtube-dl</extracomment>
         <translation type="unfinished"></translation>
     </message>
     <message id="ytplayer-action-cache-settings">

@@ -32,7 +32,7 @@
 
 namespace {
 const int kMaxResponseCacheSize = 20;
-const char kYouTubeDLBinaryName[] = "youtube-dl";
+const QString ytdlFilename = QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+"youtube-dl";
 
     QString getYouTubeDLPath()
     {
@@ -53,7 +53,7 @@ YTVideoUrlFetcher::YTVideoUrlFetcher()
     : QObject(nullptr)
     , _process(nullptr)
 {
-    Q_ASSERT(QFile("/usr/share/harbour-ytplayer/youtube-dl/youtube-dl").exists());
+    Q_ASSERT(QFile(ytdlFilename).exists());
 
     static bool registered = false;
     if (!registered) {
@@ -68,7 +68,7 @@ YTVideoUrlFetcher::YTVideoUrlFetcher()
 void
 YTVideoUrlFetcher::runInitialCheck()
 {
-    QFile youtubedl("/usr/share/harbour-ytplayer/youtube-dl/youtube-dl");
+    QFile youtubedl(ytdlFilename);
     if(!youtubedl.exists()) {
         _version_str = "";
         _works = false;
@@ -77,8 +77,7 @@ YTVideoUrlFetcher::runInitialCheck()
     }
 
     QStringList arguments;
-    arguments << "/usr/share/harbour-ytplayer/youtube-dl/youtube-dl"
-              << "--version";
+    arguments << ytdlFilename << "--version";
 
     QProcess process;
     process.start(getYouTubeDLPath(), arguments, QIODevice::ReadOnly);
@@ -124,7 +123,7 @@ YTVideoUrlFetcher::onFetchUrlsFor(QString videoId)
     }
 
     QStringList arguments;
-    arguments << "/usr/share/harbour-ytplayer/youtube-dl/youtube-dl"
+    arguments << ytdlFilename
               << "--dump-json"
               << "--youtube-skip-dash-manifest"
               << "--no-cache-dir"

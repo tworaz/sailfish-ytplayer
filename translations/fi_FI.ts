@@ -919,5 +919,45 @@ Label informing the user there are no watched recently videos</extracomment>
         <extracomment>User hasn&apos;t provided the .json and .key files in Downloads directory</extracomment>
         <translation></translation>
     </message>
+    <message id="ytplayer-update-checking-local-version">
+        <source>Checking local version...</source>
+        <extracomment>Shown while checking for local version of youtube-dl</extracomment>
+        <translation>Tarkistetaan paikallinen versio...</translation>
+    </message>
+    <message id="ytplayer-update-checking-remote-version">
+        <source>Checking remote version...</source>
+        <extracomment>Shown while checking for remote version of youtube-dl</extracomment>
+        <translation>Tarkistetaan päivitykset...</translation>
+    </message>
+    <message id="ytplayer-update-checking-remote-version-failed">
+        <source>Could not check for updates</source>
+        <extracomment>Shown when checking youtube-dl version from the Internet failed</extracomment>
+        <translation>Päivitystarkistus epäonnistui</translation>
+    </message>
+    <message id="ytplayer-update-downloading">
+        <source>Downloading youtube-dl...</source>
+        <extracomment>Shown while downloading the youtube-dl update from the Internet</extracomment>
+        <translation>Ladataan youtube-dl...</translation>
+    </message>
+    <message id="ytplayer-update-up-to-date">
+        <source>Youtube-dl is up to date</source>
+        <extracomment>Shown when youtube-dl is up to date and no update is needed</extracomment>
+        <translation>Youtube-dl on ajan tasalla</translation>
+    </message>
+    <message id="ytplayer-update-failed">
+        <source>Updating youtube-dl failed</source>
+        <extracomment>Shown after youtube-dl update failed</extracomment>
+        <translation>Youtube-dl -päivitys epäonnistui</translation>
+    </message>
+    <message id="ytplayer-update-successful">
+        <source>Updated youtube-dl succesfully</source>
+        <extracomment>Shown after youtube-dl update succeeded</extracomment>
+        <translation>Youtube-dl päivitetty</translation>
+    </message>
+    <message id="ytplayer-update-youtubedl">
+        <source>Update youtube-dl</source>
+        <extracomment>MenuItem text for updating youtube-dl</extracomment>
+        <translation>Päivitä youtube-dl</translation>
+    </message>
 </context>
 </TS>
