@@ -348,6 +348,18 @@ YTRequest::handleError(QNetworkReply *reply)
         QByteArray data = reply->readAll();
         QJsonDocument json = QJsonDocument::fromJson(data);
         qCritical() << "API Error: " << json;
+
+        QString message = json.object().value(QString("error")).toObject()["message"].toString();
+        if(message.length() > 0) {
+            message.remove(QRegExp("<[^>]*>"));
+
+            Notification notification;
+            notification.setAppName("YTPlayer");
+            notification.setAppIcon("harbour-ytplayer");
+            notification.setPreviewBody(message);
+            notification.publish();
+        }
+
         emit error(QVariant(json.object()));
     } else {
         QVariantMap map;
