@@ -34,7 +34,12 @@
 #include <QVariant>
 #include <QSettings>
 #include <QStandardPaths>
+#include <QFile>
 #include <QDir>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
 #include <QDebug>
 
 extern const char kWiFiOnly[];
