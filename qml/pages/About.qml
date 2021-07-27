@@ -124,7 +124,6 @@ Page {
                     id: b4
                     width: parent.buttonWidth
                     anchors.horizontalCenter: parent.horizontalCenter
-                    //: Label for button showing application translation credits page
                     text: "GitHub"
                     onClicked: Qt.openUrlExternally("https://github.com/direc85/sailfish-ytplayer")
                 }

@@ -903,50 +903,21 @@ Label informing the user there are no watched recently videos</extracomment>
         <extracomment>Menu option opening a link to YTPlayer translation page on Transifex.</extracomment>
         <translation>Translate YTPlayer</translation>
     </message>
-    <message id="ytplayer-update-checking-local-version">
-        <source>Checking local version...</source>
-        <extracomment>Shown while checking for local version of youtube-dl</extracomment>
-        <translation type="vanished">Checking local version...</translation>
-    </message>
-    <message id="ytplayer-update-checking-remote-version">
-        <source>Checking remote version...</source>
-        <extracomment>Shown while checking for remote version of youtube-dl</extracomment>
-        <translation type="vanished">Checking remote version...</translation>
-    </message>
-    <message id="ytplayer-update-checking-remote-version-failed">
-        <source>Could not check for updates</source>
-        <extracomment>Shown when checking youtube-dl version from the Internet failed</extracomment>
-        <translation type="vanished">Could not check for updates</translation>
-    </message>
-    <message id="ytplayer-update-downloading">
-        <source>Downloading youtube-dl...</source>
-        <extracomment>Shown while downloading the youtube-dl update from the Internet</extracomment>
-        <translation type="vanished">Downloading youtube-dl...</translation>
-    </message>
-    <message id="ytplayer-update-up-to-date">
-        <source>Youtube-dl is up to date</source>
-        <extracomment>Shown when youtube-dl is up to date and no update is needed</extracomment>
-        <translation type="vanished">Youtube-dl is up to date</translation>
-    </message>
-    <message id="ytplayer-update-failed">
-        <source>Updating youtube-dl failed</source>
-        <extracomment>Shown after youtube-dl update failed</extracomment>
-        <translation type="vanished">Updating youtube-dl failed</translation>
-    </message>
-    <message id="ytplayer-update-successful">
-        <source>Updated youtube-dl succesfully</source>
-        <extracomment>Shown after youtube-dl update succeeded</extracomment>
-        <translation type="vanished">Updated youtube-dl succesfully</translation>
-    </message>
-    <message id="ytplayer-update-youtubedl">
-        <source>Update youtube-dl</source>
-        <extracomment>MenuItem text for updating youtube-dl</extracomment>
-        <translation type="vanished">Update youtube-dl</translation>
-    </message>
     <message id="ytplayer-about-ko-fiz">
         <source>The original creator, tworaz, deserves all the credit for this awesome app. If, however, you would like to give your support to the maintainer, you can buy him a nice cup of coffee!</source>
         <extracomment>Description for Ko-Fi donation link image</extracomment>
-        <translation type="unfinished"></translation>
+        <translation>The original creator, tworaz, deserves all the credit for this awesome app. If, however, you would like to give your support to the maintainer, you can buy him a nice cup of coffee!</translation>
+    </message>
+    <message id="ytplayer-msg-error-parsing-json">
+        <source>Could not parse %1 or %2</source>
+        <extracomment>Error while parsing user-supplied json and key files</extracomment>
+        <translation>Could not parse %1 or %2</translation>
+    </message>
+    <message id="ytplayer-msg-error-json-files-not-found">
+        <source>Files %1 and %2 not found in Downloads folder</source>
+        <oldsource>Files youtube-client-id.json and youtube-data-api-v3.key not found in Downloads folder</oldsource>
+        <extracomment>User hasn&apos;t provided the .json and .key files in Downloads directory</extracomment>
+        <translation>Files %1 and %2 not found in Downloads folder</translation>
     </message>
 </context>
 </TS>

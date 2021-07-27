@@ -908,5 +908,16 @@ Label informing the user there are no watched recently videos</extracomment>
         <extracomment>Description for Ko-Fi donation link image</extracomment>
         <translation type="unfinished"></translation>
     </message>
+    <message id="ytplayer-msg-error-parsing-json">
+        <source>Could not parse %1 or %2</source>
+        <extracomment>Error while parsing user-supplied json and key files</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-msg-error-json-files-not-found">
+        <source>Files %1 and %2 not found in Downloads folder</source>
+        <oldsource>Files youtube-client-id.json and youtube-data-api-v3.key not found in Downloads folder</oldsource>
+        <extracomment>User hasn&apos;t provided the .json and .key files in Downloads directory</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
