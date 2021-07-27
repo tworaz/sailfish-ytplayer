@@ -3,6 +3,7 @@
         <file alias="mcc-data.json">resources/mcc-data.json</file>
         <file alias="translations.json">translations/translations.json</file>
         <file alias="logo.png">harbour-ytplayer.png</file>
+        <file alias="ko-fi.png">artwork/Ko-fi_Icon_RGB_rounded.png</file>
     </qresource>
     <qresource prefix="/icons">
         <file alias="approval-64-white.png">resources/icons/approval-64-white.png</file>
@@ -53,6 +54,7 @@
         <file>qml/cover/VideoOverview.qml</file>
         <file>qml/pages/About.qml</file>
         <file>qml/pages/Account.qml</file>
+		<file>qml/pages/APIKeys.qml</file>
         <file>qml/pages/CacheSettings.qml</file>
         <file>qml/pages/CategoryVideoList.qml</file>
         <file>qml/pages/ChannelBrowser.qml</file>

@@ -225,6 +225,15 @@ Page {
                     pageStack.push(Qt.resolvedUrl("SearchSettings.qml"))
                 }
             }
+            SettingsButton {
+                width: parent.width / parent.columns
+                //: Label for menu option to enter YouTube API keys
+                //% "API keys"
+                text: qsTrId("ytplayer-action-set-api-keys")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("APIKeys.qml"))
+                }
+            }
         } // Column
 
         VerticalScrollDecorator {}

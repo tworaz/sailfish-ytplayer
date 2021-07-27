@@ -39,13 +39,13 @@ class YTDownloadInfo : public QObject {
     Q_OBJECT
 public:
     explicit YTDownloadInfo(QSharedPointer<YTLocalVideoData> data,
-                            QNetworkAccessManager& nam, QObject *parent = 0)
+                            QNetworkAccessManager& nam, QObject *parent = nullptr)
         : QObject(parent)
         , _downloadData(data)
-        , _streamRequest(NULL)
-        , _snippetRequest(NULL)
-        , _thumbnailReply(NULL)
-        , _videoReply(NULL)
+        , _streamRequest(nullptr)
+        , _snippetRequest(nullptr)
+        , _thumbnailReply(nullptr)
+        , _videoReply(nullptr)
         , _initialVideoOffset(0)
         , _networkAccessManager(nam)
     {
@@ -120,7 +120,7 @@ private slots:
         }
         _thumbnailReply->disconnect();
         _thumbnailReply->deleteLater();
-        _thumbnailReply = NULL;
+        _thumbnailReply = nullptr;
     }
 
     void onVideoDownloadFinished()
@@ -138,7 +138,7 @@ private slots:
                     QNetworkRequest::RedirectionTargetAttribute).toUrl();
                 _videoReply->disconnect();
                 _videoReply->deleteLater();
-                _videoReply = NULL;
+                _videoReply = nullptr;
                 startVideoDataDownload();
                 return;
             } else {
@@ -152,16 +152,16 @@ private slots:
         }
         _videoReply->disconnect();
         _videoReply->deleteLater();
-        _videoReply = NULL;
+        _videoReply = nullptr;
     }
 
     void onVideoDownloadProgress(qint64 bytesReceived, qint64 bytesTotal)
     {
         Q_ASSERT(_videoReply);
         if (bytesTotal != 0) {
-            double p = (double)(_initialVideoOffset + bytesReceived) /
-                               (_initialVideoOffset + bytesTotal);
-            _downloadData->reportVideoDownloadProgress(p * 100);
+            double p = (_initialVideoOffset + static_cast<double>(bytesReceived)) /
+                    (_initialVideoOffset + static_cast<double>(bytesTotal));
+            _downloadData->reportVideoDownloadProgress(static_cast<unsigned int>(p * 100.0));
         }
         _downloadData->videoDataFetched(_videoReply->readAll());
     }
@@ -210,7 +210,7 @@ private slots:
         _downloadData->setQuality(quality);
 
         _streamRequest->deleteLater();
-        _streamRequest = NULL;
+        _streamRequest = nullptr;
         beginDataDownloadsIfPossible();
     }
 
@@ -253,7 +253,7 @@ private slots:
         _downloadData->setDuration(contentDetails["duration"].toString());
 
         _snippetRequest->deleteLater();
-        _snippetRequest = NULL;
+        _snippetRequest = nullptr;
         beginDataDownloadsIfPossible();
     }
 
@@ -272,7 +272,7 @@ private:
             if (_snippetRequest->isRunning())
                 _snippetRequest->abort();
             _snippetRequest->deleteLater();
-            _snippetRequest = NULL;
+            _snippetRequest = nullptr;
             qDebug() << "Cleaning up snippet request";
         }
         if (_streamRequest) {
@@ -280,7 +280,7 @@ private:
             if (_streamRequest->isRunning())
                 _streamRequest->abort();
             _streamRequest->deleteLater();
-            _streamRequest = NULL;
+            _streamRequest = nullptr;
             qDebug() << "Cleaning up stream request";
         }
         if (_videoReply) {
@@ -288,7 +288,7 @@ private:
             if (_videoReply->isRunning())
                 _videoReply->abort();
             _videoReply->deleteLater();
-            _videoReply = NULL;
+            _videoReply = nullptr;
             qDebug() << "Cleaning up video reply";
         }
         if (_thumbnailReply) {
@@ -296,7 +296,7 @@ private:
             if (_thumbnailReply->isRunning())
                 _thumbnailReply->abort();
             _thumbnailReply->deleteLater();
-            _thumbnailReply = NULL;
+            _thumbnailReply = nullptr;
             qDebug() << "Cleaning up thumbnail reply";
         }
     }

@@ -903,6 +903,22 @@ Label informing the user there are no watched recently videos</extracomment>
         <extracomment>Menu option opening a link to YTPlayer translation page on Transifex.</extracomment>
         <translation>Translate YTPlayer</translation>
     </message>
+    <message id="ytplayer-about-ko-fiz">
+        <source>The original creator, tworaz, deserves all the credit for this awesome app. If, however, you would like to give your support to the maintainer, you can buy him a nice cup of coffee!</source>
+        <extracomment>Description for Ko-Fi donation link image</extracomment>
+        <translation>The original creator, tworaz, deserves all the credit for this awesome app. If, however, you would like to give your support to the maintainer, you can buy him a nice cup of coffee!</translation>
+    </message>
+    <message id="ytplayer-msg-error-parsing-json">
+        <source>Could not parse %1 or %2</source>
+        <extracomment>Error while parsing user-supplied json and key files</extracomment>
+        <translation>Could not parse %1 or %2</translation>
+    </message>
+    <message id="ytplayer-msg-error-json-files-not-found">
+        <source>Files %1 and %2 not found in Downloads folder</source>
+        <oldsource>Files youtube-client-id.json and youtube-data-api-v3.key not found in Downloads folder</oldsource>
+        <extracomment>User hasn&apos;t provided the .json and .key files in Downloads directory</extracomment>
+        <translation>Files %1 and %2 not found in Downloads folder</translation>
+    </message>
     <message id="ytplayer-update-checking-local-version">
         <source>Checking local version...</source>
         <extracomment>Shown while checking for local version of youtube-dl</extracomment>

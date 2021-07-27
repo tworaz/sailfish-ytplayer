@@ -1,3 +1,38 @@
+* Tue Jun 27 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.18-1
+- Added youtube-dl update functionality in Settings
+- Read youtube-client-id.json and youtube-data-api-v3.key from Downloads
+- Improve error reporting a bit
+
+* Sun Jan 31 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.17-1
+- Use youtube-dl instead of youtube-dl-lite for now
+- Update youtube-dl to 2021.01.24.1
+- Remove preinstalled API keys
+- Enable (require) user supplied API keys
+- Release experimental aarch64 version
+
+* Thu Jun 11 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.16-1
+- Update youtube-dl-lite to 2020.05.08
+
+* Mon Jun 1 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.15-1
+- Revert "Recommened" videos change
+
+* Sun May 31 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.14-1
+- Remove "Latest" menu item from subscriptions
+- "Fix" "Recommened" videos in main menu
+- Update About page
+
+* Sat Mar 21 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.13-1
+- Update youtube-dl-lite to 2020.03.08
+
+* Tue Feb 25 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.12-1
+- BETA RELEASE
+- Uses custom version of youtube-dl
+- Update functionality temporarily disabled
+
+* Sun Feb 23 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.11-1
+- Fix version number on about page
+- Fix video player page on SFOS 2.2
+
 * Tue Sep 24 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.10-1
 - Update Chinese translation
 - Use .yaml file to generate .spec

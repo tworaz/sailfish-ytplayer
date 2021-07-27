@@ -72,8 +72,8 @@ InitApplicationDatabase()
 QThread*
 GetBackgroundTaskThread()
 {
-    static QThread* thread = NULL;
-    if (thread == NULL) {
+    static QThread* thread = nullptr;
+    if (thread == nullptr) {
         thread = new QThread();
         thread->start();
         thread->setPriority(QThread::LowPriority);
@@ -84,8 +84,8 @@ GetBackgroundTaskThread()
 QNetworkDiskCache*
 GetImageDiskCache()
 {
-    static QNetworkDiskCache* cache = NULL;
-    if (cache == NULL) {
+    static QNetworkDiskCache* cache = nullptr;
+    if (cache == nullptr) {
         cache = new QNetworkDiskCache();
         QString datadir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
         datadir += "/ImageCache";
@@ -101,8 +101,8 @@ GetImageDiskCache()
 QNetworkDiskCache*
 GetAPIResponseDiskCache()
 {
-    static QNetworkDiskCache* cache = NULL;
-    if (cache == NULL) {
+    static QNetworkDiskCache* cache = nullptr;
+    if (cache == nullptr) {
         cache = new QNetworkDiskCache();
         QString datadir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
         datadir += "/APIRequestCache";

@@ -47,6 +47,8 @@
 #include <QLocale>
 #include <QDebug>
 
+#include <nemonotifications-qt5/notification.h>
+
 #include "YTListModel.h"
 #include "YTUpdater.h"
 
@@ -119,7 +121,7 @@ private:
     bool loaded() const { return _loaded; }
     void setModel(YTListModel *model) { _model = model; }
     YTListModel *model() const { return _model; }
-    QUrl oAuth2Url() const;
+    QUrl oAuth2Url();
     void setLoaded(bool);
     void setBusy(bool);
 

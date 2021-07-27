@@ -34,11 +34,8 @@
 #include "YTTranslations.h"
 #include "YTPlayer.h"
 #include "YTUtils.h"
-#include "config.h"
 
 namespace {
-static const QString kYouTubeDataV3Url("https://www.googleapis.com/youtube/v3/");
-static const QString kYouTubeGetVideoInfoUrl("http://www.youtube.com/get_video_info");
 static const QString kMaxResults("50"); // Maximum allowed by YouTube
 static const int kMaxRetryCount = 3;
 }
@@ -46,14 +43,15 @@ static const int kMaxRetryCount = 3;
 static void
 appendParams(QUrlQuery& query, QVariantMap& params)
 {
-    for (QVariantMap::const_iterator i = params.begin(); i != params.end(); ++i)
+    for (QVariantMap::const_iterator i = params.constBegin(); i != params.constEnd(); ++i)
         query.addQueryItem(i.key(), i.value().toString());
 }
 
 static void
 appendCommonParams(QUrlQuery& query)
 {
-    query.addQueryItem("key", YOUTUBE_DATA_API_V3_KEY);
+    QSettings settings;
+    query.addQueryItem("key", settings.value("YouTube/DataAPIv3Key").toString());
     query.addQueryItem("regionCode", YTUtils::getRegionCode());
     query.addQueryItem("maxResults", kMaxResults);
     query.addQueryItem("hl", YTTranslations::language());
@@ -81,22 +79,22 @@ appendAuthHeader(QNetworkRequest& request)
 static QString
 methodToString(YTRequest::Method method)
 {
-    switch (method) {
-    case YTRequest::List: return "list";
-    case YTRequest::Post: return "post";
-    case YTRequest::Delete: return "delete";
-    default: return "unknown";
-    }
+    if(method == YTRequest::List)   return "list";
+    if(method == YTRequest::List)   return "list";
+    if(method == YTRequest::Post)   return "post";
+    if(method == YTRequest::Delete) return "delete";
+    return "unknown";
 }
 
 static QUrl
 youtubeDataAPIUrl(QString resource, QVariantMap params)
 {
     QUrlQuery query;
+    QSettings settings;
     appendParams(query, params);
     appendCommonParams(query);
 
-    QUrl url(kYouTubeDataV3Url + resource);
+    QUrl url(settings.value("YouTube/DataURL").toString() + resource);
     url.setQuery(query);
     return url;
 }
@@ -105,6 +103,7 @@ static QUrl
 youtubeVideoInfoUrl(QVariantMap params)
 {
     QUrlQuery query;
+    QSettings settings;
     appendParams(query, params);
     query.addQueryItem("el", "player_embedded");
     query.addQueryItem("gl", YTUtils::getRegionCode());
@@ -114,20 +113,20 @@ youtubeVideoInfoUrl(QVariantMap params)
         query.addQueryItem("hl", "en");
     }
 
-    QUrl url(kYouTubeGetVideoInfoUrl);
+    QUrl url(settings.value("YouTube/VideoInfoURL").toString());
     url.setQuery(query);
     return url;
 }
 
 YTRequest::YTRequest(QObject *parent, QNetworkAccessManager* nam)
     : QObject(parent)
-    , _reply(NULL)
-    , _token_reply(NULL)
-    , _url_fetcher(NULL)
+    , _reply(nullptr)
+    , _token_reply(nullptr)
+    , _url_fetcher(nullptr)
     , _network_access_manager(nam ? *nam : GetNetworkAccessManager())
     , _loaded(false)
     , _busy(false)
-    , _model(NULL)
+    , _model(nullptr)
     , _retryCount(0)
 {
     Q_ASSERT(thread() == _network_access_manager.thread());
@@ -139,18 +138,17 @@ YTRequest::~YTRequest()
         if (!_reply->isFinished())
             _reply->abort();
         _reply->deleteLater();
-        _reply = NULL;
+        _reply = nullptr;
     }
     if (_token_reply) {
         if (!_token_reply->isFinished())
             _token_reply->abort();
-        _reply->deleteLater();
-        _token_reply = NULL;
+        _token_reply = nullptr;
     }
     if (_url_fetcher) {
         _url_fetcher->disconnect();
         _url_fetcher->deleteLater();
-        _url_fetcher = NULL;
+        _url_fetcher = nullptr;
     }
 }
 
@@ -237,13 +235,13 @@ YTRequest::onTokenRequestFinished()
         handleError(_token_reply);
         if (_reply) {
             delete _reply;
-            _reply = NULL;
+            _reply = nullptr;
         }
         break;
     }
 
     _token_reply->deleteLater();
-    _token_reply = NULL;
+    _token_reply = nullptr;
 }
 
 void
@@ -251,11 +249,13 @@ YTRequest::onFinished()
 {
     Q_ASSERT(_reply);
 
+    QSettings settings;
+
     bool busy = false;
 
     switch (_reply->error()) {
     case QNetworkReply::NoError:
-        if (_reply->request().url().toString().startsWith(kYouTubeGetVideoInfoUrl)) {
+        if (_reply->request().url().toString().startsWith(settings.value("YouTube/VideoInfoURL").toString())) {
             if (!handleVideoInfoReply(_reply)) {
                 busy = true;
                 break;
@@ -292,13 +292,14 @@ YTRequest::onFinished()
             refreshToken();
             break;
         }
+        /* fall thru */
     default:
         handleError(_reply);
         break;
     }
 
     _reply->deleteLater();
-    _reply = NULL;
+    _reply = nullptr;
 
     setBusy(busy);
 }
@@ -347,6 +348,18 @@ YTRequest::handleError(QNetworkReply *reply)
         QByteArray data = reply->readAll();
         QJsonDocument json = QJsonDocument::fromJson(data);
         qCritical() << "API Error: " << json;
+
+        QString message = json.object().value(QString("error")).toObject()["message"].toString();
+        if(message.length() > 0) {
+            message.remove(QRegExp("<[^>]*>"));
+
+            Notification notification;
+            notification.setAppName("YTPlayer");
+            notification.setAppIcon("harbour-ytplayer");
+            notification.setPreviewBody(message);
+            notification.publish();
+        }
+
         emit error(QVariant(json.object()));
     } else {
         QVariantMap map;
@@ -470,18 +483,21 @@ YTRequest::handleVideoInfoReply(QNetworkReply *reply)
 void
 YTRequest::requestToken()
 {
+    QSettings settings;
     QUrlQuery query;
+    QSettings settings;
     appendParams(query, _params);
     //query.addQueryItem("code", authCode);
-    query.addQueryItem("client_id", YOUTUBE_AUTH_CLIENT_ID);
-    query.addQueryItem("client_secret", YOUTUBE_AUTH_CLIENT_SECRET);
+    query.addQueryItem("client_id", settings.value("YouTube/ClientID").toString());
+    query.addQueryItem("client_secret", settings.value("YouTube/ClientSecret").toString());
+
     query.addQueryItem("redirect_uri", "urn:ietf:wg:oauth:2.0:oob");
     query.addQueryItem("grant_type", "authorization_code");
     QByteArray data = query.toString(QUrl::FullyEncoded).toLocal8Bit();
 
     qDebug() << "Requesting YouTube OAuth2 tokens";
 
-    QNetworkRequest* request = new QNetworkRequest(QUrl(YOUTUBE_AUTH_TOKEN_URI));
+    QNetworkRequest* request = new QNetworkRequest(QUrl(settings.value("YouTube/TokenUri").toString()));
     request->setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
     if (_token_reply) {
@@ -502,13 +518,13 @@ YTRequest::refreshToken()
     qDebug() << "OAuth2 token expired, refreshing";
     Q_ASSERT(settings.value("YouTube/RefreshToken").isValid());
 
-    query.addQueryItem("client_id", YOUTUBE_AUTH_CLIENT_ID);
-    query.addQueryItem("client_secret", YOUTUBE_AUTH_CLIENT_SECRET);
+    query.addQueryItem("client_id", settings.value("YouTube/ClientID").toString());
+    query.addQueryItem("client_secret", settings.value("YouTube/ClientSecret").toString());
     query.addQueryItem("refresh_token", settings.value("YouTube/RefreshToken").toString());
     query.addQueryItem("grant_type", "refresh_token");
     QByteArray data = query.toString(QUrl::FullyEncoded).toLocal8Bit();
 
-    QNetworkRequest* request = new QNetworkRequest(QUrl(YOUTUBE_AUTH_TOKEN_URI));
+    QNetworkRequest* request = new QNetworkRequest(QUrl(settings.value("YouTube/TokenUri").toString()));
     request->setHeader(QNetworkRequest::ContentTypeHeader, "application/x-www-form-urlencoded");
 
     if (_token_reply) {
@@ -542,16 +558,18 @@ YTRequest::tryExternalStreamFetcher()
 }
 
 QUrl
-YTRequest::oAuth2Url() const
+YTRequest::oAuth2Url()
 {
+    QSettings settings;
     QUrlQuery query;
-    query.addQueryItem("client_id", YOUTUBE_AUTH_CLIENT_ID);
-    query.addQueryItem("redirect_uri", YOUTUBE_AUTH_REDIRECT_URI);
+    QSettings settings;
+    query.addQueryItem("client_id", settings.value("YouTube/ClientID").toString());
+    query.addQueryItem("redirect_uri", settings.value("YouTube/RedirectURI").toString());
     query.addQueryItem("scope", "https://www.googleapis.com/auth/youtube");
     query.addQueryItem("response_type", "code");
     query.addQueryItem("access_type=", "offline");
 
-    QUrl url(YOUTUBE_AUTH_URI);
+    QUrl url((settings.value("YouTube/AuthURI").toString()));
     url.setQuery(query);
     return url;
 }

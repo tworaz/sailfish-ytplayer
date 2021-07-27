@@ -273,7 +273,7 @@ YTLocalVideoData::videoDownloadFinished()
     Q_ASSERT(_videoFile->size() > 0);
 
     Q_ASSERT(_videoPath.endsWith(kPartialContentSuffix));
-    _videoPath = _videoPath.left(_videoPath.size() - strlen(kPartialContentSuffix));
+    _videoPath = _videoPath.left(_videoPath.size() - static_cast<int>(strlen(kPartialContentSuffix)));
 
     if (QFile(_videoPath).exists())
         QFile(_videoPath).remove();

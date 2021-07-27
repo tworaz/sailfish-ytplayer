@@ -32,7 +32,7 @@
 
 namespace {
 const int kMaxResponseCacheSize = 20;
-const char kYouTubeDLBinaryName[] = "youtube-dl";
+const QString ytdlFilename = QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+"youtube-dl";
 
     QString getYouTubeDLPath()
     {
@@ -50,10 +50,10 @@ QString YTVideoUrlFetcher::_version_str;
 bool YTVideoUrlFetcher::_works = false;
 
 YTVideoUrlFetcher::YTVideoUrlFetcher()
-    : QObject(0)
-    , _process(0)
+    : QObject(nullptr)
+    , _process(nullptr)
 {
-    Q_ASSERT(QFile(QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+kYouTubeDLBinaryName).exists());
+    Q_ASSERT(QFile(ytdlFilename).exists());
 
     static bool registered = false;
     if (!registered) {
@@ -68,16 +68,16 @@ YTVideoUrlFetcher::YTVideoUrlFetcher()
 void
 YTVideoUrlFetcher::runInitialCheck()
 {
-    QFile youtubedl(QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+kYouTubeDLBinaryName);
+    QFile youtubedl(ytdlFilename);
     if(!youtubedl.exists()) {
         _version_str = "";
         _works = false;
+        qWarning() << "youtube-dl is non functional: file not found";
         return;
     }
 
     QStringList arguments;
-    arguments << QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+kYouTubeDLBinaryName
-              << "--version";
+    arguments << ytdlFilename << "--version";
 
     QProcess process;
     process.start(getYouTubeDLPath(), arguments, QIODevice::ReadOnly);
@@ -123,7 +123,7 @@ YTVideoUrlFetcher::onFetchUrlsFor(QString videoId)
     }
 
     QStringList arguments;
-    arguments << QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+QDir::separator()+kYouTubeDLBinaryName
+    arguments << ytdlFilename
               << "--dump-json"
               << "--youtube-skip-dash-manifest"
               << "--no-cache-dir"
@@ -132,7 +132,7 @@ YTVideoUrlFetcher::onFetchUrlsFor(QString videoId)
 
     qDebug() << "YouTubeDL subprocess:" << getYouTubeDLPath() << arguments;
 
-    _process = new QProcess(0);
+    _process = new QProcess(nullptr);
     connect(_process, SIGNAL(finished(int, QProcess::ExitStatus)),
             this, SLOT(onProcessFinished(int, QProcess::ExitStatus)));
     connect(_process, SIGNAL(error(QProcess::ProcessError)),
@@ -182,7 +182,7 @@ YTVideoUrlFetcher::onProcessFinished(int code, QProcess::ExitStatus status)
         emit failure(map);
     }
     delete _process;
-    _process = NULL;
+    _process = nullptr;
 }
 
 void
@@ -190,7 +190,7 @@ YTVideoUrlFetcher::onProcessError(QProcess::ProcessError error)
 {
     qCritical() << "Process error:" << error;
     delete _process;
-    _process = NULL;
+    _process = nullptr;
     emit failure(QVariantMap());
 }
 
@@ -201,7 +201,7 @@ YTVideoUrlFetcher::~YTVideoUrlFetcher()
         _process->kill();
         _process->waitForFinished();
         _process->deleteLater();
-        _process = NULL;
+        _process = nullptr;
     }
 }
 

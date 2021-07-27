@@ -209,7 +209,7 @@ YTNetworkManager::closeNetworkSession()
 
     _session->close();
     delete _session;
-    _session = NULL;
+    _session = nullptr;
 }
 
 qint64

@@ -943,5 +943,20 @@ Label informing the user there are no watched recently videos</extracomment>
         <extracomment>MenuItem text for updating youtube-dl</extracomment>
         <translation>更新 youtube-dl</translation>
     </message>
+    <message id="ytplayer-about-ko-fiz">
+        <source>The original creator, tworaz, deserves all the credit for this awesome app. If, however, you would like to give your support to the maintainer, you can buy him a nice cup of coffee!</source>
+        <extracomment>Description for Ko-Fi donation link image</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-msg-error-parsing-json">
+        <source>Could not parse %1 or %2</source>
+        <extracomment>Error while parsing user-supplied json and key files</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message id="ytplayer-msg-error-json-files-not-found">
+        <source>Files %1 and %2 not found in Downloads folder</source>
+        <extracomment>User hasn&apos;t provided the .json and .key files in Downloads directory</extracomment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 </TS>
