@@ -44,7 +44,7 @@ Page {
                 //: YouTube subscribed channels page title
                 //% "Subscribed channels"
                 title: qsTrId("ytplayer-title-subscribed-channels")
-                topPulleyVisible: true
+                topPulleyVisible: false
             }
         },
         State {
@@ -206,6 +206,7 @@ Page {
         }
 
         delegate: YTListItem {
+            contentHeight: Theme.itemSizeMedium
             title: snippet.title
             thumbnails: snippet.thumbnails
             youtubeId: {

@@ -1,0 +1,51 @@
+Name: harbour-ytplayer
+Summary: Native YouTube client for SailfishOS
+Version: 0.6.18
+Release: 1
+# The contents of the Group field should be one of the groups listed here:
+# https://github.com/mer-tools/spectacle/blob/master/data/GROUPS
+Group: Applications/Multimedia
+URL: https://github.com/direc85/sailfish-ytplayer
+License: BSD-3-Clause
+# This must be generated before uploading a package to a remote build service.
+# Usually this line does not need to be modified.
+Sources:
+- '%{name}-%{version}.tar.bz2'
+Description: |
+  YTPlayer is an unofficial YouTube client for SailfishOS
+Configure: none
+Builder: qmake5
+
+# This section specifies build dependencies that are resolved using pkgconfig.
+# This is the preferred way of specifying build dependencies for your package.
+PkgConfigBR:
+  - sailfishapp >= 1.0.2
+  - Qt5Core
+  - Qt5Qml
+  - Qt5Quick
+  - Qt5DBus
+  - Qt5Concurrent
+  - nemonotifications-qt5
+
+# Build dependencies without a pkgconfig setup can be listed here
+PkgBR:
+  - desktop-file-utils
+  - qt5-qttools-linguist
+
+# Runtime dependencies which are not automatically detected
+Requires:
+  - sailfishsilica-qt5 >= 0.10.9
+  - pyotherside-qml-plugin-python3-qt5
+  - nemo-qml-plugin-notifications-qt5
+
+# All installed files
+Files:
+  - '%{_bindir}'
+  - '%{_datadir}/%{name}'
+  - '%{_datadir}/%{name}/licenses'
+  - '%{_datadir}/%{name}/translations'
+  - '%{_datadir}/applications/%{name}.desktop'
+  - '%{_datadir}/icons/hicolor/*/apps/%{name}.png'
+
+# For more information about yaml and what's supported in Sailfish OS
+# build system, please see https://wiki.merproject.org/wiki/Spectacle

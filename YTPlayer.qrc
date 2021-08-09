@@ -1,22 +1,35 @@
 <RCC>
     <qresource prefix="/">
         <file alias="mcc-data.json">resources/mcc-data.json</file>
-        <file alias="logo.png">resources/logo.png</file>
-        <file alias="translations.json">languages/translations.json</file>
+        <file alias="translations.json">translations/translations.json</file>
+        <file alias="logo.png">harbour-ytplayer.png</file>
+        <file alias="ko-fi.png">artwork/Ko-fi_Icon_RGB_rounded.png</file>
     </qresource>
     <qresource prefix="/icons">
-        <file alias="approval-64.png">resources/icons/approval-64.png</file>
-        <file alias="dislike-m.png">resources/icons/dislike-m.png</file>
-        <file alias="downloaded-videos-64.png">resources/icons/downloaded-videos-64.png</file>
-        <file alias="like-m.png">resources/icons/like-m.png</file>
-        <file alias="rss-m.png">resources/icons/rss-m.png</file>
-        <file alias="search-m.png">resources/icons/search-m.png</file>
-        <file alias="video-multi-m.png">resources/icons/video-multi-m.png</file>
-        <file alias="categorize-64.png">resources/icons/categorize-64.png</file>
-        <file alias="bookmark-2-64.png">resources/icons/bookmark-2-64.png</file>
-        <file alias="star-8-64.png">resources/icons/star-8-64.png</file>
-        <file alias="play-64.png">resources/icons/play-64.png</file>
-        <file alias="pause-64.png">resources/icons/pause-64.png</file>
+        <file alias="approval-64-white.png">resources/icons/approval-64-white.png</file>
+        <file alias="dislike-m-white.png">resources/icons/dislike-m-white.png</file>
+        <file alias="downloaded-videos-64-white.png">resources/icons/downloaded-videos-64-white.png</file>
+        <file alias="like-m-white.png">resources/icons/like-m-white.png</file>
+        <file alias="rss-m-white.png">resources/icons/rss-m-white.png</file>
+        <file alias="search-m-white.png">resources/icons/search-m-white.png</file>
+        <file alias="video-multi-m-white.png">resources/icons/video-multi-m-white.png</file>
+        <file alias="categorize-64-white.png">resources/icons/categorize-64-white.png</file>
+        <file alias="bookmark-2-64-white.png">resources/icons/bookmark-2-64-white.png</file>
+        <file alias="star-8-64-white.png">resources/icons/star-8-64-white.png</file>
+        <file alias="play-64-white.png">resources/icons/play-64-white.png</file>
+        <file alias="pause-64-white.png">resources/icons/pause-64-white.png</file>
+        <file alias="approval-64-black.png">resources/icons/approval-64-black.png</file>
+        <file alias="dislike-m-black.png">resources/icons/dislike-m-black.png</file>
+        <file alias="downloaded-videos-64-black.png">resources/icons/downloaded-videos-64-black.png</file>
+        <file alias="like-m-black.png">resources/icons/like-m-black.png</file>
+        <file alias="rss-m-black.png">resources/icons/rss-m-black.png</file>
+        <file alias="search-m-black.png">resources/icons/search-m-black.png</file>
+        <file alias="video-multi-m-black.png">resources/icons/video-multi-m-black.png</file>
+        <file alias="categorize-64-black.png">resources/icons/categorize-64-black.png</file>
+        <file alias="bookmark-2-64-black.png">resources/icons/bookmark-2-64-black.png</file>
+        <file alias="star-8-64-black.png">resources/icons/star-8-64-black.png</file>
+        <file alias="play-64-black.png">resources/icons/play-64-black.png</file>
+        <file alias="pause-64-black.png">resources/icons/pause-64-black.png</file>
     </qresource>
     <qresource prefix="/fonts">
         <file alias="youtube-icons.ttf">resources/fonts/youtube-icons.ttf</file>
@@ -41,6 +54,7 @@
         <file>qml/cover/VideoOverview.qml</file>
         <file>qml/pages/About.qml</file>
         <file>qml/pages/Account.qml</file>
+		<file>qml/pages/APIKeys.qml</file>
         <file>qml/pages/CacheSettings.qml</file>
         <file>qml/pages/CategoryVideoList.qml</file>
         <file>qml/pages/ChannelBrowser.qml</file>

@@ -32,6 +32,17 @@
 
 #include <QString>
 #include <QVariant>
+#include <QSettings>
+#include <QStandardPaths>
+#include <QFile>
+#include <QDir>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
+#include <QDebug>
+
+#include <nemonotifications-qt5/notification.h>
 
 extern const char kWiFiOnly[];
 extern const char kCellularOnly[];

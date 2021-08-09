@@ -1,4 +1,10 @@
-/*.pro.user
-/mcc.json
-/youtube-data-api-v3.key
-/youtube-client-id.json
+*.pro.user*
+mcc.json
+youtube-data-api-v3*
+youtube-client-id*
+rpm/*.spec*
+src/config.h
+*.bak
+*.autosave
+scripts/version-str
+youtube-dl-lite

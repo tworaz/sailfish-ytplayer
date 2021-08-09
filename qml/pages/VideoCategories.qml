@@ -83,31 +83,41 @@ Page {
 
         delegate: BackgroundItem {
             id: delegate
+            width: page.width
+            height: Theme.itemSizeSmall
 
-            Row {
-                x: Theme.paddingMedium
-                width: page.width
-                spacing: Theme.paddingLarge
-                anchors.verticalCenter: parent.verticalCenter
-
-                Text {
-                    anchors.verticalCenter: parent.verticalCenter
-                    horizontalAlignment: Text.AlignHCenter
-                    width: 60
-                    font.family: youtubeIconsFontName
-                    font.pixelSize: Theme.fontSizeLarge
-                    color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
-                    text: H.getYouTubeIconForCategoryId(id)
+            // The logo on the left is actually a font character!
+            // ...which actually causes the vertical align to be off.
+            Text {
+                id: catLogo
+                anchors {
+                    left: parent.left
+                    verticalCenter: parent.verticalCenter
+                    leftMargin: Theme.paddingLarge
                 }
+                horizontalAlignment: Text.AlignHCenter
+                width: height
+                font.pixelSize: Theme.fontSizeLarge
+                font.family: youtubeIconsFontName
+                color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
+                text: H.getYouTubeIconForCategoryId(id)
+            }
 
-                Label {
-                    text: snippet.title
-                    anchors.verticalCenter: parent.verticalCenter
-                    color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
-                    font {
-                        pixelSize: Theme.fontSizeLarge
-                        family: Theme.fontFamilyHeading
-                    }
+            Label {
+                text: snippet.title
+                maximumLineCount: 1
+                truncationMode: TruncationMode.Fade
+                anchors {
+                    verticalCenter: parent.verticalCenter
+                    left: catLogo.right
+                    right: parent.right
+                    leftMargin: Theme.paddingLarge
+                    rightMargin: Theme.paddingMedium
+                }
+                color: delegate.highlighted ? Theme.highlightColor : Theme.primaryColor
+                font {
+                    pixelSize: Theme.fontSizeLarge
+                    family: Theme.fontFamilyHeading
                 }
             }
 

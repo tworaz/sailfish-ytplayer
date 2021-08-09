@@ -29,10 +29,6 @@
 
 #include "YTLogger.h"
 
-#include <QDebug>
-#include <QDir>
-#include <qtconcurrentrun.h>
-
 namespace {
 int kLogCacheSize = 200;
 const char kLogFileName[] = "YTPlayer.log";
@@ -45,7 +41,7 @@ static QString _log_str_arr[] = {
     QString("[INFO]  ")
 };
 
-QtMessageHandler YTLogger::_original_handler = NULL;
+QtMessageHandler YTLogger::_original_handler = nullptr;
 QContiguousCache<QVariantMap> YTLogger::_log_cache =
     QContiguousCache<QVariantMap>(kLogCacheSize);
 

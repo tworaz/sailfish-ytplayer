@@ -33,6 +33,16 @@
 #include <QObject>
 #include <QMutex>
 #include <QList>
+#include <QtNetwork/QNetworkConfigurationManager>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QDBusPendingCall>
+#include <QtNetwork/QNetworkRequest>
+#include <QtNetwork/QNetworkSession>
+#include <QDBusConnection>
+#include <QSharedPointer>
+#include <QDBusMessage>
+#include <QSettings>
+#include <QDebug>
 
 class QNetworkConfigurationManager;
 class QNetworkAccessManager;

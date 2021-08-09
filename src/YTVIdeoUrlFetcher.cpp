@@ -28,33 +28,21 @@
  */
 
 #include "YTVideoUrlFetcher.h"
-
-#include <QJsonDocument>
-#include <sailfishapp.h>
-#include <QJsonObject>
-#include <QStringList>
-#include <QProcess>
-#include <QDebug>
-#include <QDir>
-
 #include "YTPlayer.h"
 
 namespace {
-const char kYouTubeDLBinaryName[] = "youtube-dl";
 const int kMaxResponseCacheSize = 20;
+const QString ytdlFilename = QStandardPaths::writableLocation(QStandardPaths::DataLocation)+QDir::separator()+"youtube-dl";
 
-QString getYouTubeDLPath()
-{
-    static QString program;
-    if (program.isEmpty()) {
-        program = SailfishApp::pathTo("bin").toLocalFile();
-        program.append(QDir::separator());
-        program.append(kYouTubeDLBinaryName);
-        Q_ASSERT(QFile(program).exists());
+    QString getYouTubeDLPath()
+    {
+        static QString program;
+        if (program.isEmpty()) {
+            program = "/usr/bin/python3";
+            Q_ASSERT(QFile(program).exists());
+        }
+        return program;
     }
-    return program;
-}
-
 }
 
 QCache<QString, QVariantMap> YTVideoUrlFetcher::_response_cache;
@@ -62,9 +50,11 @@ QString YTVideoUrlFetcher::_version_str;
 bool YTVideoUrlFetcher::_works = false;
 
 YTVideoUrlFetcher::YTVideoUrlFetcher()
-    : QObject(0)
-    , _process(0)
+    : QObject(nullptr)
+    , _process(nullptr)
 {
+    Q_ASSERT(QFile(ytdlFilename).exists());
+
     static bool registered = false;
     if (!registered) {
         qRegisterMetaType<QProcess::ExitStatus>("QProcess::ExitStatus");
@@ -78,8 +68,16 @@ YTVideoUrlFetcher::YTVideoUrlFetcher()
 void
 YTVideoUrlFetcher::runInitialCheck()
 {
+    QFile youtubedl(ytdlFilename);
+    if(!youtubedl.exists()) {
+        _version_str = "";
+        _works = false;
+        qWarning() << "youtube-dl is non functional: file not found";
+        return;
+    }
+
     QStringList arguments;
-    arguments << "--version";
+    arguments << ytdlFilename << "--version";
 
     QProcess process;
     process.start(getYouTubeDLPath(), arguments, QIODevice::ReadOnly);
@@ -92,8 +90,14 @@ YTVideoUrlFetcher::runInitialCheck()
         _works = true;
         qDebug() << "youtube-dl works, current version:" << _version_str;
     } else {
-        qWarning() << "youtune-dl is non functional:" << process.readAllStandardError();
+        qWarning() << "youtube-dl is non functional:" << process.readAllStandardError();
     }
+}
+
+void
+YTVideoUrlFetcher::setVersion(QString newVersion, bool newWorks) {
+    _version_str = newVersion;
+    _works = newWorks;
 }
 
 void
@@ -119,7 +123,8 @@ YTVideoUrlFetcher::onFetchUrlsFor(QString videoId)
     }
 
     QStringList arguments;
-    arguments << "--dump-json"
+    arguments << ytdlFilename
+              << "--dump-json"
               << "--youtube-skip-dash-manifest"
               << "--no-cache-dir"
               << "--no-call-home"
@@ -127,7 +132,7 @@ YTVideoUrlFetcher::onFetchUrlsFor(QString videoId)
 
     qDebug() << "YouTubeDL subprocess:" << getYouTubeDLPath() << arguments;
 
-    _process = new QProcess(0);
+    _process = new QProcess(nullptr);
     connect(_process, SIGNAL(finished(int, QProcess::ExitStatus)),
             this, SLOT(onProcessFinished(int, QProcess::ExitStatus)));
     connect(_process, SIGNAL(error(QProcess::ProcessError)),
@@ -177,7 +182,7 @@ YTVideoUrlFetcher::onProcessFinished(int code, QProcess::ExitStatus status)
         emit failure(map);
     }
     delete _process;
-    _process = NULL;
+    _process = nullptr;
 }
 
 void
@@ -185,7 +190,7 @@ YTVideoUrlFetcher::onProcessError(QProcess::ProcessError error)
 {
     qCritical() << "Process error:" << error;
     delete _process;
-    _process = NULL;
+    _process = nullptr;
     emit failure(QVariantMap());
 }
 
@@ -196,7 +201,7 @@ YTVideoUrlFetcher::~YTVideoUrlFetcher()
         _process->kill();
         _process->waitForFinished();
         _process->deleteLater();
-        _process = NULL;
+        _process = nullptr;
     }
 }
 
@@ -237,9 +242,6 @@ YTVideoUrlFetcher::parseResponse(QJsonDocument doc)
             break;
         case 22:
             response.insert("720p", details);
-            break;
-        case 37:
-            response.insert(("1080p"), details);
             break;
         }
     }

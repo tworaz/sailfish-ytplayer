@@ -27,21 +27,13 @@
  * SUCH DAMAGE.
  */
 
-#include <QNetworkAccessManager>
-#include <QNetworkDiskCache>
-#include <QGuiApplication>
-#include <QStandardPaths>
-#include <QQuickView>
-#include <QSqlError>
-#include <QtQml>
-#include <QDebug>
-#include <QFontDatabase>
-#include <QSqlDatabase>
-#include <qtconcurrentrun.h>
-#include <sailfishapp.h>
+#ifdef QT_QML_DEBUG
+#include <QtQuick>
+#endif
+
+#include "YTPlayer.h"
 
 #include "YTVideoDownloadNotification.h"
-#include "YTPlayer.h"
 #include "YTListModel.h"
 #include "YTNetworkManager.h"
 #include "YTLocalVideoManager.h"
@@ -56,6 +48,7 @@
 #include "YTLogger.h"
 #include "YTUtils.h"
 #include "YTPrefs.h"
+#include "YTUpdater.h"
 
 namespace {
 const QString kApplicationDBFileName = "YTPlayer.sqlite";
@@ -79,8 +72,8 @@ InitApplicationDatabase()
 QThread*
 GetBackgroundTaskThread()
 {
-    static QThread* thread = NULL;
-    if (thread == NULL) {
+    static QThread* thread = nullptr;
+    if (thread == nullptr) {
         thread = new QThread();
         thread->start();
         thread->setPriority(QThread::LowPriority);
@@ -91,8 +84,8 @@ GetBackgroundTaskThread()
 QNetworkDiskCache*
 GetImageDiskCache()
 {
-    static QNetworkDiskCache* cache = NULL;
-    if (cache == NULL) {
+    static QNetworkDiskCache* cache = nullptr;
+    if (cache == nullptr) {
         cache = new QNetworkDiskCache();
         QString datadir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
         datadir += "/ImageCache";
@@ -108,8 +101,8 @@ GetImageDiskCache()
 QNetworkDiskCache*
 GetAPIResponseDiskCache()
 {
-    static QNetworkDiskCache* cache = NULL;
-    if (cache == NULL) {
+    static QNetworkDiskCache* cache = nullptr;
+    if (cache == nullptr) {
         cache = new QNetworkDiskCache();
         QString datadir = QStandardPaths::writableLocation(QStandardPaths::CacheLocation);
         datadir += "/APIRequestCache";
@@ -137,6 +130,20 @@ public:
 int
 main(int argc, char *argv[])
 {
+    // Some more speed & memory improvements
+	// Borrowed these from LLC MediaPlayer :)
+    setenv("QT_NO_FAST_MOVE", "0", 0);
+    setenv("QT_NO_FT_CACHE","0",0);
+    setenv("QT_NO_FAST_SCROLL","0",0);
+    setenv("QT_NO_ANTIALIASING","1",1);
+    setenv("QT_NO_FREE","0",0);
+    setenv("QT_PREDICT_FUTURE", "1", 1);
+    setenv("QT_NO_BUG", "1", 1);
+    setenv("QT_NO_QT", "1", 1);
+    // Taken from sailfish-browser
+    setenv("USE_ASYNC", "1", 1);
+    QQuickWindow::setDefaultAlphaBuffer(true);
+
     QScopedPointer<QGuiApplication> app(SailfishApp::application(argc, argv));
     QScopedPointer<QQuickView> view(SailfishApp::createView());
     YTTranslations translations;
@@ -152,6 +159,8 @@ main(int argc, char *argv[])
 
     // Make sure the logger is initialized
     YTLogger::instance();
+
+    YTUpdater updater;
 
     if (!YTTranslations::initialize()) {
         qCritical() << "Failed to initialize YTTranslations!";
@@ -181,6 +190,7 @@ main(int argc, char *argv[])
     view->rootContext()->setContextProperty("YTTranslations", &translations);
     view->rootContext()->setContextProperty("YTWatchedRecently", &watched_recently);
     view->rootContext()->setContextProperty("YTFavorites", &favorites);
+    view->rootContext()->setContextProperty("YTUpdater", &updater);
 
     view->engine()->addImportPath("qrc:/ui/qml/");
     view->setSource(QUrl("qrc:/ui/qml/YTPlayer.qml"));

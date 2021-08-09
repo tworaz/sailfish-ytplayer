@@ -73,7 +73,7 @@ Page {
 
             AsyncImage {
                 id: thumbnail
-                width: kThumbnailWidth
+                width: Theme.itemSizeMedium
                 height: width * thumbnailAspectRatio
                 anchors {
                     verticalCenter: parent.verticalCenter

@@ -34,6 +34,11 @@
 
 #include <QByteArray>
 #include <QHash>
+#include <QSqlDatabase>
+#include <QSqlRecord>
+#include <QSqlQuery>
+#include <QSqlError>
+#include <QDebug>
 
 class YTWatchedRecently : public YTSqlListModel
 {

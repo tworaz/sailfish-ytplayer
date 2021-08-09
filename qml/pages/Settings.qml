@@ -15,7 +15,80 @@ Page {
         if (status === PageStatus.Active) {
             accountSwitch.checked = YTPrefs.isAuthEnabled()
             requestCoverPage("Default.qml")
+            if(autoUpdate) {
+                // We have to use this so that the
+                // functions do not fire at page activation
+                updateButtonClicked = true
+                startUpdate()
+            }
         }
+    }
+
+    // Update-related properties
+    property bool autoUpdate: false // Used from YTPlayer.qml
+    property string localVersion: YTUpdater.localVersion
+    property string remoteVersion: YTUpdater.remoteVersion
+    property bool updating: YTUpdater.updating
+    property bool updateButtonClicked: false
+
+    // Update check helper; just for convenience
+    function updateMenuItem(itemEnabled, spinnerEnabled, newText) {
+        updateYtdlButton.text = newText
+        updateYtdlButton.enabled = itemEnabled
+        updateYtdlIndicator.running = spinnerEnabled
+
+    }
+
+    // Phase 1: Check the local version
+    function startUpdate() {
+        //: Shown while checking for local version of youtube-dl
+        //% "Checking local version..."
+        updateMenuItem(false, true, qsTrId("ytplayer-update-checking-local-version"))
+        YTUpdater.checkLocalVersion()
+    }
+
+    // Phase 2: Check the remote version
+    onLocalVersionChanged: {
+        if(!updateButtonClicked || localVersion === "checkingLocalVersion")
+            return;
+        //: Shown while checking for remote version of youtube-dl
+        //% "Checking remote version..."
+        updateMenuItem(false, true, qsTrId("ytplayer-update-checking-remote-version"))
+        YTUpdater.checkRemoteVersion()
+    }
+
+    // Phase 3: Compare the versions, and update if needed, or stop here
+    onRemoteVersionChanged: {
+        if(!updateButtonClicked || remoteVersion === "checkingRemoteVersion")
+            return;
+        if(remoteVersion === "----.--.--")
+            //: Shown when checking youtube-dl version from the Internet failed
+            //% "Could not check for updates"
+            updateMenuItem(true, false, qsTrId("ytplayer-update-checking-remote-version-failed"))
+        else if(remoteVersion !== localVersion) {
+            //: Shown while downloading the youtube-dl update from the Internet
+            //% "Downloading youtube-dl..."
+            updateMenuItem(false, true, qsTrId("ytplayer-update-downloading"))
+            YTUpdater.startUpdate()
+        }
+        else
+            //: Shown when youtube-dl is up to date and no update is needed
+            //% "Youtube-dl is up to date"
+            updateMenuItem(false, false, qsTrId("ytplayer-update-up-to-date"))
+    }
+
+    // Phase 4: Verify the updated version, or inform about failure
+    onUpdatingChanged: {
+        if(!updateButtonClicked)
+            return;
+        if(localVersion !== remoteVersion)
+            //: Shown after youtube-dl update failed
+            //% "Updating youtube-dl failed"
+            updateMenuItem(false, false, qsTrId("ytplayer-update-failed"))
+        else(localVersion === remoteVersion)
+            //: Shown after youtube-dl update succeeded
+            //% "Updated youtube-dl succesfully"
+            updateMenuItem(false, false, qsTrId("ytplayer-update-successful"))
     }
 
     SilicaFlickable {
@@ -76,6 +149,37 @@ Page {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: Theme.paddingLarge
 
+            Item {
+                height: updateYtdlButton.height
+                width: parent.width / parent.columns
+                SettingsButton {
+                    id: updateYtdlButton
+                    anchors.fill: parent
+                    enabled: localVersion !== remoteVersion
+                    text: {
+                        if(localVersion !== remoteVersion)
+                            //: MenuItem text for updating youtube-dl
+                            //% "Update youtube-dl"
+                            return qsTrId("ytplayer-update-youtubedl")
+                        else
+                            qsTrId("ytplayer-update-up-to-date")
+                    }
+                    color: (root.highlighted | root.selected) ? Theme.highlightColor : (enabled ? Theme.primaryColor : Theme.secondaryColor)
+                    onClicked: {
+                        // We have to use this so that the
+                        // functions do not fire at page activation
+                        updateButtonClicked = true
+                        startUpdate()
+                    }
+                }
+                BusyIndicator {
+                    id: updateYtdlIndicator
+                    anchors.centerIn: parent
+                    size: BusyIndicatorSize.Medium
+                    running: false
+                    visible: running
+                }
+            }
             SettingsButton {
                 width: parent.width / parent.columns
                 //: Label for menu option showing cache settings page
@@ -119,6 +223,15 @@ Page {
                 text: qsTrId("ytplayer-action-search-settings")
                 onClicked: {
                     pageStack.push(Qt.resolvedUrl("SearchSettings.qml"))
+                }
+            }
+            SettingsButton {
+                width: parent.width / parent.columns
+                //: Label for menu option to enter YouTube API keys
+                //% "API keys"
+                text: qsTrId("ytplayer-action-set-api-keys")
+                onClicked: {
+                    pageStack.push(Qt.resolvedUrl("APIKeys.qml"))
                 }
             }
         } // Column

@@ -42,8 +42,8 @@ ListItem {
 
     AsyncImage {
         id: thumbnail
-        width: kThumbnailWidth
-        height: width * thumbnailAspectRatio
+        height: Theme.itemSizeMedium * 0.85
+        width: height / thumbnailAspectRatio
         anchors {
             verticalCenter: parent.verticalCenter
             left: parent.left
@@ -55,18 +55,19 @@ ListItem {
         Rectangle {
             anchors.bottom: parent.bottom
             anchors.right: parent.right
-            visible: (ytItem.duration.length > 0) &&
-                     parent.status === Image.Ready
+            visible: (ytItem.duration.length > 0) && parent.status === Image.Ready
             color: "black"
             height: childrenRect.height
             width: childrenRect.width + 2 * Theme.paddingSmall
+            opacity: 0.8
 
             Label {
                 x: Theme.paddingSmall
                 text: ytItem.duration.length > 0 ?
                           (new DJS.Duration(ytItem.duration)).asClock() : ""
-                color: Theme.primaryColor
-                font.pixelSize: Theme.fontSizeExtraSmall * 0.8
+                color: Theme.lightPrimaryColor
+                font.pixelSize: Theme.fontSizeExtraSmall * 0.7
+                font.weight: Font.Bold
                 horizontalAlignment: Text.AlignHCenter
             }
         }
@@ -80,14 +81,24 @@ ListItem {
         wrapMode: Text.Wrap
         anchors {
             left: thumbnail.right
-            right: parent.right
+            right: imageChannel.visible ? imageChannel.right : parent.right
             leftMargin: Theme.paddingSmall
             rightMargin: Theme.paddingSmall
             verticalCenter: parent.verticalCenter
         }
-        font {
-            family: Theme.fontFamily
-            pixelSize: Theme.fontSizeExtraSmall
+        font.pixelSize: Theme.fontSizeSmall
+    }
+
+    Image {
+        id: imageChannel
+        source: "image://theme/icon-m-media-artists"
+        visible: youtubeId.kind === "youtube#channel"
+        width: Theme.iconSizeMedium
+        height: Theme.iconSizeMedium
+        anchors {
+            right: parent.right
+            rightMargin: Theme.paddingSmall
+            verticalCenter: parent.verticalCenter
         }
     }
 

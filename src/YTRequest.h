@@ -34,10 +34,23 @@
 #include <QObject>
 #include <QString>
 #include <QVariantMap>
-#include <QNetworkReply>
+#include <QtNetwork/QNetworkReply>
 #include <QSharedPointer>
+#include <QtNetwork/QNetworkConfigurationManager>
+#include <QtNetwork/QNetworkAccessManager>
+#include <QScopedPointer>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QStringList>
+#include <QUrlQuery>
+#include <QSettings>
+#include <QLocale>
+#include <QDebug>
+
+#include <nemonotifications-qt5/notification.h>
 
 #include "YTListModel.h"
+#include "YTUpdater.h"
 
 class QNetworkAccessManager;
 class YTVideoUrlFetcher;
@@ -108,7 +121,7 @@ private:
     bool loaded() const { return _loaded; }
     void setModel(YTListModel *model) { _model = model; }
     YTListModel *model() const { return _model; }
-    QUrl oAuth2Url() const;
+    QUrl oAuth2Url();
     void setLoaded(bool);
     void setBusy(bool);
 

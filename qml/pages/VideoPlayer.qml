@@ -5,8 +5,9 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 import QtMultimedia 5.0
+import Sailfish.Media 1.0
 import harbour.ytplayer 1.0
-import org.nemomobile.notifications 1.0
+import Nemo.Notifications 1.0
 import "../common/Helpers.js" as H
 import "../common"
 
@@ -171,6 +172,7 @@ Page {
         PageHeader {
             id: header
             z: videoOutput.z + 2
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
@@ -184,13 +186,19 @@ Page {
             color: "black"
             opacity: 0.5
             z: header.z - 1
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
         }
 
         Rectangle {
-            color: "black"
+            color: Qt.application.active ? "black" : "transparent"
+            Behavior on color {
+                ColorAnimation {
+                    duration: Qt.application.active ? 300 : 0
+                }
+            }
             width: page.width
             height: page.height
             Text {
@@ -237,12 +245,12 @@ Page {
                 YTIconButton {
                     id: playButton
                     anchors.centerIn: parent
-                    source: "qrc:///icons/play-64.png"
+                    source: "qrc:///icons/play-64-white.png"
                 }
                 YTIconButton {
                     id: pauseButton
                     anchors.centerIn: parent
-                    source: "qrc:///icons/pause-64.png"
+                    source: "qrc:///icons/pause-64-white.png"
                 }
             }
         }
@@ -388,8 +396,9 @@ Page {
             Text {
                 id: statusLabel
                 font.pixelSize: Theme.fontSizeSmall
-                color: Theme.highlightColor
+                color: Theme.lightPrimaryColor !== "undefined" ? Theme.lightPrimaryColor : Theme.primaryColor
             }
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
@@ -404,12 +413,16 @@ Page {
             radius: 4.0
             color: "black"
             opacity: 0.0
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
         }
         Slider {
             id: progressSlider
+            color: Theme.lightPrimaryColor !== "undefined" ? Theme.lightPrimaryColor : Theme.primaryColor
+            backgroundColor: Theme.lightSecondaryColor !== "undefined" ? Theme.lightSecondaryColor : Theme.secondaryColor
+            highlightColor: Theme.highlightColor
             anchors.bottom: bottomMenu.top
             width: parent.width
             z: videoOutput.z + 2
@@ -417,11 +430,13 @@ Page {
             enabled: true
             minimumValue: 0
             valueText: H.parseDuration(value)
+            valueLabelColor: Theme.lightPrimaryColor !== "undefined" ? Theme.lightPrimaryColor : Theme.primaryColor
             onPressed: controlsTimer.stop()
             onReleased: {
                 mediaPlayer.seek(value)
                 controlsTimer.startIfNeeded()
             }
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
@@ -435,12 +450,13 @@ Page {
             color: "black"
             opacity: 0.5
             z: progressSlider.z - 1
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
         }
         Text {
-            color: "white"
+            color: Theme.lightPrimaryColor
             anchors.right: parent.right
             anchors.bottom: parent.bottom
             anchors.bottomMargin: Theme.paddingSmall
@@ -449,6 +465,7 @@ Page {
             text: H.parseDuration(mediaPlayer.duration)
             opacity: mediaPlayer.duration > 0 ? progressSliderBg.opacity * 2 : 0.0
             z: progressSliderBg.z + 1
+            visible: opacity > 0.0
             Behavior on opacity {
                 FadeAnimation {}
             }
@@ -457,7 +474,7 @@ Page {
         PushUpMenu {
             id: bottomMenu
             bottomMargin: Theme.paddingSmall
-            visible: priv.controlsVisible && multipleQualitiesAvailable
+            visible: opacity > 0.0 && priv.controlsVisible && multipleQualitiesAvailable
 
             property bool multipleQualitiesAvailable: false
             property Item selectedItem

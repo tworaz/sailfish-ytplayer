@@ -33,6 +33,10 @@
 #include <QAbstractListModel>
 #include <QVariant>
 #include <QVector>
+#include <QSqlQuery>
+#include <QSqlRecord>
+#include <QSqlError>
+#include <QDebug>
 
 class QSqlQuery;
 

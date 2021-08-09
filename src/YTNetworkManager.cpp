@@ -29,17 +29,6 @@
 
 #include "YTNetworkManager.h"
 
-#include <QNetworkConfigurationManager>
-#include <QNetworkAccessManager>
-#include <QDBusPendingCall>
-#include <QNetworkRequest>
-#include <QNetworkSession>
-#include <QDBusConnection>
-#include <QSharedPointer>
-#include <QDBusMessage>
-#include <QSettings>
-#include <QDebug>
-
 #include "YTPlayer.h"
 #include "YTRequest.h"
 
@@ -50,11 +39,14 @@ _isCellular(const QNetworkConfiguration& config)
 {
     switch (config.bearerType()) {
     case QNetworkConfiguration::Bearer2G:
-    case QNetworkConfiguration::BearerBluetooth:
     case QNetworkConfiguration::BearerHSPA:
     case QNetworkConfiguration::BearerCDMA2000:
     case QNetworkConfiguration::BearerWCDMA:
     case QNetworkConfiguration::BearerWiMAX:
+    case QNetworkConfiguration::BearerEVDO:
+    case QNetworkConfiguration::BearerLTE:
+    case QNetworkConfiguration::Bearer3G:
+    case QNetworkConfiguration::Bearer4G:
         return true;
     default:
         return false;
@@ -217,7 +209,7 @@ YTNetworkManager::closeNetworkSession()
 
     _session->close();
     delete _session;
-    _session = NULL;
+    _session = nullptr;
 }
 
 qint64

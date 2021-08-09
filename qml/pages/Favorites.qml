@@ -91,6 +91,7 @@ Page {
         model: YTFavorites
 
         delegate: YTListItem {
+            contentHeight: Theme.itemSizeMedium
             title: video_title
             duration: video_duration
             menu: contextMenuComponent

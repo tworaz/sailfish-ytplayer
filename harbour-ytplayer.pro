@@ -4,90 +4,81 @@
 
 TARGET = harbour-ytplayer
 
-CONFIG += sailfishapp sailfishapp_no_deploy_qml
-QT += dbus sql concurrent
+CONFIG += sailfishapp sailfishapp_no_deploy_qml # sailfishapp_i18n
+
+PKGCONFIG += nemonotifications-qt5
+
+QT += dbus sql concurrent qml core multimedia
 
 SOURCES += \
-        src/YTPlayer.cpp \
-        src/YTUtils.cpp \
-        src/YTLogger.cpp \
-        src/YTPrefs.cpp  \
-        src/YTRequest.cpp \
-        src/YTListModel.cpp \
-        src/YTNetworkManager.cpp \
-        src/YTLocalVideo.cpp \
-        src/YTLocalVideoData.cpp \
-        src/YTLocalVideoManager.cpp \
-        src/YTLocalVideoListModel.cpp \
-        src/YTVideoDownloadNotification.cpp \
-        src/YTVIdeoUrlFetcher.cpp \
-        src/YTSuggestionEngine.cpp \
-        src/YTTranslations.cpp \
-        src/YTWatchedRecently.cpp \
-        src/YTFavorites.cpp \
-        src/YTSqlListModel.cpp
+    src/YTPlayer.cpp \
+    src/YTUtils.cpp \
+    src/YTLogger.cpp \
+    src/YTPrefs.cpp  \
+    src/YTRequest.cpp \
+    src/YTListModel.cpp \
+    src/YTNetworkManager.cpp \
+    src/YTLocalVideo.cpp \
+    src/YTLocalVideoData.cpp \
+    src/YTLocalVideoManager.cpp \
+    src/YTLocalVideoListModel.cpp \
+    src/YTVideoDownloadNotification.cpp \
+    src/YTVIdeoUrlFetcher.cpp \
+    src/YTSuggestionEngine.cpp \
+    src/YTTranslations.cpp \
+    src/YTWatchedRecently.cpp \
+    src/YTFavorites.cpp \
+    src/YTSqlListModel.cpp \
+    src/YTUpdater.cpp \
+    src/YTUpdateWorker.cpp
 
 HEADERS += \
-        src/YTPlayer.h \
-        src/YTUtils.h  \
-        src/YTLogger.h \
-        src/YTPrefs.h \
-        src/YTRequest.h \
-        src/YTListModel.h \
-        src/YTNetworkManager.h \
-        src/YTLocalVideo.h \
-        src/YTLocalVideoData.h \
-        src/YTLocalVideoManager.h \
-        src/YTLocalVideoListModel.h \
-        src/YTVideoDownloadNotification.h \
-        src/YTVideoUrlFetcher.h \
-        src/YTSuggestionEngine.h \
-        src/YTTranslations.h \
-        src/YTWatchedRecently.h \
-        src/YTFavorites.h \
-        src/YTSqlListModel.h
+    src/YTPlayer.h \
+    src/YTUtils.h  \
+    src/YTLogger.h \
+    src/YTPrefs.h \
+    src/YTRequest.h \
+    src/YTListModel.h \
+    src/YTNetworkManager.h \
+    src/YTLocalVideo.h \
+    src/YTLocalVideoData.h \
+    src/YTLocalVideoManager.h \
+    src/YTLocalVideoListModel.h \
+    src/YTVideoDownloadNotification.h \
+    src/YTVideoUrlFetcher.h \
+    src/YTSuggestionEngine.h \
+    src/YTTranslations.h \
+    src/YTWatchedRecently.h \
+    src/YTFavorites.h \
+    src/YTSqlListModel.h \
+    src/YTUpdater.h \
+    src/YTUpdateWorker.h
 
 QML_SOURCES = \
-        qml/*.qml \
-        qml/pages/*.qml \
-        qml/cover/*.qml \
-        qml/common/*.qml \
-        qml/common/*.js
+    qml/*.qml \
+    qml/pages/*.qml \
+    qml/cover/*.qml \
+    qml/common/*.qml \
+    qml/common/*.js
 
 OTHER_FILES += \
-        $$QML_SOURCES \
-        harbour-ytplayer.desktop \
-        scripts/mcc-data-util.py \
-        scripts/generate-config-h.py \
-        scripts/get_version_str.sh \
-        rpm/harbour-ytplayer.spec
+    $$QML_SOURCES \
+    harbour-ytplayer.desktop \
+    scripts/get_version_str.sh \
+    translations/*.ts
 
-include(third_party/youtube_dl.pri)
-include(languages/translations.pri)
+DISTFILES += \
+    rpm/harbour-ytplayer.spec \
+    rpm/harbour-ytplayer.yaml \
+    translations/*.qm \
+    rpm/harbour-ytplayer.changes
 
-KEY_FILE = $$top_srcdir/youtube-data-api-v3.key
-CLIENT_ID_FILE = $$top_srcdir/youtube-client-id.json
+SAILFISHAPP_ICONS = 86x86 108x108 128x128 172x172
 
-!exists($$KEY_FILE) {
-    error("YouTube data api key file not found: youtube-data-api-v3.key")
-}
-!exists($$CLIENT_ID_FILE) {
-    warning("YouTube client ID file not found, client authotization won't work!")
-}
+include(translations/translations.pri)
 
-configh.input = KEY_FILE
-configh.output = $$top_builddir/config.h
-configh.commands = \
-    $$top_srcdir/scripts/generate-config-h.py \
-            --keyfile=$$KEY_FILE \
-            --idfile=$$CLIENT_ID_FILE \
-            --outfile=$$top_builddir/config.h
-configh.CONFIG += no_link
-
-QMAKE_EXTRA_COMPILERS += configh
-PRE_TARGETDEPS += compiler_configh_make_all
-
-DEFINES += VERSION_STR=\\\"$$system($${top_srcdir}/scripts/get_version_str.sh)\\\"
+VERSION_RUN = $$system(bash $${top_srcdir}/scripts/get_version_str.sh)
+DEFINES += VERSION_STR=\\\"$$system(cat $${top_srcdir}/scripts/version-str)\\\"
 
 licenses.files = $$files($$top_srcdir/LICENSE.*)
 licenses.path = /usr/share/$${TARGET}/licenses
@@ -99,13 +90,3 @@ SOURCES += $$QML_SOURCES
 
 RESOURCES += \
     YTPlayer.qrc
-
-mcc_data.target = mcc-data
-mcc_data.commands = \
-    $$top_srcdir/scripts/mcc-data-util.py \
-        --keyfile=$$top_srcdir/youtube-data-api-v3.key \
-        --mccfile=$$top_srcdir/resources/mcc-data.json \
-        --verbose --mode check
-
-QMAKE_EXTRA_TARGETS += mcc-data
-PRE_TARGETDEPS += mcc-data

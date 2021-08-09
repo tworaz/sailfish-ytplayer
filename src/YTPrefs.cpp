@@ -29,11 +29,6 @@
 
 #include "YTPrefs.h"
 
-#include <QSettings>
-#include <QStandardPaths>
-#include <QDir>
-#include <QDebug>
-
 #include "YTLocalVideoManager.h"
 
 const char kWiFiOnly[] = "WiFi";
@@ -94,6 +89,77 @@ YTPrefs::initialize()
     if (!settings.contains(kSearchSuggestionEngineKey))
         settings.setValue(kSearchSuggestionEngineKey,
                           kHistorySuggestionEngine);
+
+
+    if (!settings.contains("YouTube/DataURL"))
+        settings.setValue("YouTube/DataURL", "https://www.googleapis.com/youtube/v3/");
+    if (!settings.contains("YouTube/VideoInfoURL"))
+        settings.setValue("YouTube/VideoInfoURL","http://www.youtube.com/get_video_info");
+
+    // Not the best place to read and handle the JSON code, but here it is.
+    QFile keyFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + QDir::separator() + "youtube-data-api-v3.key");
+    QFile dataApiFile(QStandardPaths::writableLocation(QStandardPaths::DownloadLocation) + QDir::separator() + "youtube-client-id.json");
+    if(keyFile.exists() && dataApiFile.exists() &&
+            keyFile.open(QFile::ReadOnly) && dataApiFile.open(QFile::ReadOnly)) {
+        qDebug() << "Trying to proccess youtube-client-id.json...";
+        QJsonParseError jsonError;
+        QByteArray bytes = dataApiFile.readAll();
+        QJsonDocument dataJsonD = QJsonDocument::fromJson(bytes, &jsonError);
+        qDebug() << "JSON parse result:" << jsonError.errorString();
+
+        QJsonObject installed = dataJsonD.object().value(QString("installed")).toObject();
+        settings.setValue("YouTube/AuthURI", installed["auth_uri"].toString());
+        qDebug() << "AuthURI" << settings.value("YouTube/AuthURI");
+        settings.setValue("YouTube/TokenUri",installed["token_uri"].toString());
+        qDebug() << "TokenUri" <<  settings.value("YouTube/TokenUri");
+        settings.setValue("YouTube/RedirectURI", installed["redirect_uris"].toArray()[0].toString());
+        qDebug() << "RedirectURI" <<  settings.value("YouTube/RedirectURI");
+
+        settings.setValue("YouTube/ClientID", installed["client_id"].toString());
+        qDebug() << "ClientID" <<  settings.value("YouTube/ClientID");
+        settings.setValue("YouTube/ClientSecret", installed["client_secret"].toString());
+        qDebug() << "ClientSecret" <<  settings.value("YouTube/ClientSecret");
+
+        QString oldKey = settings.value("YouTube/DataAPIv3Key","").toString();
+
+        qDebug() << "Trying to proccess youtube-client-id.json...";
+        settings.setValue("YouTube/DataAPIv3Key", QString(keyFile.readAll()).toUtf8());
+        qDebug() << "DataAPIv3Key" <<  settings.value("YouTube/DataAPIv3Key");
+
+        if(settings.value("YouTube/DataAPIv3Key").toString().count() == 0
+                || settings.value("YouTube/ClientSecret").toString().count() == 0
+                || settings.value("YouTube/ClientID").toString().count() == 0) {
+            Notification notification;
+            notification.setAppName("YTPlayer");
+            notification.setAppIcon("harbour-ytplayer");
+            //: Error while parsing user-supplied json and key files
+            //% "Could not parse %1 or %2"
+            notification.setPreviewBody(qtTrId("ytplayer-msg-error-parsing-json")
+                                        .arg("youtube-client-id.json", "youtube-data-api-v3.key"));
+            notification.publish();
+        }
+        else if(oldKey != settings.value("YouTube/DataAPIv3Key").toString()) {
+            settings.remove("YouTube/AccessToken");
+            settings.remove("YouTube/RefreshToken");
+            settings.remove("YouTube/AccessTokenType");
+            settings.setValue("AccountIntegration", false);
+        }
+    }
+    else if(settings.value("YouTube/DataAPIv3Key").toString().count() == 0
+            || settings.value("YouTube/ClientSecret").toString().count() == 0
+            || settings.value("YouTube/ClientID").toString().count() == 0) {
+        Notification notification;
+        notification.setAppName("YTPlayer");
+        //: User hasn't provided the .json and .key files in Downloads directory
+        //% "Files %1 and %2 not found in Downloads folder"
+        notification.setPreviewBody(qtTrId("ytplayer-msg-error-json-files-not-found")
+                                    .arg("youtube-client-id.json", "youtube-data-api-v3.key"));
+        notification.publish();
+    }
+    if(keyFile.isOpen())
+        keyFile.close();
+    if(dataApiFile.isOpen())
+        dataApiFile.close();
 }
 
 void

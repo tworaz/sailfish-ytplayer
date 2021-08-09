@@ -1,0 +1,93 @@
+* Tue Jun 27 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.18-1
+- Added youtube-dl update functionality in Settings
+- Read youtube-client-id.json and youtube-data-api-v3.key from Downloads
+- Improve error reporting a bit
+
+* Sun Jan 31 2021 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.17-1
+- Use youtube-dl instead of youtube-dl-lite for now
+- Update youtube-dl to 2021.01.24.1
+- Remove preinstalled API keys
+- Enable (require) user supplied API keys
+- Release experimental aarch64 version
+
+* Thu Jun 11 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.16-1
+- Update youtube-dl-lite to 2020.05.08
+
+* Mon Jun 1 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.15-1
+- Revert "Recommened" videos change
+
+* Sun May 31 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.14-1
+- Remove "Latest" menu item from subscriptions
+- "Fix" "Recommened" videos in main menu
+- Update About page
+
+* Sat Mar 21 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.13-1
+- Update youtube-dl-lite to 2020.03.08
+
+* Tue Feb 25 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.12-1
+- BETA RELEASE
+- Uses custom version of youtube-dl
+- Update functionality temporarily disabled
+
+* Sun Feb 23 2020 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.11-1
+- Fix version number on about page
+- Fix video player page on SFOS 2.2
+
+* Tue Sep 24 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.10-1
+- Update Chinese translation
+- Use .yaml file to generate .spec
+- Use git head revision in About page
+
+* Sun Sep 15 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.9-1
+- Remove unused 1080p menu element
+
+* Sun Sep 15 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.8-1
+- Fix updating youtube-dl
+- Use internal log when updating youtube-dl
+- Better propagate youtube-dl update internally
+- Translations refreshed
+
+* Fri May 24 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.7-1
+- Update German translation
+- Fix category cover page background
+
+* Mon May 20 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.6-1
+- Improve dark theme support
+- Fix version number on About page
+- Restore logo in various pages
+- Adjust main menu list item size
+- Adjust video list item size
+- Update Swedish translation
+
+* Sat May 18 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.5-1
+- Added youtube-dl update functionality in Settings
+- Added auto-updating youtube-dl, if it is missing
+- Not bundling youtube-dl anymore
+- Fix for light theme cover
+- Compiled using Sailfish Application SDK 2.1 (3.0.3.9)
+- Changelog added
+
+* Sat Mar 30 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.2-1
+- Fix quota issue (thanks for help, tworaz!)
+- Re-uploaded correct armv7hl build
+
+* Sat Mar 30 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.1-3
+- 0.6.1-RC3
+- Compile using Sailfish Application SDK 2.1 EA (3.0.3)
+- Update youtube-dl
+
+* Tue Feb 12 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.0-2
+- 0.6.0-RC2
+- Compile fixes
+- Enable youtube-dl lazy extractors
+- Add channel icon to search results for channels
+- Main menu, Categories list, Video list layout fixes
+- About, Translations and License layout fixes
+- About page credits updated
+
+* Mon Feb 11 2019 Matti Viljanen <matti.viljanen@kapsi.fi> 0.6.0-1
+- 0.6.0-RC1
+- Update youtube-dl to 2019.02.09
+- Fix translations
+- Performance fixes
+- Tons of compile- and project-related fixes

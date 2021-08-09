@@ -31,7 +31,7 @@ import QtQuick 2.0
 import QtWebKit 3.0
 import Sailfish.Silica 1.0
 import harbour.ytplayer 1.0
-import org.nemomobile.notifications 1.0
+import Nemo.Notifications 1.0
 
 Page {
     id: page
@@ -91,16 +91,12 @@ Page {
         }
     }
 
-    SilicaWebView {
+    WebView {
         id: webview
         anchors.fill: parent
         visible: false
 
         property string _authCode: ""
-
-        header: PageHeader {
-            title: page.pageTitle
-        }
 
         url: request.oAuth2Url
 
@@ -130,7 +126,7 @@ Page {
             } else if (title.indexOf('Denied error') !== -1) {
                 Log.debug("Youtube OAuth access denied!")
                 //: Message informing the user about YouTube OAuth autorization denial
-                //% "YouTube OAuth access denined!"
+                //% "YouTube OAuth access denied!"
                 failureNotification.previewBody = qsTrId("ytplayer-oauth-access-denied")
                 failureNotification.publish()
                 pageStack.navigateBack(PageStackAction.Animated)
